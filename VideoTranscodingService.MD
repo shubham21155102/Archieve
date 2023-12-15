@@ -78,4 +78,4 @@ graph LR;
     Y -->ZZ[Storage Bucket]
 ```
 - Now temporary bucket is deleted
-- FFMPEG stands for Fast Forward Moving Picture Experts Grou
+- FFMPEG stands for Fast Forward Moving Picture Experts Group
