@@ -166,3 +166,22 @@ D-->I[Segment 8]
   - Lifetime of a bt is also decided
   - Data rate also decided in this layer
   - also check mode of communication (simplex,half duplex,full duplex)
+
+```mermaid
+graph TD;
+X[Sender]-->A[Application Layer]-->B[Presentation Layer]-->C[Session Layer]
+C-->D[Transport Layer]-->E[Network Layer]
+E-->F[Data Link Layer]-->G[Physical Layer]
+H[Physical Layer]-->I[Data Link Layer]
+I-->J[Network Layer]
+J-->K[Transport Layer]
+K-->L[Session Layer]
+L-->M[Data Link Layer]
+M-->N[Application Layer]
+C--I am sending data-->L
+L--par bhai tu hai kon -->C
+C--Main ye le authenticate kar -->L
+L-- Bhej de kar diya -->C
+G-->H
+N-->O[Receiver]
+```
