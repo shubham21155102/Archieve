@@ -133,3 +133,31 @@
   - Easily identify which device is connected with which port by using MAC Adrresss
   - By this it deliveres messages where we want to send
   - more intelligent than HUB
+  - Advantages
+    - Generally used to unicast the message
+    - provides more security than HUB
+    - Provides duplex transmssion mode
+    - used to send data packet based on MAC aadress
+    - If a node fails then total network will not get distuurbed
+  - Disadvantages
+    - If sitch fails total network loss
+    - expensive
+    - Difficult setup
+  - ```mermaid
+    graph LR;
+    A[SWITCH:G1,G2 ]
+    X[G1:A]-->C[Computer 1]
+    Y[G1:B]-->B[Computer 2]
+    Z[G2:E]-->D[Computer 3]
+    W[G2:H]-->E[Computer 4]
+    T[G1:PORTS:A+B+C+D]-->X
+    T-->Y
+    U[G2:PORTS:E+F+G+H]-->Z
+    U-->W
+    A-->T
+    A-->U
+    ```
+- **ROUTER**
+
+  - Work as traffic controller
+  -

@@ -193,6 +193,5 @@ N-->O[Receiver]
 - IP:Interenet Protocol
 - Concern of that time we were able to comunicate Dell to Dell laptop
   ```mermaid
-  graph TD;
-  A[
+
   ```
