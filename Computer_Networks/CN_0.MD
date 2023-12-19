@@ -82,6 +82,7 @@
     ```
 
 ## Advantages
+
 - Open to everyone
 - file sharing
 - open to everyone
@@ -193,15 +194,31 @@
 
   - Boostup the weeken signals
   - Used in wired and wireless both
-  - ```graphviz
-    graph {
-    	layout=patchwork
-    	node [style=filled]
-    	"S1"  [area=1 fillcolor=gold]
-    	"S2"  [area=1 fillcolor=blue]
-    	"S3" [area= 1 fillcolor=yellow]
-    	"S4" [area= 1 fillcolor=green]
-    	"S5" [area= 1 fillcolor=red]
-    	"S6"  [area=  1 fillcolor=white]
-    }
+  - Advantages
+    - Used to regenerate the weak signals
+    - Cheaper
+    - ability to extend the length of signal
+    - increase /maintain the signal performance
+  - Disadvantages
+    - No of repeater too much required for some distances
+    - unable to connect dissimilar type of N/W(Analog/Digital)
+    - Can't reduce network traffic
+- **BRIDGE**
+
+  - Used to separate LAN in to number of 	Sections
+  - Oprates both physical as well as data link layer of OSI model
+  - ```mermaid
+    graph LR;
+    A[HUB] --> B[BRIDGE] --> C[HUB]
+        subgraph X[Noted Data by Bridge]
+        AY[BRIDGE]-->AA
+        AY-->BB
+        AA[MAC Addr.]
+        BB[PORT No.]
+        AA-->AX[19.63.373.8]
+        AA-->BX[19.63.373.85]
+        BB-->3000
+        BB-->80
+
+        end
     ```
