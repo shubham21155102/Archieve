@@ -185,3 +185,14 @@ L-- Bhej de kar diya -->C
 G-->H
 N-->O[Receiver]
 ```
+
+## TCP/IP Model
+
+- Follows two protocols
+- TCP:Transmission Control Protocol
+- IP:Interenet Protocol
+- Concern of that time we were able to comunicate Dell to Dell laptop
+  ```mermaid
+  graph TD;
+  A[
+  ```
