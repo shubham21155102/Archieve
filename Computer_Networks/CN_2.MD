@@ -1,197 +1,217 @@
-## OSI MODEL
+# Data Transmission Modes
 
-**Open System Interconnection**
+- Data Transfer between two devices over network.
+- also known as mode of Communication
+- **Types**
+  - **Simplex**
+    - Uni Directional
+    - Data can only be sent in one direction
+    - loudspeaker ,monitor, keyboard etc
+  - **Half Duplex**
+    - Bi Directional
+    - But only one action can be taken at a time
+    - Walkie Talkie
+  - **FULL DUPLEX**
+    - Bi directional
+    - Receiving and sending at same instance
+    - Telephone network
 
-- This is a reference model
-- 1970's & 80's
-- reference model for TCP/IP model
-- Protocols & Layered System
+```mermaid
+graph LR;
+A[(Simplex)]-->B(Simplex)
+C[(Half Duplex)]--Sending-->D(Half Duplex)
+D--Receiving-->C
+E[(Full Duplex)]--Sending & Receving -->F(Full Duplex)
+```
 
-  - set up of some rules
-- Let us understand Layered system via diagram
+# Data Transmission
+
+- process of transferring data b/w two or more digital devices in analog or digital form
+- **Types**
+  - **Serial**
+    - One bit at a time
+    - Slow
+    - Long Distance
+    - Types
+      - Synchronous
+        - A lot of data sent in a block
+      - Asynchronous
+        - only one character is sent at a time
+        - Uses start and stop bits for transferring data
+    - Ex: Keyboard, Mouse
+  - **Parallel**
+    - Multiple bits at a time
+    - Fast
+    - Short Distance
+    - Ex: Printer, Scanner
+
+```mermaid
+graph LR;
+A[(Serial)]-->B(Serial)
+C[(Parallel)]-->D(Parallel)
+```
+
+```mermaid
+graph LR;
+A[Sender]--0-->B[Receiver]
+A--1-->B
+A--0-->B
+A--0-->B
+A----Parallel---->B
+A--0-->B
+A--0-->B
+A--1-->B
+A--0-->B
+```
+
+```mermaid
+graph LR;
+A[Sender]--0--1--0--1--1-->B[Receiver]
+A--Series-->B
+```
+
+```mermaid
+graph LR;
+A[Sender]-->C[1 0 1 1 0]-->D[1 0 1 1 1]-->E[1 0 0 1 1]-->B[Receiver]
+A--Series:Synchronous-->B
+```
+
+```mermaid
+graph LR;
+A[Sender]--Stop Bit-->F[1]-->E[1 0 0 1 1]-->G[0]--Start Bit-->B[Receiver]
+A--Series:Asynchronous-->B
+```
+
+# Data Communication
+
+- Process of sending and receiving digital data b/w two or more computers via transmission medium such as wire cable
+- 5 Components of Data Communication
+  - Message
+  - Sender
+  - Receiver
+  - Transmossion Medium
+  - Protocol
+
+# IP Address
+
+- Internet Protocol Address
+- unique number provided to each and every address
+- form of integric number separated by dots
+- 192.168.10.26
+
+  ```mermaid
+  graph TB;
+  A[Address]-->B[IP Address <br/> Logical]
+  A-->C[MAC Address <br/> Physical]
+  subgraph IP Types;
+  IP-->X[IPV4 <br> - length 32 bits <br> - Octet -4 <br> - 0 to 255<br> - 4 billlion<br> - 192.168.10.26]
+  IP-->Y[IPV6<br> - length 128 bits<br> - Octet 8<br> - 0 to FFFF<br> - 340 Trillion<br> - 2001:0db8:85a3:0000:0000:8a2e:0370:7334]
+  end
+  ```
+- IPV6 & IPV4
+
+  - FFFF:65535
+  - 4 billion-> $2^{3 \\ 2}$
+  - 340 trillion -> $2^{1\\2\\8}$
+  - Uses of IP
+    - PUBLIC
+    - PRIVATE
+- Classes of IP
+
+  - Class A: 0 to 126 (127 reserved):125.255.23.17
+  - Class B: 128 to 191: 191.23.34.123
+  - Class C: 192 to 223:192.204.10.14
+  - Class D: 224 to 239:used for multicasting
+  - Class E: 240 to 255:reserved for research
+- Network ID : 1
+- Host ID: 0
+- OCTET
 
   ```mermaid
   graph LR;
-  A[Location A] --> B[Location B]
+  subgraph 1:8
+  end
+  subgraph 2:8
+  end
+  subgraph 3:8
+  end
+  subgraph 4:8
+  end
+  1:8-->2:8-->3:8-->4:8
+  A[Each Octet has 8 bits]
+  B[Each Octet has 8 bits]
   ```
+- Class A
 
-  - Seven Layers of OSI Model
-
-    ```mermaid
-    graph LR;
-    A[Application Layer]
-    B[Presentation Layer]
-    C[Session Layer]
-    D[Transport Layer]
-    E[Network Layer]
-    F[Data Link Layer]
-    G[Physical Layer]
-    ```
-
-    - (Technique): All People Seems To Need Data Processing
-
-```mermaid
-graph LR;
-A[Application Layer]-->B[Software Layer]
-C[Presentation Layer]-->B
-D[Session Layer]-->B
-```
-
-```mermaid
-graph LR;
-A[Network Layer]-->B[HardWare Layer]
-C[Data Link Layer]-->B
-D[Physical Layer]-->B
-```
-
-```mermaid
-graph LR;
-A[Transport Layer]-->B[Heart of the Model]
-```
-
-```mermaid
-graph LR;
-A[Software Layer]<-->B[Transport Layer]<-->C[Hardware Layer]
-B-->A
-C-->B
-```
-
-- Application Layer
-  - Provide User Interface Like Safari ,Chrome ,Brave
-  - Provide Different Protocols for sharing the data
-  - Ex: HTTP,FTP,SMTP
-  - HTTP: Hyper Text Transfer Protocol(Website viewing)
-  - FTP:File Transfer Protcol
-  - SMTP:Simple Mail Transfer Protocol
-  - HTTPS:Hyper Text Transfer Protocol Secure
-
-```mermaid
-graph LR;
-A[Application Layer]--Data-->B[Presentation Layer]
-```
-
-- Presenatation Layer
-
-  - Reformat the received data(Converting to ASCII Character)
-  - Data Encrypting (AAA-->$#@@)(To save from hacking)
-  - Data Compression(File size reduction)(less time more data transfer)
-- Session Layer
-
-  - Create and Manage Session(Create Session for sender and Receiver will ready to authenticate and receive)
-  - Add Check points (If connection interrupted then resending data from resumed point )
-  - Terminate Session
-
-```mermaid
-graph LR; 
-A[Presentation Layer]--Data-->B[Session Layer]--Data-->C[Transport Layer]
-```
-
-- **- - >Transport Layer**
-- If we are using whatsapp and youtube at same time how the system will identify which data is coming from which source so this is done by Transport Layer
-- Transport Layer uses port number and ip address to identify data source and by this bits data is differentiated
-- Threre is total 65,536 port numbers
-
-```mermaid
-graph RL;
-A[Youtube]-- IP:208.65.153.238 -->B[Transport Layer]--Youtube Data-->D[User]
-C[WhatsApp]--IP:157.240.229.60-->B
-B-- Whatsapp Data -->D
-A-- PORT: 80-->B
-C-- PORT: 443-->B
-```
-
-- Transport Lyer also decides which Connection type should be used to transport data
-- TCP/UDP
-  - If data will be transferred by TCP then this will be connection oriented protocol
-  - TCP is connection oriented
-  - UDP is connection less
-  - In connection oriented model first connection is established then communication starts
-  - In connection less model no conection is established just messages are sent
-
-```mermaid
-graph LR;
-D[Data]-->A[Segment 1]
-D-->B[Segment 2]
-D-->C[Segment 3]
-D-->E[Segment 4]
-D-->F[Segment 5]
-D-->G[Segment 6]
-D-->H[Segment 7]
-D-->I[Segment 8]
-```
-
-- Transport layer divides data in to segments
-- Convert data to segments
-- Flow Control
-- Error Control
-- **Network Layer**
-
-  - Segments to packets
-
-    - Each Packet go through different network before reaching the destination
-    - Network Layer selects the quickest path for a packet to reach destination
-    - Routers help the network layer in finding the best path
-    - Network layer uses ip address to transfer a packet
-    - once the ip address is assigned it will not change
-
-    ```mermaid
-    graph LR;
-    D[Segment]-->A[Packet 1]
-    D-->B[Packet 2]
-    D-->C[Packet 3]
-    D-->E[Packet 4]
-    D-->F[Packet 5]
-    D-->G[Packet 6]
-    D-->H[Packet 7]
-    D-->I[Packet 8]
-    ```
-- **Data Link Layer**
-
-  - Packets to frames
-  - how many frames that will be totally dependent on hardware used in data link layer
-  - Mostly Hardware in data link layer is Network Interface Card(NIC)
-  - NIC:
-    - In which lan is connected
-    - Swich and hub also work in this layer
-  - In this layer to transfer the data we use MAC Address
-  - And data is transferred system to system
-  - Media Access Controller Layer
-    - Desices which system will receive the media
-- **Physical Layer**
-
-  - Decides how raw bits will be transferred through physical medium
-  - If Physical Medium are wires then Electric Signal will be used to transmit data
-  - If Wireless like wifi then radio signals will be used to transfer data
-  - Physical Layer also decides the representation signal for 1 and 0 in a communication medium
-  - Lifetime of a bt is also decided
-  - Data rate also decided in this layer
-  - also check mode of communication (simplex,half duplex,full duplex)
-
-```mermaid
-graph TD;
-X[Sender]-->A[Application Layer]-->B[Presentation Layer]-->C[Session Layer]
-C-->D[Transport Layer]-->E[Network Layer]
-E-->F[Data Link Layer]-->G[Physical Layer]
-H[Physical Layer]-->I[Data Link Layer]
-I-->J[Network Layer]
-J-->K[Transport Layer]
-K-->L[Session Layer]
-L-->M[Data Link Layer]
-M-->N[Application Layer]
-C--I am sending data-->L
-L--par bhai tu hai kon -->C
-C--Main ye le authenticate kar -->L
-L-- Bhej de kar diya -->C
-G-->H
-N-->O[Receiver]
-```
-
-## TCP/IP Model
-
-- Follows two protocols
-- TCP:Transmission Control Protocol
-- IP:Interenet Protocol
-- Concern of that time we were able to comunicate Dell to Dell laptop
   ```mermaid
-
+  graph TB;
+  subgraph A[H]
+  end
+  subgraph B[H]
+  end
+  subgraph H
+  end
+  subgraph N
+  end
   ```
+- Class B
+
+  ```mermaid
+  graph TB;
+  subgraph A[H]
+  end
+  subgraph B[H]
+  end
+  subgraph C[N]
+  end
+  subgraph D[N]
+  end
+  ```
+- Class C
+
+  ```mermaid
+    graph TB;
+    subgraph A[H]
+    end
+    subgraph B[H]
+    end
+    subgraph C[H]
+    end
+    subgraph D[N]
+    end
+  ```
+
+## Difference Between IPV4 & IPV6
+
+```mermaid
+graph TB;
+X[IPV4 <br> - length 32 bits <br> - Octet -4 <br> - 0 to 255<br> - 4 billlion<br> - 192.168.10.26]
+Y[IPV6<br> - length 128 bits<br> - Octet 8<br> - 0 to FFFF<br> - 340 Trillion<br> - 2001:0db8:85a3:0000:0000:8a2e:0370:7334]
+```
+
+# Mac Address
+
+- Media Access Control
+- physical address
+- hardware address
+- unique and permanent for all n/w devices
+- **FORMAT**
+  - MM:MM:MM:SS:SS:SS
+  - MM-MM-MM-SS-SS-SS
+  - MMM.MMM.SSS.SSS
+- Start 6: manufacturer
+- End 6:NIC number
+- USES
+  - DEVICE tracking
+  - Private communication
+
+# Difference b/w IP & MAC
+| IP | MAC |
+| --- | --- |
+| Logical | Physical |
+| Network Layer | Data Link Layer |
+| Software | Hardware |
+| Assigned by ISP | Assigned by Manufacturer |
+| Can be changed | Can be changed only changing LAN card|
+| 32 bits/128 bits | 48 bits |
+| identifies network | identifies device |
