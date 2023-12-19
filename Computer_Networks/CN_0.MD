@@ -81,7 +81,7 @@
     F[WAN]
     ```
 
-  ## Advantages
+## Advantages
 - Open to everyone
 - file sharing
 - open to everyone
@@ -193,4 +193,15 @@
 
   - Boostup the weeken signals
   - Used in wired and wireless both
-  -
+  - ```graphviz
+    graph {
+    	layout=patchwork
+    	node [style=filled]
+    	"S1"  [area=1 fillcolor=gold]
+    	"S2"  [area=1 fillcolor=blue]
+    	"S3" [area= 1 fillcolor=yellow]
+    	"S4" [area= 1 fillcolor=green]
+    	"S5" [area= 1 fillcolor=red]
+    	"S6"  [area=  1 fillcolor=white]
+    }
+    ```
