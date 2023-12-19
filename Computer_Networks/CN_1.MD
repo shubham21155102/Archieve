@@ -255,6 +255,7 @@
 - Server sends file to client
 
 ## SMTP
+
 - SMTP is a protocol which is used to send emails over the internet
 - SMTP is a connection oriented protocol
 - uses TCP/IP for data transfer
@@ -262,28 +263,60 @@
   - POP
   - IMAP
 - SMTP uses two ports for data transfer
-    - 25: Data transfer
-    - 587: Control
+  - 25: Data transfer
+  - 587: Control
+
 ## POP
+
 - POP is a protocol which is used to receive emails over the internet
 - POP is a connection oriented protocol
 - uses TCP/IP for data transfer and helps **SMTP** from end to end communication
 - POP uses two ports for data transfer
-    - 110: Data transfer
-    - 995: Control  
+  - 110: Data transfer
+  - 995: Control
+
 ## IMAP
+
 - IMAP is a protocol which is used to receive emails over the internet
 - IMAP is a connection oriented protocol
 - uses TCP/IP for data transfer
 - IMAP uses two ports for data transfer
 - actually a mail box which is actually an improvement over POP
 - by using imap main advantage is that we can retrieve our deleted emails from server
-    - 143: Data transfer
-    - 993: Control
+  - 143: Data transfer
+  - 993: Control
+
 ## UDP
+
 - UDP is a protocol which is used to transfer data over the internet
 - UDP is a connectionless protocol
 - UDP is a unreliable protocol
 - UDP is a stateless protocol
 - UDP is a unencrypted protocol
 - UDP is a faster than TCP
+
+## PPP
+
+- used to transfer data between two connected devices
+
+## UDP
+
+- unreliable and connectionless protocol
+- in order to send data we don't need to establish connection
+- UDP is faster than TCP
+- UDP is used in video streaming
+- UDP is used in video conferencing
+- UDP is used in online gaming
+- used to transfer data in short distance
+
+```mermaid
+graph LR;
+Protocol-->A(PortNo.)
+B>FTP]-->C[(21)]
+SMTP-->25
+PPP-->110
+IMAP-->143
+HTTP-->80
+HTTPS-->443
+```
+## TCP vs UDP
