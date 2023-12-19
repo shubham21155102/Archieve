@@ -320,3 +320,21 @@ HTTP-->80
 HTTPS-->443
 ```
 ## TCP vs UDP
+| | TCP | UDP | 
+| --- | --- | --- |
+| **Connection** | Connection Oriented | Connectionless |
+| **Reliability** | Reliable | Unreliable |
+| **Data Transmission speed** | Slow | Fast |
+| **Header Size** | 20 bytes | 8 bytes |
+| **Packet Size** | 65,535 bytes | 65,535 bytes |
+| **Bandwidth Usage** | Less | More |
+| **Used in** | Web, Email, FTP | Video Streaming, Video Conferencing, Online Gaming,DNS |
+| **Connection Establishment** | Yes | No |
+| **Retransmission Of Lost Data** | Yes | No |
+| **Error Checking** | Yes | No |
+| **Flow Control** | Yes | No |
+| **Congestion Control** | Yes | No |
+| **Sequencing** | Yes | No |
+| **ACK** | Yes | No |
+| **Handshake** | Yes | No |
+|
