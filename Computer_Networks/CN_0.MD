@@ -140,7 +140,7 @@
     - used to send data packet based on MAC aadress
     - If a node fails then total network will not get distuurbed
   - Disadvantages
-    - If sitch fails total network loss
+    - If switch fails total network loss
     - expensive
     - Difficult setup
   - ```mermaid
@@ -160,4 +160,37 @@
 - **ROUTER**
 
   - Work as traffic controller
+  - choose a congestion free path through which the data packet will travel
+  - receive data packet from sender analyse it and forward data packet to receiver by choosing congestion free path.
+  - Uses both LAN and WAN
+  - Advantages
+    - Provides connection b/w two diff devices
+    - congestionless
+    - transmission rate very high
+    - provides both wire and wireless facility
+  - Disadvantages
+    - more expension compared to others
+    - complex to maintain
+    - security issue
+    - only works with routable protocol
+  - ```mermaid
+    graph LR;
+    C[Computer 1]-->A
+    D[Computer 2]-->A
+    A-->E[Computer 3]
+    A[HUB]-->B[ROUTER]
+    A-->F[Computer 4]
+    B--Traffic:1:less-->AA[so go]-->G[Router]
+    B--Traffic:1,2,3,4-->G
+    B--Traffic:1,2,3,4,5-->G
+    I-->H[Computer 1]
+    G-->I[HUB]
+    I-->J[Computer 2]
+    I-->K[Computer 4]
+    I-->L[Computer 5]
+    ```
+- **REPEATER**
+
+  - Boostup the weeken signals
+  - Used in wired and wireless both
   -
