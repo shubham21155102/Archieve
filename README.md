@@ -68,3 +68,17 @@
 - DNS
 - ISP
 - Difference B/W Internet and Intranet
+## [Secton 5](Computer_Networks/CN_4.MD)
+- Network Architecture
+  - Peer to Peer
+  - Client Server
+## [Secton 6](Computer_Networks/CN_5.MD)
+- OSI Model
+  - Application Layer
+  - Presentation Layer
+  - Session Layer
+  - Transport Layer
+  - Network Layer
+  - Data Link Layer
+  - Physical Layer
+
