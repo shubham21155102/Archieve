@@ -2,6 +2,7 @@
 
 - Stateful Components
 - **Class components have a state and can implement lifecycle methods like componentDidMount and componentDidUpdate**
+- **Class components can maintain their own internal state and, optionally, update it**
 ```js
 class Car extends React.Component {
       render() {
@@ -9,48 +10,48 @@ class Car extends React.Component {
       }
 }
 ```
+```js
+import React, { Component } from "react"; 
 
-- ```js
-  import React, { Component } from "react"; 
+class ClassComponent extends React.Component { 
+	constructor() { 
+		super(); 
+		this.state = { 
+			count: 0 
+		}; 
+		this.increase = this.increase.bind(this); 
+	} 
 
-  class ClassComponent extends React.Component { 
-  	constructor() { 
-  		super(); 
-  		this.state = { 
-  			count: 0 
-  		}; 
-  		this.increase = this.increase.bind(this); 
-  	} 
+	increase() { 
+		this.setState({ count: this.state.count + 1 }); 
+	} 
 
-  	increase() { 
-  		this.setState({ count: this.state.count + 1 }); 
-  	} 
+	render() { 
+		return ( 
+			<div style={{ margin: '50px' }}> 
+				<h1>Welcome to Geeks for Geeks </h1> 
+				<h3>Counter App using Class Component : </h3> 
+				<h2> {this.state.count}</h2> 
+				<button onClick={this.increase}> Add</button> 
 
-  	render() { 
-  		return ( 
-  			<div style={{ margin: '50px' }}> 
-  				<h1>Welcome to Geeks for Geeks </h1> 
-  				<h3>Counter App using Class Component : </h3> 
-  				<h2> {this.state.count}</h2> 
-  				<button onClick={this.increase}> Add</button> 
+			</div> 
+		) 
+	} 
+} 
 
-  			</div> 
-  		) 
-  	} 
-  } 
+export default ClassComponent; 
 
-  export default ClassComponent; 
-
-  ```
+```
 
 # Functional Components
 
 - Stateless Components
-  ```js
+```js
   const Car=()=> {
         return <h2>Hi, I am also a Car!</h2>;
   }
   ```
+
 ```js
   import React, { useState } from "react"; 
 
@@ -72,5 +73,4 @@ class Car extends React.Component {
   } 
 
   export default FunctionalComponent; 
-
-  ```
+```
