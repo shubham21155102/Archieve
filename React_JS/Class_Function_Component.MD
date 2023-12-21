@@ -29,7 +29,7 @@ class ClassComponent extends React.Component {
 	render() { 
 		return ( 
 			<div style={{ margin: '50px' }}> 
-				<h1>Welcome to Geeks for Geeks </h1> 
+				<h1>Welcome to Github </h1> 
 				<h3>Counter App using Class Component : </h3> 
 				<h2> {this.state.count}</h2> 
 				<button onClick={this.increase}> Add</button> 
@@ -64,7 +64,7 @@ export default ClassComponent;
 
   	return ( 
   		<div style={{ margin: '50px' }}> 
-  			<h1>Welcome to Geeks for Geeks </h1> 
+  			<h1>Welcome to GitHub </h1> 
   			<h3>Counter App using Functional Component : </h3> 
   			<h2>{count}</h2> 
   			<button onClick={increase}>Add</button> 
