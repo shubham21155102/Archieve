@@ -1,6 +1,6 @@
 # Linked List
 
-- Why Linked List & Problem with Array
+## Why Linked List over Array
   ------------------------------------
 
   - fixed size
@@ -737,4 +737,70 @@ public static Node_DLL deleteAtTail(Node_DLL head) {
 
 # Circular Linked List
 
+## Why Circular Linked List
+- can be traversed in both direction
+- implementation of Round Robin Scheduling easy
+- can be used to implement stack and queue
+- can be used to implement Fibonacci Heap
+- we can insert at the beginning and end by just maintaining one tail/reference pointer
+**Disadvantages**
+- code becomes more complex
+
+
 ## Implementation
+
+
+```cpp
+#include <iostream>
+using namespace std;
+struct Node
+{
+    int data;
+    Node *next;
+    Node(int x)
+    {
+        this->data = x;
+        next = nullptr;
+    }
+};
+int main()
+{
+    Node *head = new Node(10);
+    Node *temp1 = new Node(20);
+    Node *temp2 = new Node(30);
+    head->next = temp1;
+    temp1->next = temp2;
+    temp2->next = head;
+    Node *trav1 = head;
+    do
+    {
+        cout << trav1->data << " ";
+        trav1 = trav1->next;
+    } while (trav1 != head);
+
+    return 0;
+}
+```
+
+
+```java
+package DSA.LinkedList.java;
+
+public class CircularLinkedList {
+    public static void main(String[] args) {
+        Node head = new Node(10);
+        Node temp1 = new Node(20);
+        Node temp2 = new Node(30);
+        head.next = temp1;
+        temp1.next = temp2;
+        temp2.next = head;
+        Node trav = head;
+        do {
+            System.out.print(trav.data + " ");
+            trav = trav.next;
+        } while (trav != head);
+        System.out.println();
+    }
+}
+
+```
