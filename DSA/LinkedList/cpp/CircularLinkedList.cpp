@@ -10,6 +10,15 @@ struct Node
         next = nullptr;
     }
 };
+void PrintList(Node *head)
+{
+    Node *trav = head;
+    do
+    {
+        cout << trav->data << " ";
+        trav = trav->next;
+    } while (trav != head);
+}
 int main()
 {
     Node *head = new Node(10);

@@ -15,4 +15,30 @@ public class CircularLinkedList {
         } while (trav != head);
         System.out.println();
     }
+
+    public static void PrintList(Node head) {
+        Node trav = head;
+        do {
+            System.out.print(trav.data + " ");
+            trav = trav.next;
+        } while (trav != head);
+        System.out.println();
+    }
+
+    public static Node insertAtHead(int x, Node head) {
+        Node temp = new Node(x);
+        if (head == null) {
+            temp.next = temp; 
+            return temp;
+        } else {
+            temp.next = head;
+            Node curr = head;
+            while (curr.next != head) {
+                curr = curr.next;
+            }
+            curr.next = temp;
+            return temp; 
+        }
+    }
+
 }

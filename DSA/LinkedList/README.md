@@ -1,14 +1,15 @@
 # Linked List
 
 ## Why Linked List over Array
-  ------------------------------------
 
-  - fixed size
-  - worst case insertion
-  - insertion in middle costly
-  - deletion from middle costly
-  - implementation of deque and queue complex
-  - **Robin Round Scheduling**
+---
+
+- fixed size
+- worst case insertion
+- insertion in middle costly
+- deletion from middle costly
+- implementation of deque and queue complex
+- **Robin Round Scheduling**
 
 ```mermaid
 graph TD;
@@ -738,17 +739,16 @@ public static Node_DLL deleteAtTail(Node_DLL head) {
 # Circular Linked List
 
 ## Why Circular Linked List
+
 - can be traversed in both direction
 - implementation of Round Robin Scheduling easy
 - can be used to implement stack and queue
 - can be used to implement Fibonacci Heap
 - we can insert at the beginning and end by just maintaining one tail/reference pointer
-**Disadvantages**
+  **Disadvantages**
 - code becomes more complex
 
-
 ## Implementation
-
 
 ```cpp
 #include <iostream>
@@ -782,7 +782,6 @@ int main()
 }
 ```
 
-
 ```java
 package DSA.LinkedList.java;
 
@@ -803,4 +802,70 @@ public class CircularLinkedList {
     }
 }
 
+```
+
+## Print Cicular Linked List
+
+```cpp
+void PrintList(Node *head)
+{
+    Node *trav = head;
+    do
+    {
+        cout << trav->data << " ";
+        trav = trav->next;
+    } while (trav != head);
+}
+```
+
+```java
+public static void PrintList(Node head) {
+        Node trav = head;
+        do {
+            System.out.print(trav.data + " ");
+            trav = trav.next;
+        } while (trav != head);
+    }
+```
+
+## Insert At Head
+
+```cpp
+Node *insertAtHead(Node *head, int x)
+{
+    Node *temp = new Node(x);
+    if (head == nullptr)
+    {
+        temp->next = temp;
+        return temp;
+    }
+    else
+    {
+        temp->next = head;
+        Node *curr = head;
+        while (curr->next != head)
+        {
+            curr = curr->next;
+        }
+        curr->next = temp;
+        return temp;
+    }
+}
+```
+
+```java
+public static Node insertAtHead(int x, Node head) {
+        Node temp = new Node(x);
+        if (head == null) {
+            temp.next = temp; 
+            return temp;
+        } else {
+            temp.next = head;
+            Node curr = head;
+            while (curr.next != head) {
+                curr = curr.next;
+            }
+            curr.next = temp;
+            return temp; 
+        }
 ```
