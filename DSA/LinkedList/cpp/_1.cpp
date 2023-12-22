@@ -57,6 +57,39 @@ Node *deleteAtTail(Node *head)
   temp->next = nullptr;
   return head;
 }
+Node *insertAtPosition(int x, int pos, Node *head)
+{
+  if (pos == 1)
+  {
+    head = insertAtHead(head, x);
+    return head;
+  }
+  Node *temp = new Node(x);
+  Node *curr = head;
+  for (int i = 1; i <= pos - 2 && head != nullptr; i++)
+    curr = curr->next;
+  if (curr == nullptr)
+  {
+    cout << "out of range you are saying to insert so inserting at tail"
+         << "\n";
+    head = insertAtTail(head, x);
+    return head;
+  }
+  temp->next=curr->next;
+  curr->next=temp;
+  return head;
+}
+int search(int x,Node *head){
+  int pos=1;
+  if(head==nullptr) return -1;
+  Node* curr=head;
+  while(curr!=nullptr){
+    if(curr->data==x) return pos;
+    curr=curr->next;
+    pos++;
+  }
+  return -1;
+}
 void PrintList(Node *head)
 {
   if (head == nullptr)
@@ -98,9 +131,12 @@ int main()
   head = insertAtTail(head, 898);
   head = insertAtTail(head, 891);
   head = insertAtTail(head, 189);
-  head=deleteAtHead(head);
-  head=deleteAtTail(head);
-  head=deleteAtTail(head);
+  head = deleteAtHead(head);
+  head = deleteAtTail(head);
+  head = deleteAtTail(head);
+  head=insertAtPosition(3,5,head);
+  int x=search(90,head);
+  cout<<x<<"\n";
   PrintList(head);
   cout << "\n";
   return 0;

@@ -31,6 +31,18 @@ public class _1 {
         ll = deleteAtHead(ll);
         PrintList(ll);
         System.out.println();
+        ll = insertAtHead(13, ll);
+        ll = insertAtHead(14, ll);
+        ll = insertAtHead(53, ll);
+        ll = insertAtHead(63, ll);
+        ll = insertAtTail(90, ll);
+        ll = insertAtTail(68, ll);
+        ll = deleteAtHead(ll);
+        ll = insertAtPosition(12, 9, ll);
+        int x=search(68, ll);
+        System.out.println(x+1);
+        PrintList(ll);
+        System.out.println();
     }
 
     public static void PrintList(Node head) {
@@ -75,4 +87,45 @@ public class _1 {
         temp.next = null;
         return head;
     }
+
+    public static Node insertAtPosition(int pos, int x, Node head) {
+        if (pos <= 0) {
+            System.out.println("Invalid position");
+            return head;
+        }
+
+        if (pos == 1) {
+            head = insertAtHead(x, head);
+            return head;
+        }
+
+        Node temp = new Node(x);
+        Node curr = head;
+
+        for (int i = 1; i <= pos - 2 && curr != null; i++) {
+            curr = curr.next;
+        }
+
+        if (curr == null) {
+            System.out.println("Position exceeds the length of the list. Inserting at the end.");
+            return insertAtTail(x, head);
+        }
+
+        temp.next = curr.next;
+        curr.next = temp;
+        return head;
+    }
+    public static int search(int x,Node head){
+        int pos=0;
+        if(head==null) return -1;
+        Node curr=head;
+        while (curr!=null) {
+            if(curr.data==x)
+            return pos;
+            curr=curr.next;
+            pos++;
+        }
+        return -1;
+    }
+
 }

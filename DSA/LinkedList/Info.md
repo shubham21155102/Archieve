@@ -367,6 +367,7 @@ Node *deleteAtTail(Node *head)
   return head;
 }
 ```
+
 ```java
  public static Node deleteAtTail(Node head) {
         if (head == null)
@@ -382,3 +383,91 @@ Node *deleteAtTail(Node *head)
 ```
 
 ## Insert At Given Position
+
+```cpp
+Node *insertAtPosition(int x, int pos, Node *head)
+{
+  if (pos == 1)
+  {
+    head = insertAtHead(head, x);
+    return head;
+  }
+  Node *temp = new Node(x);
+  Node *curr = head;
+  for (int i = 1; i <= pos - 2 && head != nullptr; i++)
+    curr = curr->next;
+  if (curr == nullptr)
+  {
+    cout << "out of range you are saying to insert so inserting at tail"
+         << "\n";
+    head = insertAtTail(head, x);
+    return head;
+  }
+  temp->next=curr->next;
+  curr->next=temp;
+  return head;
+}
+```
+
+```java
+ public static Node insertAtPosition(int pos, int x, Node head) {
+        if (pos <= 0) {
+            System.out.println("Invalid position");
+            return head;
+        }
+
+        if (pos == 1) {
+            head = insertAtHead(x, head);
+            return head;
+        }
+
+        Node temp = new Node(x);
+        Node curr = head;
+
+        for (int i = 1; i <= pos - 2 && curr != null; i++) {
+            curr = curr.next;
+        }
+
+        if (curr == null) {
+            System.out.println("Position exceeds the length of the list. Inserting at the end.");
+            return insertAtTail(x, head);
+        }
+
+        temp.next = curr.next;
+        curr.next = temp;
+        return head;
+    }
+```
+
+## Search A Node
+
+```cpp
+int search(int x,Node *head){
+  int pos=1;
+  if(head==nullptr) return -1;
+  Node* curr=head;
+  while(curr!=nullptr){
+    if(curr->data==x) return pos;
+    curr=curr->next;
+    pos++;
+  }
+  return -1;
+}
+```
+
+```java
+ public static int search(int x,Node head){
+        int pos=0;
+        if(head==null) return -1;
+        Node curr=head;
+        while (curr!=null) {
+            if(curr.data==x)
+            return pos;
+            curr=curr.next;
+            pos++;
+        }
+        return -1;
+    }
+```
+
+# Doubly Linked List
