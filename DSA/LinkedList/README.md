@@ -618,3 +618,123 @@ public static Node_DLL insertAtTail(int x, Node_DLL head) {
         return head;
     }
 ```
+
+## Delete At Head
+
+```cpp
+Node* deleteHead(Node* head){
+  if(head == nullptr){
+    return nullptr;
+  }
+  if(head->next == nullptr){
+    delete head;
+    return nullptr;
+  }
+  Node* temp = head;
+  head = head->next;
+  head->prev = nullptr;
+  delete temp;
+  return head;
+}
+```
+
+```java
+   public static Node_DLL deleteHead(Node_DLL head) {
+        if (head == null)
+            return null;
+        if (head.next == null)
+            return null;
+        head = head.next;
+        head.prev = null;
+        return head;
+    }
+```
+
+## Reverse Doubly Linked List
+
+```cpp
+Node *reverseDLL(Node *head)
+{
+  if (head == nullptr || head->next == nullptr)
+  {
+    return head;
+  }
+
+  Node *curr = head;
+  Node *temp = nullptr;
+
+  while (curr != nullptr)
+  {
+    temp = curr->prev;
+    curr->prev = curr->next;
+    curr->next = temp;
+    curr = curr->prev;
+  }
+
+  if (temp != nullptr)
+  {
+    head = temp->prev;
+  }
+
+  return head;
+}
+```
+
+```java
+    public static Node_DLL reverseDLL(Node_DLL head) {
+        if (head == null)
+            return null;
+        if (head.next == null)
+            return head;
+        Node_DLL curr = head;
+        Node_DLL prev = null;
+        while (curr != null) {
+            prev = curr.prev;
+            curr.prev = curr.next;
+            curr.next = prev;
+            curr = curr.prev;
+        }
+        return prev.prev;
+    }
+```
+
+## Delete At Tail
+
+```cpp
+Node* deleteTail(Node* head){
+  if(head == nullptr){
+    return nullptr;
+  }
+  if(head->next == nullptr){
+    delete head;
+    return nullptr;
+  }
+  Node* trav = head;
+  while(trav->next != nullptr){
+    trav = trav->next;
+  }
+  trav->prev->next = nullptr;
+  delete trav;
+  return head;
+}
+```
+
+```java
+public static Node_DLL deleteAtTail(Node_DLL head) {
+        if (head == null)
+            return null;
+        if (head.next == null)
+            return null;
+        Node_DLL curr = head;
+        while (curr.next != null) {
+            curr = curr.next;
+        }
+        curr.prev.next = null;
+        return head;
+    }
+
+```
+
+# Circular Linked List
+
+## Implementation

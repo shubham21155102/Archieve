@@ -22,15 +22,38 @@ public class DoublyLinkedList {
             trav2 = trav2.next;
         }
         System.out.println();
-        head=insertAtTail(12, head);
-        head=insertAtTail(22, head);
-        head=insertAtTail(13, head);
-        head=insertAtTail(42, head);
+        head = insertAtTail(12, head);
+        head = insertAtTail(22, head);
+        head = insertAtTail(13, head);
+        head = insertAtTail(42, head);
+        head = insertAtTail(52, head);
         Node_DLL trav3 = head;
         while (trav3 != null) {
             System.out.print(trav3.data + " ");
             trav3 = trav3.next;
         }
+        System.out.println();
+        head = reverseDLL(head);
+        Node_DLL trav4 = head;
+        while (trav4 != null) {
+            System.out.print(trav4.data + " ");
+            trav4 = trav4.next;
+        }
+        System.out.println();
+        head = deleteHead(head);
+        Node_DLL trav5 = head;
+        while (trav5 != null) {
+            System.out.print(trav5.data + " ");
+            trav5 = trav5.next;
+        }
+        System.out.println();
+        head = deleteAtTail(head);
+        Node_DLL trav6 = head;
+        while (trav6 != null) {
+            System.out.print(trav6.data + " ");
+            trav6 = trav6.next;
+        }
+        
 
     }
 
@@ -48,16 +71,52 @@ public class DoublyLinkedList {
         if (head == null)
             return temp;
         if (head.next == null) {
-            head.next=temp;
-            temp.prev=head;
+            head.next = temp;
+            temp.prev = head;
             return head;
         }
-        Node_DLL curr=head;
-        while(curr.next!=null){
-            curr=curr.next;
+        Node_DLL curr = head;
+        while (curr.next != null) {
+            curr = curr.next;
         }
-        curr.next=temp;
-        temp.prev=curr;
+        curr.next = temp;
+        temp.prev = curr;
+        return head;
+    }
+    public static Node_DLL reverseDLL(Node_DLL head) {
+        if (head == null)
+            return null;
+        if (head.next == null)
+            return head;
+        Node_DLL curr = head;
+        Node_DLL prev = null;
+        while (curr != null) {
+            prev = curr.prev;
+            curr.prev = curr.next;
+            curr.next = prev;
+            curr = curr.prev;
+        }
+        return prev.prev;
+    }
+    public static Node_DLL deleteHead(Node_DLL head) {
+        if (head == null)
+            return null;
+        if (head.next == null)
+            return null;
+        head = head.next;
+        head.prev = null;
+        return head;
+    }
+    public static Node_DLL deleteAtTail(Node_DLL head) {
+        if (head == null)
+            return null;
+        if (head.next == null)
+            return null;
+        Node_DLL curr = head;
+        while (curr.next != null) {
+            curr = curr.next;
+        }
+        curr.prev.next = null;
         return head;
     }
 }
