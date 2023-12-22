@@ -472,6 +472,22 @@ int search(int x,Node *head){
 
 # Doubly Linked List
 
+## Why DLL over SLL
+
+- Can be traversed in both direction
+- previously in sll we were only traversing in only one direction
+- as example we can take the example of web page we go forward and sometime want to go back
+- deleting a node O(1) time
+- can insert and delete before a given node
+- insert/delete both ends in O(1)
+
+**Disadvantages**
+
+- Extra Space
+- code becomes more complex
+
+## Implementations
+
 ```cpp
 #include <iostream>
 using namespace std;
@@ -501,20 +517,6 @@ int main(){
     return 0;
 }
 ```
-
-## Why DLL over SLL
-
-- Can be traversed in both direction
-- previously in sll we were only traversing in only one direction
-- as example we can take the example of web page we go forward and sometime want to go back
-- deleting a node O(1) time
-- can insert and delete before a given node
-- insert/delete both ends in O(1)
-
-**Disadvantages**
-
-- Extra Space
-- code becomes more complex
 
 ```java
 package DSA.LinkedList.java;
@@ -553,4 +555,66 @@ public class DoublyLinkedList {
   
 }
 
+```
+
+## Insert At Head
+
+```cpp
+Node *insertAtHead(Node* head,int x){
+    Node* temp=new Node(x);
+    temp->next=head;
+    if(head!=nullptr){
+        head->prev=temp;
+    }
+    return temp;
+}
+```
+
+```java
+ public static Node_DLL insertAtHead(int x, Node_DLL head) {
+        if (head == null)
+            return new Node_DLL(x);
+        Node_DLL temp = new Node_DLL(x);
+        temp.next = head;
+        head.prev = temp;
+        return temp;
+    }
+```
+
+## Insert At Tail
+
+```cpp
+Node *insertAtTail(Node* head,int x){
+    Node* temp=new Node(x);
+    if(head==nullptr){
+        return temp;
+    }
+    Node* trav=head;
+    while(trav->next!=nullptr){
+        trav=trav->next;
+    }
+    trav->next=temp;
+    temp->prev=trav;
+    return head;
+}
+```
+
+```java
+public static Node_DLL insertAtTail(int x, Node_DLL head) {
+        Node_DLL temp = new Node_DLL(x);
+        if (head == null)
+            return temp;
+        if (head.next == null) {
+            head.next=temp;
+            temp.prev=head;
+            return head;
+        }
+        Node_DLL curr=head;
+        while(curr.next!=null){
+            curr=curr.next;
+        }
+        curr.next=temp;
+        temp.prev=curr;
+        return head;
+    }
 ```
