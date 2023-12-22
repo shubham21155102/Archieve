@@ -471,3 +471,86 @@ int search(int x,Node *head){
 ```
 
 # Doubly Linked List
+
+```cpp
+#include <iostream>
+using namespace std;
+struct Node{
+  int data;
+  Node* prev;
+  Node* next;
+  Node(int x){
+    this->data=x;
+    prev=nullptr;
+    next=nullptr;
+  }
+};
+int main(){
+    Node *head=new Node(56);
+    Node* temp1=new Node(34);
+    Node* temp2=new Node(45);
+    head->next=temp1;
+    temp1->prev=head;
+    temp1->next=temp2;
+    temp2->prev=temp1;
+    Node* trav1=head;
+    while(trav1!=nullptr){
+        cout<<trav1->data<<" ";
+        trav1=trav1->next;
+    }
+    return 0;
+}
+```
+
+## Why DLL over SLL
+
+- Can be traversed in both direction
+- previously in sll we were only traversing in only one direction
+- as example we can take the example of web page we go forward and sometime want to go back
+- deleting a node O(1) time
+- can insert and delete before a given node
+- insert/delete both ends in O(1)
+
+**Disadvantages**
+
+- Extra Space
+- code becomes more complex
+
+```java
+package DSA.LinkedList.java;
+
+public class Node_DLL {
+    public int data;
+    public Node_DLL prev;
+    public Node_DLL next;
+    Node_DLL(int x){
+        this.data=x;
+        this.prev=null;
+        this.next=null;
+    }
+}
+
+```
+
+```java
+package DSA.LinkedList.java;
+
+public class DoublyLinkedList {
+   public static void main(String[] args) {
+     Node_DLL head=new Node_DLL(12);
+    Node_DLL temp1=new Node_DLL(34);
+    Node_DLL temp2=new Node_DLL(8);
+    head.next=temp1;
+    temp1.prev=head;
+    temp1.next=temp2;
+    temp2.prev=temp1;
+    Node_DLL trav1=head;
+    while(trav1!=null){
+        System.out.print(trav1.data+" ");
+        trav1=trav1.next;
+    }
+   }
+  
+}
+
+```

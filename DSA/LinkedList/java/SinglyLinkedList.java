@@ -1,6 +1,6 @@
 package DSA.LinkedList.java;
 
-public class _1 {
+public class SinglyLinkedList {
     public static void main(String[] args) {
         Node ll = new Node(10);
         Node temp1 = new Node(5);
