@@ -95,7 +95,25 @@
 
 <body>
     <center>
-        <h1>Linked List</h1>
+        <marquee>
+            <span style="color: tomato;">Linked List</span>
+            <span style="color: tomato;">Linked List</span>
+            <span style="color: tomato;">Linked List</span> <span style="color: rgb(31, 60, 34);">Linked List</span>
+            <span style="color: tomato;">Linked List</span> <span style="color: rgb(255, 181, 71);">Linked List</span>
+            <span style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span> <span
+                style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span> <span
+                style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span> <span
+                style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span> <span
+                style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span> <span
+                style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span> <span
+                style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span> <span
+                style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span> <span
+                style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span> <span
+                style="color: tomato;">Linked List</span> <span style="color: tomato;">Linked List</span>
+        </marquee>
+
+
+        <p style="font-size: xx-large; font-weight: 500;">Linked List</p>
     </center>
     <div id="app">
         <p id="members"></p>
@@ -120,10 +138,24 @@
         </form>
         <br>
         <form id="inputForm5">
+            <button type="button" id="addRandomAtHeadButton">Add Random At Head</button>
+        </form>
+        <br>
+        <form id="inputForm6">
+            <button type="button" id="addRandomAtTailButton">Add Random At Tail</button>
+        </form>
+        <br>
+        <form id="inputForm7">
             <input type="number" placeholder="Enter a number" id="nodeValue3">
             <input type="number" placeholder="Enter the position" id="position1">
             <button type="button" id="addAtPositionButton">Insert at Position</button>
         </form>
+        <br>
+        <form id="inputForm8">
+            <input type="number" placeholder="Enter a number" id="nodeValue4">
+            <button type="button" id="searchButton">Search</button>
+        </form>
+
     </div>
 
     <script>
@@ -181,6 +213,44 @@
         inputForm1.addEventListener('submit', function (event) {
             event.preventDefault();
         });
+        function addRandomAtHead(event) {
+            event.preventDefault();
+            var x = Math.random();
+            x = parseInt(x * 1000);
+            const newNode = new Node(x);
+            newNode.next = head;
+            head = newNode;
+            members.innerHTML = "";
+            printList(head);
+        }
+        const addRandomAtHeadButton = document.getElementById('addRandomAtHeadButton');
+        addRandomAtHeadButton.addEventListener('click', addRandomAtHead);
+        const inputForm6 = document.getElementById('inputForm6');
+        inputForm6.addEventListener('submit', function (event) {
+            event.preventDefault();
+        });
+        function addRandomAtTail(event) {
+            event.preventDefault();
+            var x = Math.random();
+            x = parseInt(x * 1000);
+            const newNode = new Node(x);
+            if (head === null) {
+                head = newNode;
+            } else {
+                var temp = head;
+                while (temp.next != null) temp = temp.next;
+                temp.next = newNode;
+            }
+            members.innerHTML = "";
+            printList(head);
+        }
+        const addRandomAtTailButton = document.getElementById('addRandomAtTailButton');
+        addRandomAtTailButton.addEventListener('click', addRandomAtTail);
+        const inputForm7 = document.getElementById('inputForm7');
+        inputForm7.addEventListener('submit', function (event) {
+            event.preventDefault();
+        });
+
         function addToTail(event) {
             event.preventDefault();
             const nodeValue = document.getElementById('nodeValue2').value;
@@ -283,7 +353,36 @@
         inputForm5.addEventListener('submit', function (event) {
             event.preventDefault();
         });
-
+        function Search(event) {
+            event.preventDefault();
+            if (head === null) {
+                alert("Given Linked List is Empty");
+                return;
+            }
+            var temp = head;
+            var nodeSearch = document.getElementById("nodeValue4").value;
+            nodeSearch = parseInt(nodeSearch);
+            console.log(nodeSearch)
+            let pos = 1;
+            while (temp !== null) {
+                if (temp.data === nodeSearch) {
+                    alert("Congratulations you got the Number at " + pos + " position");
+                    return;
+                }
+                else {
+                    temp = temp.next;
+                    pos = pos + 1;
+                }
+            }
+            alert("Uff number is not present");
+            return;
+        }
+        const searchButton = document.getElementById("searchButton");
+        searchButton.addEventListener('click', Search);
+        const inputForm8 = document.getElementById("inputForm8");
+        inputForm8.addEventListener('submit', function (event) {
+            event.preventDefault();
+        })
         printList(head);
     </script>
 </body>
