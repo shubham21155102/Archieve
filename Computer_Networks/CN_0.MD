@@ -403,6 +403,7 @@
   BUSH-->A
   ```
 - **TREE TOPOLOGY**
+
   - Combination of **STAR** and **BUS** topology
   - all the nodes are connected to a central device called **HUB**
   - **HUB** is connected to another **HUB** via cable
@@ -417,61 +418,62 @@
     - If cable fail then total network fail
     - If hub fail then total network fail
     - If any node fail then total network fail
-   ```mermaid
-    graph LR;
-    A[Computer]-->B[Computer]
-    B--BUS-->C
-    C--BUS-->D
-    A-->C[Computer]
-    A-->D[Computer]
-    B-->E[Computer]
-    B-->F[Computer]
-    C-->G[Computer]
-    C-->H[Computer]
-    D-->I[Computer]
-    D-->J[Computer]
-    E-->K[Computer]
-    E-->L[Computer]
-    F-->M[Computer]
-    F-->N[Computer]
-    G-->O[Computer]
-    G-->P[Computer]
-    H-->Q[Computer]
-    H-->R[Computer]
-    I-->S[Computer]
-    I-->T[Computer]
-    J-->U[Computer]
-    J-->V[Computer]
-    K-->W[Computer]
-    K-->X[Computer]
-    L-->Y[Computer]
-    L-->Z[Computer]
-    ```
-    ```mermaid
-    graph LR;
-    A[Computer]-->B[Computer]
-    A-->C[Computer]
-    A-->D[Computer]
-    B-->E[Computer]
-    B-->F[Computer]
-    C-->G[Computer]
-    C-->H[Computer]
-    D-->I[Computer]
-    D-->J[Computer]
-    E-->K[Computer]
-    E-->L[Computer]
-    F-->M[Computer]
-    F-->N[Computer]
-    G-->O[Computer]
-    G-->P[Computer]
-    H-->Q[Computer]
-    H-->R[Computer]
-    I-->S[Computer]
-    I-->T[Computer]
-    J-->U[Computer]
-    J-->V[Computer]
-    K-->W[Computer]
-    K-->X[Computer]
-    L-->Y[Computer]
-    L-->Z[Computer]
-    ```
+
+  ```mermaid
+   graph LR;
+   A[Computer]-->B[Computer]
+   B--BUS-->C
+   C--BUS-->D
+   A-->C[Computer]
+   A-->D[Computer]
+   B-->E[Computer]
+   B-->F[Computer]
+   C-->G[Computer]
+   C-->H[Computer]
+   D-->I[Computer]
+   D-->J[Computer]
+   E-->K[Computer]
+   E-->L[Computer]
+   F-->M[Computer]
+   F-->N[Computer]
+   G-->O[Computer]
+   G-->P[Computer]
+   H-->Q[Computer]
+   H-->R[Computer]
+   I-->S[Computer]
+   I-->T[Computer]
+   J-->U[Computer]
+   J-->V[Computer]
+   K-->W[Computer]
+   K-->X[Computer]
+   L-->Y[Computer]
+   L-->Z[Computer]
+  ```
+  ```mermaid
+  graph LR;
+  A[Computer]-->B[Computer]
+  A-->C[Computer]
+  A-->D[Computer]
+  B-->E[Computer]
+  B-->F[Computer]
+  C-->G[Computer]
+  C-->H[Computer]
+  D-->I[Computer]
+  D-->J[Computer]
+  E-->K[Computer]
+  E-->L[Computer]
+  F-->M[Computer]
+  F-->N[Computer]
+  G-->O[Computer]
+  G-->P[Computer]
+  H-->Q[Computer]
+  H-->R[Computer]
+  I-->S[Computer]
+  I-->T[Computer]
+  J-->U[Computer]
+  J-->V[Computer]
+  K-->W[Computer]
+  K-->X[Computer]
+  L-->Y[Computer]
+  L-->Z[Computer]
+  ```
