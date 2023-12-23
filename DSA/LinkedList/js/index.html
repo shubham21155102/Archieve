@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Linked List</title>
@@ -46,6 +47,7 @@
         button:hover {
             background-color: #0056b3;
         }
+
         .list-container {
             display: flex;
             justify-content: center;
@@ -81,11 +83,14 @@
             border-radius: 5px;
             background-color: #f9f9f9;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-
+            overflow-x: auto;
             transform: translateY(-2px);
-
+            white-space: nowrap;
+            margin-bottom: 20px;
         }
     </style>
+    <link rel="icon" href="https://www.shubhamiitbhu.in/_next/image?url=%2Fshubham.jpg&w=640&q=75">
+
 </head>
 
 <body>
@@ -114,6 +119,11 @@
             <button type="button" id="deleteFromTailButton">delete From Tail</button>
         </form>
         <br>
+        <form id="inputForm5">
+            <input type="number" placeholder="Enter a number" id="nodeValue3">
+            <input type="number" placeholder="Enter the position" id="position1">
+            <button type="button" id="addAtPositionButton">Insert at Position</button>
+        </form>
     </div>
 
     <script>
@@ -125,11 +135,11 @@
         }
 
         var x = Math.random();
-        x=parseInt(x*1000);
+        x = parseInt(x * 1000);
         var head = new Node(x);
-        head.next=new Node(parseInt(1000*Math.random()));
-        head.next.next=new Node(parseInt(1000*Math.random()));
-        head.next.next.next=new Node(parseInt(1000*Math.random()));
+        head.next = new Node(parseInt(1000 * Math.random()));
+        head.next.next = new Node(parseInt(1000 * Math.random()));
+        head.next.next.next = new Node(parseInt(1000 * Math.random()));
 
 
 
