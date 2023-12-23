@@ -514,9 +514,9 @@ A--1-->B
 A--0-->B
 </pre>
 <pre class='mermaid'>graph LR;
-A[Sender]--0--1--0--1--1-->B[Receiver]
-A--Series-->B
-</pre>
+	A[Sender]-->D[0-1-0-1-1]-->B[Receiver]
+	A--Series-->B
+	</pre>
 <pre class='mermaid'>graph LR;
 A[Sender]-->C[1 0 1 1 0]-->D[1 0 1 1 1]-->E[1 0 0 1 1]-->B[Receiver]
 A--Series:Synchronous-->B
