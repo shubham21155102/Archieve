@@ -242,6 +242,47 @@
         inputForm4.addEventListener('submit', function (event) {
             event.preventDefault();
         })
+        function addAtPosition(event) {
+            event.preventDefault();
+            const nodeValue = document.getElementById('nodeValue3').value;
+            const position = document.getElementById('position1').value;
+
+            if (nodeValue === "" || isNaN(position) || position < 1) return;
+
+            if (position === 1) {
+                addToHead(event);
+                return;
+            }
+
+            let temp = head;
+            const newNode = new Node(parseInt(nodeValue, 10));
+
+            for (let i = 1; i < position - 1 && temp !== null; i++) {
+                temp = temp.next;
+            }
+
+            if (temp === null) {
+                temp = head;
+                while (temp.next !== null) {
+                    temp = temp.next;
+                }
+                temp.next = newNode;
+            } else {
+                newNode.next = temp.next;
+                temp.next = newNode;
+            }
+
+            members.innerHTML = "";
+            printList(head);
+        }
+
+        const addAtPositionButton = document.getElementById('addAtPositionButton');
+        addAtPositionButton.addEventListener('click', addAtPosition);
+
+        const inputForm5 = document.getElementById('inputForm5');
+        inputForm5.addEventListener('submit', function (event) {
+            event.preventDefault();
+        });
 
         printList(head);
     </script>
