@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Linked List</title>
+    <style>
+        body,
+        h1,
+        form {
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .input-form {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style for the linked list display */
+        .list-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .linked-list {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+
+        .node {
+            display: inline-block;
+            width: fit-content;
+            min-width: 150px;
+            height: 40px;
+            border-radius: 5%;
+            background-color: blue;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+        }
+
+        #members {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+            transform: translateY(-2px);
+
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h1>Linked List</h1>
+    </center>
+    <div id="app">
+        <p id="members"></p>
+        <form id="inputForm1">
+            <input type="number" placeholder="Enter a number" id="nodeValue1">
+            <button type="button" id="addToHeadButton">Add to Head</button>
+
+        </form>
+        <br>
+        <form id="inputForm2">
+            <input type="number" placeholder="Enter a number" id="nodeValue2">
+            <button type="button" id="addToTailButton">Add to Tail</button>
+
+        </form>
+        <br>
+        <form id="inputForm3">
+            <button type="button" id="deleteFromHeadButton">delete From Head</button>
+        </form>
+        <br>
+        <form id="inputForm4">
+            <button type="button" id="deleteFromTailButton">delete From Tail</button>
+        </form>
+        <br>
+    </div>
+
+    <script>
+        class Node {
+            constructor(data, next = null) {
+                this.data = data;
+                this.next = next;
+            }
+        }
+
+        var x = Math.random();
+        x=parseInt(x*1000);
+        var head = new Node(x);
+        head.next=new Node(parseInt(1000*Math.random()));
+        head.next.next=new Node(parseInt(1000*Math.random()));
+        head.next.next.next=new Node(parseInt(1000*Math.random()));
+
+
+
+        const members = document.getElementById('members');
+        function printList(head) {
+            var curr = head;
+            const members = document.getElementById('members');
+
+            while (curr !== null) {
+                const nodeElement = document.createElement('span');
+                nodeElement.textContent = curr.data;
+                nodeElement.classList.add('node');
+                members.appendChild(nodeElement);
+                if (curr.next !== null) {
+                    const arrowElement = document.createElement('span');
+                    arrowElement.textContent = '--->';
+                    members.appendChild(arrowElement);
+                }
+
+                curr = curr.next;
+            }
+        }
+
+        function addToHead(event) {
+            event.preventDefault();
+            const nodeValue = document.getElementById('nodeValue1').value;
+            if (nodeValue === "") {
+                return;
+            }
+            const newNode = new Node(parseInt(nodeValue));
+            newNode.next = head;
+            head = newNode;
+            members.innerHTML = "";
+            printList(head);
+        }
+        const addToHeadButton = document.getElementById('addToHeadButton');
+        addToHeadButton.addEventListener('click', addToHead);
+        const inputForm1 = document.getElementById('inputForm1');
+        inputForm1.addEventListener('submit', function (event) {
+            event.preventDefault();
+        });
+        function addToTail(event) {
+            event.preventDefault();
+            const nodeValue = document.getElementById('nodeValue2').value;
+
+            if (nodeValue === "") return;
+
+            const newNode = new Node(parseInt(nodeValue, 10));
+
+            if (head === null) {
+                head = newNode;
+            } else {
+                var temp = head;
+                while (temp.next != null) temp = temp.next;
+                temp.next = newNode;
+            }
+
+            members.innerHTML = "";
+            printList(head);
+        }
+
+        const addToTailButton = document.getElementById('addToTailButton');
+        addToTailButton.addEventListener('click', addToTail);
+        const inputForm2 = document.getElementById('inputForm2');
+        inputForm2.addEventListener('submit', function (event) {
+            event.preventDefault();
+        })
+        function deleteFromHead(event) {
+            event.preventDefault();
+            if (head === null) return;
+            head = head.next;
+            members.innerHTML = ""
+            printList(head);
+        }
+        const deleteFromHeadButton = document.getElementById('deleteFromHeadButton');
+        deleteFromHeadButton.addEventListener('click', deleteFromHead);
+        const inputForm3 = document.getElementById('inputForm3');
+        inputForm3.addEventListener('submit', function (event) {
+            event.preventDefault();
+        })
+        function deleteFromTail(event) {
+            event.preventDefault();
+            if (head === null) return;
+
+            if (head.next === null) {
+                head = null;
+            } else {
+                var temp = head;
+                while (temp.next.next !== null) {
+                    temp = temp.next;
+                }
+                temp.next = null;
+            }
+            members.innerHTML = "";
+            printList(head);
+        }
+        const deleteFromTailButton = document.getElementById('deleteFromTailButton');
+        deleteFromTailButton.addEventListener('click', deleteFromTail);
+        const inputForm4 = document.getElementById('inputForm4');
+        inputForm4.addEventListener('submit', function (event) {
+            event.preventDefault();
+        })
+        
+        printList(head);
+    </script>
+</body>
+
+</html>

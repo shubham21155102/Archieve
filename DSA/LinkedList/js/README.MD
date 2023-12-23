@@ -28,7 +28,7 @@ const printList = (head) => {
     }
 }
 ```
-
+## Output of next pointer 
 ```plaintext
 In JavaScript, when we log an object (like a Node in our case) to the console, it displays the object's properties and their values. The next property in each node points to the next node in the linked list or null if it's the end of the list.
 
