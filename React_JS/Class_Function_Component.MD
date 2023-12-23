@@ -1,8 +1,12 @@
+[
+]()
+
 # Class Components
 
 - Stateful Components
 - **Class components have a state and can implement lifecycle methods like componentDidMount and componentDidUpdate**
 - **Class components can maintain their own internal state and, optionally, update it**
+
 ```js
 class Car extends React.Component {
       render() {
@@ -10,6 +14,7 @@ class Car extends React.Component {
       }
 }
 ```
+
 ```js
 import React, { Component } from "react"; 
 
@@ -46,11 +51,12 @@ export default ClassComponent;
 # Functional Components
 
 - Stateless Components
+
 ```js
   const Car=()=> {
         return <h2>Hi, I am also a Car!</h2>;
   }
-  ```
+```
 
 ```js
   import React, { useState } from "react"; 

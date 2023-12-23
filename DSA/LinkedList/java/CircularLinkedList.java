@@ -8,6 +8,8 @@ public class CircularLinkedList {
         head.next = temp1;
         temp1.next = temp2;
         temp2.next = head;
+        head = insertAtHead(12, head);
+        head = insertAtTail(23, head);
         Node trav = head;
         do {
             System.out.print(trav.data + " ");
@@ -28,17 +30,39 @@ public class CircularLinkedList {
     public static Node insertAtHead(int x, Node head) {
         Node temp = new Node(x);
         if (head == null) {
-            temp.next = temp; 
+            temp.next = temp;
             return temp;
         } else {
             temp.next = head;
             Node curr = head;
-            while (curr.next != head) {
+            while (curr.next != head)
                 curr = curr.next;
-            }
             curr.next = temp;
-            return temp; 
         }
+        return temp;
     }
 
+    public static Node insertAtTail(int x, Node head) {
+        Node temp = new Node(x);
+        if (head == null) {
+            temp.next = temp;
+            return temp;
+
+        }
+        if (head.next == head) {
+            head.next = temp;
+            temp.next = head;
+            return head;
+        }
+        Node curr = head;
+        while (curr.next != head)
+            curr = curr.next;
+        curr.next = temp;
+        temp.next = head;
+        return head;
+    }
+    // public static Node deleteHead(Node head){
+    //       if(head==null || head.next==head) return null;
+
+    // }
 }
