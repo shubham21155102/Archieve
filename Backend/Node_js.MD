@@ -1,6 +1,6 @@
 ```mermaid
 graph TD;
-X("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100%' />")
+X("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100%'/>")
 ```
 
 # What is Node JS
@@ -61,7 +61,7 @@ T3--res<br>3sec-->C3
 C4--req-->T4
 T4--res<br>3sec-->C4
 subgraph Languages
-X("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/java.png'; width='30' />")
+X["<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/java.png'; width='30' /> Java"]
 Y("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/php.png'; width='30' />")
 end
 ```
@@ -274,4 +274,166 @@ var readStream = fs.createReadStream('input.txt');
 var writeStream = fs.createWriteStream('input.txt.gz');
 readStream.pipe(gzip).pipe(writeStream);
 console.log("File Compressed.");
+```
+
+# Process Model of Node JS
+
+```mermaid
+graph LR;
+C[Client]--HTTP-->S[Node js Server]
+C--HTTP-->S
+C--HTTP-->S
+C--HTTP-->S
+C--HTTP-->S
+C--HTTP-->S
+subgraph Workers
+X[R1 <br> for req1]
+R2
+R3
+R4
+R5
+end
+S-->R1
+S-->R2
+S-->R3
+S-->R4
+S-->R5
+```
+
+# Globals
+
+- Def: Global objects are global in nature and they are available in all modules. We do not need to include these objects in our application, rather we can use them directly. These objects are modules, functions, strings and object itself as explained below.
+
+## When to use Node js and when not to use Node js
+
+- Node js is not good for CPU intensive applications
+- Node js is good for I/O intensive applications
+- Node js is not good for heavy computation
+- Node js is good for real time applications
+- in Chat Application Node js is good
+- in Video Encoding Node js is not good
+- in Image Processing Node js is not good
+- in Machine Learning Node js is not good
+- in Data Science Node js is not good
+- in Web Scraping Node js is good
+- in Web Crawling Node js is good
+- in Web Server Node js is good
+- in Web Socket Node js is good
+- in Micro Services Node js is good
+- in Rest Api Node js is good
+- in CRUD Application Node js is good
+- in Single Page Application Node js is good
+- in Multi Page Application Node js is good
+- in Web Application Node js is good
+- in Desktop Application Node js is good
+- in Mobile Application Node js is good
+- in IOT Application Node js is good
+- in Embedded System Node js is good
+
+## setImmediate vs setTimeout vs process.nextTick
+
+```js
+console.log("Start");
+setTimeout(() => {
+    console.log("Set Timeout");
+}, 0);
+setImmediate(() => {
+    console.log("Set Immediate");
+});
+process.nextTick(() => {
+    console.log("Process Next Tick");
+});
+console.log("End");
+```
+
+```js
+Output
+Start
+End
+Process Next Tick
+Set Timeout
+Set Immediate
+```
+
+- setImmediate --> Check Handelers/ Queue
+- setTimeout --> timer Queue
+
+# Child Process Module
+
+- Def: Child processes always have three streams child.stdin, child.stdout, and child.stderr which may be shared with the stdio streams of the parent process.
+- Basically we can run any command of command line in our system using child process module
+- We used to integrate languages like python, java, c++ with node js using child process module
+
+```js
+const cp=require("child_process");
+cp.execSync("mkdir hello");
+```
+
+```js
+const cp=require("child_process");
+cp.execSync("start chrome");
+```
+
+```js
+const cp=require("child_process");
+cp.execSync("start chrome https://www.google.com");
+```
+
+```js
+const cp=require("child_process");
+cp.execSync("start chrome https://www.google.com");
+```
+
+# Event Emitter
+
+- Def: Node.js core API is built around an idiomatic asynchronous event-driven architecture in which certain kinds of objects (called "emitters") emit named events that cause Function objects ("listeners") to be called.
+- Node js is event driven architecture
+- Node js is single threaded
+- Node js is non blocking I/O
+
+```js
+const EventEmitter=require("events");
+const event=new EventEmitter();
+event.on("sayMyName",()=>{
+    console.log("Your name is Shubham");
+});
+event.on("sayMyName",()=>{
+    console.log("Your name is Shubham Patel");
+});
+event.on("sayMyName",()=>{
+    console.log("Your name is Shubham Patel and you are a web developer");
+});
+event.emit("sayMyName");
+```
+
+```js
+Output
+Your name is Shubham
+Your name is Shubham Patel
+Your name is Shubham Patel and you are a web developer
+```
+
+# PolyFill of Event Emitter
+
+```js
+  class EventEmitter {
+    constructor() {
+      this.events = {};
+    }
+    on(eventName, callback) {
+      if (this.events[eventName]) {
+        this.events[eventName].push(callback);
+      } else {
+        this.events[eventName] = [callback];
+      }
+    }
+    emit(eventName) {
+      if (this.events[eventName]) {
+        this.events[eventName].forEach((callback) => {
+          callback();
+        });
+      }
+    }
+  }
+  module.exports = EventEmitter;
 ```

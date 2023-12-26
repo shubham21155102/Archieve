@@ -4,7 +4,10 @@
 <head>
 	<title>Node_js.MD</title>
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-
+	<script type="module">
+		import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+	</script>
+	<link rel="icon" href="https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png">
 	<style>
 		/*
 
@@ -1734,9 +1737,10 @@ Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
 
 <body>
 	<div class="content-wrapper">
-		<pre class='hljs'><code><div>graph TD;
-X(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100%' /&gt;&quot;)
-</div></code></pre>
+
+		<center>
+			<img src="https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png" width="50%" />
+		</center>
 		<h1 id="what-is-node-js" tabindex="-1">What is Node JS</h1>
 		<ul>
 			<li>Runtime environment</li>
@@ -1751,17 +1755,17 @@ X(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/
 				Runtime Environment called Node.js that can run on our system. Our index.js js file can communicate with
 				our system.</li>
 		</ul>
-		<pre class='hljs'><code><div>graph TD;
+		<pre class='mermaid'>graph TD;
 A(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/v8.png'; width='30' /&gt;&quot; &lt;br&gt;&lt;br&gt; V8 Engine)--&gt;B[(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100' /&gt;&quot;Node js)]
 C(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/libuv.png'; width='50'  /&gt;&quot; &lt;br&gt;&lt;br&gt; libuv)--&gt;B
-</div></code></pre>
+</pre>
 		<h2 id="threading" tabindex="-1">Threading</h2>
 		<ul>
 			<li>Node js is single threaded run time environment</li>
 			<li>Java Runtime Environment Supports Multi threading</li>
 			<li>so let's understanding how node js executes multiple requests simultaneously</li>
 		</ul>
-		<pre class='hljs'><code><div>graph RL;
+		<pre class='mermaid'>graph RL;
 A[&lt;strong&gt;Single Threaded&lt;/strong&gt;&lt;br&gt;&lt;br&gt;all will wait until.&lt;br&gt; execution of prev &lt;br&gt; completed or not]
 C1--req1--&gt;S[Server]
 S--res1&lt;br&gt;3 sec--&gt;C1
@@ -1771,8 +1775,8 @@ C3--req2--&gt;S
 S--res2&lt;br&gt;9 sec--&gt;C3
 C4--req2--&gt;S
 S--res2&lt;br&gt;9 sec--&gt;C4
-</div></code></pre>
-		<pre class='hljs'><code><div>graph RL
+</pre>
+		<pre class='mermaid'>graph RL
 A[&lt;strong&gt;Multi Threaded&lt;/strong&gt;&lt;br&gt;&lt;br&gt;all requests will excute&lt;br&gt; at same time ]
 C1
 C2
@@ -1793,14 +1797,15 @@ T3--res&lt;br&gt;3sec--&gt;C3
 C4--req--&gt;T4
 T4--res&lt;br&gt;3sec--&gt;C4
 subgraph Languages
-X(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/java.png'; width='30' /&gt;&quot;)
-Y(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/php.png'; width='30' /&gt;&quot;)
+A(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/java.png'; width='30' /&gt;&quot; &lt;br&gt;&lt;br&gt;Java)
+C(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/php.png'; width='50'  /&gt;&quot; &lt;br&gt;&lt;br&gt;Php)
+
 end
-</div></code></pre>
+</pre>
 		<ul>
 			<li>But Node js is Single Threaded so how it is fast</li>
 		</ul>
-		<pre class='hljs'><code><div>graph LR;
+		<pre class='mermaid'>graph LR;
 C1--&gt;S[(Server)]
 C2--&gt;S
 C3--&gt;S
@@ -1816,9 +1821,9 @@ S--&gt;Req2
 S--&gt;Req3
 S--&gt;Req4
 subgraph Environment
-X(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100' /&gt;&quot;)
+C(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='50'  /&gt;&quot; &lt;br&gt;&lt;br&gt;Node JS)
 end
-</div></code></pre>
+</pre>
 		<h2 id="synchronous-vs-asynchronous" tabindex="-1">Synchronous vs Asynchronous</h2>
 		<img src="https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/synasyn.jpg" />
 		<h2 id="libuv" tabindex="-1">libuv</h2>
@@ -1827,6 +1832,313 @@ end
 			<li>make js asynchronous I/O operations</li>
 			<li>Above Async. given by libuv</li>
 		</ul>
+		<pre class='hljs'><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Hii&quot;</span>)
+SetTimeOut(cb)
+Promises
+SetTimeOut
+Promises
+Promises
+Promises
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Bye&quot;</span>)
+</pre>
+<pre class='mermaid'>
+	graph TD;
+A[Call Stack]
+B[Node Api's Browser Api]
+C[Micro Tasks Queue]
+D[Callback Queue]
+</pre>
+		<h3 id="step-1" tabindex="-1">Step 1</h3>
+		<pre class='mermaid'>graph LR;
+subgraph CallStack
+A[Console.log-Hii]
+B[Console.log-Bye]
+end
+</pre>
+		<h3 id="step-2" tabindex="-1">Step 2</h3>
+		<pre class='mermaid'>graph LR;
+subgraph Node API's Browser API
+S1
+P1
+S2
+P2
+P3
+P4
+end
+</pre>
+		<h3 id="step-3" tabindex="-1">Step 3</h3>
+		<pre class='mermaid'>graph TD;
+subgraph CallBack Queue
+S1 
+S2
+end
+subgraph Micro Tasks Queue
+P1
+P2 
+P3
+P4
+end
+</pre>
+		<h3 id="step-4" tabindex="-1">Step 4</h3>
+		<pre class='mermaid'>graph TD;
+subgraph T[CallBack Queue]
+S1 
+S2
+end
+subgraph U[Micro Tasks Queue]
+P1
+P2 
+P3
+P4
+end
+subgraph V[Event Loop]
+X[now it will decide &lt;br&gt;which will executes first &lt;br&gt;vip Micro Tasks Queue &lt;br&gt;will be choosen first]
+P1
+P2 
+P3
+P4
+end
+</pre>
+		<pre class='hljs'>Output
+Hii
+Bye
+P1
+P2
+P3
+P4
+S1
+S2
+</pre>
+		<h2 id="event-loop-and-thread-pool" tabindex="-1">Event Loop and Thread Pool</h2>
+		<img src="https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/eventloop.jpg" />
+		<h2 id="streams" tabindex="-1">Streams</h2>
+		<ul>
+			<li>Data Chunk by Chunk</li>
+		</ul>
+		<h3 id="node-js-streams" tabindex="-1">Node js Streams</h3>
+		<ul>
+			<li>Readable
+				<ul>
+					<li>Read Data from a source</li>
+				</ul>
+			</li>
+			<li>Writable
+				<ul>
+					<li>Write Data to a destination</li>
+				</ul>
+			</li>
+			<li>Duplex
+				<ul>
+					<li>Read and Write Data to a destination</li>
+				</ul>
+			</li>
+			<li>Transform
+				<ul>
+					<li>Read Data from a source and write to a destination</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="strems-by-node-js-fs-module" tabindex="-1">Strems By Node js fs module</h3>
+		<h4 id="readable-stream" tabindex="-1">Readable Stream</h4>
+		<pre class='hljs'><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+<span class="hljs-keyword">let</span> data = <span class="hljs-string">&#x27;&#x27;</span>;
+<span class="hljs-keyword">let</span> readStream = fs.createReadStream(<span class="hljs-string">&#x27;input.txt&#x27;</span>);
+readStream.setEncoding(<span class="hljs-string">&#x27;UTF8&#x27;</span>);
+readStream.on(<span class="hljs-string">&#x27;data&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">chunk</span>) </span>{
+    data += chunk;
+});
+readStream.on(<span class="hljs-string">&#x27;end&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(data);
+});
+readStream.on(<span class="hljs-string">&#x27;error&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(err.stack);
+});
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Program Ended&quot;</span>);
+</pre>
+		<h4 id="writable-stream" tabindex="-1">Writable Stream</h4>
+		<pre class='hljs'><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+<span class="hljs-keyword">let</span> data = <span class="hljs-string">&#x27;Simply Easy Learning&#x27;</span>;
+<span class="hljs-keyword">let</span> writeStream = fs.createWriteStream(<span class="hljs-string">&#x27;output.txt&#x27;</span>);
+writeStream.write(data, <span class="hljs-string">&#x27;UTF8&#x27;</span>);
+writeStream.end();
+writeStream.on(<span class="hljs-string">&#x27;finish&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Write completed.&quot;</span>);
+});
+writeStream.on(<span class="hljs-string">&#x27;error&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(err.stack);
+});
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Program Ended&quot;</span>);
+</pre>
+		<h4 id="piping" tabindex="-1">Piping</h4>
+		<ul>
+			<li>Piping is a mechanism where we provide the output of one stream as the input to another stream.</li>
+		</ul>
+		<pre class='hljs'><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+<span class="hljs-keyword">let</span> readStream = fs.createReadStream(<span class="hljs-string">&#x27;input.txt&#x27;</span>);
+<span class="hljs-keyword">let</span> writeStream = fs.createWriteStream(<span class="hljs-string">&#x27;output.txt&#x27;</span>);
+readStream.pipe(writeStream);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Program Ended&quot;</span>);
+</pre>
+		<h4 id="chaining" tabindex="-1">Chaining</h4>
+		<ul>
+			<li>Chaining is a mechanism to connect the output of one stream to another stream and create a chain of
+				multiple stream operations.</li>
+		</ul>
+		<pre class='hljs'><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
+<span class="hljs-keyword">let</span> zlib = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;zlib&#x27;</span>);
+<span class="hljs-keyword">const</span> gzip = zlib.createGzip();
+<span class="hljs-keyword">var</span> readStream = fs.createReadStream(<span class="hljs-string">&#x27;input.txt&#x27;</span>);
+<span class="hljs-keyword">var</span> writeStream = fs.createWriteStream(<span class="hljs-string">&#x27;input.txt.gz&#x27;</span>);
+readStream.pipe(gzip).pipe(writeStream);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;File Compressed.&quot;</span>);
+</pre>
+		<h1 id="process-model-of-node-js" tabindex="-1">Process Model of Node JS</h1>
+		<pre class='mermaid'>graph LR;
+C[Client]--HTTP--&gt;S[Node js Server]
+C--HTTP--&gt;S
+C--HTTP--&gt;S
+C--HTTP--&gt;S
+C--HTTP--&gt;S
+C--HTTP--&gt;S
+subgraph Workers
+X[R1 &lt;br&gt; for req1]
+R2
+R3
+R4
+R5
+end
+S--&gt;R1
+S--&gt;R2
+S--&gt;R3
+S--&gt;R4
+S--&gt;R5
+</pre>
+		<h1 id="globals" tabindex="-1">Globals</h1>
+		<ul>
+			<li>Def: Global objects are global in nature and they are available in all modules. We do not need to
+				include these objects in our application, rather we can use them directly. These objects are modules,
+				functions, strings and object itself as explained below.</li>
+		</ul>
+		<h2 id="when-to-use-node-js-and-when-not-to-use-node-js" tabindex="-1">When to use Node js and when not to use
+			Node js</h2>
+		<ul>
+			<li>Node js is not good for CPU intensive applications</li>
+			<li>Node js is good for I/O intensive applications</li>
+			<li>Node js is not good for heavy computation</li>
+			<li>Node js is good for real time applications</li>
+			<li>in Chat Application Node js is good</li>
+			<li>in Video Encoding Node js is not good</li>
+			<li>in Image Processing Node js is not good</li>
+			<li>in Machine Learning Node js is not good</li>
+			<li>in Data Science Node js is not good</li>
+			<li>in Web Scraping Node js is good</li>
+			<li>in Web Crawling Node js is good</li>
+			<li>in Web Server Node js is good</li>
+			<li>in Web Socket Node js is good</li>
+			<li>in Micro Services Node js is good</li>
+			<li>in Rest Api Node js is good</li>
+			<li>in CRUD Application Node js is good</li>
+			<li>in Single Page Application Node js is good</li>
+			<li>in Multi Page Application Node js is good</li>
+			<li>in Web Application Node js is good</li>
+			<li>in Desktop Application Node js is good</li>
+			<li>in Mobile Application Node js is good</li>
+			<li>in IOT Application Node js is good</li>
+			<li>in Embedded System Node js is good</li>
+		</ul>
+		<h2 id="setimmediate-vs-settimeout-vs-process.nexttick" tabindex="-1">setImmediate vs setTimeout vs
+			process.nextTick</h2>
+		<pre class='hljs'><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Start&quot;</span>);
+<span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Set Timeout&quot;</span>);
+}, <span class="hljs-number">0</span>);
+setImmediate(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Set Immediate&quot;</span>);
+});
+process.nextTick(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Process Next Tick&quot;</span>);
+});
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;End&quot;</span>);
+</pre>
+		<pre class='hljs'>Output
+Start
+End
+Process Next Tick
+<span class="hljs-built_in">Set</span> Timeout
+<span class="hljs-built_in">Set</span> Immediate
+</pre>
+		<ul>
+			<li>setImmediate --&gt; Check Handelers/ Queue</li>
+			<li>setTimeout --&gt; timer Queue</li>
+		</ul>
+		<h1 id="child-process-module" tabindex="-1">Child Process Module</h1>
+		<ul>
+			<li>Def: Child processes always have three streams child.stdin, child.stdout, and child.stderr which may be
+				shared with the stdio streams of the parent process.</li>
+			<li>Basically we can run any command of command line in our system using child process module</li>
+			<li>We used to integrate languages like python, java, c++ with node js using child process module</li>
+		</ul>
+		<pre class='hljs'><span class="hljs-keyword">const</span> cp=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>);
+cp.execSync(<span class="hljs-string">&quot;mkdir hello&quot;</span>);
+</pre>
+		<pre class='hljs'><span class="hljs-keyword">const</span> cp=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>);
+cp.execSync(<span class="hljs-string">&quot;start chrome&quot;</span>);
+</pre>
+		<pre class='hljs'><span class="hljs-keyword">const</span> cp=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>);
+cp.execSync(<span class="hljs-string">&quot;start chrome https://www.google.com&quot;</span>);
+</pre>
+		<pre class='hljs'><span class="hljs-keyword">const</span> cp=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>);
+cp.execSync(<span class="hljs-string">&quot;start chrome https://www.google.com&quot;</span>);
+</pre>
+		<h1 id="event-emitter" tabindex="-1">Event Emitter</h1>
+		<ul>
+			<li>Def: Node.js core API is built around an idiomatic asynchronous event-driven architecture in which
+				certain kinds of objects (called &quot;emitters&quot;) emit named events that cause Function objects
+				(&quot;listeners&quot;) to be called.</li>
+			<li>Node js is event driven architecture</li>
+			<li>Node js is single threaded</li>
+			<li>Node js is non blocking I/O</li>
+		</ul>
+		<pre class='hljs'><span class="hljs-keyword">const</span> EventEmitter=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;events&quot;</span>);
+<span class="hljs-keyword">const</span> event=<span class="hljs-keyword">new</span> EventEmitter();
+event.on(<span class="hljs-string">&quot;sayMyName&quot;</span>,<span class="hljs-function">()=&gt;</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Your name is Shubham&quot;</span>);
+});
+event.on(<span class="hljs-string">&quot;sayMyName&quot;</span>,<span class="hljs-function">()=&gt;</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Your name is Shubham Patel&quot;</span>);
+});
+event.on(<span class="hljs-string">&quot;sayMyName&quot;</span>,<span class="hljs-function">()=&gt;</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Your name is Shubham Patel and you are a web developer&quot;</span>);
+});
+event.emit(<span class="hljs-string">&quot;sayMyName&quot;</span>);
+</pre>
+		<pre class='hljs'>Output
+Your name is Shubham
+Your name is Shubham Patel
+Your name is Shubham Patel and you are a web developer
+</pre>
+		<h1 id="polyfill-of-event-emitter" tabindex="-1">PolyFill of Event Emitter</h1>
+		<pre class='hljs'>  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventEmitter</span> </span>{
+    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"></span>)</span> {
+      <span class="hljs-built_in">this</span>.events = {};
+    }
+    <span class="hljs-function"><span class="hljs-title">on</span>(<span class="hljs-params">eventName, callback</span>)</span> {
+      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.events[eventName]) {
+        <span class="hljs-built_in">this</span>.events[eventName].push(callback);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">this</span>.events[eventName] = [callback];
+      }
+    }
+    <span class="hljs-function"><span class="hljs-title">emit</span>(<span class="hljs-params">eventName</span>)</span> {
+      <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.events[eventName]) {
+        <span class="hljs-built_in">this</span>.events[eventName].forEach(<span class="hljs-function">(<span class="hljs-params">callback</span>) =&gt;</span> {
+          callback();
+        });
+      }
+    }
+  }
+  <span class="hljs-built_in">module</span>.exports = EventEmitter;
+</pre>
 
 	</div>
 </body>
