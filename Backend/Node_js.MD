@@ -1,7 +1,8 @@
 ```mermaid
 graph TD;
-A("<img src='nodejs.png'; width='100%' />")
+A("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100%' />")
 ```
+
 # What is Node JS
 
 - Runtime environment
@@ -15,6 +16,6 @@ A("<img src='nodejs.png'; width='100%' />")
 
 ```mermaid
 graph TD;
-A("<img src='v8.png'; width='30' />" <br> V8 Engine)-->B[Node js]
-C("<img src='libuv.png'; width='30' />" <br> libuv)-->B
+A("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/v8.png'; width='30' />" <br> V8 Engine)-->B[Node js]
+C("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/libuv.png'; width='30' />" <br> libuv)-->B
 ```
