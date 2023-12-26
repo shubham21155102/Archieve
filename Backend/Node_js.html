@@ -1755,17 +1755,19 @@ Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
 				Runtime Environment called Node.js that can run on our system. Our index.js js file can communicate with
 				our system.</li>
 		</ul>
-		<pre class='mermaid'>graph TD;
+		<center>
+			<pre class='mermaid'" style="width: fit-content;">graph TD;
 A(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/v8.png'; width='30' /&gt;&quot; &lt;br&gt;&lt;br&gt; V8 Engine)--&gt;B[(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100' /&gt;&quot;Node js)]
 C(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/libuv.png'; width='50'  /&gt;&quot; &lt;br&gt;&lt;br&gt; libuv)--&gt;B
 </pre>
+		</center>
 		<h2 id="threading" tabindex="-1">Threading</h2>
 		<ul>
 			<li>Node js is single threaded run time environment</li>
 			<li>Java Runtime Environment Supports Multi threading</li>
 			<li>so let's understanding how node js executes multiple requests simultaneously</li>
 		</ul>
-		<pre class='mermaid'>graph RL;
+		<center>	<pre class='mermaid' style="width: fit-content;">graph RL;
 A[&lt;strong&gt;Single Threaded&lt;/strong&gt;&lt;br&gt;&lt;br&gt;all will wait until.&lt;br&gt; execution of prev &lt;br&gt; completed or not]
 C1--req1--&gt;S[Server]
 S--res1&lt;br&gt;3 sec--&gt;C1
@@ -1775,8 +1777,9 @@ C3--req2--&gt;S
 S--res2&lt;br&gt;9 sec--&gt;C3
 C4--req2--&gt;S
 S--res2&lt;br&gt;9 sec--&gt;C4
-</pre>
-		<pre class='mermaid'>graph RL
+</pre></center>
+<center>
+	<pre class='mermaid'" style="width: fit-content;">graph RL
 A[&lt;strong&gt;Multi Threaded&lt;/strong&gt;&lt;br&gt;&lt;br&gt;all requests will excute&lt;br&gt; at same time ]
 C1
 C2
@@ -1802,10 +1805,12 @@ C(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/
 
 end
 </pre>
+</center>
 		<ul>
 			<li>But Node js is Single Threaded so how it is fast</li>
 		</ul>
-		<pre class='mermaid'>graph LR;
+		<center>
+			<pre class='mermaid'" style="width: fit-content;">graph LR;
 C1--&gt;S[(Server)]
 C2--&gt;S
 C3--&gt;S
@@ -1824,6 +1829,7 @@ subgraph Environment
 C(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='50'  /&gt;&quot; &lt;br&gt;&lt;br&gt;Node JS)
 end
 </pre>
+</center>
 		<h2 id="synchronous-vs-asynchronous" tabindex="-1">Synchronous vs Asynchronous</h2>
 		<img src="https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/synasyn.jpg" />
 		<h2 id="libuv" tabindex="-1">libuv</h2>
@@ -1841,13 +1847,14 @@ Promises
 Promises
 <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;Bye&quot;</span>)
 </pre>
-<pre class='mermaid'>
+<center>
+	<pre class='mermaid'" style="width: fit-content;">
 	graph TD;
 A[Call Stack]
 B[Node Api's Browser Api]
 C[Micro Tasks Queue]
 D[Callback Queue]
-</pre>
+</pre></center>
 		<h3 id="step-1" tabindex="-1">Step 1</h3>
 		<pre class='mermaid'>graph LR;
 subgraph CallStack
