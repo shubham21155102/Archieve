@@ -336,7 +336,9 @@ end
 | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | when the system doesn't allow<br />read operation until the data <br />is written to <br />all the replicas | when the system allows read<br />operation <br />even if the data is not written <br />to <br />all the replicas | Not need to update all<br />the replicas <br />it depends upon the<br />business logics |
 | Example: Ticket Booking                                                                                     | Example: Social media post<br />Update                                                                           |                                                                                          |
+
 # CAP Theorem
+
 - C Consistency
 - A Availability
 - P Partition Tolerance:
@@ -345,7 +347,7 @@ end
 - CAP Theorem is applicable for distributed system
 - In banking system we compromise during update
 - In social media we compromise consistency
-- CP/AP Only 
+- CP/AP Only
 - Blog Website - AP
 - Multiplayer Game - CP
 - Stock Market - CP
@@ -353,5 +355,161 @@ end
 - Social Media - AP
 - Ticket Booking - CP
 - Video Streaming - AP
+
 # Lamport Logical Clock
 
+- For Distributed System
+
+```mermaid
+graph LR;
+a[Server 1<br>USA Washington DC<br> time:8:23 AM]
+b[Server 2<br>India<br> time:6:53 PM]
+c[Server 3<br>UK<br> time:1:23 PM]
+a-->b-->c-->a
+subgraph Events
+A[How can we find which event is first occuring]
+end
+```
+
+# Scalability
+
+```mermaid
+graph
+A[Scaling]-->B[Horizontal Scaling]
+A-->C[Vertical Scaling]
+```
+
+## Vertical Scaling
+
+```mermaid
+graph LR;
+A[Server<br> 25 GB ]-->B[Server <br> 100 GB]
+```
+
+### Pros
+
+- Easy Implementation
+- Less Power
+- Management Easy
+- Security
+
+### Cons
+
+- Single Point of failure
+- Limitation of storage (After a limit we can not increase the Storage)
+- Price (same company's machine equipment add on)
+
+## Horizontal Scaling
+
+### Pros
+
+- No Single Point of failure
+- No Limitation of storage
+- No Price Isuue we can use less costly machine for less consumotion need where we need that
+
+### Cons
+
+- Security maintainance issue
+- Management issue
+- More Power Consumption
+- Complex Implementation
+
+# Redundancy and Replication
+
+## Redundancy
+
+- Simply duplication of nodes or components so that when a node or component fails the duplicate node is availabe to service
+
+### Types
+
+- **Active Redundancy:**
+  - Activite Redundancy is considered when each unit is operating/active and responding to the action.Multiple nodes are connected to a load balancer and each unit recives an equal load
+- **Passive Server**
+  - Passive Redundancy is considered when each unit is not operating/active and not responding to the action.Multiple nodes are connected to a load balancer and each unit recives an equal load
+
+## Replication
+
+- **Redundancy along with Synchronisation**
+- Copy along this sync
+- All the data should be copy to all the server
+- Used in databases
+
+### Types
+
+- **Active Replication**
+  - Active Replication is considered when each unit is operating/active and responding to the action.Multiple nodes are connected to a load balancer and each unit recives an equal load
+  - also all will be doing the same work like read and write in case of database
+  - All nodes would be master
+- **Passive Replication**
+  - Passive Replication is considered when each unit is not operating/active and not responding to the action.Multiple nodes are connected to a load balancer and each unit recives an equal load
+  - also all will be doing the same work like read and write in case of database
+  - One node would be master and other would be slave
+  - Master will be doing the write operation and slave will be doing the read operation
+  - if instaly we are updating then asynchronisation will be there
+  - if we are updating to slave after some scheduled time then asynchronisation will be there
+
+```mermaid
+graph LR;
+D-->A
+A-->D[Server 2]
+E[Server 3]-->D
+D-->E
+E-->A
+A-->E
+A[Server 1]-->B[Copy 1<br> I am awaking and <br> continuously Copying the data  from server <br> So i am Actively Redundance]
+A-->C[Copy 2<br> I am sleeping and <br> not Copying the data  from server <br> So i am Passively Replication]
+subgraph Redundancy
+X[Active Redundancy]
+Y[Passive Redundancy]
+end
+```
+
+```mermaid
+graph LR;
+subgraph Active Replication
+D-->A
+A-->D[Server 2]
+E[Server 3]-->D
+D-->E
+E-->A
+A-->E
+A[Server 1]-->a[DB 1 <br> Master Node<br> read write simultaneously]
+A-->c[DB 2 <br> Master Node<br> read write simultaneously]
+A-->d[DB 3 <br> Master Node<br> read write simultaneously]
+A-->e[DB 4 <br> Master Node<br> read write simultaneously]
+A-->f[DB 5 <br> Master Node<br> read write simultaneously]
+a-->c
+c-->a
+c-->d
+d-->c
+d-->e
+e-->d
+e-->f
+f-->e
+end
+subgraph Passive Replication
+D1-->A1
+A1-->D1[Server 2]
+E1[Server 3]-->D1
+D1-->E1
+E1-->A1
+A1-->E1
+A1[Server 1]-->a1[DB 1 <br> Master Node<br> read write simultaneously]
+A1-->c1[DB 2 <br> Slave Node<br> read write on permission <br> by Master Node]
+A1-->d1[DB 3 <br> Slave Node<br> read write on permission <br> by Master Node]
+A1-->e1[DB 4 <br> Slave Node<br> read write on permission <br> by Master Node]
+A1-->f1[DB 5 <br> Slave Node<br> read write on permission <br> by Master Node]
+a1-->c1
+c1-->a1
+c1-->d1
+d1-->c1
+d1-->e1
+e1-->d1
+e1-->f1
+f1-->e1
+end
+subgraph Replication
+X[Active Replication ]
+Y[Passive Replication]
+end
+```
