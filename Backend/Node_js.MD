@@ -91,10 +91,187 @@ end
 
 ## Synchronous vs Asynchronous
 
-<img src="synasyn.jpg" />
+<img src="https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/synasyn.jpg" />
 
 ## libuv
 
 - written in c++
 - make js asynchronous I/O operations
 - Above Async. given by libuv
+
+```js
+console.log("Hii")
+SetTimeOut(cb)
+Promises
+SetTimeOut
+Promises
+Promises
+Promises
+console.log("Bye")
+```
+
+```mermaid
+graph TD;
+A[Call Stack]
+B[Node Api's Browser Api]
+C[Micro Tasks Queue]
+D[Callback Queue]
+```
+
+### Step 1
+
+```mermaid
+graph LR;
+subgraph CallStack
+A[Console.log-Hii]
+B[Console.log-Bye]
+end
+```
+
+### Step 2
+
+```mermaid
+graph LR;
+subgraph Node API's Browser API
+S1
+P1
+S2
+P2
+P3
+P4
+end
+```
+
+### Step 3
+
+```mermaid
+graph TD;
+subgraph CallBack Queue
+S1 
+S2
+end
+subgraph Micro Tasks Queue
+P1
+P2 
+P3
+P4
+end
+```
+
+### Step 4
+
+```mermaid
+graph TD;
+subgraph T[CallBack Queue]
+S1 
+S2
+end
+subgraph U[Micro Tasks Queue]
+P1
+P2 
+P3
+P4
+end
+subgraph V[Event Loop]
+X[now it will decide <br>which will executes first <br>vip Micro Tasks Queue <br>will be choosen first]
+P1
+P2 
+P3
+P4
+end
+```
+
+```js
+Output
+Hii
+Bye
+P1
+P2
+P3
+P4
+S1
+S2
+```
+
+## Event Loop and Thread Pool
+
+<img src="https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/eventloop.jpg" />
+
+## Streams
+
+- Data Chunk by Chunk
+
+### Node js Streams
+
+- Readable
+  - Read Data from a source
+- Writable
+  - Write Data to a destination
+- Duplex
+  - Read and Write Data to a destination
+- Transform
+  - Read Data from a source and write to a destination
+
+### Strems By Node js fs module
+
+#### Readable Stream
+
+```js
+const fs = require('fs');
+let data = '';
+let readStream = fs.createReadStream('input.txt');
+readStream.setEncoding('UTF8');
+readStream.on('data', function(chunk) {
+    data += chunk;
+});
+readStream.on('end', function() {
+    console.log(data);
+});
+readStream.on('error', function(err) {
+    console.log(err.stack);
+});
+console.log("Program Ended");
+```
+
+#### Writable Stream
+
+```js
+const fs = require('fs');
+let data = 'Simply Easy Learning';
+let writeStream = fs.createWriteStream('output.txt');
+writeStream.write(data, 'UTF8');
+writeStream.end();
+writeStream.on('finish', function() {
+    console.log("Write completed.");
+});
+writeStream.on('error', function(err) {
+    console.log(err.stack);
+});
+console.log("Program Ended");
+```
+
+#### Piping
+
+- Piping is a mechanism where we provide the output of one stream as the input to another stream.
+
+```js
+const fs = require('fs');
+let readStream = fs.createReadStream('input.txt');
+let writeStream = fs.createWriteStream('output.txt');
+readStream.pipe(writeStream);
+console.log("Program Ended");
+```
+
+#### Chaining
+
+- Chaining is a mechanism to connect the output of one stream to another stream and create a chain of multiple stream operations.
+
+```js
+const fs = require('fs');
+let zlib = require('zlib');
+const gzip = zlib.createGzip();
+var readStream = fs.createReadStream('input.txt');
+var writeStream = fs.createWriteStream('input.txt.gz');
+readStream.pipe(gzip).pipe(writeStream);
+console.log("File Compressed.");
+```
