@@ -1,0 +1,59 @@
+<html>
+
+<body>
+    Here is one mermaid diagram:
+    <div class="mermaid">
+        graph TD
+        A[Client] --> B[Load Balancer]
+        B --> C[Server1]
+        B --> D[Server2]
+    </div>
+    And here is another:
+    <div class="mermaid">
+        graph TD
+        A[Client] -->|tcp_123| B
+        B(Load Balancer)
+        B -->|tcp_456| C[Server1]
+        B -->|tcp_456| D[Server2]
+    </div>
+    <div id="mermaid">
+
+        graph TD
+        A[Client] -->|tcp_123| B
+        B(Load Balancer)
+        B -->|tcp_456| C[Server1]
+        B -->|tcp_456| D[Server2]
+
+    </div>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9.1.0/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true
+        });
+        var node = {
+            data: {
+                graph: `
+            graph TD;
+            A[Start] --> B{Decision};
+            B -->|Yes| C[Result 1];
+            B -->|No| D[Result 2];
+            C --> E[End];
+            D --> E;
+        `
+            }
+        };
+        var mermaidElement = document.getElementById('mermaid');
+
+        if (mermaidElement) {
+            console.log('mermaidElement', mermaidElement.style);
+            mermaidElement.innerHTML = node.data.graph;
+            mermaidElement.removeAttribute('data-processed');
+            console.log('mermaidElement', mermaidElement)
+        }
+
+        mermaid.init(undefined, mermaidElement);
+
+    </script>
+</body>
+
+</html>

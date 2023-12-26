@@ -1,13 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://www.shubhamiitbhu.in/_next/image?url=%2Fshubham.jpg&w=640&q=75">
-
     <title>Circular Linked List</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    </script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            /* Optional: Set background color */
+        }
+
+        .circle {
+            position: relative;
+            width: 300px;
+            /* Set the width and height of the main circle */
+            height: 300px;
+            /* Adjust as needed */
+            border: 2px solid #333;
+            /* Border for the main circle */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item {
+            position: absolute;
+            width: 30px;
+            /* Size of the small circles */
+            height: 30px;
+            /* Adjust as needed */
+            border: 2px solid #333;
+            /* Border for small circles */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            /* Font size for numbers */
+        }
+
+        .item:nth-child(1) {
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .item:nth-child(2) {
+            top: 30%;
+            left: 75%;
+        }
+
+        .item:nth-child(3) {
+            top: 70%;
+            left: 75%;
+        }
+
+        .item:nth-child(4) {
+            top: 90%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .item:nth-child(5) {
+            top: 70%;
+            left: 25%;
+        }
+
+        .item:nth-child(6) {
+            top: 30%;
+            left: 25%;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div class="mermaid">
+        graph LR
+        A[Head] --> B[1]
+        B --> C[2]
+        C --> D[3]
+        D --> E[4]
+        E --> F[5]
+        F --> A
+    </div>
 </body>
+
 </html>
