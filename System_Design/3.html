@@ -2,6 +2,7 @@
 <html>
 
 <head>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 	<title>System Design</title>
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 	<link rel="icon" href="download.png">
@@ -1737,543 +1738,444 @@ Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
 
 <body>
 	<div class="content-wrapper">
-		<h1 id="latency" tabindex="-1">Latency</h1>
+		<h1 id="caching" tabindex="-1">Caching</h1>
+		<h2 id="what-is-caching%3F" tabindex="-1">What is caching?</h2>
 		<ul>
-			<li>Time taken to send a message from one point to another point</li>
+			<li>Caching is the process of storing data in a cache.</li>
+			<li>A cache is a temporary storage area.</li>
+			<li>Caching is used to speed up data access.</li>
+			<li>Caching is used to reduce load on underlying resources.</li>
 		</ul>
-		<pre class='mermaid'>graph LR;
-User--t1--&gt;Server
-Server--t2--&gt;User
-Server--t3:Computation--&gt;Server
-subgraph Latency
-A[t1+t2+t3]
-B[network delay&lt;br&gt;+&lt;br&gt;computational delay]
-end
-</pre>
-		<p>Monolithic&lt;&lt;Distrubuted :Latency</p>
-		<h2 id="methods-to-reduce-latency" tabindex="-1">Methods to reduce Latency</h2>
+		<h2 id="real-world-example" tabindex="-1">Real world example</h2>
 		<ul>
-			<li>Caching
+			<li>I have used caching in my project to reduce the load on the database.</li>
+			<li>website link :<a href="https://www.fmcweekend.in/">FMC Weekend</a></li>
+			<li>I have used caching in the following way:
 				<ul>
-					<li>Caching is the process of storing some data in the cache on the server. The cache is a temporary
-						storage component area where the data is stored so that in future, data can be served faster
-						rather than searching from the original location.</li>
+					<li>I have used caching to store the data of the users who have registered for the event.</li>
 				</ul>
 			</li>
-			<li>CDN
+			<li>Their Profile data is stored in the cache.</li>
+			<li>When the user logs in, the data is fetched from the cache.</li>
+			<li>If the data is not present in the cache, then the data is fetched from the database and stored in the
+				cache.</li>
+			<li>This reduces the load on the database.</li>
+		</ul>
+		<h2 id="types-of-caching" tabindex="-1">Types of caching</h2>
+		<ul>
+			<li>There are two types of caching:
 				<ul>
-					<li>CDNs are geographically distributed network of proxy servers and their data centers are spread
-						across the globe to provide high availability and performance by distributing the service
-						spatially relative to end users.</li>
+					<li><strong>In Memory/Local Cache</strong></li>
+					<li><strong>Distributed Cache/Internal Cache</strong></li>
 				</ul>
 			</li>
 		</ul>
-		<pre class='hljs'><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getName</span>(<span class="hljs-params">userId</span>)</span>{
-.........we are getting <span class="hljs-built_in">this</span> after <span class="hljs-number">1000</span> lines <span class="hljs-keyword">of</span> code.....
-}
-</pre>
-		<pre class='hljs'><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getName</span>(<span class="hljs-params">userId=<span class="hljs-string">&quot;abc&quot;</span></span>)</span>{
-<span class="hljs-keyword">if</span>(userId===<span class="hljs-string">&quot;abc&quot;</span>){
-<span class="hljs-keyword">return</span> [...results];
-}
-......... <span class="hljs-number">1000</span> lines <span class="hljs-keyword">of</span> code.....
-}
-</pre>
+		<h3 id="in-memory%2Flocal-cache" tabindex="-1">In Memory/Local Cache</h3>
 		<ul>
-			<li>Upgrading the hardware</li>
+			<li>In Memory/Local Cache is a cache that is stored in the memory of the server.</li>
+			<li>Example:
+				<ul>
+					<li>Memcached</li>
+				</ul>
+			</li>
 		</ul>
-		<h1 id="throughput" tabindex="-1">Throughput</h1>
+		<h3 id="distributed-cache%2Finternal-cache" tabindex="-1">Distributed Cache/Internal Cache</h3>
 		<ul>
-			<li>Volume of data that can be handled by the system in a given time</li>
-			<li>Amount of data transmitted per unit of time .</li>
-			<li>Process rate flow</li>
-			<li>Measured in bits per second</li>
-			<li>Throughput is the number of such actions executed or results produced per unit of time.</li>
-			<li>Distributed System has more throughput than Monolithic System because of multiple replicas</li>
+			<li>Distributed Cache/Internal Cache is a cache that is stored in a shared network/memory.</li>
+			<li>Example:
+				<ul>
+					<li>Redis</li>
+				</ul>
+			</li>
 		</ul>
-		<h2 id="causes-of-low-throughput" tabindex="-1">Causes of Low Throughput</h2>
+		<h2 id="when-to-use-caching%3F" tabindex="-1">When to use caching?</h2>
 		<ul>
-			<li>Network Congestion</li>
-			<li>Slow Network</li>
-			<li>Latency</li>
-			<li>Protocol Overhead</li>
-			<li>Slow Server</li>
-			<li>Slow Database</li>
+			<li>Caching should be used when:
+				<ul>
+					<li>The data is not updated frequently.</li>
+					<li>The data is not sensitive.</li>
+					<li>The data is not large.</li>
+					<li>static content (images, videos,html,css etc.)</li>
+					<li>Example :
+						<ul>
+							<li>Read Intensive in Twitter</li>
+							<li>Read Intensive in Facebook</li>
+							<li>Read Intensive in Instagram</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
 		</ul>
-		<h2 id="methods-to-increase-throughput" tabindex="-1">Methods to increase Throughput</h2>
+		<h2 id="types-of-caching-we-are-storing-in-our-project" tabindex="-1">Types of caching we are storing in our
+			project</h2>
 		<ul>
-			<li>Caching</li>
+			<li>Application Server Cache</li>
 			<li>CDN</li>
-			<li>Load Balancer</li>
-			<li>Upgrading the hardware</li>
-			<li>Use distributed system</li>
 		</ul>
-		<h1 id="availability" tabindex="-1">Availability</h1>
+		<h2 id="cache-eviction" tabindex="-1">Cache Eviction</h2>
 		<ul>
-			<li>The probability that a system will work as expected when required during the period of a mission.</li>
-			<li>Goggle has 99.99% availability</li>
-			<li>99.99% availability means 52.56 minutes of downtime per year</li>
-			<li>99.999% availability means 5.26 minutes of downtime per year</li>
-			<li>99.9999% availability means 31.5 seconds of downtime per year</li>
-			<li>99.99999% availability means 3.15 seconds of downtime per year</li>
-			<li>99.999999% availability means 0.315 seconds of downtime per year</li>
-			<li>In distributed system if any of the system fails then the entire system will not fail</li>
-			<li>Availability of distributed system is more than monolithic system because of multiple replicas</li>
+			<li>Cache eviction is the process of removing an entry from the cache on a definite time or on a condition.
+			</li>
 		</ul>
-		<h2 id="causes-of-low-availability" tabindex="-1">Causes of Low Availability</h2>
+		<h2 id="cache-eviction-techniques" tabindex="-1">Cache Eviction Techniques</h2>
 		<ul>
-			<li>Single point of failure</li>
-			<li>Network Congestion</li>
-			<li>Slow Network</li>
-			<li>Latency</li>
-			<li>Monoilithic System</li>
-		</ul>
-		<h2 id="methods-to-increase-availability" tabindex="-1">Methods to increase Availability</h2>
-		<ul>
-			<li>Replication</li>
-			<li>Redundancy
+			<li>How we are deleting the data from the cache?</li>
+			<li>There are following types of cache eviction techniques:
 				<ul>
-					<li>Each nodes are synchronized with each other</li>
+					<li><strong>LRU (Least Recently Used) Eviction</strong></li>
+					<li><strong>LFU (Least Frequently Used) Eviction</strong></li>
+					<li><strong>FIFO (First In First Out) Eviction</strong></li>
+					<li><strong>MRU(Most Recently Used) Eviction</strong></li>
+					<li><strong>LFU (Least Frequently Used) Eviction</strong></li>
+					<li><strong>LIFO (Last In First Out) Eviction</strong></li>
+					<li><strong>RR (Random Replacement) Eviction</strong></li>
 				</ul>
 			</li>
-			<li>Distributed System</li>
 		</ul>
-		<h1 id="consistency" tabindex="-1">Consistency</h1>
+		<h3 id="lru-(least-recently-used)-eviction" tabindex="-1">LRU (Least Recently Used) Eviction</h3>
 		<ul>
-			<li>When a user updates a data then the user should get the updated data</li>
+			<li>In this technique, the entry which is least recently used is removed from the cache.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is least recently used is
+						removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="lfu-(least-frequently-used)-eviction" tabindex="-1">LFU (Least Frequently Used) Eviction</h3>
+		<ul>
+			<li>In this technique, the entry which is least frequently used is removed from the cache.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is least frequently used is
+						removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="fifo-(first-in-first-out)-eviction" tabindex="-1">FIFO (First In First Out) Eviction</h3>
+		<ul>
+			<li>In this technique, the entry which is first inserted in the cache is removed from the cache.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is first inserted in the cache
+						is removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="mru(most-recently-used)-eviction" tabindex="-1">MRU(Most Recently Used) Eviction</h3>
+		<ul>
+			<li>In this technique, the entry which is most recently used is removed from the cache.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is most recently used is
+						removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="lfu-(least-frequently-used)-eviction-1" tabindex="-1">LFU (Least Frequently Used) Eviction</h3>
+		<ul>
+			<li>In this technique, the entry which is least frequently used is removed from the cache.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is least frequently used is
+						removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="lifo-(last-in-first-out)-eviction" tabindex="-1">LIFO (Last In First Out) Eviction</h3>
+		<ul>
+			<li>In this technique, the entry which is last inserted in the cache is removed from the cache.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is last inserted in the cache
+						is removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="rr-(random-replacement)-eviction" tabindex="-1">RR (Random Replacement) Eviction</h3>
+		<ul>
+			<li>In this technique, the entry which is randomly selected is removed from the cache.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is randomly selected is removed
+						from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h2 id="cache-invalidation" tabindex="-1">Cache Invalidation</h2>
+		<ul>
+			<li>Cache Invalidation is the process of removing an entry from the cache on a definite time or on a
+				condition.</li>
+		</ul>
+		<h2 id="cache-invalidation-techniques" tabindex="-1">Cache Invalidation Techniques</h2>
+		<ul>
+			<li>How we are deleting the data from the cache?</li>
+			<li>There are following types of cache invalidation techniques:
+				<ul>
+					<li><strong>Time To Live (TTL)</strong></li>
+					<li><strong>Write Through</strong></li>
+					<li><strong>Write Back</strong></li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="time-to-live-(ttl)" tabindex="-1">Time To Live (TTL)</h3>
+		<ul>
+			<li>In this technique, the entry is removed from the cache after a definite time.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is least recently used is
+						removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="write-through" tabindex="-1">Write Through</h3>
+		<ul>
+			<li>In this technique, the entry is removed from the cache after a definite time.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is least recently used is
+						removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="write-back" tabindex="-1">Write Back</h3>
+		<ul>
+			<li>In this technique, the entry is removed from the cache after a definite time.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is least recently used is
+						removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h2 id="cache-consistency" tabindex="-1">Cache Consistency</h2>
+		<ul>
+			<li>Cache Consistency is the process of maintaining the consistency of the data in the cache.</li>
+		</ul>
+		<h2 id="cache-consistency-techniques" tabindex="-1">Cache Consistency Techniques</h2>
+		<ul>
+			<li>How we are maintaining the consistency of the data in the cache?</li>
+			<li>There are following types of cache consistency techniques:
+				<ul>
+					<li><strong>Write Through</strong></li>
+					<li><strong>Write Back</strong></li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="write-through-1" tabindex="-1">Write Through</h3>
+		<ul>
+			<li>In this technique, the entry is removed from the cache after a definite time.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is least recently used is
+						removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="write-back-1" tabindex="-1">Write Back</h3>
+		<ul>
+			<li>In this technique, the entry is removed from the cache after a definite time.</li>
+			<li>Example:
+				<ul>
+					<li>If the cache size is 5 and the cache is full.</li>
+					<li>If we want to add a new entry in the cache, then the entry which is least recently used is
+						removed from the cache.</li>
+				</ul>
+			</li>
+		</ul>
+		<h1 id="file-based-storage-system" tabindex="-1">File Based Storage System</h1>
+		<h2 id="what-is-file-based-storage-system%3F" tabindex="-1">What is File Based Storage System?</h2>
+		<ul>
+			<li>File Based Storage System is a system in which the data is stored in the form of files.</li>
+			<li>Example:
+				<ul>
+					<li>File System</li>
+				</ul>
+			</li>
+		</ul>
+		<h2 id="when-to-use-file-based-storage-system%3F" tabindex="-1">When to use File Based Storage System?</h2>
+		<ul>
+			<li>File Based Storage System should be used when:
+				<ul>
+					<li>The data is not updated frequently.</li>
+					<li>The data is not sensitive.</li>
+					<li>The data is not large.</li>
+					<li>Example :
+						<ul>
+							<li>Read Intensive in Twitter</li>
+							<li>Read Intensive in Facebook</li>
+							<li>Read Intensive in Instagram</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<h2 id="types-of-file-based-storage-system" tabindex="-1">Types of File Based Storage System</h2>
+		<ul>
+			<li>There are two types of File Based Storage System:
+				<ul>
+					<li><strong>Local File System</strong></li>
+					<li><strong>Distributed File System</strong></li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="local-file-system" tabindex="-1">Local File System</h3>
+		<ul>
+			<li>Local File System is a file system that is stored in the memory of the server.</li>
+			<li>Example:
+				<ul>
+					<li>Ext4</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="distributed-file-system" tabindex="-1">Distributed File System</h3>
+		<ul>
+			<li>Distributed File System is a file system that is stored in a shared network/memory.</li>
+			<li>Example:
+				<ul>
+					<li>HDFS</li>
+				</ul>
+			</li>
+		</ul>
+		<h2 id="challenges-in-file-based-storage-system" tabindex="-1">Challenges in File Based Storage System</h2>
+		<ul>
+			<li>Data Redundancy</li>
+			<li>Data Consistency</li>
+			<li>Data Security</li>
+			<li>Slow Data Access</li>
+		</ul>
+		<h1 id="database" tabindex="-1">Database</h1>
+		<h2 id="rdbms" tabindex="-1">RDBMS</h2>
+		<ul>
+			<li>RDBMS stands for Relational Database Management System.</li>
+			<li>RDBMS is a database management system that is based on the relational model.</li>
+			<li>Stored data in the form of tables.</li>
+			<li>Connected data with the help of foreign keys.</li>
+			<li>Example:
+				<ul>
+					<li>MySQL</li>
+					<li>PostgreSQL</li>
+					<li>Oracle</li>
+					<li>Microsoft SQL Server</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="advantages-of-rdbms" tabindex="-1">Advantages of RDBMS</h3>
+		<ul>
+			<li>Data Redundancy is reduced.</li>
+			<li>Data Consistency is maintained.</li>
+			<li>Data Security is maintained.</li>
+			<li>Data Access is fast.</li>
+			<li>Data Integrity is maintained.</li>
+		</ul>
+		<h3 id="disadvantages-of-rdbms" tabindex="-1">Disadvantages of RDBMS</h3>
+		<ul>
+			<li>Rigid Schema</li>
+			<li>Scaling is difficult(Horizontal Scaling)</li>
+			<li>High Cost</li>
+			<li>Not suitable for unstructured data</li>
+			<li>Vertical Scaling is possible but it is expensive and limited.</li>
+		</ul>
+		<h2 id="nosql" tabindex="-1">NoSQL</h2>
+		<ul>
+			<li>NoSQL stands for Not Only SQL.</li>
+			<li>NoSQL is a database management system that is not based on the relational model.</li>
+		</ul>
+		<h3 id="types-of-nosql" tabindex="-1">Types of NoSQL</h3>
+		<ul>
+			<li>There are four types of NoSQL:
+				<ul>
+					<li><strong>Key Value Store</strong>
+						<ul>
+							<li>Generrally used for caching.</li>
+							<li>Example:
+								<ul>
+									<li>Redis</li>
+									<li>Memcached</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><strong>Document Store</strong>
+						<ul>
+							<li>Brimgs both RDMS and NoSQL together.</li>
+							<li>Used for storing unstructured data.</li>
+							<li>Example:
+								<ul>
+									<li>MongoDB</li>
+									<li>CouchDB</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><strong>Column Store</strong>
+						<ul>
+							<li>Used for storing large amount of data.</li>
+							<li>For Data Management during machine learning.</li>
+							<li>Column Store is a type of NoSQL database that stores data in columns rather than rows.
+							</li>
+							<li>Example:
+								<ul>
+									<li>Cassandra</li>
+									<li>HBase</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><strong>Graph Database</strong>
+						<ul>
+							<li>Used for storing data in the form of nodes and edges.</li>
+							<li>Used for storing data in the form of graphs.</li>
+							<li>Google Maps</li>
+							<li>Social Media LinkedIn connection graph</li>
+							<li>Example:
+								<ul>
+									<li>Neo4j</li>
+									<li>OrientDB</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<img src="https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/cassandra.jpg" />
+		<h2 id="examples" tabindex="-1">Examples</h2>
+		<ul>
+			<li>Google Maps - Graph DB</li>
+			<li>LinkedIn - Graph DB</li>
+			<li>Amazon Cart- Key Valued DB :Redis</li>
+			<li>Payment :We won't use NoSQL , We use SQL DB for consistency</li>
+		</ul>
+		<h1 id="polyglot-persistance" tabindex="-1">Polyglot Persistance</h1>
+		<ul>
+			<li>Multiple Databases are used as per requirement in the system</li>
 		</ul>
 		<pre class='mermaid'>graph TD;
-subgraph Delhi
-A[Ticket1&lt;br&gt;booked]
-B[Ticket2]
-C[Ticket3]
-end
-subgraph Pune
-X[Ticket1&lt;br&gt;booked]
-Y[Ticket2]
-Z[Ticket3]
-end
-subgraph Status
-T[Data should be updated&lt;br&gt; on change on any loaction's data]
-end
-</pre>
-		<ul>
-			<li>Consistency in monolithic system is easy</li>
-			<li>Consistency in distributed system is difficult</li>
-			<li>Because of multiple replicas, users are getting different servers for their use</li>
-		</ul>
-		<h2 id="types-of-consistency" tabindex="-1">Types of Consistency</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Strong Consistency</th>
-					<th>Eventual Consistency</th>
-					<th>Weak Consistency</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>when the system doesn't allow<br />read operation until the data <br />is written to <br />all
-						the replicas</td>
-					<td>when the system allows read<br />operation <br />even if the data is not written <br />to
-						<br />all the replicas</td>
-					<td>Not need to update all<br />the replicas <br />it depends upon the<br />business logics</td>
-				</tr>
-				<tr>
-					<td>Example: Ticket Booking</td>
-					<td>Example: Social media post<br />Update</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-		<h1 id="cap-theorem" tabindex="-1">CAP Theorem</h1>
-		<ul>
-			<li>C Consistency</li>
-			<li>A Availability</li>
-			<li>P Partition Tolerance:
-				<ul>
-					<li>One server is down but the system is still working using replicas</li>
-				</ul>
-			</li>
-			<li>CAP Theorem says that we can only have two of the three properties at a time and compromise on the third
-				one</li>
-			<li>CAP Theorem is applicable for distributed system</li>
-			<li>In banking system we compromise during update</li>
-			<li>In social media we compromise consistency</li>
-			<li>CP/AP Only</li>
-			<li>Blog Website - AP</li>
-			<li>Multiplayer Game - CP</li>
-			<li>Stock Market - CP</li>
-			<li>Banking System - CP</li>
-			<li>Social Media - AP</li>
-			<li>Ticket Booking - CP</li>
-			<li>Video Streaming - AP</li>
-		</ul>
-		<h1 id="lamport-logical-clock" tabindex="-1">Lamport Logical Clock</h1>
-		<ul>
-			<li>For Distributed System</li>
-		</ul>
-		<img src="https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/Lambort.jpg" />
-		<pre class='mermaid'>graph LR;
-a[Server 1&lt;br&gt;USA Washington DC&lt;br&gt; time:8:23 AM]
-b[Server 2&lt;br&gt;India&lt;br&gt; time:6:53 PM]
-c[Server 3&lt;br&gt;UK&lt;br&gt; time:1:23 PM]
-a--&gt;b--&gt;c--&gt;a
-subgraph Events
-A[How can we find which event is first occuring]
-end
-</pre>
-		<h1 id="scalability" tabindex="-1">Scalability</h1>
-		<pre class='mermaid'>graph
-A[Scaling]--&gt;B[Horizontal Scaling]
-A--&gt;C[Vertical Scaling]
-</pre>
-		<h2 id="vertical-scaling" tabindex="-1">Vertical Scaling</h2>
-		<pre class='mermaid'>graph LR;
-A[Server&lt;br&gt; 25 GB ]--&gt;B[Server &lt;br&gt; 100 GB]
-</pre>
-		<h3 id="pros" tabindex="-1">Pros</h3>
-		<ul>
-			<li>Easy Implementation</li>
-			<li>Less Power</li>
-			<li>Management Easy</li>
-			<li>Security</li>
-		</ul>
-		<h3 id="cons" tabindex="-1">Cons</h3>
-		<ul>
-			<li>Single Point of failure</li>
-			<li>Limitation of storage (After a limit we can not increase the Storage)</li>
-			<li>Price (same company's machine equipment add on)</li>
-		</ul>
-		<h2 id="horizontal-scaling" tabindex="-1">Horizontal Scaling</h2>
-		<h3 id="pros-1" tabindex="-1">Pros</h3>
-		<ul>
-			<li>No Single Point of failure</li>
-			<li>No Limitation of storage</li>
-			<li>No Price Isuue we can use less costly machine for less consumotion need where we need that</li>
-		</ul>
-		<h3 id="cons-1" tabindex="-1">Cons</h3>
-		<ul>
-			<li>Security maintainance issue</li>
-			<li>Management issue</li>
-			<li>More Power Consumption</li>
-			<li>Complex Implementation</li>
-		</ul>
-		<h1 id="redundancy-and-replication" tabindex="-1">Redundancy and Replication</h1>
-		<h2 id="redundancy" tabindex="-1">Redundancy</h2>
-		<ul>
-			<li>Simply duplication of nodes or components so that when a node or component fails the duplicate node is
-				availabe to service</li>
-		</ul>
-		<h3 id="types" tabindex="-1">Types</h3>
-		<ul>
-			<li><strong>Active Redundancy:</strong>
-				<ul>
-					<li>Activite Redundancy is considered when each unit is operating/active and responding to the
-						action.Multiple nodes are connected to a load balancer and each unit recives an equal load</li>
-				</ul>
-			</li>
-			<li><strong>Passive Server</strong>
-				<ul>
-					<li>Passive Redundancy is considered when each unit is not operating/active and not responding to
-						the action.Multiple nodes are connected to a load balancer and each unit recives an equal load
-					</li>
-				</ul>
-			</li>
-		</ul>
-		<h2 id="replication" tabindex="-1">Replication</h2>
-		<ul>
-			<li><strong>Redundancy along with Synchronisation</strong></li>
-			<li>Copy along this sync</li>
-			<li>All the data should be copy to all the server</li>
-			<li>Used in databases</li>
-		</ul>
-		<h3 id="types-1" tabindex="-1">Types</h3>
-		<ul>
-			<li><strong>Active Replication</strong>
-				<ul>
-					<li>Active Replication is considered when each unit is operating/active and responding to the
-						action.Multiple nodes are connected to a load balancer and each unit recives an equal load</li>
-					<li>also all will be doing the same work like read and write in case of database</li>
-					<li>All nodes would be master</li>
-				</ul>
-			</li>
-			<li><strong>Passive Replication</strong>
-				<ul>
-					<li>Passive Replication is considered when each unit is not operating/active and not responding to
-						the action.Multiple nodes are connected to a load balancer and each unit recives an equal load
-					</li>
-					<li>also all will be doing the same work like read and write in case of database</li>
-					<li>One node would be master and other would be slave</li>
-					<li>Master will be doing the write operation and slave will be doing the read operation</li>
-					<li>if instaly we are updating then asynchronisation will be there</li>
-					<li>if we are updating to slave after some scheduled time then asynchronisation will be there</li>
-				</ul>
-			</li>
-		</ul>
-		<pre class='mermaid'>graph LR;
-D--&gt;A
-A--&gt;D[Server 2]
-E[Server 3]--&gt;D
-D--&gt;E
-E--&gt;A
-A--&gt;E
-A[Server 1]--&gt;B[Copy 1&lt;br&gt; I am awaking and &lt;br&gt; continuously Copying the data  from server &lt;br&gt; So i am Actively Redundance]
-A--&gt;C[Copy 2&lt;br&gt; I am sleeping and &lt;br&gt; not Copying the data  from server &lt;br&gt; So i am Passively Replication]
-subgraph Redundancy
-X[Active Redundancy]
-Y[Passive Redundancy]
-end
-</pre>
-		<pre class='mermaid'>graph LR;
-subgraph Active Replication
-D--&gt;A
-A--&gt;D[Server 2]
-E[Server 3]--&gt;D
-D--&gt;E
-E--&gt;A
-A--&gt;E
-A[Server 1]--&gt;a[DB 1 &lt;br&gt; Master Node&lt;br&gt; read write simultaneously]
-A--&gt;c[DB 2 &lt;br&gt; Master Node&lt;br&gt; read write simultaneously]
-A--&gt;d[DB 3 &lt;br&gt; Master Node&lt;br&gt; read write simultaneously]
-A--&gt;e[DB 4 &lt;br&gt; Master Node&lt;br&gt; read write simultaneously]
-A--&gt;f[DB 5 &lt;br&gt; Master Node&lt;br&gt; read write simultaneously]
-a--&gt;c
-c--&gt;a
-c--&gt;d
-d--&gt;c
-d--&gt;e
-e--&gt;d
-e--&gt;f
-f--&gt;e
-f--&gt;a
-a--&gt;f
-end
-subgraph Passive Replication
-D1--&gt;A1
-A1--&gt;D1[Server 2]
-E1[Server 3]--&gt;D1
-D1--&gt;E1
-E1--&gt;A1
-A1--&gt;E1
-A1[Server 1]--&gt;a1[DB 1 &lt;br&gt; Master Node&lt;br&gt; read write simultaneously]
-A1--&gt;c1[DB 2 &lt;br&gt; Slave Node&lt;br&gt; read write on permission &lt;br&gt; by Master Node]
-A1--&gt;d1[DB 3 &lt;br&gt; Slave Node&lt;br&gt; read write on permission &lt;br&gt; by Master Node]
-A1--&gt;e1[DB 4 &lt;br&gt; Slave Node&lt;br&gt; read write on permission &lt;br&gt; by Master Node]
-A1--&gt;f1[DB 5 &lt;br&gt; Slave Node&lt;br&gt; read write on permission &lt;br&gt; by Master Node]
-a1--&gt;c1
-c1--&gt;a1
-c1--&gt;d1
-d1--&gt;c1
-d1--&gt;e1
-e1--&gt;d1
-e1--&gt;f1
-f1--&gt;e1
-f1--&gt;a1
-a1--&gt;f1
-end
-subgraph Replication
-X[Active Replication ]
-Y[Passive Replication]
-end
-</pre>
-		<h1 id="load-balancer" tabindex="-1">Load Balancer</h1>
-		<ul>
-			<li>Process of efficient distribution of incoming network traffic across all nodes in a distributed system
-			</li>
-		</ul>
-		<h2 id="nginx" tabindex="-1">NGINX</h2>
-		<ul>
-			<li>Pronounciation :Engine X</li>
-			<li>PowerFul Web Server</li>
-			<li>Uses non-threaded and event driven structure</li>
-			<li>Used as a reverse proxy server, load balancer, mail proxy server, and HTTP cache</li>
-		</ul>
-		<p><strong>Diagram of Normal HTTP Connection</strong></p>
-		<pre class='mermaid'>  graph LR
-    A[Client] -- Normal HTTP Connection --&gt; B[Server]
-</pre>
-		<p><strong>Diagram of HTTP Connection with VPN</strong></p>
-		<ul>
-			<li>Forward Proxy Sever is used to connect to the VPN</li>
-		</ul>
-		<pre class='mermaid'>  graph LR
-    A[Client] -- Normal HTTP Connection --&gt; B[Server]
-    A &lt;--&gt; C[Forward Proxy Server]
-    C &lt;--&gt; B
-</pre>
-		<pre class='mermaid'>  graph LR
-    A[Client 1] &lt;--&gt; B[Forward Proxy :VPN]
-    C[Client 2]&lt;--&gt; B
-    D[Client 3]&lt;--&gt; B
-    E[Client 4]&lt;--&gt;B
-    B&lt;--&gt;F[Server]   
-  
-</pre>
-		<ul>
-			<li>Server is not able to identify the client in forward proxy server
-				<ul>
-					<li>Forward Proxy Server is used to connect to the VPN</li>
-				</ul>
-			</li>
-		</ul>
-		<p><strong>Connection of NGINX</strong></p>
-		<pre class='mermaid'>  graph LR
-    A[Client] -- Normal HTTP Connection --&gt; B[Reverse Proxy S:NGINX]
-    B &lt;--&gt; C[Server 1]
-    B &lt;--&gt; D[Server 2]
-    B &lt;--&gt; E[Server 3]
-    B &lt;--&gt; F[Server 4]
-  
-</pre>
-		<ul>
-			<li>NGINX is used to connect to the VPN
-				<ul>
-					<li>Client is not able to identify the server in NGINX case</li>
-				</ul>
-			</li>
-		</ul>
-		<pre class='mermaid'>graph LR;
-A[Client 1]&lt;--&gt;B[NGINX]
-C[Client 2]&lt;--&gt;B
-D[Client 3]&lt;--&gt;B
-E[Client 4]&lt;--&gt;B
-F[Client 5]&lt;--&gt;B
-G[Client 6]&lt;--&gt;B
-H[Client 7]&lt;--&gt;B
-B--Request Sending On specific server after decision--&gt;I[Decision Output]
-I--&gt;J[Server 1]
-I--&gt;K[Server 2]
-I--&gt;L[Server 3]
-I--&gt;M[Server 4]
-I--&gt;N[Server 5]
-I--&gt;O[Server 6]
-I--&gt;P[Server 7]
-I--&gt;Q[Server 8]
+X(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/psql.png'; width='50' /&gt;&quot;&lt;br&gt;&lt;br&gt;Postgre SQL)
+Y(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/cassandral.png'; width='75' /&gt;&quot;&lt;br&gt;&lt;br&gt;Cassendra)
+Z(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/mong.webp'; width='70' /&gt;&quot;&lt;br&gt;&lt;br&gt;Mongo DB)
+W(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/redis.png'; width='70' /&gt;&quot; &lt;br&gt;&lt;br&gt;Redis DB)
+
 
 </pre>
-		<p><strong>More Clearation</strong></p>
-		<pre class='mermaid'>graph LR;
-A[Client 1]&lt;--&gt;B[NGINX]
-C[Client 2]&lt;--&gt;B
-D[Client 3]&lt;--&gt;B
-E[Client 4]&lt;--&gt;B
-F[Client 5]&lt;--&gt;B
-G[Client 6]&lt;--&gt;B
-H[Client 7]&lt;--&gt;B
-B--/admin--&gt;J[Server 1]
-B--/user--&gt;K[Server 2]
-B--/admin--&gt;L[Server 3]
-B--/settings--&gt;M[Server 4]
-B--/all--&gt;N[Server 5]
-B--/todo--&gt;O[Server 6]
-B--/example--&gt;P[Server 7]
-B--/ex--&gt;Q[Server 8]
+		<pre class='mermaid'>graph TD;
+A[Ecommerce Platform]--&gt;B[Shopping Cart&lt;br&gt; &amp; &lt;br&gt; Session Data]--&gt;C[Key Valued DB]--&gt;W(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/redis.png'; width='70' /&gt;&quot;&lt;br&gt;&lt;br&gt;Redis DB)
+A--&gt;D[Completed Order]--&gt;E[Document DB]--&gt;Z(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/mong.webp'; width='70' /&gt;&quot;&lt;br&gt;&lt;br&gt;Mongo DB)
+A--&gt;F[Inventory &lt;br&gt;&amp;&lt;br&gt;Item Price]--&gt;G[RDBMS&lt;br&gt;Legacy DB]--&gt;X(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/psql.png'; width='50' /&gt;&quot;&lt;br&gt;&lt;br&gt;PostgreSQL)
+A--&gt;H[Customer &lt;br&gt;Social Graph]--&gt;I[Graph DB]--&gt;CC(&quot;&lt;img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/neo4j.svg'; width='80' /&gt;&quot;&lt;br&gt;&lt;br&gt;Neo4j Graph DB)
 </pre>
-		<h2 id="contributions" tabindex="-1">Contributions</h2>
-		<ul>
-			<li>Can Handle 10000 Concurrent Requests</li>
-			<li>Catche HTTP Requests</li>
-			<li>Act as Reverse Proxy</li>
-			<li>Act as Load Balancer</li>
-			<li>Act as an API Gateway(see upper example)</li>
-			<li>Serve and Cache Static files like images ,videos etc.</li>
-			<li>Handle SSL Certificates</li>
-			<li>Load distribution is equal over all the servers</li>
-			<li>Health Check of all the servers</li>
-			<li>Ensures High Availability, Scalability and Reliability</li>
-			<li>NGINX is used by 66% of the world's busiest websites</li>
-		</ul>
-		<h2 id="when-to-use-load-balancer" tabindex="-1">When to use Load Balancer</h2>
-		<ul>
-			<li>In distributed system</li>
-			<li>In Microservices Architecture</li>
-			<li>Not In Monolithic Architecture</li>
-		</ul>
-		<h2 id="challenges" tabindex="-1">Challenges</h2>
-		<ul>
-			<li>Single Point of Failure</li>
-		</ul>
-		<h2 id="solutions" tabindex="-1">Solutions</h2>
-		<ul>
-			<li>Multiple Load Balancer</li>
-			<li>Passive Load Balancer</li>
-			<li>Active Load Balancer</li>
-		</ul>
-		<h2 id="advantages" tabindex="-1">Advantages</h2>
-		<ul>
-			<li>Optimized Resource Usage</li>
-			<li>Reduced Processing Time</li>
-			<li>Better User Experience</li>
-			<li>Improved Scalability</li>
-			<li>Prevents Overloading of a single server</li>
-			<li>Better Security</li>
-			<li>Prevents Downtime</li>
-			<li>Flexibility</li>
-			<li>Redundancy</li>
-		</ul>
-		<h2 id="load-balancing-algorithms" tabindex="-1">Load Balancing Algorithms</h2>
-		<ul>
-			<li>Round Robin(Static) Algorithm
-				<ul>
-					<li>Rotation fashion</li>
-					<li>1st request goes to 1st server</li>
-					<li>2nd request goes to 2nd server</li>
-					<li>3rd request goes to 3rd server</li>
-					<li>4th request goes to 4th server</li>
-					<li>5th request goes to 1st server</li>
-					<li>6th request goes to 2nd server</li>
-					<li>7th request goes to 3rd server</li>
-					<li>8th request goes to 4th server</li>
-					<li>9th request goes to 1st server</li>
-					<li>10th request goes to 2nd server</li>
-					<li>11th request goes to 3rd server</li>
-					<li>and so on</li>
-				</ul>
-			</li>
-			<li>Weighted Round Robin(Static) Algorithm
-				<ul>
-					<li>similar to Round Robin but servers have different capacity</li>
-					<li>so work will be distributed according to the capacity of the server</li>
-				</ul>
-			</li>
-			<li>IP Hash Algorithm
-				<ul>
-					<li>IP address of the client is used to determine which server receives the request</li>
-					<li>so if the client is same then the server will be same</li>
-					<li>here we hash the ip of user then we generate a number and that number will represent the server
-					</li>
-				</ul>
-			</li>
-			<li>Source IP Hash(Static) Algorithm
-				<ul>
-					<li>similar to IP Hash Algorithm but here we hash the ip of server then we generate a number and
-						that number will represent the server</li>
-					<li>we use ip of both source and destination</li>
-				</ul>
-			</li>
-			<li>Least Connection(Dynamic) Algorithm
-				<ul>
-					<li>server with least connection will be selected</li>
-					<li>if server 1 has 10 connection</li>
-					<li>server 2 has 5 connection</li>
-					<li>server 3 has 3 connection</li>
-					<li>server 4 has 2 connection</li>
-					<li>then server 4 will be selected</li>
-				</ul>
-			</li>
-			<li>Least Response Time(Dynamic) Algorithm
-				<ul>
-					<li>Server will see active connection and response time</li>
-					<li>server with least response time will be selected</li>
-					<li>if server 1 has 10 ms response time</li>
-					<li>server 2 has 5 ms response time</li>
-					<li>server 3 has 3 ms response time</li>
-					<li>server 4 has 2 ms response time</li>
-					<li>then server 4 will be selected</li>
-				</ul>
-			</li>
-		</ul>
 
 	</div>
 </body>
