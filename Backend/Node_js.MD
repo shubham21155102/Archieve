@@ -1,6 +1,6 @@
 ```mermaid
 graph TD;
-A("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100%' />")
+X("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100%' />")
 ```
 
 # What is Node JS
@@ -16,14 +16,9 @@ A("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Bac
 
 ```mermaid
 graph TD;
-A("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/v8.png'; width='30' />" <br> V8 Engine)-->B[Node js]
-C("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/libuv.png'; width='30' />" <br> libuv)-->B
+A("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/v8.png'; width='30' />" <br><br> V8 Engine)-->B[("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100' />"Node js)]
+C("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/libuv.png'; width='50'  />" <br><br> libuv)-->B
 ```
-
-## libuv
-
-- written in c++
-- make js asynchronous I/O operations
 
 ## Threading
 
@@ -32,7 +27,7 @@ C("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Bac
 - so let's understanding how node js executes multiple requests simultaneously
 
 ```mermaid
-graph LR;
+graph RL;
 A[<strong>Single Threaded</strong><br><br>all will wait until.<br> execution of prev <br> completed or not]
 C1--req1-->S[Server]
 S--res1<br>3 sec-->C1
@@ -46,7 +41,7 @@ S--res2<br>9 sec-->C4
 
 ```mermaid
 graph RL
-A[<strong>Multi Threaded</strong><br><br>all will excute<br> at same time ]
+A[<strong>Multi Threaded</strong><br><br>all requests will excute<br> at same time ]
 C1
 C2
 C3
@@ -70,3 +65,36 @@ X("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Bac
 Y("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/php.png'; width='30' />")
 end
 ```
+
+- But Node js is Single Threaded so how it is fast
+
+```mermaid
+graph LR;
+C1-->S[(Server)]
+C2-->S
+C3-->S
+c4-->S
+subgraph Workers
+Req1
+Req2
+Req3
+Req4
+end
+S-->Req1
+S-->Req2
+S-->Req3
+S-->Req4
+subgraph Environment
+X("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/Backend/nodejs.png'; width='100' />")
+end
+```
+
+## Synchronous vs Asynchronous
+
+<img src="synasyn.jpg" />
+
+## libuv
+
+- written in c++
+- make js asynchronous I/O operations
+- Above Async. given by libuv
