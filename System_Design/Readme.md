@@ -935,3 +935,512 @@ A-->D[Completed Order]-->E[Document DB]-->Z("<img src='https://raw.githubusercon
 A-->F[Inventory <br>&<br>Item Price]-->G[RDBMS<br>Legacy DB]-->X("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/psql.png'; width='50' />")
 A-->H[Customer <br>Social Graph]-->I[Graph DB]-->CC("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/neo4j.svg'; width='80' />")
 ```
+# Normalisation
+
+- Putting data in multiple table to reduce redundancy
+
+# Denormalisation
+
+- Putting data in one table to increase performance
+
+## Benefits of Denormalisation
+
+- Faster reads
+- Simpler queries
+- Management Convenience
+- High availability
+- Reduces the network calls
+- Reduces the number of joins
+
+## Drawbacks of Denormalisation
+
+- Slower writes
+- Redundant data- wastage of space and money
+- Increase Complexity
+- Data inconsistency
+- Difficult to maintain
+
+# Indexing
+
+- Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed. It is a data structure technique which is used to quickly locate and access the data in a database.
+
+```mermaid
+graph LR;
+subgraph Students
+A[id name age netWorth]
+B[1 Ram 12 8000]
+C[2 Radha 14 3400]
+D[3 Seeta 14 300]
+E[4 Ramu 14 3000]
+end
+subgraph Networth
+X[netWorth]
+Y[300]
+Z[3000]
+WW[3400]
+W[8000]
+end
+D-->Y
+B-->W
+C-->WW
+E-->Z
+subgraph Indexing
+XRT[Now it is optimised <br>here a separate memory<br>is assigned]
+end
+subgraph DataStructure
+XRTR[B-trees structure <br>used to store indexing]
+end
+```
+
+- Used in Read Intensive Application
+
+# Synchronous Communication
+
+```mermaid
+graph LR;
+A("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/amazon.png'; width='80' />")-->B("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/cart.jpeg'; width='80' />")-->C[Synchronous<br>Item in stock<br> or not during order<br>wait or block to check<br>highly consistent]
+D("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/amazon.png''; width='80' />")-->E("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/pay.jpeg'; width='80' />")-->F[Synchronous<br>Payment<br>highly consistent]
+G("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/amazon.png''; width='80' />")-->H("<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/notification.png'; width='80' />")-->I[ASynchronous<br>no problem if<br>we receive notification<br> with delay]
+```
+
+## Where Asynchronous Communication is necessary
+
+- Computation takes a lot of time
+- Scalability of application
+- Avoid Cascading Failures
+
+# Message Based Communication
+
+- Client send requests in the form of messages to the server and server send response in the form of messages to the client
+- so it is asynchronous communication
+
+## Producer
+
+## Consumer
+
+## Agent
+
+## P2P Model
+
+- Peer to Peer Model
+- Email are not sent immediately
+- Email are stored in the queue and then sent
+- Email are sent in the form of messages
+- Email are sent asynchronously
+
+## Public Subscriber Model
+
+- Email are sent to all the subscribers
+- Email are sent in the form of messages
+- Email are sent asynchronously
+
+## Examples
+
+- Kafka
+- RabbitMQ
+- ActiveMQ
+- Amazon SQS
+
+# Kafka
+
+- Zomato :
+
+  - Live loaction of delivery partner we see
+  - life feed we are getting each second of driver location
+  - this can not be done using data base because if we are calling database each second our database will go down
+  - throughput of database is low
+  - throughput of kafka is high
+- Kafka has high throughput
+- but Kafka's storage is temporary and very low
+- DB: throughput low ,storage high, we can query the data
+
+```mermaid
+graph LR;
+A["<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/zomato.png''; width='80' />"<br>Zomato<br>producing 1m data per seconds<br><br>Producer]
+B["<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/kafka.png''; width='80' />"<br>Kafka<br>Consuming the datas]
+A-->B--Bulk insert after<br> a fixed time-->C["<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/psql.png''; width='80' />"<br>Kafka<br>Consuming the datas]
+subgraph Datas
+B-->Speed
+B-->Distance
+B-->Time
+X[1 million datas]
+end
+```
+
+## Sharding
+
+- Sharding is a type of database partitioning that separates large databases into smaller, faster, more easily managed parts. These smaller parts are called data shards. The word shard means "a small part of a whole."
+
+## Partitioning
+
+- Partitioning is a database design technique that splits large tables into smaller ones. There are several benefits to partitioning data in a large database. Partitioning can make large tables more manageable and scalable, and it can speed up query times when dealing with large tables.
+
+## Difference between Sharding and Partitioning
+
+- We do sharding when we have to scale our database horizontally
+- We do partitioning when we have to scale our database vertically
+- Sharding is done when we have to scale our database to multiple machines
+- Partitioning is done when we have to scale our database to single machine
+
+**We will be doing partitioning in case of Kafka to manage large data because Kafka is singly here and here we can vertically scale the system so Partitioning will be here**
+
+```mermaid
+graph LR;
+A["<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/zomato.png''; width='80' />"<br>Producer]
+subgraph Kafka Server
+B["<img src='https://raw.githubusercontent.com/shubham21155102/Archieve/main/System_Design/kafka.png''; width='80' />"<br> Kafka]
+subgraph Partition1
+AX[Managing Riders Update]
+AXX[Managing Data For USA]
+AXY[Managing Data For India]
+AX-->AXY
+AX-->AXX
+end
+subgraph Partition2
+AY[Managing Restaurent Updates]
+AYX[Managing Data For USA]
+AYY[Managing Data For India]
+AY-->AYY
+AY-->AYX
+end
+end
+A-->AX
+A-->AY
+C[Consumer 1]
+D[Consumer 2]
+AXX-->C
+AYX-->C
+AXY-->D
+AYY-->D
+C--Consistent-->D
+D--Consistent-->C
+```
+
+```mermaid
+graph LR;
+subgraph Consumer Groups;
+subgraph Topic
+A[P1]
+B[P2]
+C[P3]
+D[P4]
+end
+end
+subgraph Consumers
+D1[D1]
+end
+A-->D1
+B-->D1
+C-->D1
+D-->D1
+```
+
+```mermaid
+graph LR;
+subgraph Consumer Groups;
+subgraph Topic
+A[P1]
+B[P2]
+C[P3]
+D[P4]
+end
+end
+subgraph Consumers
+D1[D1]
+D2[D2]
+end
+A-->D1
+B-->D1
+C-->D2
+D-->D2
+```
+
+```mermaid
+graph LR;
+subgraph Consumer Groups;
+subgraph Topic
+A[P1]
+B[P2]
+C[P3]
+D[P4]
+end
+end
+subgraph Consumers
+D1[D1]
+D2[D2]
+D3[D3]
+end
+A-->D1
+B-->D1
+C-->D2
+D-->D3
+```
+
+```mermaid
+graph LR;
+subgraph Consumer Groups;
+subgraph Topic
+A[P1]
+B[P2]
+C[P3]
+D[P4]
+end
+end
+subgraph Consumers
+D1[D1]
+D2[D2]
+D3[D3]
+D4[D4]
+end
+A-->D4
+B-->D1
+C-->D2
+D-->D3
+```
+
+```mermaid
+graph LR;
+subgraph Consumer Groups;
+subgraph Topic
+A[P1]
+B[P2]
+C[P3]
+D[P4]
+end
+end
+subgraph Consumers Group 1
+D1[D1]
+D2[D2]
+D3[D3]
+D4[D4]
+D5[D5]
+end
+A-->D4
+B-->D1
+C-->D2
+D-->D3
+subgraph Consumers Group 2
+D11[D1]
+D21[D2]
+end
+A-->D11
+B-->D11
+C-->D21
+D-->D21
+```
+
+```mermaid
+graph TD;
+A[Kafka as a]
+B[Queue]
+C[PUB/SUB]
+A-->B
+A-->C
+B-->D[When No. of <br> Consumers==Producers]
+C-->E[When No. of <br> Consumers!=Producers]
+```
+
+```mermaid
+graph LR;
+subgraph Consumer Groups;
+subgraph Topic
+A[P1]
+B[P2]
+C[P3]
+D[P4]
+end
+end
+subgraph Consumers
+D1[D1]
+D2[D2]
+D3[D3]
+D4[D4]
+end
+A-->D4
+B-->D1
+C-->D2
+D-->D3
+subgraph Behaviour
+T[Here Kafka will act as Queue]
+end
+```
+
+```mermaid
+graph LR;
+subgraph Consumer Groups;
+subgraph Topic
+A[P1]
+B[P2]
+C[P3]
+D[P4]
+end
+end
+subgraph Consumers Group 1
+D1[D1]
+D2[D2]
+D3[D3]
+D4[D4]
+D5[D5]
+end
+A-->D4
+B-->D1
+C-->D2
+D-->D3
+subgraph Consumers Group 2
+D11[D1]
+D21[D2]
+end
+A-->D11
+B-->D11
+C-->D21
+D-->D21
+subgraph Behaviour
+T[Here Kafka will act as PUB/SUB]
+end
+```
+
+## Zookeeper
+
+- Zookeeper is a distributed co-ordination service to manage large set of hosts
+- Zookeeper is used to manage Kafka
+- Manage Kafka Internally
+- Zookeeper is used to manage the broker
+- Zookeeper is used to manage the consumer group
+# Web Server
+
+- Tools or programs that help keep the web application always up and running
+- Just like a computer, a web server has a CPU, memory, and storage
+- The web server is responsible for storing and serving the web application’s static assets, content, images, videos, and other files
+- On hardware side web server is a computer that stores web server software and a website’s component files
+- On software side web server is a program that uses HTTP (Hypertext Transfer Protocol) to serve the files that form web pages to users, in response to their requests, which are forwarded by their computers’ HTTP clients
+- Web server is a computer that runs websites
+
+## Difference between Web Server and Application Server
+
+- Web server is a computer that runs websites
+- Application server is a program that handles all application operations between users and an organization’s backend business applications or databases
+- A web server is a program that uses HTTP (Hypertext Transfer Protocol) to serve the files that form web pages to users, in response to their requests, which are forwarded by their computers’ HTTP clients
+
+# Communication Protocols
+
+- A protocol which set a rule between client and server to communicate with each other
+- can be implemented in hardware or software or combination of both
+
+## Models
+
+### Pull/Polling
+
+- Client send request to server and wait for response
+
+### Long Polling
+
+- Client send request to server and wait for response
+- Number of requests too much
+- Server will store the request in the queue
+- Server will send response to the client after some time
+- Server will awake the client after some time
+- Server will always busy
+
+### Push
+
+- In this model server will send response to the client without any request
+- The server pushes new events to the client as they happen
+- Reduces the server load
+- Example: Facebook, Twitter likes
+
+### Socket
+
+- Socket is a two way communication protocol
+- Client and server can send and receive data at the same time
+- Example: Chatting application
+
+### Server Sent Events
+
+- Server Sent Events (SSE) is a server push technology enabling a client to receive automatic updates from a server via HTTP connection
+- Example: Stock market,Cricket score
+
+# Difference between Website and Web Application
+
+- Website is static
+- Web Application is dynamic
+
+## Client and Server
+
+- Client is a computer that request data from the server
+  - Example: Browser,Instagram App
+- Server is a computer that stores data and send data to the client
+  - Example: Instagram Server
+
+## Requirement for communication between client and server
+
+- Fast
+- Light Weight
+- Language Independent
+- Platform Independent
+- Enable Communication over the n/w
+
+# REST
+
+- REST stands for Representational State Transfer
+- REST is an architectural style for developing applications that can be accessed over the network
+- CREATE, READ, UPDATE, DELETE
+
+# SOA(Service Oriented Architecture)
+
+- SOA is a style of architecture that promotes loose coupling and granular application to make the components of the software reusable
+
+## Advantages
+
+- Selective scalability
+- Different Tech Stacks
+- Loose Coupling
+- Agile(Independency)
+
+## Disadvantages
+
+- High Latency
+- High Complexity
+- Complex uderstanding
+- complex to secure
+
+# Microservices
+
+- evolution of SOA
+- Microservices is an architectural style that structures an application as a collection of services that are
+  - Highly maintainable and testable
+  - Loosely coupled
+  - Independently deployable
+  - Organized around business capabilities
+  - Owned by a small team
+- different databases
+
+# Tier Architecture
+
+- Tier is a logical partition of the application
+- Frontend, Backend, Database different tiers
+- First tier is the client tier, second tier is the application tier, and the third tier is the database tier
+- Each tier is completely independent from the other tiers, except for the interface to the next tier
+- Each tier can be managed or scaled independently
+
+# Authentication vs Authorization
+
+- Authentication is the process of verifying who you are
+- Authorization is the process of verifying what you have access to
+
+# Basic Authentication
+- Basic authentication is a simple authentication scheme built into the HTTP protocol
+- Each time username and password is sent to the server
+- It is not secure
+- It is not used in production
+## Token Based Authentication
+- Token based authentication is stateless
+- Token is generated by the server and sent to the client
+- Token is stored in the client side
+- Token is sent to the server for every request
+- Token is valid for a certain period of time
+- Token is not stored in the server side
+- Token is stored in the client side
+## OAuth
+- OAuth is an open standard for access delegation
+- OAuth provides client applications a 'secure delegated access' to server resources on behalf of a resource owner
+- Can be login with google,facebook,github etc
