@@ -46,3 +46,44 @@ E[Redis]
 C-->E
 e-->E
 ```
+
+- Now our problem is resolved all the users are connected with each other
+- Now we will save datas to our database
+
+```mermaid
+graph BT;
+A[User 1]
+B[User 2]
+D[User 3]
+C[Server 1<br>socket.io]
+A-->C
+B-->C
+e[Server 2<br>socket.io]
+D-->e
+E[Redis]
+C-->E
+e-->E
+E-->F(PSQL)
+```
+
+- Now here one problem arises like now read and write to database is increased so our database can be down after some times
+- so now what we will do
+
+```mermaid
+graph BT;
+A[User 1]
+B[User 2]
+D[User 3]
+C[Server 1<br>socket.io]
+A-->C
+B-->C
+e[Server 2<br>socket.io]
+D-->e
+E[Redis]
+C-->E
+e-->E
+E-->G
+G(Kafka)
+F(PSQL)
+G-->F
+```
