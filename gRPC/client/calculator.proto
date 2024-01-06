@@ -1,0 +1,15 @@
+syntax="proto3";
+service Calculator {
+    rpc add(Numbers) returns (Result) {}
+    rpc sub(Numbers) returns (Result) {}
+    rpc mul(Numbers) returns (Result) {}
+    rpc div(Numbers) returns (Result) {}
+}
+message Numbers{
+    int32 a=1;
+    int32 b=2;
+}
+message Result{
+    int32 value=1;
+}
+
