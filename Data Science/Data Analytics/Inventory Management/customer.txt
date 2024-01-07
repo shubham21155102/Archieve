@@ -1,0 +1,25 @@
+Customer Name: Rakesh
+Phone No. : 891223637823
+Customer_email : rabs@mvdw
+Product_Id_required : 3
+Quantity of the Product : 10
+Total Bill Amount : 5000
+Product Purchase Timings : Sat Jan  6 01:34:12 2024
+--------------------
+Customer Name: Satyam
+Phone No. : 98972862872
+Customer_email : sat@gmail.com
+Product_Id_required : 1
+Quantity of the Product : 30
+Total Bill Amount : 150
+Product Purchase Timings : Sat Jan  6 01:35:00 2024
+--------------------
+
+Customer Name: Chandu
+Phone No. : 891272882
+Customer_email : stt@jvhsnd
+Product_Id_required : 1
+Quantity of the Product : 70
+Total Bill Amount : 350
+Product Purchase Timings : Sat Jan  6 01:44:05 2024
+--------------------
