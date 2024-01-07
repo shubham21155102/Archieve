@@ -6,3 +6,4 @@ secured.js
 target/**
 __pycache__/**
 Rust/Backend/**
+satyam/**
