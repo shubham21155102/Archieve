@@ -90,7 +90,7 @@ G5-->H
 H-->I[exe file]
 ```
 
-## Let's dive deeper 
+## Let's dive deeper
 
 ### Structures in C
 
@@ -285,7 +285,7 @@ int main(){
 }
 ```
 
-### Malloc 
+### Malloc
 
 ```c
 #include <stdio.h>
@@ -386,7 +386,7 @@ int main(){
 }
 ```
 
-# Memory Layout of C program 
+# Memory Layout of C program
 
 ```mermaid
 graph LR;
@@ -404,17 +404,20 @@ end
 ```
 
 ## Heap Overflow & Stack Overflow
+
 - When memory limit exceeded due to large allocation of memory in heap, it is called heap overflow.
 - We continuously allocate memory in heap and deallocate memory from heap. If we allocate memory in heap more than the limit of heap, it is called heap overflow.
 - We continuously push data into stack and pop data from stack. If we push data into stack more than the limit of stack, it is called stack overflow.
 - When memory limit exceeded due to large allocation of memory in stack, it is called stack overflow.
 - Higher dimensional arrays cause stack overflow.
 - Recursive functions cause stack overflow.
+
 # Buffer Overflow
+
 - Buffer overflow is a vulnerability in low level codes of C and C++.
-   - Buffer is a temporary storage area in RAM.
-   - Buffer : Sequential section of memory allocated to contain anything from a character string to an array of integers.
-   - Buffers are designed to store data in a sequential manner.
+  - Buffer is a temporary storage area in RAM.
+  - Buffer : Sequential section of memory allocated to contain anything from a character string to an array of integers.
+  - Buffers are designed to store data in a sequential manner.
 - When a program tries to store more data in a buffer than it was intended to hold, it is called buffer overflow.
 - Buffer overflow can cause program to crash.
 - Buffer overflow can cause malicious code to be executed.
@@ -431,13 +434,16 @@ end
 - Rust is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
 
 # Why Rust preferrable for developers
+
 - fast
 - memory safe
 - low overhead
 - adaptable
 - simple to apply
 - strong typed and statically typed
+
 ## Memory management in Rust
+
 - Rust uses a memory management system that involves ownership, borrowing, and lifetimes.
 - Ownership is a unique feature of Rust.
 - Ownership is a unique feature of Rust that allows Rust to achieve memory safety without garbage collector.
