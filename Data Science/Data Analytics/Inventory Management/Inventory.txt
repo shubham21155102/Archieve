@@ -1,0 +1,4 @@
+1, 5 Star , 5 ,0
+2, Milky Bar , 5 ,200
+3, Cake , 500,490
+4, Kitkat , 10 , 200
