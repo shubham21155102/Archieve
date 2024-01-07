@@ -3,3 +3,6 @@
 node_modules
 Redis/**
 secured.js
+target/**
+__pycache__/**
+Rust/Backend/**

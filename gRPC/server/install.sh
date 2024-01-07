@@ -1,0 +1,1 @@
+npm i @grpc/grpc-js @grpc/proto-loader google-protobuf --save
