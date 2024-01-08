@@ -24,7 +24,6 @@ Data in the 'data.txt' file will be displayed .
    File_object.readlines()
   ```
 
-
 ## Data from Large file
 
 ```python
@@ -36,7 +35,6 @@ Data in the 'data.txt' file will be displayed .
 ```
 
 Here the the line change is marked with '/n' special character . All these are ignored if we just run the txt statement but ifwe print the txt then all the indentations are same as in the text file.
-
 
 ## Text Preprocessing
 
@@ -74,7 +72,6 @@ for i in range(1,20):
 	txt.replace(pattern , "") # replacing the string with empty string
 
 ```
-
 
 # Writing and updating the data in a file
 
