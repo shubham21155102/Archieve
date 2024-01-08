@@ -1,0 +1,2896 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Intro to Operating System</title>
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<link rel="icon" href="./image/macos.png">
+	<script type="module">
+		import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+	</script>
+	<style>
+
+		.hljs {
+			display: block;
+			overflow-x: auto;
+			padding: 0.5em;
+			background: #FFFFFF;
+		}
+
+		.hljs,
+		.hljs-subst {
+			color: #434f54;
+		}
+
+		.hljs-keyword,
+		.hljs-attribute,
+		.hljs-selector-tag,
+		.hljs-doctag,
+		.hljs-name {
+			color: #00979D;
+		}
+
+		.hljs-built_in,
+		.hljs-literal,
+		.hljs-bullet,
+		.hljs-code,
+		.hljs-addition {
+			color: #D35400;
+		}
+
+		.hljs-regexp,
+		.hljs-symbol,
+		.hljs-variable,
+		.hljs-template-variable,
+		.hljs-link,
+		.hljs-selector-attr,
+		.hljs-selector-pseudo {
+			color: #00979D;
+		}
+
+		.hljs-type,
+		.hljs-string,
+		.hljs-selector-id,
+		.hljs-selector-class,
+		.hljs-quote,
+		.hljs-template-tag,
+		.hljs-deletion {
+			color: #005C5F;
+		}
+
+		.hljs-title,
+		.hljs-section {
+			color: #880000;
+			font-weight: bold;
+		}
+
+		.hljs-comment {
+			color: rgba(149, 165, 166, .8);
+		}
+
+		.hljs-meta-keyword {
+			color: #728E00;
+		}
+
+		.hljs-meta {
+			color: #434f54;
+		}
+
+		.hljs-emphasis {
+			font-style: italic;
+		}
+
+		.hljs-strong {
+			font-weight: bold;
+		}
+
+		.hljs-function {
+			color: #728E00;
+		}
+
+		.hljs-number {
+			color: #8A7B52;
+		}
+	</style>
+
+	<style>
+		/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+		body {
+			font-family: "HelveticaNeue-Light", sans-serif, "宋体", "Segoe WPC", "Segoe UI", "SFUIText-Light", "Droid Sans Fallback";
+			font-size: 18px;
+			padding: 0 12px;
+			line-height: 1.6;
+			word-wrap: break-word;
+			color: #333333;
+		}
+
+		.content-wrapper {
+			max-width: 860px;
+			margin: 0 auto;
+			padding: 0 30px;
+		}
+
+		#code-csp-warning {
+			position: fixed;
+			top: 0;
+			right: 0;
+			color: white;
+			margin: 16px;
+			text-align: center;
+			font-size: 12px;
+			font-family: sans-serif;
+			background-color: #444444;
+			cursor: pointer;
+			padding: 6px;
+			box-shadow: 1px 1px 1px rgba(0, 0, 0, .25);
+		}
+
+		#code-csp-warning:hover {
+			text-decoration: none;
+			background-color: #007acc;
+			box-shadow: 2px 2px 2px rgba(0, 0, 0, .25);
+		}
+
+
+		body.scrollBeyondLastLine {
+			margin-bottom: calc(100vh - 22px);
+		}
+
+		body.showEditorSelection .code-line {
+			position: relative;
+		}
+
+		body.showEditorSelection .code-active-line:before,
+		body.showEditorSelection .code-line:hover:before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 0;
+			left: -12px;
+			height: 100%;
+		}
+
+		body.showEditorSelection li.code-active-line:before,
+		body.showEditorSelection li.code-line:hover:before {
+			left: -30px;
+		}
+
+		.vscode-light.showEditorSelection .code-active-line:before {
+			border-left: 3px solid rgba(0, 0, 0, 0.15);
+		}
+
+		.vscode-light.showEditorSelection .code-line:hover:before {
+			border-left: 3px solid rgba(0, 0, 0, 0.40);
+		}
+
+		.vscode-dark.showEditorSelection .code-active-line:before {
+			border-left: 3px solid rgba(255, 255, 255, 0.4);
+		}
+
+		.vscode-dark.showEditorSelection .code-line:hover:before {
+			border-left: 3px solid rgba(255, 255, 255, 0.60);
+		}
+
+		.vscode-high-contrast.showEditorSelection .code-active-line:before {
+			border-left: 3px solid rgba(255, 160, 0, 0.7);
+		}
+
+		.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+			border-left: 3px solid rgba(255, 160, 0, 1);
+		}
+
+		img {
+			max-width: 100%;
+			max-height: 100%;
+		}
+
+		a {
+			color: #4080D0;
+			text-decoration: none;
+		}
+
+		a:focus,
+		input:focus,
+		select:focus,
+		textarea:focus {
+			outline: 1px solid -webkit-focus-ring-color;
+			outline-offset: -1px;
+		}
+
+		hr {
+			border: 0;
+			height: 2px;
+			border-bottom: 2px solid;
+		}
+
+		h1 {
+			padding-bottom: 0.3em;
+			line-height: 1.2;
+			border-bottom: 1px solid #eee;
+		}
+
+
+		h2 {
+			padding-bottom: .3em;
+			font-size: 2em;
+			line-height: 1.225;
+			border-bottom: 1px solid #eee;
+		}
+
+		h3 {
+			font-size: 1.75em;
+			line-height: 1.225;
+		}
+
+		h1,
+		h2,
+		h3 {
+			font-weight: bold;
+		}
+
+		h1 code,
+		h2 code,
+		h3 code,
+		h4 code,
+		h5 code,
+		h6 code {
+			font-size: inherit;
+			line-height: auto;
+		}
+
+		a:hover {
+			color: #4080D0;
+			text-decoration: underline;
+		}
+
+		table {
+			border-collapse: collapse;
+		}
+
+		table>thead>tr>th {
+			text-align: left;
+			border-bottom: 1px solid;
+		}
+
+		table>thead>tr>th,
+		table>thead>tr>td,
+		table>tbody>tr>th,
+		table>tbody>tr>td {
+			padding: 5px 10px;
+		}
+
+		table>tbody>tr+tr>td {
+			border-top: 1px solid;
+		}
+
+		blockquote {
+			margin: 0 7px 0 5px;
+			padding: 0 16px 0 10px;
+			border-left: 5px solid;
+		}
+
+		code {
+			font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+			font-size: 14px;
+			line-height: 19px;
+		}
+
+		body.wordWrap pre {
+			white-space: pre-wrap;
+		}
+
+		.mac code {
+			font-size: 12px;
+			line-height: 18px;
+		}
+
+		pre:not(.hljs),
+		pre.hljs code>div {
+			padding: 16px;
+			border-radius: 3px;
+			overflow: auto;
+		}
+
+		/** Theming */
+
+		.vscode-light,
+		.vscode-light pre code {
+			color: rgb(30, 30, 30);
+		}
+
+		.vscode-dark,
+		.vscode-dark pre code {
+			color: #DDD;
+		}
+
+		.vscode-high-contrast,
+		.vscode-high-contrast pre code {
+			color: white;
+		}
+
+		.vscode-light code {
+			color: #A31515;
+		}
+
+		.vscode-dark code {
+			color: #D7BA7D;
+		}
+
+		.vscode-light pre:not(.hljs),
+		.vscode-light code>div {
+			background-color: rgba(220, 220, 220, 0.4);
+		}
+
+		.vscode-dark pre:not(.hljs),
+		.vscode-dark code>div {
+			background-color: rgba(10, 10, 10, 0.4);
+		}
+
+		.vscode-high-contrast pre:not(.hljs),
+		.vscode-high-contrast code>div {
+			background-color: rgb(0, 0, 0);
+		}
+
+		.vscode-high-contrast h1 {
+			border-color: rgb(0, 0, 0);
+		}
+
+		.vscode-light table>thead>tr>th {
+			border-color: rgba(0, 0, 0, 0.69);
+		}
+
+		.vscode-dark table>thead>tr>th {
+			border-color: rgba(255, 255, 255, 0.69);
+		}
+
+		.vscode-light h1,
+		.vscode-light hr,
+		.vscode-light table>tbody>tr+tr>td {
+			border-color: rgba(0, 0, 0, 0.18);
+		}
+
+		.vscode-dark h1,
+		.vscode-dark hr,
+		.vscode-dark table>tbody>tr+tr>td {
+			border-color: rgba(255, 255, 255, 0.18);
+		}
+
+		.vscode-light blockquote,
+		.vscode-dark blockquote {
+			background: rgba(127, 127, 127, 0.1);
+			border-color: rgba(0, 122, 204, 0.5);
+		}
+
+		.vscode-high-contrast blockquote {
+			background: transparent;
+			border-color: #fff;
+		}
+	</style>
+
+	<style>
+		pre {
+			background-color: #f8f8f8;
+			border: 1px solid #cccccc;
+			border-radius: 3px;
+			overflow-x: auto;
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+		}
+
+		pre:not(.hljs) {
+			padding: 23px;
+			line-height: 19px;
+		}
+
+		blockquote {
+			background: rgba(127, 127, 127, 0.1);
+			border-color: rgba(0, 122, 204, 0.5);
+		}
+
+		.emoji {
+			height: 1.4em;
+		}
+
+		/* for inline code */
+		:not(pre):not(.hljs)>code {
+			color: #C9AE75;
+			/* Change the old color so it seems less like an error */
+			font-size: inherit;
+		}
+
+		/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+		.page {
+			page-break-after: always;
+		}
+
+		.table-of-contents li {
+			list-style-type: initial;
+		}
+	</style>
+
+	<style>
+		@font-face {
+			font-family: KaTeX_AMS;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_AMS-Regular.woff2) format("woff2"), url(fonts/KaTeX_AMS-Regular.woff) format("woff"), url(fonts/KaTeX_AMS-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Caligraphic;
+			font-style: normal;
+			font-weight: 700;
+			src: url(fonts/KaTeX_Caligraphic-Bold.woff2) format("woff2"), url(fonts/KaTeX_Caligraphic-Bold.woff) format("woff"), url(fonts/KaTeX_Caligraphic-Bold.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Caligraphic;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Caligraphic-Regular.woff2) format("woff2"), url(fonts/KaTeX_Caligraphic-Regular.woff) format("woff"), url(fonts/KaTeX_Caligraphic-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Fraktur;
+			font-style: normal;
+			font-weight: 700;
+			src: url(fonts/KaTeX_Fraktur-Bold.woff2) format("woff2"), url(fonts/KaTeX_Fraktur-Bold.woff) format("woff"), url(fonts/KaTeX_Fraktur-Bold.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Fraktur;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Fraktur-Regular.woff2) format("woff2"), url(fonts/KaTeX_Fraktur-Regular.woff) format("woff"), url(fonts/KaTeX_Fraktur-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Main;
+			font-style: normal;
+			font-weight: 700;
+			src: url(fonts/KaTeX_Main-Bold.woff2) format("woff2"), url(fonts/KaTeX_Main-Bold.woff) format("woff"), url(fonts/KaTeX_Main-Bold.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Main;
+			font-style: italic;
+			font-weight: 700;
+			src: url(fonts/KaTeX_Main-BoldItalic.woff2) format("woff2"), url(fonts/KaTeX_Main-BoldItalic.woff) format("woff"), url(fonts/KaTeX_Main-BoldItalic.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Main;
+			font-style: italic;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Main-Italic.woff2) format("woff2"), url(fonts/KaTeX_Main-Italic.woff) format("woff"), url(fonts/KaTeX_Main-Italic.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Main;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Main-Regular.woff2) format("woff2"), url(fonts/KaTeX_Main-Regular.woff) format("woff"), url(fonts/KaTeX_Main-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Math;
+			font-style: italic;
+			font-weight: 700;
+			src: url(fonts/KaTeX_Math-BoldItalic.woff2) format("woff2"), url(fonts/KaTeX_Math-BoldItalic.woff) format("woff"), url(fonts/KaTeX_Math-BoldItalic.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Math;
+			font-style: italic;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Math-Italic.woff2) format("woff2"), url(fonts/KaTeX_Math-Italic.woff) format("woff"), url(fonts/KaTeX_Math-Italic.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: "KaTeX_SansSerif";
+			font-style: normal;
+			font-weight: 700;
+			src: url(fonts/KaTeX_SansSerif-Bold.woff2) format("woff2"), url(fonts/KaTeX_SansSerif-Bold.woff) format("woff"), url(fonts/KaTeX_SansSerif-Bold.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: "KaTeX_SansSerif";
+			font-style: italic;
+			font-weight: 400;
+			src: url(fonts/KaTeX_SansSerif-Italic.woff2) format("woff2"), url(fonts/KaTeX_SansSerif-Italic.woff) format("woff"), url(fonts/KaTeX_SansSerif-Italic.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: "KaTeX_SansSerif";
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_SansSerif-Regular.woff2) format("woff2"), url(fonts/KaTeX_SansSerif-Regular.woff) format("woff"), url(fonts/KaTeX_SansSerif-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Script;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Script-Regular.woff2) format("woff2"), url(fonts/KaTeX_Script-Regular.woff) format("woff"), url(fonts/KaTeX_Script-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Size1;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Size1-Regular.woff2) format("woff2"), url(fonts/KaTeX_Size1-Regular.woff) format("woff"), url(fonts/KaTeX_Size1-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Size2;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Size2-Regular.woff2) format("woff2"), url(fonts/KaTeX_Size2-Regular.woff) format("woff"), url(fonts/KaTeX_Size2-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Size3;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Size3-Regular.woff2) format("woff2"), url(fonts/KaTeX_Size3-Regular.woff) format("woff"), url(fonts/KaTeX_Size3-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Size4;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Size4-Regular.woff2) format("woff2"), url(fonts/KaTeX_Size4-Regular.woff) format("woff"), url(fonts/KaTeX_Size4-Regular.ttf) format("truetype")
+		}
+
+		@font-face {
+			font-family: KaTeX_Typewriter;
+			font-style: normal;
+			font-weight: 400;
+			src: url(fonts/KaTeX_Typewriter-Regular.woff2) format("woff2"), url(fonts/KaTeX_Typewriter-Regular.woff) format("woff"), url(fonts/KaTeX_Typewriter-Regular.ttf) format("truetype")
+		}
+
+		.katex {
+			text-rendering: auto;
+			font: normal 1.21em KaTeX_Main, Times New Roman, serif;
+			line-height: 1.2;
+			text-indent: 0
+		}
+
+		.katex * {
+			-ms-high-contrast-adjust: none !important;
+			border-color: currentColor
+		}
+
+		.katex .katex-version:after {
+			content: "0.16.2"
+		}
+
+		.katex .katex-mathml {
+			clip: rect(1px, 1px, 1px, 1px);
+			border: 0;
+			height: 1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: 1px
+		}
+
+		.katex .katex-html>.newline {
+			display: block
+		}
+
+		.katex .base {
+			position: relative;
+			white-space: nowrap;
+			width: -webkit-min-content;
+			width: -moz-min-content;
+			width: min-content
+		}
+
+		.katex .base,
+		.katex .strut {
+			display: inline-block
+		}
+
+		.katex .textbf {
+			font-weight: 700
+		}
+
+		.katex .textit {
+			font-style: italic
+		}
+
+		.katex .textrm {
+			font-family: KaTeX_Main
+		}
+
+		.katex .textsf {
+			font-family: KaTeX_SansSerif
+		}
+
+		.katex .texttt {
+			font-family: KaTeX_Typewriter
+		}
+
+		.katex .mathnormal {
+			font-family: KaTeX_Math;
+			font-style: italic
+		}
+
+		.katex .mathit {
+			font-family: KaTeX_Main;
+			font-style: italic
+		}
+
+		.katex .mathrm {
+			font-style: normal
+		}
+
+		.katex .mathbf {
+			font-family: KaTeX_Main;
+			font-weight: 700
+		}
+
+		.katex .boldsymbol {
+			font-family: KaTeX_Math;
+			font-style: italic;
+			font-weight: 700
+		}
+
+		.katex .amsrm,
+		.katex .mathbb,
+		.katex .textbb {
+			font-family: KaTeX_AMS
+		}
+
+		.katex .mathcal {
+			font-family: KaTeX_Caligraphic
+		}
+
+		.katex .mathfrak,
+		.katex .textfrak {
+			font-family: KaTeX_Fraktur
+		}
+
+		.katex .mathtt {
+			font-family: KaTeX_Typewriter
+		}
+
+		.katex .mathscr,
+		.katex .textscr {
+			font-family: KaTeX_Script
+		}
+
+		.katex .mathsf,
+		.katex .textsf {
+			font-family: KaTeX_SansSerif
+		}
+
+		.katex .mathboldsf,
+		.katex .textboldsf {
+			font-family: KaTeX_SansSerif;
+			font-weight: 700
+		}
+
+		.katex .mathitsf,
+		.katex .textitsf {
+			font-family: KaTeX_SansSerif;
+			font-style: italic
+		}
+
+		.katex .mainrm {
+			font-family: KaTeX_Main;
+			font-style: normal
+		}
+
+		.katex .vlist-t {
+			border-collapse: collapse;
+			display: inline-table;
+			table-layout: fixed
+		}
+
+		.katex .vlist-r {
+			display: table-row
+		}
+
+		.katex .vlist {
+			display: table-cell;
+			position: relative;
+			vertical-align: bottom
+		}
+
+		.katex .vlist>span {
+			display: block;
+			height: 0;
+			position: relative
+		}
+
+		.katex .vlist>span>span {
+			display: inline-block
+		}
+
+		.katex .vlist>span>.pstrut {
+			overflow: hidden;
+			width: 0
+		}
+
+		.katex .vlist-t2 {
+			margin-right: -2px
+		}
+
+		.katex .vlist-s {
+			display: table-cell;
+			font-size: 1px;
+			min-width: 2px;
+			vertical-align: bottom;
+			width: 2px
+		}
+
+		.katex .vbox {
+			align-items: baseline;
+			display: inline-flex;
+			flex-direction: column
+		}
+
+		.katex .hbox {
+			width: 100%
+		}
+
+		.katex .hbox,
+		.katex .thinbox {
+			display: inline-flex;
+			flex-direction: row
+		}
+
+		.katex .thinbox {
+			max-width: 0;
+			width: 0
+		}
+
+		.katex .msupsub {
+			text-align: left
+		}
+
+		.katex .mfrac>span>span {
+			text-align: center
+		}
+
+		.katex .mfrac .frac-line {
+			border-bottom-style: solid;
+			display: inline-block;
+			width: 100%
+		}
+
+		.katex .hdashline,
+		.katex .hline,
+		.katex .mfrac .frac-line,
+		.katex .overline .overline-line,
+		.katex .rule,
+		.katex .underline .underline-line {
+			min-height: 1px
+		}
+
+		.katex .mspace {
+			display: inline-block
+		}
+
+		.katex .clap,
+		.katex .llap,
+		.katex .rlap {
+			position: relative;
+			width: 0
+		}
+
+		.katex .clap>.inner,
+		.katex .llap>.inner,
+		.katex .rlap>.inner {
+			position: absolute
+		}
+
+		.katex .clap>.fix,
+		.katex .llap>.fix,
+		.katex .rlap>.fix {
+			display: inline-block
+		}
+
+		.katex .llap>.inner {
+			right: 0
+		}
+
+		.katex .clap>.inner,
+		.katex .rlap>.inner {
+			left: 0
+		}
+
+		.katex .clap>.inner>span {
+			margin-left: -50%;
+			margin-right: 50%
+		}
+
+		.katex .rule {
+			border: 0 solid;
+			display: inline-block;
+			position: relative
+		}
+
+		.katex .hline,
+		.katex .overline .overline-line,
+		.katex .underline .underline-line {
+			border-bottom-style: solid;
+			display: inline-block;
+			width: 100%
+		}
+
+		.katex .hdashline {
+			border-bottom-style: dashed;
+			display: inline-block;
+			width: 100%
+		}
+
+		.katex .sqrt>.root {
+			margin-left: .27777778em;
+			margin-right: -.55555556em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size1,
+		.katex .sizing.reset-size1.size1 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size2,
+		.katex .sizing.reset-size1.size2 {
+			font-size: 1.2em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size3,
+		.katex .sizing.reset-size1.size3 {
+			font-size: 1.4em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size4,
+		.katex .sizing.reset-size1.size4 {
+			font-size: 1.6em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size5,
+		.katex .sizing.reset-size1.size5 {
+			font-size: 1.8em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size6,
+		.katex .sizing.reset-size1.size6 {
+			font-size: 2em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size7,
+		.katex .sizing.reset-size1.size7 {
+			font-size: 2.4em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size8,
+		.katex .sizing.reset-size1.size8 {
+			font-size: 2.88em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size9,
+		.katex .sizing.reset-size1.size9 {
+			font-size: 3.456em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size10,
+		.katex .sizing.reset-size1.size10 {
+			font-size: 4.148em
+		}
+
+		.katex .fontsize-ensurer.reset-size1.size11,
+		.katex .sizing.reset-size1.size11 {
+			font-size: 4.976em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size1,
+		.katex .sizing.reset-size2.size1 {
+			font-size: .83333333em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size2,
+		.katex .sizing.reset-size2.size2 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size3,
+		.katex .sizing.reset-size2.size3 {
+			font-size: 1.16666667em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size4,
+		.katex .sizing.reset-size2.size4 {
+			font-size: 1.33333333em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size5,
+		.katex .sizing.reset-size2.size5 {
+			font-size: 1.5em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size6,
+		.katex .sizing.reset-size2.size6 {
+			font-size: 1.66666667em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size7,
+		.katex .sizing.reset-size2.size7 {
+			font-size: 2em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size8,
+		.katex .sizing.reset-size2.size8 {
+			font-size: 2.4em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size9,
+		.katex .sizing.reset-size2.size9 {
+			font-size: 2.88em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size10,
+		.katex .sizing.reset-size2.size10 {
+			font-size: 3.45666667em
+		}
+
+		.katex .fontsize-ensurer.reset-size2.size11,
+		.katex .sizing.reset-size2.size11 {
+			font-size: 4.14666667em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size1,
+		.katex .sizing.reset-size3.size1 {
+			font-size: .71428571em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size2,
+		.katex .sizing.reset-size3.size2 {
+			font-size: .85714286em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size3,
+		.katex .sizing.reset-size3.size3 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size4,
+		.katex .sizing.reset-size3.size4 {
+			font-size: 1.14285714em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size5,
+		.katex .sizing.reset-size3.size5 {
+			font-size: 1.28571429em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size6,
+		.katex .sizing.reset-size3.size6 {
+			font-size: 1.42857143em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size7,
+		.katex .sizing.reset-size3.size7 {
+			font-size: 1.71428571em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size8,
+		.katex .sizing.reset-size3.size8 {
+			font-size: 2.05714286em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size9,
+		.katex .sizing.reset-size3.size9 {
+			font-size: 2.46857143em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size10,
+		.katex .sizing.reset-size3.size10 {
+			font-size: 2.96285714em
+		}
+
+		.katex .fontsize-ensurer.reset-size3.size11,
+		.katex .sizing.reset-size3.size11 {
+			font-size: 3.55428571em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size1,
+		.katex .sizing.reset-size4.size1 {
+			font-size: .625em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size2,
+		.katex .sizing.reset-size4.size2 {
+			font-size: .75em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size3,
+		.katex .sizing.reset-size4.size3 {
+			font-size: .875em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size4,
+		.katex .sizing.reset-size4.size4 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size5,
+		.katex .sizing.reset-size4.size5 {
+			font-size: 1.125em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size6,
+		.katex .sizing.reset-size4.size6 {
+			font-size: 1.25em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size7,
+		.katex .sizing.reset-size4.size7 {
+			font-size: 1.5em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size8,
+		.katex .sizing.reset-size4.size8 {
+			font-size: 1.8em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size9,
+		.katex .sizing.reset-size4.size9 {
+			font-size: 2.16em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size10,
+		.katex .sizing.reset-size4.size10 {
+			font-size: 2.5925em
+		}
+
+		.katex .fontsize-ensurer.reset-size4.size11,
+		.katex .sizing.reset-size4.size11 {
+			font-size: 3.11em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size1,
+		.katex .sizing.reset-size5.size1 {
+			font-size: .55555556em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size2,
+		.katex .sizing.reset-size5.size2 {
+			font-size: .66666667em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size3,
+		.katex .sizing.reset-size5.size3 {
+			font-size: .77777778em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size4,
+		.katex .sizing.reset-size5.size4 {
+			font-size: .88888889em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size5,
+		.katex .sizing.reset-size5.size5 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size6,
+		.katex .sizing.reset-size5.size6 {
+			font-size: 1.11111111em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size7,
+		.katex .sizing.reset-size5.size7 {
+			font-size: 1.33333333em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size8,
+		.katex .sizing.reset-size5.size8 {
+			font-size: 1.6em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size9,
+		.katex .sizing.reset-size5.size9 {
+			font-size: 1.92em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size10,
+		.katex .sizing.reset-size5.size10 {
+			font-size: 2.30444444em
+		}
+
+		.katex .fontsize-ensurer.reset-size5.size11,
+		.katex .sizing.reset-size5.size11 {
+			font-size: 2.76444444em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size1,
+		.katex .sizing.reset-size6.size1 {
+			font-size: .5em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size2,
+		.katex .sizing.reset-size6.size2 {
+			font-size: .6em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size3,
+		.katex .sizing.reset-size6.size3 {
+			font-size: .7em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size4,
+		.katex .sizing.reset-size6.size4 {
+			font-size: .8em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size5,
+		.katex .sizing.reset-size6.size5 {
+			font-size: .9em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size6,
+		.katex .sizing.reset-size6.size6 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size7,
+		.katex .sizing.reset-size6.size7 {
+			font-size: 1.2em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size8,
+		.katex .sizing.reset-size6.size8 {
+			font-size: 1.44em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size9,
+		.katex .sizing.reset-size6.size9 {
+			font-size: 1.728em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size10,
+		.katex .sizing.reset-size6.size10 {
+			font-size: 2.074em
+		}
+
+		.katex .fontsize-ensurer.reset-size6.size11,
+		.katex .sizing.reset-size6.size11 {
+			font-size: 2.488em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size1,
+		.katex .sizing.reset-size7.size1 {
+			font-size: .41666667em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size2,
+		.katex .sizing.reset-size7.size2 {
+			font-size: .5em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size3,
+		.katex .sizing.reset-size7.size3 {
+			font-size: .58333333em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size4,
+		.katex .sizing.reset-size7.size4 {
+			font-size: .66666667em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size5,
+		.katex .sizing.reset-size7.size5 {
+			font-size: .75em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size6,
+		.katex .sizing.reset-size7.size6 {
+			font-size: .83333333em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size7,
+		.katex .sizing.reset-size7.size7 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size8,
+		.katex .sizing.reset-size7.size8 {
+			font-size: 1.2em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size9,
+		.katex .sizing.reset-size7.size9 {
+			font-size: 1.44em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size10,
+		.katex .sizing.reset-size7.size10 {
+			font-size: 1.72833333em
+		}
+
+		.katex .fontsize-ensurer.reset-size7.size11,
+		.katex .sizing.reset-size7.size11 {
+			font-size: 2.07333333em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size1,
+		.katex .sizing.reset-size8.size1 {
+			font-size: .34722222em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size2,
+		.katex .sizing.reset-size8.size2 {
+			font-size: .41666667em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size3,
+		.katex .sizing.reset-size8.size3 {
+			font-size: .48611111em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size4,
+		.katex .sizing.reset-size8.size4 {
+			font-size: .55555556em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size5,
+		.katex .sizing.reset-size8.size5 {
+			font-size: .625em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size6,
+		.katex .sizing.reset-size8.size6 {
+			font-size: .69444444em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size7,
+		.katex .sizing.reset-size8.size7 {
+			font-size: .83333333em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size8,
+		.katex .sizing.reset-size8.size8 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size9,
+		.katex .sizing.reset-size8.size9 {
+			font-size: 1.2em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size10,
+		.katex .sizing.reset-size8.size10 {
+			font-size: 1.44027778em
+		}
+
+		.katex .fontsize-ensurer.reset-size8.size11,
+		.katex .sizing.reset-size8.size11 {
+			font-size: 1.72777778em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size1,
+		.katex .sizing.reset-size9.size1 {
+			font-size: .28935185em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size2,
+		.katex .sizing.reset-size9.size2 {
+			font-size: .34722222em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size3,
+		.katex .sizing.reset-size9.size3 {
+			font-size: .40509259em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size4,
+		.katex .sizing.reset-size9.size4 {
+			font-size: .46296296em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size5,
+		.katex .sizing.reset-size9.size5 {
+			font-size: .52083333em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size6,
+		.katex .sizing.reset-size9.size6 {
+			font-size: .5787037em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size7,
+		.katex .sizing.reset-size9.size7 {
+			font-size: .69444444em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size8,
+		.katex .sizing.reset-size9.size8 {
+			font-size: .83333333em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size9,
+		.katex .sizing.reset-size9.size9 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size10,
+		.katex .sizing.reset-size9.size10 {
+			font-size: 1.20023148em
+		}
+
+		.katex .fontsize-ensurer.reset-size9.size11,
+		.katex .sizing.reset-size9.size11 {
+			font-size: 1.43981481em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size1,
+		.katex .sizing.reset-size10.size1 {
+			font-size: .24108004em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size2,
+		.katex .sizing.reset-size10.size2 {
+			font-size: .28929605em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size3,
+		.katex .sizing.reset-size10.size3 {
+			font-size: .33751205em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size4,
+		.katex .sizing.reset-size10.size4 {
+			font-size: .38572806em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size5,
+		.katex .sizing.reset-size10.size5 {
+			font-size: .43394407em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size6,
+		.katex .sizing.reset-size10.size6 {
+			font-size: .48216008em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size7,
+		.katex .sizing.reset-size10.size7 {
+			font-size: .57859209em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size8,
+		.katex .sizing.reset-size10.size8 {
+			font-size: .69431051em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size9,
+		.katex .sizing.reset-size10.size9 {
+			font-size: .83317261em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size10,
+		.katex .sizing.reset-size10.size10 {
+			font-size: 1em
+		}
+
+		.katex .fontsize-ensurer.reset-size10.size11,
+		.katex .sizing.reset-size10.size11 {
+			font-size: 1.19961427em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size1,
+		.katex .sizing.reset-size11.size1 {
+			font-size: .20096463em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size2,
+		.katex .sizing.reset-size11.size2 {
+			font-size: .24115756em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size3,
+		.katex .sizing.reset-size11.size3 {
+			font-size: .28135048em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size4,
+		.katex .sizing.reset-size11.size4 {
+			font-size: .32154341em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size5,
+		.katex .sizing.reset-size11.size5 {
+			font-size: .36173633em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size6,
+		.katex .sizing.reset-size11.size6 {
+			font-size: .40192926em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size7,
+		.katex .sizing.reset-size11.size7 {
+			font-size: .48231511em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size8,
+		.katex .sizing.reset-size11.size8 {
+			font-size: .57877814em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size9,
+		.katex .sizing.reset-size11.size9 {
+			font-size: .69453376em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size10,
+		.katex .sizing.reset-size11.size10 {
+			font-size: .83360129em
+		}
+
+		.katex .fontsize-ensurer.reset-size11.size11,
+		.katex .sizing.reset-size11.size11 {
+			font-size: 1em
+		}
+
+		.katex .delimsizing.size1 {
+			font-family: KaTeX_Size1
+		}
+
+		.katex .delimsizing.size2 {
+			font-family: KaTeX_Size2
+		}
+
+		.katex .delimsizing.size3 {
+			font-family: KaTeX_Size3
+		}
+
+		.katex .delimsizing.size4 {
+			font-family: KaTeX_Size4
+		}
+
+		.katex .delimsizing.mult .delim-size1>span {
+			font-family: KaTeX_Size1
+		}
+
+		.katex .delimsizing.mult .delim-size4>span {
+			font-family: KaTeX_Size4
+		}
+
+		.katex .nulldelimiter {
+			display: inline-block;
+			width: .12em
+		}
+
+		.katex .delimcenter,
+		.katex .op-symbol {
+			position: relative
+		}
+
+		.katex .op-symbol.small-op {
+			font-family: KaTeX_Size1
+		}
+
+		.katex .op-symbol.large-op {
+			font-family: KaTeX_Size2
+		}
+
+		.katex .accent>.vlist-t,
+		.katex .op-limits>.vlist-t {
+			text-align: center
+		}
+
+		.katex .accent .accent-body {
+			position: relative
+		}
+
+		.katex .accent .accent-body:not(.accent-full) {
+			width: 0
+		}
+
+		.katex .overlay {
+			display: block
+		}
+
+		.katex .mtable .vertical-separator {
+			display: inline-block;
+			min-width: 1px
+		}
+
+		.katex .mtable .arraycolsep {
+			display: inline-block
+		}
+
+		.katex .mtable .col-align-c>.vlist-t {
+			text-align: center
+		}
+
+		.katex .mtable .col-align-l>.vlist-t {
+			text-align: left
+		}
+
+		.katex .mtable .col-align-r>.vlist-t {
+			text-align: right
+		}
+
+		.katex .svg-align {
+			text-align: left
+		}
+
+		.katex svg {
+			fill: currentColor;
+			stroke: currentColor;
+			fill-rule: nonzero;
+			fill-opacity: 1;
+			stroke-width: 1;
+			stroke-linecap: butt;
+			stroke-linejoin: miter;
+			stroke-miterlimit: 4;
+			stroke-dasharray: none;
+			stroke-dashoffset: 0;
+			stroke-opacity: 1;
+			display: block;
+			height: inherit;
+			position: absolute;
+			width: 100%
+		}
+
+		.katex svg path {
+			stroke: none
+		}
+
+		.katex img {
+			border-style: none;
+			max-height: none;
+			max-width: none;
+			min-height: 0;
+			min-width: 0
+		}
+
+		.katex .stretchy {
+			display: block;
+			overflow: hidden;
+			position: relative;
+			width: 100%
+		}
+
+		.katex .stretchy:after,
+		.katex .stretchy:before {
+			content: ""
+		}
+
+		.katex .hide-tail {
+			overflow: hidden;
+			position: relative;
+			width: 100%
+		}
+
+		.katex .halfarrow-left {
+			left: 0;
+			overflow: hidden;
+			position: absolute;
+			width: 50.2%
+		}
+
+		.katex .halfarrow-right {
+			overflow: hidden;
+			position: absolute;
+			right: 0;
+			width: 50.2%
+		}
+
+		.katex .brace-left {
+			left: 0;
+			overflow: hidden;
+			position: absolute;
+			width: 25.1%
+		}
+
+		.katex .brace-center {
+			left: 25%;
+			overflow: hidden;
+			position: absolute;
+			width: 50%
+		}
+
+		.katex .brace-right {
+			overflow: hidden;
+			position: absolute;
+			right: 0;
+			width: 25.1%
+		}
+
+		.katex .x-arrow-pad {
+			padding: 0 .5em
+		}
+
+		.katex .cd-arrow-pad {
+			padding: 0 .55556em 0 .27778em
+		}
+
+		.katex .mover,
+		.katex .munder,
+		.katex .x-arrow {
+			text-align: center
+		}
+
+		.katex .boxpad {
+			padding: 0 .3em
+		}
+
+		.katex .fbox,
+		.katex .fcolorbox {
+			border: .04em solid;
+			box-sizing: border-box
+		}
+
+		.katex .cancel-pad {
+			padding: 0 .2em
+		}
+
+		.katex .cancel-lap {
+			margin-left: -.2em;
+			margin-right: -.2em
+		}
+
+		.katex .sout {
+			border-bottom-style: solid;
+			border-bottom-width: .08em
+		}
+
+		.katex .angl {
+			border-right: .049em solid;
+			border-top: .049em solid;
+			box-sizing: border-box;
+			margin-right: .03889em
+		}
+
+		.katex .anglpad {
+			padding: 0 .03889em
+		}
+
+		.katex .eqn-num:before {
+			content: "(" counter(katexEqnNo) ")";
+			counter-increment: katexEqnNo
+		}
+
+		.katex .mml-eqn-num:before {
+			content: "(" counter(mmlEqnNo) ")";
+			counter-increment: mmlEqnNo
+		}
+
+		.katex .mtr-glue {
+			width: 50%
+		}
+
+		.katex .cd-vert-arrow {
+			display: inline-block;
+			position: relative
+		}
+
+		.katex .cd-label-left {
+			display: inline-block;
+			position: absolute;
+			right: calc(50% + .3em);
+			text-align: left
+		}
+
+		.katex .cd-label-right {
+			display: inline-block;
+			left: calc(50% + .3em);
+			position: absolute;
+			text-align: right
+		}
+
+		.katex-display {
+			display: block;
+			margin: 1em 0;
+			text-align: center
+		}
+
+		.katex-display>.katex {
+			display: block;
+			text-align: center;
+			white-space: nowrap
+		}
+
+		.katex-display>.katex>.katex-html {
+			display: block;
+			position: relative
+		}
+
+		.katex-display>.katex>.katex-html>.tag {
+			position: absolute;
+			right: 0
+		}
+
+		.katex-display.leqno>.katex>.katex-html>.tag {
+			left: 0;
+			right: auto
+		}
+
+		.katex-display.fleqn>.katex {
+			padding-left: 2em;
+			text-align: left
+		}
+
+		body {
+			counter-reset: katexEqnNo mmlEqnNo
+		}
+	</style>
+
+</head>
+
+<body>
+	<div class="content-wrapper">
+		<h1 id="program" tabindex="-1">Program</h1>
+		<ul>
+			<li>A program is that which resides on our harddisk
+				<ul>
+					<li>Like c++ program in .cpp</li>
+				</ul>
+			</li>
+		</ul>
+		<h1 id="process" tabindex="-1">Process</h1>
+		<ul>
+			<li>A process is nothing but a program in execution</li>
+		</ul>
+		<pre class='mermaid'>graph LR;
+A[Program]
+subgraph Code
+B[main function]--Compiler--&gt;C[Binary Program]
+C--Execution--&gt;D[Process]
+end
+</pre>
+		<h1 id="single-tasking-system(ms-dos)" tabindex="-1">Single Tasking System(MS DOS)</h1>
+		<pre class='mermaid'>graph LR;
+A[New Program]
+B[Memory]
+C[Finished/Terminated]
+A--&gt;B
+B--&gt;C
+</pre>
+		<ul>
+			<li>In Single Tasking System, only one program can be executed at a time</li>
+			<li>When a program is finished, it is terminated and removed from memory</li>
+			<li>Then the next program is loaded into memory and executed</li>
+			<li>If Process is doing so I/O operation, then CPU is idle and waiting for I/O operation to complete and
+				this is very inefficient and wastage of CPU time</li>
+		</ul>
+		<h1 id="multi-programming-system" tabindex="-1">Multi Programming System</h1>
+		<ul>
+			<li>Where multiple processes runs at the same time and CPU is never idle</li>
+		</ul>
+		<h1 id="multi-tasking-system" tabindex="-1">Multi Tasking System</h1>
+		<ul>
+			<li>Where multiple processes runs at the same time and CPU is never idle and a time slice is given to each
+				process</li>
+			<li>A fixed Quantum of time is given to each process and after that time, the process is preempted and
+				another process is given a chance to execute</li>
+		</ul>
+		<pre class='mermaid'>graph LR;
+A[New&lt;br&gt; &lt;br&gt;Stored In&lt;br&gt;HardDisk]--Created--&gt;B[Ready&lt;br&gt;&lt;br&gt;Came to RAM]
+B--Dispatched--&gt;D[Running]
+D--Time Out/High Priority--&gt;B
+D--Last Statement &lt;br&gt;Executed / Finished--&gt;E[Finished]
+D--I/O Request--&gt;F[Waiting]
+F--I/O Completion--&gt;B
+</pre>
+		<h2 id="some-modifications-in-above-diagram" tabindex="-1">Some modifications in above diagram</h2>
+		<pre class='mermaid'>graph LR;
+A[New&lt;br&gt; &lt;br&gt;Stored In&lt;br&gt;HardDisk]--Created--&gt;B[Ready&lt;br&gt;&lt;br&gt;Came to RAM]
+B--Dispatched--&gt;D[Running]
+D--Time Out/High Priority--&gt;B
+D--Last Statement &lt;br&gt;Executed / Finished--&gt;E[Finished]
+D--I/O Request--&gt;F[Waiting]
+F--I/O Completion--&gt;B
+F--Suspend--&gt;G[Suspend/Blocked&lt;br&gt; &lt;br&gt;Stored In&lt;br&gt;HardDisk]
+G--I/O Completion--&gt;H[Suspend/Ready&lt;br&gt;&lt;br&gt;Came to RAM]
+G--Resume--&gt;B
+B--Suspend--&gt;G
+</pre>
+		<p><img src="image.png" alt="Alt text"></p>
+		<ul>
+			<li>5 State Model</li>
+			<li>7 State Model</li>
+		</ul>
+		<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20190906154144/7StateModel.png" alt=""></p>
+		<h1 id="process-control-block(pcb)" tabindex="-1">Process Control Block(PCB)</h1>
+		<ul>
+			<li>
+				<p>PCB is a data structure maintained by os for every process</p>
+			</li>
+			<li>
+				<p>PCB used for storing the collection about the processes</p>
+			</li>
+			<li>
+				<p>PCB identified by an integer process ID(PID)</p>
+			</li>
+			<li>
+				<p>PCB lies in Kernel Memory space</p>
+			</li>
+			<li>
+				<p>PCB deleted once the process id completed</p>
+				<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/process-table.jpg" alt=""></p>
+			</li>
+		</ul>
+		<pre class='mermaid'>graph LR;
+subgraph PCB
+A[Process ID]
+B[Process State]
+C[CPU Registers]
+D[Accounts Information]
+E[I/O information]
+F[CPU Scheduling Information]
+G[Memory Information]
+end
+</pre>
+		<ul>
+			<li><strong>Process ID</strong>
+				<ul>
+					<li>Unique identification for each processes in the operating system</li>
+				</ul>
+			</li>
+			<li><strong>Process State</strong>
+				<ul>
+					<li>Current state of process wheter process is running ,ready or waiting</li>
+				</ul>
+			</li>
+			<li><strong>Pointer</strong>
+				<ul>
+					<li>A pointer to parent process</li>
+				</ul>
+			</li>
+			<li><strong>CPU Registers</strong>
+				<ul>
+					<li>All the CPU registers where the process is stored for execution for example PC,SP,AX,BX,CX,DX
+						etc</li>
+				</ul>
+			</li>
+			<li><strong>Accounts Information</strong>
+				<ul>
+					<li>Process priority,Process owner,Process ID</li>
+				</ul>
+			</li>
+			<li><strong>I/O information</strong>
+				<ul>
+					<li>I/O devices allocated to process</li>
+				</ul>
+			</li>
+			<li><strong>CPU Scheduling Information</strong>
+				<ul>
+					<li>Process priority,Process state,Process ID</li>
+				</ul>
+			</li>
+			<li><strong>Memory Information</strong>
+				<ul>
+					<li>Code,Data,Stack</li>
+				</ul>
+			</li>
+		</ul>
+		<h1 id="process-scheduler" tabindex="-1">Process Scheduler</h1>
+		<pre class='mermaid'>graph TB;
+A[Process Scheduler]
+B[Ready Queue]
+C[Process Control Block]
+D[CPU]
+E[Process]
+A--&gt;B
+B--&gt;C
+C--&gt;D
+D--&gt;E
+</pre>
+		<ul>
+			<li>Process Scheduler is a part of operating system which is responsible for selecting the processes from
+				the ready queue and allocating the CPU to one of them</li>
+		</ul>
+		<pre class='mermaid'>graph TB;
+A[Process Scheduler]
+B[Long Term Scheduler&lt;br&gt;brings the process from&lt;br&gt;Disk to RAM and&lt;br&gt;makes it ready&lt;br&gt;&lt;br&gt;&lt;br&gt;decision made by &lt;br&gt; Long Term Scheduler&lt;br&gt;came into action&lt;br&gt;after a long time]
+C[Short Term Scheduler &lt;br&gt;brings the process from&lt;br&gt;Ready Queue to CPU&lt;br&gt;&lt;br&gt;&lt;br&gt;also known as Dispatcher&lt;br&gt;decision made by &lt;br&gt; Short Term Scheduler&lt;br&gt;came into action&lt;br&gt;after a short time]
+D[Medium Term Scheduler &lt;br&gt;moves the processes from waiting&lt;br&gt; to suspended state and &lt;br&gt;also from ready state&lt;br&gt; to suspended state&lt;br&gt;&lt;br&gt;&lt;br&gt;it brings the suspended process&lt;br&gt; from disk to RAM&lt;br&gt;and vice versa&lt;br&gt;used widely in&lt;br&gt;virtual memory]
+A--&gt;B
+A--&gt;C
+A--&gt;D
+
+</pre>
+		<h1 id="queues-in-os(process-scheduling-queues)" tabindex="-1">Queues in OS(Process Scheduling Queues)</h1>
+		<pre class='mermaid'>graph TB;
+A[Job Queue&lt;br&gt;when the process is created&lt;br&gt;it is added to job queue]
+B[Ready Queue&lt;br&gt;when the process is ready&lt;br&gt;it is added to ready queue&lt;br&gt;These are in RAM]
+C[I/O Queue &lt;br&gt;when the process is waiting&lt;br&gt;for I/O operation&lt;br&gt;it is added to I/O queue]
+D[Queues]
+D--&gt;A
+D--&gt;B
+D--&gt;C
+</pre>
+		<h1 id="short-term-scheduler-and-dispatcher" tabindex="-1">Short Term Scheduler and Dispatcher</h1>
+		<ul>
+			<li>Short term scheduler is only responsible for selecting the process from the ready queue and then
+				Dispatcher came in to action</li>
+			<li>Dispatcher is responsible for allocating the CPU to the selected process</li>
+			<li>Dispatcher is also known as context switcher</li>
+			<li>Dispatcher is responsible for saving the context of the current process and loading the context of the
+				selected process</li>
+		</ul>
+		<pre class='mermaid'>graph TB;
+subgraph Ready Queues
+1
+2
+3
+4
+5
+end
+A[with the help of short term scheduler&lt;br&gt;using scheduling algorithms&lt;br&gt;one of the process is selected&lt;br&gt;from the ready queue]
+B[3&lt;br&gt;PID:3&lt;br&gt;Process State:Running&lt;br&gt;CPU Registers:PC,SP,AX,BX,CX,DX&lt;br&gt;]
+3--&gt;B
+C[PCB of 3]
+C--&gt;B
+subgraph CPU
+R1[Register 1]
+R2[Register 2]
+R3[Register 3]
+R4[Register 4]
+end
+B--&gt;R1
+B--&gt;R2
+B--&gt;R3
+B--&gt;R4
+R1--saving the response--&gt;B
+R2--saving the response--&gt;B
+R3--saving the response--&gt;B
+R4--saving the response--&gt;B
+X[Dispatcher came&lt;br&gt; in to Action]
+Y[Short term Schedulers]
+Y--&gt;3
+X--&gt;B
+A--&gt;3
+</pre>
+		<h1 id="when-short-term-scheduler-came-into-action" tabindex="-1">When Short term Scheduler came into action
+		</h1>
+		<ul>
+			<li>A). when some other processes moves from running to waiting.</li>
+			<li>B). When some other processes moves from running to ready</li>
+			<li>C). When new/existing process moves to ready(priority is higher)</li>
+			<li>D). When a process terminates</li>
+			<li>Premptive Scheduling in B and C case only</li>
+			<li>Preemptive Scheduling is a scheduling in which a process can be preempted from CPU and another process
+				can be allocated to CPU</li>
+		</ul>
+		<h1 id="various-time-related-to-the-processes" tabindex="-1">Various Time Related to the Processes</h1>
+		<pre class='mermaid'>graph LR;
+A[Process]
+B[Ready]
+C[Run]
+D[Complete]
+E[Counter]
+A--Arrival&lt;br&gt;Time--&gt;B
+B--Waiting&lt;br&gt;Time--&gt;C
+C--Burst&lt;br&gt;Time--&gt;D
+D--Completion&lt;br&gt;Time--&gt;E
+</pre>
+		<ul>
+			<li>⭐Arrival Time: Time at which the process arrives in the ready queue.</li>
+			<li>⭐Completion Time: Time at which process completes its execution.</li>
+			<li>⭐Burst Time: Time required by a process for CPU execution.</li>
+			<li>⭐Turn Around Time: Time Difference between completion time and arrival time.
+				Turn Around Time = Completion Time – Arrival Time</li>
+			<li>⭐Waiting Time(W.T): Time Difference between turn around time and burst time.
+				Waiting Time = Turn Around Time – Burst Time</li>
+			<li>⭐Arrival Time=1 ⭐Completion Time=6 ⭐Turn Around Time = 6-1=5 ⭐Burst Time=3 ⭐Waiting Time = 5-3=2</li>
+		</ul>
+		<h1 id="goals-of-cpu-scheduling" tabindex="-1">Goals of CPU Scheduling</h1>
+		<ul>
+			<li>⭐Max CPU Utilization</li>
+			<li>⭐Max Throughput</li>
+			<li>⭐Min Turn Around Time</li>
+			<li>⭐Min Waiting Time</li>
+			<li>⭐Min Response Time</li>
+			<li>⭐Fair CPU Allocation(No starvation)</li>
+		</ul>
+		<pre class='mermaid'>graph TB;
+A[Algorithms]
+B[FCFS: First Come First Serve]
+C[SJF: Shortest Job First]
+D[Priority]
+E[Preemptive Shortest Job First]
+F[Round Robin]
+G[Multi Level Queue Scheduling]
+H[Multi Level Feedback Queue Scheduling]
+A--&gt;B
+A--&gt;C
+A--&gt;D
+A--&gt;E
+A--&gt;F
+A--&gt;G
+A--&gt;H
+</pre>
+		<h1 id="fcfs-algorithm" tabindex="-1">FCFS Algorithm</h1>
+		<ul>
+			<li>Criteria : Arrival time</li>
+			<li>Mode: Premptive</li>
+			<li>First come first serve basis algorithm</li>
+		</ul>
+		<table>
+			<thead>
+				<tr>
+					<th>Process</th>
+					<th>Arrival Time</th>
+					<th>Burn Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P1</td>
+					<td>2</td>
+					<td>6</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>5</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>1</td>
+					<td>8</td>
+				</tr>
+				<tr>
+					<td>P4</td>
+					<td>0</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>P5</td>
+					<td>4</td>
+					<td>4</td>
+				</tr>
+			</tbody>
+		</table>
+		<ul>
+			<li>TAT: Turn Around Time = Completion Time - Arrival Time</li>
+			<li>TAT = Waiting Time + Burst Time</li>
+			<li>RT : Response Time = Time at which process first gets the CPU - Arrival Time</li>
+			<li>Gantt Chart</li>
+		</ul>
+		<pre class='mermaid'>gantt
+title FCFS Algorithm Gantt Chart
+dateFormat HH:mm 
+axisFormat %H:%M
+Initial milestone : milestone, m1, 00:00, 0m
+    P4 : 3m
+    P3 : 8m
+    P1 : 6m
+    P5 : 4m
+    P2 : 3m
+    Final milestone:milestone, p2
+
+</pre>
+		<pre class='mermaid'>graph LR;
+P4[P4&lt;br&gt;start:0&lt;br&gt; end3]
+P3[P3&lt;br&gt;start:3&lt;br&gt; end:11]
+P1[P1&lt;br&gt;start:11&lt;br&gt; end:17]
+P5[P5&lt;br&gt;start:17&lt;br&gt; end:21]
+P2[P2&lt;br&gt;start:21&lt;br&gt; end:24]
+P4--&gt;P3
+P3--&gt;P1
+P1--&gt;P5
+P5--&gt;P2
+</pre>
+		<table>
+			<thead>
+				<tr>
+					<th>Process</th>
+					<th>AT</th>
+					<th>BT</th>
+					<th>CT</th>
+					<th>TAT<br />(CT-AT)</th>
+					<th>WT<br />(TAT-BT)</th>
+					<th>RT<br />(Start-AT)</th>
+					<th>Start Time</th>
+					<th>End Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P1</td>
+					<td>2</td>
+					<td>6</td>
+					<td>17</td>
+					<td>15</td>
+					<td>9</td>
+					<td>9</td>
+					<td>11</td>
+					<td>17</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>5</td>
+					<td>3</td>
+					<td>24</td>
+					<td>19</td>
+					<td>16</td>
+					<td>16</td>
+					<td>21</td>
+					<td>24</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>1</td>
+					<td>8</td>
+					<td>11</td>
+					<td>10</td>
+					<td>2</td>
+					<td>2</td>
+					<td>3</td>
+					<td>11</td>
+				</tr>
+				<tr>
+					<td>P4</td>
+					<td>0</td>
+					<td>3</td>
+					<td>3</td>
+					<td>3</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>P5</td>
+					<td>4</td>
+					<td>4</td>
+					<td>21</td>
+					<td>17</td>
+					<td>13</td>
+					<td>13</td>
+					<td>17</td>
+					<td>21</td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<thead>
+				<tr>
+					<th>Average  WT =</th>
+					<th>(9+16+2+0+13)/5=8</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><strong>Average TAT</strong> =</td>
+					<td>(15+19+10+3+17)/5 =12.8</td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<thead>
+				<tr>
+					<th>Advantages of FCFS</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Simple and Easy to implement</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Non Premptive</td>
+					<td>Once we assign processor<br />to the process we can not un assign back</td>
+				</tr>
+				<tr>
+					<td>Convoy Effect</td>
+					<td>One CPU bound has taken multiple<br />I/O bounds</td>
+				</tr>
+				<tr>
+					<td>Waiting Time</td>
+					<td>Comes due to Convoy effect</td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<thead>
+				<tr>
+					<th>PID</th>
+					<th>AT</th>
+					<th>BT</th>
+					<th>CT</th>
+					<th>TAT</th>
+					<th>WT</th>
+					<th>RT</th>
+					<th>ST</th>
+					<th>ET</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P1</td>
+					<td>0</td>
+					<td>40</td>
+					<td>40</td>
+					<td>40</td>
+					<td>0</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>1</td>
+					<td>3</td>
+					<td>43</td>
+					<td>42</td>
+					<td>39</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>1</td>
+					<td>1</td>
+					<td>44</td>
+					<td>43</td>
+					<td>42<br />Avg=27</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+			</tbody>
+		</table>
+		<pre class='mermaid'>gantt
+    dateFormat HH:mm
+    axisFormat %H:%M
+    Initial milestone : milestone, m1, 00:00, 0m
+    P1: 40m
+    P2: 3m
+    P3: 1m
+    Final milestone : milestone,P3
+</pre>
+		<pre class='mermaid'>graph LR;
+A[P1&lt;br&gt;ST:0&lt;br&gt;ET:40]
+B[P2&lt;br&gt;ST:40&lt;br&gt;ET:43]
+C[P3&lt;br&gt;ST:43&lt;br&gt;ET:44]
+A--&gt;B--&gt;C
+</pre>
+		<table>
+			<thead>
+				<tr>
+					<th>PID</th>
+					<th>AT</th>
+					<th>BT</th>
+					<th>CT</th>
+					<th>TAT</th>
+					<th>WT</th>
+					<th>RT</th>
+					<th>ST</th>
+					<th>ET</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P1</td>
+					<td>1</td>
+					<td>40</td>
+					<td>44</td>
+					<td>43</td>
+					<td>3</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>0</td>
+					<td>3</td>
+					<td>3</td>
+					<td>3</td>
+					<td>0</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>0</td>
+					<td>1</td>
+					<td>4</td>
+					<td>4</td>
+					<td>3<br />Avg=2</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+			</tbody>
+		</table>
+		<pre class='mermaid'>gantt
+    dateFormat HH:mm
+    axisFormat %H:%M
+    Initial milestone : milestone, m1, 00:00, 0m
+    P2: 3m
+    P3:1m
+    P1:40m
+    Final milestone :milestone, P1
+</pre>
+		<pre class='mermaid'>graph LR;
+A[P1&lt;br&gt;ST:4&lt;br&gt;ET:44]
+B[P2&lt;br&gt;ST:0&lt;br&gt;ET:3]
+C[P3&lt;br&gt;ST:3&lt;br&gt;ET:4]
+B--&gt;C--&gt;A
+</pre>
+		<pre class='mermaid'>graph
+A[In both Waiting time is largely differing&lt;br&gt; so this is a huge problem]
+</pre>
+		<h1 id="fcfs-with-overhead" tabindex="-1">FCFS With Overhead</h1>
+		<ul>
+			<li>Taking time for next process
+				<img src="image-1.png" alt="Alt text">
+			</li>
+		</ul>
+		<h1 id="shortest-job-first(sjf)" tabindex="-1">Shortest Job First(SJF)</h1>
+		<ul>
+			<li>Shortest Job First is a scheduling algorithm in which the process having the shortest burst time is
+				selected for the execution</li>
+			<li>Criteria : Burst time</li>
+			<li>Mode:Non Premptive</li>
+		</ul>
+		<table>
+			<thead>
+				<tr>
+					<th>PID</th>
+					<th>AT</th>
+					<th>BT</th>
+					<th>CT</th>
+					<th>TAT</th>
+					<th>WT</th>
+					<th>RT</th>
+					<th>ST</th>
+					<th>ET</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P1</td>
+					<td>2</td>
+					<td>6</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>5</td>
+					<td>2</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>1</td>
+					<td>8</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>P4</td>
+					<td>0</td>
+					<td>3</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>P5</td>
+					<td>4</td>
+					<td>4</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				</tr>
+			</tbody>
+		</table>
+		<pre class='mermaid'>gantt
+title Shortest Job First Gantt Chart
+dateFormat HH:mm
+axisFormat %H:%M
+Initial milestone : milestone, m1, 00:00, 0m
+P4:3m
+P1:6m
+P2:2m
+P5:4m
+P3:8m
+Final milestone:milestone,P3
+</pre>
+		<pre class='mermaid'>graph LR;
+A[P4&lt;br&gt;ST:0&lt;br&gt;ET:3]
+B[P1&lt;br&gt;ST:3&lt;br&gt;ET:9]
+C[P2&lt;br&gt;ST:9&lt;br&gt;ET:11]
+D[P5&lt;br&gt;ST:11&lt;br&gt;ET:15]
+E[P3&lt;br&gt;ST:15&lt;br&gt;ET:23]
+A--&gt;B--&gt;C--&gt;D--&gt;E
+</pre>
+		<table>
+			<thead>
+				<tr>
+					<th>PID</th>
+					<th>AT</th>
+					<th>BT</th>
+					<th>CT</th>
+					<th>TAT</th>
+					<th>WT</th>
+					<th>RT</th>
+					<th>ST</th>
+					<th>ET</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P1</td>
+					<td>2</td>
+					<td>6</td>
+					<td>9</td>
+					<td>7</td>
+					<td>1</td>
+					<td>1</td>
+					<td>3</td>
+					<td>9</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>5</td>
+					<td>2</td>
+					<td>11</td>
+					<td>6</td>
+					<td>4</td>
+					<td>4</td>
+					<td>9</td>
+					<td>11</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>1</td>
+					<td>8</td>
+					<td>23</td>
+					<td>22</td>
+					<td>14</td>
+					<td>14</td>
+					<td>15</td>
+					<td>23</td>
+				</tr>
+				<tr>
+					<td>P4</td>
+					<td>0</td>
+					<td>3</td>
+					<td>3</td>
+					<td>3</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>P5</td>
+					<td>4</td>
+					<td>4</td>
+					<td>15</td>
+					<td>11</td>
+					<td>7</td>
+					<td>7</td>
+					<td>11</td>
+					<td>15</td>
+				</tr>
+			</tbody>
+		</table>
+		<ul>
+			<li>Avg Waiting time =5.2 and it is lesser</li>
+			<li>implemented through mean heap algorithm</li>
+			<li>it is greedy algorithm</li>
+			<li>TC : O (nlogn)</li>
+		</ul>
+		<h1 id="srtf(shortest-remaining-time-first-)-algorithm" tabindex="-1">SRTF(Shortest Remaining Time First )
+			Algorithm</h1>
+		<ul>
+			<li>Method with Preemption</li>
+			<li>Criteria :Burst</li>
+			<li>Mode: Premption</li>
+			<li>Premption: Means cpu will execute the process to a fixed quantumn time it will not care for process
+				completion</li>
+		</ul>
+		<p><img src="image/2.processe_state/1704566239750.png" alt="17045663942869">
+			<img src="image/2.processe_state/1704566394286.png" alt="1704566394286">
+		</p>
+		<pre class='mermaid'>gantt 
+title Shortest Remaining Time First Gantt Chart
+dateFormat HH:mm
+axisFormat %H:%M
+Initial milestone : milestone, m1, 00:00, 0m
+P1 :1m
+P2:1m
+P3:1m
+P3:1m
+P4:1m
+P6:1m
+P6:1m
+P2:3m
+P5:3m
+P1:7m
+Final milestone : milestone,
+</pre>
+		<h2 id="advantages-of-srtf" tabindex="-1">Advantages of SRTF</h2>
+		<ul>
+			<li>Minimun Average waiting among all the algorithms</li>
+			<li>May cause high waiting and high response times for CPU bound jobs</li>
+			<li>I mpractical</li>
+		</ul>
+		<h1 id="priority-scheduling" tabindex="-1">Priority Scheduling</h1>
+		<h2 id="priority-scheduling-(non-preemptive)" tabindex="-1">Priority Scheduling (Non Preemptive)</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>PID</th>
+					<th>Arrival Time</th>
+					<th>Priority Value</th>
+					<th>Burn Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P0</td>
+					<td>0</td>
+					<td>5</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>P1</td>
+					<td>1</td>
+					<td>3</td>
+					<td>5</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>2</td>
+					<td>15</td>
+					<td>8</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>3</td>
+					<td>12</td>
+					<td>6</td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<thead>
+				<tr>
+					<th>PID</th>
+					<th>AT</th>
+					<th>PV</th>
+					<th>BT</th>
+					<th>TAT</th>
+					<th>WT</th>
+					<th>ST</th>
+					<th>ET</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P0</td>
+					<td>0</td>
+					<td>5</td>
+					<td>3</td>
+					<td>3</td>
+					<td>0</td>
+					<td>0</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>P1</td>
+					<td>1</td>
+					<td>3</td>
+					<td>5</td>
+					<td>21</td>
+					<td>16</td>
+					<td>19</td>
+					<td>22</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>2</td>
+					<td>15</td>
+					<td>8</td>
+					<td>9</td>
+					<td>1</td>
+					<td>5</td>
+					<td>11</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>3</td>
+					<td>12</td>
+					<td>6</td>
+					<td>14</td>
+					<td>8</td>
+					<td>13</td>
+					<td>17</td>
+				</tr>
+			</tbody>
+		</table>
+		<pre class='mermaid'>gantt
+title Priority Scheduling (Non Preemptive) gantt chart
+dateFormat HH:mm
+axisFormat %H:%M
+Initial milestone : milestone, m1, 00:00, 0m
+P0:5m
+P2:8m
+P3:6m
+P1:5m
+</pre>
+		<h2 id="priority-scheduling-(preemptive)" tabindex="-1">Priority Scheduling (Preemptive)</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>PID</th>
+					<th>Arrival Time</th>
+					<th>Priority Value</th>
+					<th>Burn Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P0</td>
+					<td>0</td>
+					<td>5</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>P1</td>
+					<td>1</td>
+					<td>3</td>
+					<td>5</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>2</td>
+					<td>15</td>
+					<td>8</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>3</td>
+					<td>12</td>
+					<td>6</td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<thead>
+				<tr>
+					<th>PID</th>
+					<th>AT</th>
+					<th>PV</th>
+					<th>BT</th>
+					<th>TAT</th>
+					<th>WT</th>
+					<th>ST</th>
+					<th>ET</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P0</td>
+					<td>0</td>
+					<td>5</td>
+					<td>3</td>
+					<td>17</td>
+					<td>14</td>
+					<td>0</td>
+					<td>17</td>
+				</tr>
+				<tr>
+					<td>P1</td>
+					<td>1</td>
+					<td>3</td>
+					<td>5</td>
+					<td>21</td>
+					<td>16</td>
+					<td>17</td>
+					<td>22</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>2</td>
+					<td>15</td>
+					<td>8</td>
+					<td>8</td>
+					<td>0</td>
+					<td>2</td>
+					<td>10</td>
+				</tr>
+				<tr>
+					<td>P3</td>
+					<td>3</td>
+					<td>12</td>
+					<td>6</td>
+					<td>13</td>
+					<td>7</td>
+					<td>10</td>
+					<td>15</td>
+				</tr>
+			</tbody>
+		</table>
+		<pre class='mermaid'>gantt
+title Priority Scheduling (Non Preemptive) gantt chart
+dateFormat HH:mm
+axisFormat %H:%M
+Initial milestone : milestone, m1, 00:00, 0m
+P0:2m
+P2:8m
+P3:6m
+P0:1m
+P1:5m
+</pre>
+		<ul>
+			<li>Starving of Low Priority in Priority Scheduling
+				<ul>
+					<li>Solution: Aging</li>
+				</ul>
+			</li>
+		</ul>
+		<h1 id="round-robin-scheduling" tabindex="-1">Round Robin Scheduling</h1>
+		<ul>
+			<li>Uses time Quantum</li>
+			<li>Circular Queue(ready queue)</li>
+			<li>Average waiting time can be higher but response time is good</li>
+			<li>Sensitive to quantumn
+				<ul>
+					<li>smaller quantum time: context switch overhaed</li>
+					<li>large quantum : become FCFS</li>
+				</ul>
+			</li>
+		</ul>
+		<table>
+			<thead>
+				<tr>
+					<th>PID<br />Time Quantum=2</th>
+					<th>AT</th>
+					<th>BT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>P0</td>
+					<td>0</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>P1</td>
+					<td>1</td>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>P2</td>
+					<td>1</td>
+					<td>5</td>
+				</tr>
+			</tbody>
+		</table>
+		<pre class='mermaid'>graph LR;
+A[P0&lt;br&gt;0-2]
+B[P1&lt;br&gt;2-3]
+C[P2&lt;br&gt;3-5]
+D[P0&lt;br&gt;5-6]
+E[P2&lt;br&gt;6-9]
+A--&gt;B--&gt;C--&gt;D--&gt;E
+</pre>
+		<h1 id="highest-response-rate-next-(hrrn)" tabindex="-1">Highest Response Rate Next (HRRN)</h1>
+		<p><img src="image/2.processe_state/1704571700634.png" alt="1704571700634"></p>
+		<p><img src="image/2.processe_state/1704571809090.png" alt="1704571809090"></p>
+		<p><img src="image/2.processe_state/1704571859888.png" alt="1704571859888"></p>
+		<p><img src="image/2.processe_state/1704571906548.png" alt="1704571906548"></p>
+		<h1 id="multilevel-queue-schedulling-algorithm-(mlq)" tabindex="-1">Multilevel Queue Schedulling Algorithm (MLQ)
+		</h1>
+		<pre class='mermaid'>graph LR;
+A[System Process]
+B[Interactive Process]
+C[Batch Process]
+D[Student Process]
+E[CPU]
+A--Ready Queue 1--&gt;E
+B--Ready Queue 2--&gt;E
+C--Ready Queue 3--&gt;E
+D--Ready Queue 4--&gt;E
+X[High Priority]
+Y[Medium Priority]
+Z[Lowest Priority]
+X--&gt;A
+Y--&gt;B
+Z--&gt;D
+T[.........]
+T--&gt;C
+</pre>
+		<pre class='mermaid'>graph LR;
+A[System Process&lt;br&gt;P1,P2]
+B[Interactive Process&lt;br&gt;P3,P4]
+C[Batch Process&lt;br&gt;P5,P6]
+D[Student Process&lt;br&gt;P7]
+D--Let P7 is Sent--&gt;E
+E[CPU&lt;br&gt;P7 executing]
+A--Ready Queue 1&lt;br&gt;Round Robin--&gt;E
+B--Ready Queue 2&lt;br&gt;FCFS--&gt;E
+C--Ready Queue 3&lt;br&gt;SJF--&gt;E
+D--Ready Queue 4&lt;br&gt;Priority--&gt;E
+X[High Priority]
+Y[Medium Priority]
+Z[Lowest Priority]
+X--&gt;A
+Y--&gt;B
+Z--&gt;D
+T[.........]
+T--&gt;C
+</pre>
+		<pre class='mermaid'>graph LR;
+A[System Process&lt;br&gt;P1,P2&lt;br&gt;Lets P8 new came]
+B[Interactive Process&lt;br&gt;P3,P4]
+C[Batch Process&lt;br&gt;P5,P6]
+D[Student Process&lt;br&gt;P7]
+E--P7 sent Back--&gt;D
+E[CPU&lt;br&gt;P7 suspended&lt;br&gt;P8 came]
+A--Ready Queue 1&lt;br&gt;Round Robin--&gt;E
+B--Ready Queue 2&lt;br&gt;FCFS--&gt;E
+C--Ready Queue 3&lt;br&gt;SJF--&gt;E
+D--Ready Queue 4&lt;br&gt;Priority--&gt;E
+X[High Priority]
+Y[Medium Priority]
+Z[Lowest Priority]
+X--&gt;A
+Y--&gt;B
+Z--&gt;D
+T[.........]
+T--&gt;C
+</pre>
+		<ul>
+			<li>Processes from one queue to another queue will not change</li>
+			<li>This will cause startvation</li>
+			<li>A process can have a longer wait time and cause starvation</li>
+		</ul>
+		<h1 id="multilevel-feedback-queue-scheduling-algorithm(mlfq)" tabindex="-1">MultiLevel Feedback Queue Scheduling
+			Algorithm(MLFQ)</h1>
+		<p><img src="image/2.processe_state/1704618090165.png" alt="1704618090165"></p>
+		<ul>
+			<li>No starvation problem</li>
+			<li>Windows and Mac OS uses MLFQ</li>
+			<li>Linux uses MLQ but now it uses more advanced algorithm</li>
+		</ul>
+
+	</div>
+</body>
+
+</html>
