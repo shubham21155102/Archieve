@@ -1,0 +1,97 @@
+package trees.java;
+
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Set;
+
+public class Test {
+    public static void main(String[] args) {
+        LinkedList<Integer> l = new LinkedList<Integer>();
+        LinkedList<Integer> m = new LinkedList<Integer>();
+        l.add(23);
+        l.add(24);
+        l.add(25);
+        l.add(26);
+        l.add(27);
+        l.add(28);
+        l.addAll(0, l);
+        l.add(3, 56);
+        l.addFirst(45);
+        l.addLast(46);
+        System.out.println(l);
+        m = (LinkedList<Integer>) l.clone();
+        l.clear();
+        System.out.println(l);
+        System.out.println(m);
+        ArrayDeque<Integer> adq = new ArrayDeque<Integer>();
+        adq.addFirst(23);
+        adq.addLast(24);
+        adq.addFirst(25);
+        adq.addLast(26);
+        adq.addFirst(27);
+        adq.addLast(28);
+        System.out.println(adq);
+        adq.removeFirst();
+        adq.removeLast();
+        System.out.println(adq);
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        hm.put(2, 9);
+        hm.put(3, 8);
+        hm.put(4, 7);
+        hm.put(5, 6);
+        hm.put(6, 5);
+        hm.put(7, 4);
+        hm.put(8, 3);
+        hm.put(9, 2);
+        hm.put(10, 1);
+        hm.put(11, 0);
+        hm.put(2, 34);
+        System.out.println(hm);
+        hm.remove(2);
+        System.out.println(hm);
+        hm.remove(3, 8);
+        System.out.println(hm);
+        hm.replace(4, 7, 8);
+        System.out.println(hm);
+        hm.replace(5, 6, 9);
+        System.out.println(hm);
+        hm.replace(6, 5, 10);
+        System.out.println(hm);
+        HashSet<Integer> hs = new HashSet<>();
+        hs.add(2);
+        hs.add(3);
+        hs.add(4);
+        hs.add(4);
+        hs.add(2);
+        hs.add(3);
+        hs.add(67);
+        hs.add(45);
+        System.out.println(hs);
+        Map<Integer, Integer> sm = new HashMap<>();
+        sm.put(2, 9);
+        sm.put(1, 67);
+        sm.put(3, 45);
+        System.out.println(sm);
+        Set<Integer> s = new HashSet<Integer>();
+        s.add(2);
+        s.add(-1);
+        s.add(3);
+        System.out.println(s);
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+        pq.add(7);
+        pq.add(8);
+        pq.add(9);
+        pq.add(2);
+        pq.add(3);
+        pq.add(4);
+        pq.add(5);
+        pq.add(6);
+
+        System.out.println(pq);
+
+    }
+}

@@ -1,4 +1,4 @@
-package DSA.LinkedList.java;
+package LinkedList.java;
 
 public class Node_DLL {
     public int data;
