@@ -38,3 +38,25 @@ int main() {
 
     return 0;
 }
+// output:
+// Creation started
+// Creation started
+// Creation started
+// Creation started
+// Creation started
+// Creation started
+// Creation started
+// Creation started
+// Creation started
+// Creation started
+// Prime number 1: 2
+// Prime number 2: 5
+// Prime number 3: 10
+// Prime number 4: 17
+// Prime number 5: 28
+// Prime number 6: 41
+// Prime number 7: 58
+// Prime number 8: 77
+// Prime number 9: 100
+// Prime number 10: 129
+
