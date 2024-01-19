@@ -1,0 +1,1 @@
+source C:\Users\Satyam\Desktop\Shubham_Notes\satyam\Scripts\activate
