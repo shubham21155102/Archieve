@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    </script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        center {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .mermaid {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #bfs_div {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        h3 {
+            color: #555;
+        }
+
+        select,
+        button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h1>Graph</h1>
+        <pre id="mermaid" class="mermaid">
+            graph TB;
+            subgraph graph
+            A[0]-->B[1]
+            A-->C[2]
+            B-->D[3]          
+            C-->E[4]          
+            C-->F[5]          
+            F-->D
+            end
+        </pre>
+    </center>
+    <div id="bfs_div">
+        <h2>BFS Traversal</h2>
+        <h3>Want to get BFS from
+            <select id="bfs_input">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </h3>
+        <button id="bfs_trav">Traverse</button>
+
+    </div>
+    <script>
+        const graph = {
+            0: [1, 2],
+            1: [0, 3],
+            2: [0, 4, 5],
+            3: [1, 5],
+            4: [2],
+            5: [2, 3]
+        };
+
+        function bfs(graph, start) {
+            const queue = [start];
+            const visited = [];
+            const result = [];
+            while (queue.length) {
+                const vertex = queue.shift();
+                if (!visited.includes(vertex)) {
+                    visited.push(vertex);
+                    result.push(vertex);
+                    const neighbors = graph[vertex];
+                    for (let neighbor of neighbors) {
+                        queue.push(neighbor);
+                    }
+                }
+            }
+            return result;
+        }
+
+        const bfsTrav = document.getElementById('bfs_trav');
+        bfsTrav.addEventListener('click', () => {
+            var bfsInput = document.getElementById('bfs_input').value;
+            bfsInput = parseInt(bfsInput);
+            const bfsResult = bfs(graph, bfsInput);
+            console.log('BFS Traversal', bfsResult);
+            console.log('BFS Traversal of:', bfsInput);
+
+            const bfsDiv = document.getElementById('bfs_div');
+            const resultDiv = document.createElement('div');
+            resultDiv.innerHTML = `<h3>BFS Traversal of ${bfsInput} is ${bfsResult}</h3>`;
+            bfsDiv.appendChild(resultDiv);
+        });
+    </script>
+
+</body>
+
+</html>

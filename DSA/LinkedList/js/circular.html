@@ -94,6 +94,23 @@
         E --> F[5]
         F --> A
     </div>
+    <script>
+        class Node{
+            constructor(data, next = null){
+                this.data = data;
+                this.next = next;
+            }
+        };
+        function printList(head){
+            let temp = head;
+            while(temp != null){
+                console.log(temp.data);
+                temp = temp.next;
+            }
+        };
+        
+    </script>
 </body>
+
 
 </html>
