@@ -1,4 +1,7 @@
-numpy 
+numpy
 pandas
 nbconvert
 matplotlib
+requests
+futures
+pandas-profiling
