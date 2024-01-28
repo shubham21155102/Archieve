@@ -1,4 +1,4 @@
-package DSA.LinkedList.java;
+package LinkedList.java;
 
 public class DoublyLinkedList {
     public static void main(String[] args) {

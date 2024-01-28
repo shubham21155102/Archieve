@@ -1,0 +1,2 @@
+docker build --tag 'image_name' .
+gcc -S 2.c  // to assembly

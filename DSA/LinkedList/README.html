@@ -2,9 +2,12 @@
 <html>
 
 <head>
-  <title>README.md</title>
+  <title>Linked List</title>
   <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/d/d2/Internet_map_1024.jpg">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  </script>
   <style>
     /*
 
@@ -1745,142 +1748,143 @@ Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
       <li>implementation of deque and queue complex</li>
       <li><strong>Robin Round Scheduling</strong></li>
     </ul>
-    <pre class='hljs'><code><div>graph TD;
+    <pre class='mermaid'>graph TD;
 0[10]
 1[5]
 2[3]
 3[15]
 4[10]
 5[8]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p0
 p1
 p2
 p3
 p4
 p5
-</div></code></pre>
-    <pre class='hljs'><code><div>graph LR;
+</pre>
+    <pre class='mermaid'>graph LR;
 A(Token Time)--&gt;5
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 1[5]
 2[3]
 3[15]
 4[10]
 5[8]
 6[5]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p1
 p2
 p3
 p4
 p5
 p0
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 2[3]
 3[15]
 4[10]
 5[8]
 6[5]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p2
 p3
 p4
 p5
 p0
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 3[15]
 4[10]
 5[8]
 6[5]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p3
 p4
 p5
 p0
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 4[10]
 5[8]
 6[5]
 7[10]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p4
 p5
 p0
 p3
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 5[8]
 6[5]
 7[10]
 8[5]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p5
 p0
 p3
 p4
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 6[5]
 7[10]
 8[5]
 9[3]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p0
 p3
 p4
 p5
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 7[10]
 8[5]
 9[3]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p3
 p4
 p5
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 8[5]
 9[3]
 10[5]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p4
 p5
 p3
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 9[3]
 10[5]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p5
 p3
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 10[5]
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
 p3
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
-</div></code></pre>
-    <pre class='hljs'><code><div>graph TD;
-</div></code></pre>
+</pre>
+    <pre class='mermaid'>graph TD;
+</pre>
+    <pre class='mermaid'>graph TD;
+</pre>
     <h2 id="implementations" tabindex="-1">Implementations</h2>
+    <img src="./js//play.png" alt="play" width="45" height="45" style="cursor:progress">
     <pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span>{</span>
