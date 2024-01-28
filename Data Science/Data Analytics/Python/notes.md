@@ -34,5 +34,12 @@ A-->D[COMPARISION OPERATORS]
 A-->E[BITWISE OPERATORS]
 ```
 
-
 ### Arithematic Operators:
+
+- '+' , '-' , '*' , '/' include arithematic operators used for operations like addition , substraction , multiplication , division etc....
+- 2+3 = 5
+- 5-4 = 1
+- 4*9 = 36
+- 9/4 = 2.25
+
+### Logical Operators:
