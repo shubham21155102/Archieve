@@ -1,38 +1,39 @@
 name: Deployment Check
+
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
-    workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
-    hello:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v2
-            - name: Hello
-              run: echo "Hello World"
-              shell: bash
-    goodbye:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v2
-            - name: Goodbye
-              run: echo "Goodbye World"
-              shell: bash
-    gRPC_Deployment_Check:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Jump to gRPC directory
-              uses: actions/checkout@v2
-              with:
-                  path: gRPC/server
-            - name: Install dependencies
-              run: npm install
-              shell: bash   
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Hello
+        run: echo "Hello World"
 
+  goodbye:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Goodbye
+        run: echo "Goodbye World"
 
+  gRPC_Deployment_Check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Jump to gRPC directory
+        uses: actions/checkout@v2
+        with:
+          path: gRPC/server
+      - name: Install dependencies
+        run: |
+          cd gRPC/server
+          npm install
