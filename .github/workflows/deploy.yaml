@@ -24,3 +24,15 @@ jobs:
             - name: Goodbye
               run: echo "Goodbye World"
               shell: bash
+    gRPC_Deployment_Check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Jump to gRPC directory
+              uses: actions/checkout@v2
+              with:
+                  path: gRPC/server
+            - name: Install dependencies
+              run: npm install
+              shell: bash   
+
+
