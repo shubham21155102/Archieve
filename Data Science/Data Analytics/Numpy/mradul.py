@@ -20,3 +20,4 @@ urls = [f"{API_ENDPOINT}" for i in range(num_requests)]
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
     executor.map(make_request,urls)
+    
