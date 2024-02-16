@@ -439,6 +439,50 @@ blockquote {
 <ul>
 <li>An application is a logical collection of Elastic Beanstalk components, including environments, versions, and environment configurations. In Elastic Beanstalk, you can create and manage multiple applications. An environment is a versioned, runnable instance of an application. You can run one or more environments in an application.</li>
 </ul>
+<h2 id="instance-traffic-and-scaling" tabindex="-1">Instance traffic and scaling</h2>
+<ol>
+<li><strong>Capacity Settings</strong> :</li>
+</ol>
+<ul>
+<li><strong>Min instances</strong> : Specifies the minimum number of instances that Elastic Beanstalk should maintain for your environment.</li>
+<li><strong>Max instances</strong> : Specifies the maximum number of instances that Elastic Beanstalk can scale up to based on traffic and load.</li>
+</ul>
+<ol start="2">
+<li><strong>Instance Types and AMI</strong> :</li>
+</ol>
+<ul>
+<li><strong>Instance types</strong> : Defines the type of EC2 instances used in your environment. In this case, <code>t4g.small</code> instances are being used.</li>
+<li><strong>AMI ID</strong> : Specifies the Amazon Machine Image (AMI) used to launch the EC2 instances.</li>
+</ul>
+<ol start="3">
+<li><strong>Scaling Settings</strong> :</li>
+</ol>
+<ul>
+<li><strong>Scaling cooldown</strong> : The amount of time, in seconds, that Elastic Beanstalk should wait before scaling the number of instances again. This helps prevent rapid scaling up and down in response to fluctuating traffic.</li>
+<li><strong>Breach duration</strong> : The amount of time, in seconds, that a metric must breach the threshold before triggering a scaling action.</li>
+<li><strong>Upper threshold</strong> : The threshold for the metric (<code>NetworkOut</code> in this case) that, when exceeded, triggers scaling up (adding more instances).</li>
+<li><strong>Lower threshold</strong> : The threshold for the metric that, when not exceeded, triggers scaling down (removing instances).</li>
+<li><strong>Scale up increment</strong> : The number of instances to add when scaling up.</li>
+<li><strong>Scale down increment</strong> : The number of instances to remove when scaling down.</li>
+</ul>
+<ol start="4">
+<li><strong>Load Balancer Settings</strong> :</li>
+</ol>
+<ul>
+<li><strong>Load balancer visibility</strong> : Specifies whether the load balancer is public or internal.</li>
+<li><strong>Load balancer subnets</strong> : Specifies the subnets where the load balancer is deployed.</li>
+<li><strong>Load balancer type</strong> : Specifies the type of load balancer (e.g., application, network).</li>
+<li><strong>Load balancer is shared</strong> : Indicates whether the load balancer is shared with other environments.</li>
+</ul>
+<ol start="5">
+<li><strong>Other Settings</strong> :</li>
+</ol>
+<ul>
+<li><strong>IMDSv1</strong> : Controls whether EC2 instance metadata service version 1 is enabled.</li>
+<li><strong>EC2 Security Groups</strong> : Specifies the security groups associated with the EC2 instances in your environment.</li>
+<li><strong>Processor type</strong> : Specifies the processor architecture used by the EC2 instances (e.g., <code>arm64</code>).</li>
+<li><strong>Availability Zones</strong> : Specifies the availability zones where instances can be launched.</li>
+</ul>
 
     </div>
 </body>
