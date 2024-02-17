@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>index.md</title>
+<title>Elastic Beanstalks</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-
+<script type="module">
+	import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+</script>
 <style>
 /*
 
@@ -483,6 +485,177 @@ blockquote {
 <li><strong>Processor type</strong> : Specifies the processor architecture used by the EC2 instances (e.g., <code>arm64</code>).</li>
 <li><strong>Availability Zones</strong> : Specifies the availability zones where instances can be launched.</li>
 </ul>
+<h2 id="updates%2C-monitoring%2C-and-logging" tabindex="-1">Updates, monitoring, and logging</h2>
+<p><strong>Monitoring:</strong></p>
+<ul>
+<li><strong>System</strong> : Indicates the level of monitoring for the environment. In this case, it's set to &quot;enhanced,&quot; which likely means that Elastic Beanstalk is collecting more detailed system-level metrics.</li>
+<li><strong>CloudWatch Custom Metrics - Instance</strong> : This setting is not configured (<code>—</code>), indicating that no custom metrics specific to instances are being sent to CloudWatch.</li>
+<li><strong>CloudWatch Custom Metrics - Environment</strong> : Similarly, no custom metrics specific to the environment are being sent to CloudWatch.</li>
+<li><strong>Log Streaming</strong> : Indicates whether log streaming to CloudWatch Logs is activated. It's currently deactivated.</li>
+<li><strong>Retention</strong> : Specifies the number of days logs are retained in CloudWatch Logs. Logs are retained for 7 days in this case.</li>
+<li><strong>Lifecycle</strong> : Indicates whether lifecycle monitoring is activated. It's currently set to false.</li>
+</ul>
+<p><strong>Updates:</strong></p>
+<ul>
+<li><strong>Managed Updates</strong> : Indicates whether managed updates are activated. Managed updates automatically apply updates to the underlying platform version of your Elastic Beanstalk environment.</li>
+<li><strong>Deployment Batch Size</strong> : Specifies the number of instances that can be updated simultaneously during a deployment. It's set to 100% of instances (<code>Deployment batch size type</code>).</li>
+<li><strong>Command Timeout</strong> : The maximum time, in seconds, that Elastic Beanstalk waits for a deployment command to finish.</li>
+<li><strong>Deployment Policy</strong> : Defines the deployment strategy. Here, it's set to &quot;AllAtOnce,&quot; which means that all instances are updated at the same time during a deployment.</li>
+<li><strong>Health Threshold</strong> : Specifies the threshold for considering the deployment successful based on health checks.</li>
+<li><strong>Ignore Health Check</strong> : Indicates whether health checks are ignored during deployment. It's set to false, meaning health checks are not ignored.</li>
+<li><strong>Instance Replacement</strong> : Specifies whether instances are replaced during a deployment. It's set to false.</li>
+<li><strong>Platform Software</strong> : Indicates whether lifecycle management for platform software is activated. It's set to false.</li>
+<li><strong>Proxy Server</strong> : Specifies the proxy server used. Here, it's set to nginx.</li>
+<li><strong>Logs Retention</strong> : Specifies the number of days logs are retained on instances. Logs are retained for 7 days.</li>
+<li><strong>Rotate Logs</strong> : Indicates whether log rotation is activated.</li>
+<li><strong>Update Level</strong> : Specifies the level of updates. Here, it's set to &quot;minor.&quot;</li>
+<li><strong>X-Ray Enabled</strong> : Indicates whether AWS X-Ray tracing is enabled. It's currently deactivated.</li>
+</ul>
+<h3 id="let's-see-how-to-deploy-a-web-application-using-aws-elasticbeanstalks-using-github-actions." tabindex="-1">Let's see how to deploy a web application using AWS Elasticbeanstalks using GitHub Actions.</h3>
+<pre class='hljs'><code><div><span class="hljs-attr">name:</span> <span class="hljs-string">Deploy</span> <span class="hljs-string">Develeopment</span> <span class="hljs-string">Server</span> <span class="hljs-string">to</span> <span class="hljs-string">Beanstalk</span>
+
+<span class="hljs-attr">on:</span>
+  <span class="hljs-attr">push:</span>
+    <span class="hljs-attr">branches:</span> [<span class="hljs-string">dev</span>]
+
+<span class="hljs-attr">jobs:</span>
+  <span class="hljs-attr">build:</span>
+    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>
+    <span class="hljs-attr">steps:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Checkout</span> <span class="hljs-string">source</span> <span class="hljs-string">code</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v4</span>
+
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Set</span> <span class="hljs-string">current</span> <span class="hljs-string">date</span> <span class="hljs-string">as</span> <span class="hljs-string">env</span> <span class="hljs-string">variable</span>
+        <span class="hljs-attr">id:</span> <span class="hljs-string">current-date</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">echo</span> <span class="hljs-string">&quot;NOW=$(date +&#x27;%Y-%m-%dT%H:%M:%S&#x27;)&quot;</span> <span class="hljs-string">&gt;&gt;</span> <span class="hljs-string">$GITHUB_OUTPUT</span>
+
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">Node.js</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v4</span>
+        <span class="hljs-attr">with:</span>
+          <span class="hljs-attr">node-version:</span> <span class="hljs-number">18</span>
+
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">dependencies</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">i</span>
+
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">npm</span> <span class="hljs-string">run</span> <span class="hljs-string">build</span>
+
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Generate</span> <span class="hljs-string">deployment</span> <span class="hljs-string">package</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">zip</span> <span class="hljs-string">-r</span> <span class="hljs-string">${{</span> <span class="hljs-string">steps.current-date.outputs.NOW</span> <span class="hljs-string">}}.zip</span> <span class="hljs-string">.</span> <span class="hljs-string">-x</span> <span class="hljs-string">&#x27;*.git*&#x27;</span> <span class="hljs-string">-x</span> <span class="hljs-string">&#x27;*node_modules*&#x27;</span>
+
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Deploy</span> <span class="hljs-string">to</span> <span class="hljs-string">AWS</span> <span class="hljs-string">Elasticbeanstalk</span>
+        <span class="hljs-attr">uses:</span> <span class="hljs-string">einaregilsson/beanstalk-deploy@v21</span>
+        <span class="hljs-attr">with:</span>
+          <span class="hljs-attr">aws_access_key:</span> <span class="hljs-string">${{</span> <span class="hljs-string">secrets.AWS_ACCESS_KEY_ID</span> <span class="hljs-string">}}</span>
+          <span class="hljs-attr">aws_secret_key:</span> <span class="hljs-string">${{</span> <span class="hljs-string">secrets.AWS_SECRET_ACCESS_KEY</span> <span class="hljs-string">}}</span>
+          <span class="hljs-attr">application_name:</span> <span class="hljs-string">backend-dev</span>
+          <span class="hljs-attr">environment_name:</span> <span class="hljs-string">backend-dev-env</span>
+          <span class="hljs-attr">version_label:</span> <span class="hljs-string">${{</span> <span class="hljs-string">github.sha</span> <span class="hljs-string">}}</span>
+          <span class="hljs-attr">region:</span> <span class="hljs-string">ap-south-1</span>
+          <span class="hljs-attr">deployment_package:</span> <span class="hljs-string">${{</span> <span class="hljs-string">steps.current-date.outputs.NOW</span> <span class="hljs-string">}}.zip</span>
+          <span class="hljs-attr">existing_bucket_name:</span> <span class="hljs-string">backend-dev-deployment</span>
+</div></code></pre>
+<pre class='mermaid'>graph TD;
+subgraph Local Machine
+P[Local Machine]
+X[CodeBase Containing &lt;br&gt; Github WorkFlow file]
+Y[After any change &lt;br&gt;on configured branch &lt;br&gt;below action is happening]
+end
+subgraph GitHub
+Q[GitHub]
+Z[Code Changed From Local&lt;br&gt;and Pushed To Github]
+W[Workflow/GitHub Actions Started Working]
+end
+subgraph R[Virtual Machine Made by&lt;br&gt; Github For Action Running]
+S[Virtual Machine]
+T[Checkout source code]
+U[Set current date as env variable]
+V[Setup Node.js]
+V1[Install dependencies]
+V2[Build]
+V3[Generate deployment package]
+end
+X--&gt;P
+Y--&gt;P
+P--&gt;Z
+P--&gt;W
+Z--&gt;Q
+W--&gt;Q
+Q--&gt;T
+Q--&gt;U
+Q--&gt;V
+Q--&gt;V1
+Q--&gt;V2
+Q--&gt;V3
+T--&gt;S
+U--&gt;S
+V--&gt;S
+V1--&gt;S
+V2--&gt;S
+V3--&gt;S
+subgraph R1[Deploying to ElasticBeanstalks]
+A[AWS Elasticbeanstalk]
+end
+S--&gt;A
+</pre>
+<h4 id="some-more-explanation-of-above-workflow-for-some-jobs" tabindex="-1">Some more Explanation of Above Workflow for some Jobs</h4>
+<h5 id="checkout-source-code-job" tabindex="-1">Checkout source code Job</h5>
+<ul>
+<li><strong>Name</strong> : &quot;Checkout source code&quot;</li>
+<li>This is just a descriptive name for the step to indicate what it does.</li>
+<li><strong>Uses</strong> : <code>actions/checkout@v4</code></li>
+<li>This is a GitHub Action that's being utilized to perform the checkout operation.</li>
+<li><code>actions/checkout</code> is the name of the action.</li>
+<li><code>@v4</code> specifies the version of the action to use. In this case, it's version 4.</li>
+<li><strong>Role</strong> :</li>
+<li>The role of this step is to fetch the latest source code from your repository and make it available for subsequent steps in the workflow.</li>
+<li>It essentially clones your repository into the working directory of the workflow runner (typically the GitHub Actions runner).</li>
+<li>This step is crucial for workflows as it ensures that subsequent steps have access to the latest version of your codebase, enabling them to perform tasks such as building, testing, and deploying your application.</li>
+</ul>
+<h5 id="generate-deployment-package-%3A" tabindex="-1"><strong>Generate Deployment Package</strong> :</h5>
+<ul>
+<li>This step creates a deployment package that will be used to deploy your application to AWS Elastic Beanstalk.</li>
+<li>The <code>zip</code> command is used to create a zip file containing your application files, excluding <code>.git</code> directory and <code>node_modules</code> directory.</li>
+<li>The output of this step is the name of the generated zip file, which includes the current date and time.</li>
+</ul>
+<h5 id="deploy-to-aws-elastic-beanstalk-%3A" tabindex="-1"><strong>Deploy to AWS Elastic Beanstalk</strong> :</h5>
+<ul>
+<li>This step is responsible for deploying your application to AWS Elastic Beanstalk.</li>
+<li>It uses the <code>einaregilsson/beanstalk-deploy</code> GitHub Action to handle the deployment process.</li>
+<li>Configuration options for the deployment are provided using the <code>with</code> key.
+<ul>
+<li><code>aws_access_key</code> and <code>aws_secret_key</code>: These are AWS credentials used for authentication.</li>
+<li><code>application_name</code> and <code>environment_name</code>: These specify the Elastic Beanstalk application and environment to which the deployment will be made.</li>
+<li><code>version_label</code>: This is set to <code>${{ github.sha }}</code>, which typically represents the Git commit SHA of the code being deployed.</li>
+<li><code>region</code>: Specifies the AWS region where Elastic Beanstalk is located.</li>
+<li><code>deployment_package</code>: This parameter specifies the path to the deployment package created in the previous step.</li>
+<li><code>existing_bucket_name</code>: Specifies the name of an existing Amazon S3 bucket where the deployment package will be uploaded. This bucket is used by Elastic Beanstalk to access the deployment package.</li>
+</ul>
+</li>
+</ul>
+<h5 id="important-questions-related-to-elasticbeanstalks" tabindex="-1">Important Questions Related to ElasticBeanstalks</h5>
+<p>1). Elastic beanstalks stores that zip file first in s3 ?</p>
+<p>Yes, that's correct. When you deploy an application to AWS Elastic Beanstalk using the AWS Management Console, AWS CLI, or API, Elastic Beanstalk stores the deployment package (in your case, the zip file) in an Amazon S3 bucket.</p>
+<p>Here's how the deployment process typically works:</p>
+<ol>
+<li>You generate a deployment package (such as a zip file) containing your application code and any other necessary files.</li>
+<li>When you initiate a deployment to Elastic Beanstalk, whether through the AWS Management Console, CLI, or API, Elastic Beanstalk uploads this deployment package to an Amazon S3 bucket.</li>
+<li>Elastic Beanstalk then retrieves the deployment package from the S3 bucket and deploys it to the instances in your Elastic Beanstalk environment.</li>
+<li>Once the deployment is complete, the deployment package remains in the S3 bucket, where it can be accessed in case of future deployments or for reference.</li>
+</ol>
+<p>This mechanism allows Elastic Beanstalk to efficiently manage the deployment process by separating the storage of the deployment package from the deployment itself. It also enables Elastic Beanstalk to scale deployments across multiple instances in your environment, as instances can simultaneously retrieve the deployment package from the S3 bucket during deployment.</p>
+<p>2). By this my s3 is getting full day by day what can we do?</p>
+<p>If your Amazon S3 bucket used for Elastic Beanstalk deployments is getting full day by day, you may want to implement strategies to manage the storage usage effectively. Here are some steps you can take to address this issue:</p>
+<ol>
+<li><strong>Retention Policy</strong> : Implement a retention policy to automatically delete older deployment packages from the S3 bucket after a certain period. For example, you can configure lifecycle rules in S3 to transition or expire objects based on their age.</li>
+<li><strong>Versioning</strong> : If versioning is enabled for your S3 bucket, consider enabling lifecycle policies to manage object versions. You can specify rules to delete older versions of objects after a certain period while retaining the latest version.</li>
+<li><strong>Review and Cleanup</strong> : Regularly review the contents of the S3 bucket and identify any unnecessary or obsolete deployment packages. You can manually delete these files or automate the cleanup process using scripts or AWS SDKs.</li>
+<li><strong>Optimize Deployment Packages</strong> : Review your deployment process and optimize the size of deployment packages. Minimize unnecessary files and dependencies included in the package to reduce storage consumption.</li>
+<li><strong>Archive to Glacier</strong> : For long-term storage of historical deployment packages that are rarely accessed, consider archiving them to Amazon Glacier. Glacier offers lower storage costs compared to standard S3 storage but with longer retrieval times.</li>
+<li><strong>Cost Monitoring</strong> : Monitor your AWS billing and usage reports to track storage costs associated with the S3 bucket. This can help identify trends and anomalies in storage usage and take appropriate actions to optimize costs.</li>
+<li><strong>Use Multiple Buckets</strong> : If your deployment packages include large files or datasets that are rarely accessed, consider using separate S3 buckets with different lifecycle policies based on access frequency and retention requirements.</li>
+</ol>
+<p>By implementing these strategies, you can effectively manage storage usage in your S3 bucket used for Elastic Beanstalk deployments and optimize costs associated with AWS storage services.</p>
 
     </div>
 </body>
