@@ -54,3 +54,30 @@ AWS Elastic Beanstalk is an easy-to-use service for deploying and scaling web ap
 - **EC2 Security Groups** : Specifies the security groups associated with the EC2 instances in your environment.
 - **Processor type** : Specifies the processor architecture used by the EC2 instances (e.g., `arm64`).
 - **Availability Zones** : Specifies the availability zones where instances can be launched.
+
+## Updates, monitoring, and logging
+
+**Monitoring:**
+
+* **System** : Indicates the level of monitoring for the environment. In this case, it's set to "enhanced," which likely means that Elastic Beanstalk is collecting more detailed system-level metrics.
+* **CloudWatch Custom Metrics - Instance** : This setting is not configured (`—`), indicating that no custom metrics specific to instances are being sent to CloudWatch.
+* **CloudWatch Custom Metrics - Environment** : Similarly, no custom metrics specific to the environment are being sent to CloudWatch.
+* **Log Streaming** : Indicates whether log streaming to CloudWatch Logs is activated. It's currently deactivated.
+* **Retention** : Specifies the number of days logs are retained in CloudWatch Logs. Logs are retained for 7 days in this case.
+* **Lifecycle** : Indicates whether lifecycle monitoring is activated. It's currently set to false.
+
+**Updates:**
+
+* **Managed Updates** : Indicates whether managed updates are activated. Managed updates automatically apply updates to the underlying platform version of your Elastic Beanstalk environment.
+* **Deployment Batch Size** : Specifies the number of instances that can be updated simultaneously during a deployment. It's set to 100% of instances (`Deployment batch size type`).
+* **Command Timeout** : The maximum time, in seconds, that Elastic Beanstalk waits for a deployment command to finish.
+* **Deployment Policy** : Defines the deployment strategy. Here, it's set to "AllAtOnce," which means that all instances are updated at the same time during a deployment.
+* **Health Threshold** : Specifies the threshold for considering the deployment successful based on health checks.
+* **Ignore Health Check** : Indicates whether health checks are ignored during deployment. It's set to false, meaning health checks are not ignored.
+* **Instance Replacement** : Specifies whether instances are replaced during a deployment. It's set to false.
+* **Platform Software** : Indicates whether lifecycle management for platform software is activated. It's set to false.
+* **Proxy Server** : Specifies the proxy server used. Here, it's set to nginx.
+* **Logs Retention** : Specifies the number of days logs are retained on instances. Logs are retained for 7 days.
+* **Rotate Logs** : Indicates whether log rotation is activated.
+* **Update Level** : Specifies the level of updates. Here, it's set to "minor."
+* **X-Ray Enabled** : Indicates whether AWS X-Ray tracing is enabled. It's currently deactivated.
