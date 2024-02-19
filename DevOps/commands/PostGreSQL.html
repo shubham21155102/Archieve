@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>docker.md</title>
+<title>PostGreSQL.md</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
 <style>
@@ -420,47 +420,36 @@ blockquote {
 </head>
 <body>
     <div class="content-wrapper">
-        <h1 id="docker-commands" tabindex="-1">Docker Commands</h1>
-<h3 id="image-builder" tabindex="-1">Image Builder</h3>
-<pre class='hljs'><code><div>docker build -t &lt;image-name&gt; .
-</div></code></pre>
-<h3 id="run-container" tabindex="-1">Run Container</h3>
-<pre class='hljs'><code><div>docker run -d -p 8080:8080 &lt;image-name&gt;
-</div></code></pre>
-<pre class='hljs'><code><div>docker tag build-server:latest shubham21155102/vercel:build-server
+        <ul>
+<li>Connect to PostGreSQL</li>
+</ul>
+<pre class='hljs'><code><div>psql -h username -p 5432 -U postgres
 </div></code></pre>
 <ul>
-<li>
-<p>Pulling an Image</p>
-<pre class='hljs'><code><div>docker pull amazonlinux
-</div></code></pre>
-</li>
-<li>
-<p>Docker to provide a JSON representation of all the metadata associated with the <code>amazonlinux</code> image.</p>
-<pre class='hljs'><code><div>docker image inspect amazonlinux
-</div></code></pre>
-</li>
-<li>
-<p>export the filesystem of a Docker container created from the <code>amazonlinux</code> image to a TAR archive named <code>amazonlinux.tar</code>.</p>
-<pre class='hljs'><code><div>docker export $(docker create amazonlinux) &gt; amazonlinux.tar
-</div></code></pre>
-</li>
-<li>
-<p>Interacting with Amazon linux</p>
-<pre class='hljs'><code><div>docker run -it amazonlinux /bin/bash
-</div></code></pre>
-</li>
-<li>
-<p>Bulk Delete Images</p>
-<pre class='hljs'><code><div>docker rmi -f $(docker images -a -q)
-</div></code></pre>
-</li>
-<li>
-<p>Command to delete all containers</p>
-<pre class='hljs'><code><div>docker image prune -f
-</div></code></pre>
-</li>
+<li>List all databases</li>
 </ul>
+<pre class='hljs'><code><div>\l
+</div></code></pre>
+<ul>
+<li>List all databases</li>
+</ul>
+<pre class='hljs'><code><div>SELECT datname FROM pg_database;
+</div></code></pre>
+<ul>
+<li>Connect to a specific database</li>
+</ul>
+<pre class='hljs'><code><div>psql -d dev
+</div></code></pre>
+<ul>
+<li>Connect to a specific database if you are already connected to PostGreSQL's default database</li>
+</ul>
+<pre class='hljs'><code><div>\c dev
+</div></code></pre>
+<ul>
+<li>List all tables in a database</li>
+</ul>
+<pre class='hljs'><code><div>\dt
+</div></code></pre>
 
     </div>
 </body>
