@@ -6,3 +6,4 @@ requests
 futures
 pandas-profiling
 scikit-learn
+statsmodels
