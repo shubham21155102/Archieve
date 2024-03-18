@@ -4,7 +4,7 @@
 <title>index.md</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+	import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 </script>
 <style>
 /*
@@ -422,79 +422,337 @@ blockquote {
 </head>
 <body>
     <div class="content-wrapper">
-        <h1 id="ansible" tabindex="-1">Ansible</h1>
+        <h1 id="kubernetes" tabindex="-1">Kubernetes</h1>
 <ul>
-<li>In simple let say we have three servers, one for web server, one for database server and one for application server. We need to install some packages on all three servers. We can do it manually or we can use Ansible to automate the process.</li>
+<li>Another name K8s</li>
+<li>Contsiner Management tool</li>
+<li><strong>Kubernetes is an Open-Source Container Management tool which automates Container deployment, Container Scaling &amp; Load Balancing.</strong></li>
+<li>It schedules, runs. and manages isolated Containers which are running on virtual/Physical/Cloud Machines.</li>
+<li>All top Cloud providers Support Kubernetes</li>
 </ul>
-<p>Ansible is an open-source automation tool, commonly used for configuration management, application deployment, task automation, and orchestration. It simplifies the process of managing systems and applications, enabling administrators to automate repetitive tasks efficiently.</p>
-<h2 id="features" tabindex="-1">Features</h2>
-<h3 id="agentless-architecture" tabindex="-1">Agentless Architecture</h3>
-<p>One of the key features of Ansible is its agentless architecture. Unlike some other automation tools, Ansible doesn't require installing agents on remote systems. Instead, it uses SSH (Secure Shell) protocol to communicate with the target machines, which makes it lightweight and easy to deploy.</p>
-<h3 id="infrastructure-as-code" tabindex="-1">Infrastructure as Code</h3>
-<p>Ansible allows you to define your infrastructure as code using YAML (YAML Ain't Markup Language) syntax. This approach enables you to describe the desired state of your systems and applications in a declarative manner, making it easier to understand and manage infrastructure configurations.</p>
-<h3 id="playbooks" tabindex="-1">Playbooks</h3>
-<p>In Ansible, tasks are organized into playbooks. A playbook is a YAML file that contains a set of tasks to be executed on remote hosts. Playbooks can also define variables, templates, handlers, and more, providing a flexible and modular way to manage infrastructure.</p>
-<h3 id="idempotent-execution" tabindex="-1">Idempotent Execution</h3>
-<p>Ansible follows the idempotent principle, meaning that running the same playbook multiple times will result in the same state, regardless of the initial state of the system. This ensures consistency and predictability in your infrastructure management workflows.</p>
-<h3 id="extensibility" tabindex="-1">Extensibility</h3>
-<p>Ansible is highly extensible, with a vast collection of modules that cover a wide range of use cases, from system administration tasks to cloud provisioning and beyond. Additionally, you can create custom modules to extend Ansible's functionality and integrate it with other tools and systems.</p>
-<h2 id="getting-started" tabindex="-1">Getting Started</h2>
-<p>To get started with Ansible, you'll need to install it on a control node, which can be your local machine or a dedicated server. Ansible is available for various operating systems, including Linux, macOS, and Windows.</p>
-<p>Once installed, you can begin writing playbooks to automate tasks such as package installation, configuration management, service deployment, and more. Ansible's documentation provides comprehensive guides and examples to help you learn and master its capabilities.</p>
-<h2 id="example-playbook" tabindex="-1">Example Playbook</h2>
-<pre class='hljs'><code><div><span class="hljs-meta">---</span>
-<span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Configure</span> <span class="hljs-string">Nginx</span>
-  <span class="hljs-attr">hosts:</span> <span class="hljs-string">web_servers</span>
-  <span class="hljs-attr">become:</span> <span class="hljs-literal">true</span>
-  <span class="hljs-attr">tasks:</span>
-    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">Nginx</span>
-      <span class="hljs-attr">apt:</span>
-        <span class="hljs-attr">name:</span> <span class="hljs-string">nginx</span>
-        <span class="hljs-attr">state:</span> <span class="hljs-string">present</span>
-
-    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Copy</span> <span class="hljs-string">Nginx</span> <span class="hljs-string">configuration</span> <span class="hljs-string">file</span>
-      <span class="hljs-attr">template:</span>
-        <span class="hljs-attr">src:</span> <span class="hljs-string">nginx.conf.j2</span>
-        <span class="hljs-attr">dest:</span> <span class="hljs-string">/etc/nginx/nginx.conf</span>
-      <span class="hljs-attr">notify:</span>
-        <span class="hljs-bullet">-</span> <span class="hljs-string">restart</span> <span class="hljs-string">nginx</span>
-
-  <span class="hljs-attr">handlers:</span>
-    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">restart</span> <span class="hljs-string">nginx</span>
-      <span class="hljs-attr">service:</span>
-        <span class="hljs-attr">name:</span> <span class="hljs-string">nginx</span>
-        <span class="hljs-attr">state:</span> <span class="hljs-string">restarted</span>
-</div></code></pre>
-<p>In this example playbook, we define tasks to install Nginx, copy a configuration file, and restart the Nginx service. We target the hosts under the group <code>web_servers</code>, and we use the <code>become</code> directive to execute tasks with administrative privileges.</p>
-<h2 id="conclusion" tabindex="-1">Conclusion</h2>
-<p>Ansible is a powerful automation tool that simplifies the management of systems and applications. Its agentless architecture, infrastructure as code approach, and idempotent execution make it an ideal choice for automating various IT operations tasks. Whether you're managing a small-scale infrastructure or a large, complex environment, Ansible can help streamline your workflows and improve efficiency.</p>
-<pre class='mermaid'>graph LR;
-A[ansible master]
-B[ansible server 1]
-C[ansible server 2]
-D[ansible server 3]
+<h2 id="history" tabindex="-1">HISTORY</h2>
+<ul>
+<li>Google developed an internal system Called 'borg' later named as Omega deploy and manage thousands google application and services on their cluster</li>
+<li>In 2014, google introduced Kubernetes an open Source platform written in&quot;'Golang' and later donated to <strong>CNCF(Cloud Native Computing Foundation</strong>).</li>
+</ul>
+<h2 id="online-platform-for-k8s" tabindex="-1">ONLINE PLATFORM FOR K8s</h2>
+<ul>
+<li>Kubernetes playground.</li>
+<li>Play with k8s</li>
+<li>Play with Kubernetes Classroom</li>
+</ul>
+<h2 id="cloud-based-k8s-services" tabindex="-1">CLOUD BASED K8s SERVICES</h2>
+<ul>
+<li>GKE -&gt; Google Kubernetes Services</li>
+<li>AKS Azure Kubernetes Services</li>
+<li>Amazon Eks (Elastic Kubernetes Services)</li>
+</ul>
+<h2 id="kubernetes-installation-tool" tabindex="-1">KUBERNETES INSTALLATION TOOL</h2>
+<ul>
+<li>Minicube</li>
+<li>Kubeadm</li>
+</ul>
+<h2 id="alternative-of-kubernetes" tabindex="-1">Alternative of Kubernetes</h2>
+<ul>
+<li><strong>Docker Swarm</strong> is <strong>a container orchestration tool for clustering and scheduling Docker containers</strong> . With Swarm, IT administrators and developers can establish and manage a cluster of Docker nodes as a single virtual system.</li>
+</ul>
+<h2 id="problems-with-containers" tabindex="-1">Problems with Containers</h2>
+<ul>
+<li><strong><em>Problems with Scaling up the Containers</em></strong>
+<ul>
+<li>Containers Cannot Communicate with each other.</li>
+<li>Autoscaling and and Load Balancing was not possible</li>
+<li>Containers had to be manage Carefully</li>
+</ul>
+</li>
+</ul>
+<h2 id="features-of-kubernetes" tabindex="-1">Features of Kubernetes</h2>
+<ul>
+<li>Orchestration (Clustering of any no. Containers running on different n/w)</li>
+<li>Autoscaling(Both horizontal and Vertical Scalling)</li>
+<li>Auto-Healing</li>
+<li>Load Balancing</li>
+<li>Platform Independent (cloud/virtual/Physical)</li>
+<li>Fault Tolerance (Node /POD failure)</li>
+<li>Rollback (going back to previous Version)</li>
+<li>Health Monitoring of Containers</li>
+<li>Batch Execution (one time ,Sequential, Parallel)</li>
+<li><strong><em>Custering</em></strong></li>
+</ul>
+<pre class='mermaid'> graph LR;
+A[On Premises]
+B[On Cloud]
+C[Virtual]
 A--&gt;B
+B--&gt;A
+B--&gt;C
+C--&gt;B
+C--&gt;A
 A--&gt;C
-A--&gt;D
+</pre>
+<table>
+<thead>
+<tr>
+<th>Fetaures</th>
+<th>Kubernates</th>
+<th>Docker Swarm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insttallation and Cluster configruation</td>
+<td>Complicated and time consuming</td>
+<td>Fast and Easy</td>
+</tr>
+<tr>
+<td>Support</td>
+<td>K8s can work with almost all conatiner<br />types like rocket , docker ,containerD</td>
+<td>Work with docker only</td>
+</tr>
+<tr>
+<td>GUI</td>
+<td>Available</td>
+<td>Not Available</td>
+</tr>
+<tr>
+<td>Data Volumes</td>
+<td>only shared with conatiners in same<br /><strong>POD</strong></td>
+<td>can be shared with any containers</td>
+</tr>
+<tr>
+<td>Updates and Roleback</td>
+<td>Process scheduling to maintain services<br />while updating</td>
+<td>Progressive updates of service health<br />monitoring through the update</td>
+</tr>
+<tr>
+<td>Auto Scalling</td>
+<td>Supports both Horizontal and Vertical Scalling</td>
+<td>Not support autoscalling</td>
+</tr>
+<tr>
+<td>Logging and Monitoring</td>
+<td>Inbuilt tool for monitoring</td>
+<td>used third party tool like splunk</td>
+</tr>
+</tbody>
+</table>
+<h2 id="kubernetes-architecture" tabindex="-1">KUBERNETES Architecture</h2>
+<pre class='mermaid'>graph LR;
+A[Kubernetes Cluster]
+subgraph Master
+B[Secheduler]
+C[(etcd)]
+D([Controller &lt;br&gt; Manager])
+G[API Server]
+B--&gt;G
+C--&gt;G
+D--&gt;G
+end
+subgraph Node
+F([Kubelet])
+H([Service &lt;br&gt; Proxy])
+end
+E[kubectl]
+G--&gt;F
+G--&gt;H
+E--&gt;G
+G--&gt;E
+I[User]
+H--&gt;I
+</pre>
+<p><img src="kubernetes_archi.png" alt="Architecture">
+<img src="details_kubes.png" alt="Architecture 2"></p>
+<h2 id="types" tabindex="-1">Types</h2>
+<pre class='mermaid'>graph TB;
+subgraph type_1
+A[Master]--&gt;B[Node/Worker]
+end
+subgraph type_2
+C[Master]--&gt;D[Node/Worker]
+subgraph node
+POD
+end
+C--&gt;E[Node/Worker]
+C--&gt;F[Node/Worker]
+end
+subgraph type_3
+G[Master]--&gt;H[Node/Worker]
+I[Master]--&gt;J[Node/Worker]
+G--&gt;J
+I--&gt;H
+K[Master]--&gt;L[Node/Worker]
+end
+K--&gt;H
+K--&gt;J
+G--&gt;L
+I--&gt;L
 </pre>
 <ul>
-<li>Creating a file on all the three servers using single command on ansible master</li>
+<li>Mater Slave Architecture</li>
+<li>Client Server Architecture</li>
 </ul>
-<pre class='hljs'><code><div>ansible-playbook create_file.yml -i /home/ubuntu/ansible/hosts --private-<span class="hljs-built_in">keys</span>= ~/.ssh/ansible_key
-</div></code></pre>
-<pre class='hljs'><code><div><span class="hljs-attr">name :</span> <span class="hljs-string">This</span> <span class="hljs-string">Playbook</span> <span class="hljs-string">will</span> <span class="hljs-string">create</span> <span class="hljs-string">one</span> <span class="hljs-string">file</span> <span class="hljs-string">on</span> <span class="hljs-string">each</span> <span class="hljs-string">servers</span>
-<span class="hljs-attr">hosts :</span> <span class="hljs-string">all</span>
-<span class="hljs-attr">become :</span> <span class="hljs-literal">true</span>
-<span class="hljs-attr">tasks :</span> 
-<span class="hljs-bullet">-</span> <span class="hljs-attr">name :</span> <span class="hljs-string">create</span> <span class="hljs-string">a</span> <span class="hljs-string">file</span>
-  <span class="hljs-attr">file :</span> 
-     <span class="hljs-attr">path :</span> <span class="hljs-string">/home/ubuntu/demo.txt</span>
-     <span class="hljs-attr">state :</span> <span class="hljs-string">touch</span>
-</div></code></pre>
+<pre class='mermaid'>graph TD;
+A[Cluster]--&gt;B[Node]
+A--&gt;C[Node]
+A--&gt;D[Node]
+A--&gt;E[Node]
+A--&gt;F[Node]
+A--&gt;G[Node]
+B--&gt;H[POD]
+B--&gt;I[POD]
+B--&gt;J[POD]
+B--&gt;K[POD]
+B--&gt;L[POD]
+H--&gt;M[Container]
+H--&gt;N[Container]
+H--&gt;O[Container]
+H--&gt;P[Container]
+H--&gt;Q[Container]
+M--&gt;R[Apllication/Microservice]
+N--&gt;S[Apllication/Microservice]
+O--&gt;T[Apllication/Microservice]
+P--&gt;U[Apllication/Microservice]
+Q--&gt;V[Apllication/Microservice]
+</pre>
 <ul>
-<li>We can also automate docker on all three servers</li>
+<li>We should keep only one container in one pod</li>
+<li>pod is immortal</li>
 </ul>
-<a href="https://drive.google.com/file/d/1RZJZFdpDTIEj5X17lFXv4Kdx7qhaRhv2/view" target="_blank">Read more ......</a>
+<h2 id="working-with-kubernetes" tabindex="-1">Working with Kubernetes</h2>
+<ul>
+<li>
+<p>We Create manifest (yml)</p>
+</li>
+<li>
+<p>Apply this to Cluster (to master) to bring into desired state.</p>
+</li>
+<li>
+<p>Pod runs on node, which is Controlled by master</p>
+</li>
+<li>
+<h3 id="role-of-master-node" tabindex="-1">Role of Master Node</h3>
+<p>Kubernetes Cluster Contains Containers running or Bare Metal/VM instances/ Cloud instances.</p>
+</li>
+</ul>
+<h2 id="components" tabindex="-1">Components</h2>
+<h3 id="(1).-kube--api-server-(for-all-communications)" tabindex="-1">(1). Kube- api-server (For all Communications)</h3>
+<ul>
+<li>This api-server interacts directly with user (ie we apply yml or json manifest to Kube-api server)</li>
+<li>This Kube- apiserver is meant to scale automatically as per load</li>
+<li>frontend of control plane</li>
+</ul>
+<h3 id="(2).-etcd" tabindex="-1">(2). etcd</h3>
+<ul>
+<li>Stores (metadata and status of Cluster)</li>
+<li>etcd is Consistent and high-availableStore (key-value store)</li>
+<li>Source of touch Cluster state (info about state of Cluster)</li>
+<li><strong>etcd has following features:-</strong>
+<ul>
+<li>①. Fully Replicated - The entire state is available on every node in the Cluster.</li>
+<li>②. Secure- Implements automatic TLS with Optional Client-Certificate authentication.</li>
+<li>③. fast - Benchmarked at 10,000 writes per second.</li>
+</ul>
+</li>
+</ul>
+<h3 id="(3).-kube-scheduler" tabindex="-1">(3). Kube-scheduler</h3>
+<ul>
+<li>Assigns work to nodes</li>
+<li>It is responsible for distributing work or containers across multiple nodes</li>
+<li>When users make request for the Creation &amp; Management of Pods, kube-scheduler
+is going to take action on these requests.</li>
+<li>Handles Pod Creation and Management</li>
+<li>kube-scheduler match / assign any node to
+Create and run pods.</li>
+<li>It is responsible for scheduling pods to run on nodes.</li>
+<li>It is responsible for binding the pod to a node.</li>
+<li>It is responsible for selecting the node for the pod to run on.</li>
+<li>It is responsible for maintaining the desired state of the pods in the system.</li>
+</ul>
+<h3 id="(4).-kube-controller-manager" tabindex="-1">(4). Kube-controller-manager</h3>
+<ul>
+<li>It is responsible for maintaining the desired state of the Cluster.</li>
+<li>It is responsible for maintaining the desired state of the pods in the system.</li>
+<li>It is responsible for maintaining the desired state of the nodes in the system.</li>
+<li>It is responsible for maintaining the desired state of the replication controllers in the system.</li>
+<li>It is responsible for maintaining the desired state of the endpoints in the system.</li>
+<li>It is responsible for maintaining the desired state of the service accounts in the system.</li>
+</ul>
+<h3 id="(5).-kubelet" tabindex="-1">(5). Kubelet</h3>
+<ul>
+<li>It is responsible for running containers on the nodes.</li>
+<li>It is responsible for running the containers on the nodes.</li>
+<li>It is responsible for running the pods on the nodes.</li>
+<li>It is responsible for running the containers in the pods on the nodes.</li>
+<li>It is responsible for running the pods in the nodes.</li>
+<li>It is responsible for running the containers in the nodes.</li>
+</ul>
+<h3 id="(6).-kube-proxy" tabindex="-1">(6). Kube-proxy</h3>
+<ul>
+<li>It is responsible for maintaining the network rules on the nodes.</li>
+</ul>
+<h3 id="(7).-container-runtime" tabindex="-1">(7). Container Runtime</h3>
+<ul>
+<li>It is responsible for running the containers on the nodes.</li>
+</ul>
+<h3 id="(8).-kubectl" tabindex="-1">(8). Kubectl</h3>
+<ul>
+<li>Kubectl is a command-line interface (CLI) tool used to interact with Kubernetes clusters. Kubernetes is an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications. Kubectl serves as the primary means for developers, administrators, and operators to manage Kubernetes clusters and the resources running on them.</li>
+</ul>
+<p>Key features and functions of kubectl include:</p>
+<ol>
+<li><strong>Cluster Management</strong>: Kubectl allows users to create, update, and delete Kubernetes clusters. Users can interact with multiple clusters simultaneously, enabling seamless management of distributed environments.</li>
+<li><strong>Resource Management</strong>: Users can use kubectl to create, inspect, update, and delete Kubernetes resources such as pods, deployments, services, namespaces, and more. These resources define the desired state of applications running on the Kubernetes cluster.</li>
+<li><strong>Deployment Operations</strong>: Kubectl facilitates deploying applications onto Kubernetes clusters. Users can create deployment manifests or use higher-level deployment controllers like Deployments or StatefulSets to manage application lifecycle.</li>
+<li><strong>Scaling</strong>: With kubectl, users can scale applications horizontally or vertically by adjusting the number of replicas or the resources allocated to pods.</li>
+<li><strong>Monitoring and Debugging</strong>: Kubectl provides commands to monitor the health and status of resources within the cluster. Users can troubleshoot issues by inspecting logs, describing resources, or executing commands within pods.</li>
+<li><strong>Security</strong>: Kubectl supports various authentication mechanisms to ensure secure access to Kubernetes clusters. It allows users to configure role-based access control (RBAC) and manage user permissions effectively.</li>
+<li><strong>Customization and Extensibility</strong>: Kubectl is highly extensible and customizable through plugins and custom resource definitions (CRDs). Users can extend its functionality to meet specific requirements or integrate with other tools and systems.</li>
+</ol>
+<p>Kubectl commands typically follow the syntax:</p>
+<pre class='hljs'><code><div>kubectl [<span class="hljs-built_in">command</span>] [TYPE] [NAME] [flags]
+</div></code></pre>
+<p>Where:</p>
+<ul>
+<li><code>command</code> specifies the operation to perform (e.g., create, get, describe, delete).</li>
+<li><code>TYPE</code> is the Kubernetes resource type (e.g., pod, deployment, service).</li>
+<li><code>NAME</code> is the name of the resource.</li>
+<li><code>flags</code> are optional parameters to customize the operation.</li>
+</ul>
+<p>Overall, kubectl is a powerful tool that simplifies the management and operation of Kubernetes clusters, enabling users to efficiently deploy and manage containerized applications at scale.</p>
+<h3 id="(9).-pod" tabindex="-1">(9). Pod</h3>
+<p>A Pod is the smallest deployable unit in Kubernetes, representing a single instance of a running process in the cluster. It encapsulates one or more containers, storage resources, and configuration options related to how the containers should run. Pods are fundamental building blocks in Kubernetes, providing a higher-level abstraction over individual containers.</p>
+<p>Key features and characteristics of Pods include:</p>
+<ol>
+<li>
+<p><strong>Atomic Unit of Deployment</strong>: Pods serve as the basic unit of deployment in Kubernetes. They encapsulate one or more containers that are tightly coupled and need to share resources or work together.</p>
+</li>
+<li>
+<p><strong>Co-located Containers</strong>: Pods enable running multiple containers within the same network and storage context. These containers can communicate with each other using local host networking and share the same lifecycle.</p>
+</li>
+<li>
+<p><strong>Shared Resources</strong>: Containers within a Pod share the same network namespace, IP address, and port space, facilitating inter-container communication through localhost. They can also share volumes mounted into the Pod's filesystem, allowing them to exchange data.</p>
+</li>
+<li>
+<p><strong>Application Lifecycle Management</strong>: Pods define the desired state of the application, including which containers should be running and their configuration. Kubernetes orchestrates the creation, scaling, and termination of Pods based on the desired state specified in the Pod manifest.</p>
+</li>
+<li>
+<p><strong>Pod States</strong>: Pods can be in various states during their lifecycle, including Pending, Running, Succeeded, Failed, or Unknown. These states indicate the current status of the Pod and whether it's successfully running its containers.</p>
+</li>
+<li>
+<p><strong>Pod Lifecycle Hooks</strong>: Pods support lifecycle hooks, allowing users to execute custom logic at different stages of the Pod lifecycle. Hooks include pre-start and post-start actions, enabling tasks such as initialization, configuration, or cleanup.</p>
+</li>
+<li>
+<p><strong>Resource Management</strong>: Pods can specify resource requests and limits for CPU and memory, ensuring fair resource allocation and preventing resource contention among containers running on the same node.</p>
+</li>
+<li>
+<p><strong>Pod Affinity and Anti-affinity</strong>: Kubernetes allows users to specify affinity and anti-affinity rules for Pods, influencing how they are scheduled onto nodes. This feature helps optimize resource utilization and improve application performance by controlling Pod placement.</p>
+</li>
+<li>
+<p><strong>Pod Networking</strong>: Pods are assigned a unique IP address within the Kubernetes cluster, allowing them to communicate with other Pods and external services. Kubernetes networking plugins handle the routing of traffic between Pods and ensure network isolation and security.</p>
+</li>
+</ol>
+<p>Overall, Pods provide a flexible and scalable way to deploy and manage containerized applications in Kubernetes. By encapsulating one or more containers and their associated resources, Pods simplify application deployment, scaling, and management in distributed environments.</p>
+
     </div>
 </body>
 </html>
