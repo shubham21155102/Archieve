@@ -419,10 +419,71 @@ blockquote {
 
 </head>
 <body>
-	<center>
-	<embed src="https://compiler.shubhamiitbhu.in"
-	width="75%" height="500px"
-	/>
-	</center>
+    <div class="content-wrapper">
+        <h1 id="jenkins" tabindex="-1">Jenkins</h1>
+<p>Jenkins is an open source automation server written in Java. Jenkins helps to automate the non-human part of the software development process, with continuous integration and facilitating technical aspects of continuous delivery. It is a server-based system that runs in servlet containers such as Apache Tomcat. It supports version control tools, including AccuRev, CVS, Subversion, Git, Mercurial, Perforce, ClearCase and RTC, and can execute Apache Ant, Apache Maven and sbt based projects as well as arbitrary shell scripts and Windows batch commands. The creator of Jenkins is Kohsuke Kawaguchi. Released under the MIT License, Jenkins is free software.</p>
+<h2 id="installation(mac-os)" tabindex="-1">Installation(Mac OS)</h2>
+<ul>
+<li><code>brew install jenkins-lts</code></li>
+<li><code>brew services start jenkins-lts</code></li>
+<li><code>cat /Users/Shared/Jenkins/Home/secrets/initialAdminPassword</code></li>
+<li>Open browser and go to http://localhost:8080</li>
+<li>Error resolve in MacOS
+<ul>
+<li><a href="https://medium.com/@bectorhimanshu/fix-for-the-error-docker-command-not-found-when-building-docker-image-using-jenkins-pipeline-on-db1bc5fa7976">Error Resolve</a></li>
+</ul>
+</li>
+<li>Jenkins is ready to use</li>
+</ul>
+<h2 id="resolving-%22docker-command-not-found%22-error-in-jenkins-pipeline-on-macos" tabindex="-1">Resolving &quot;Docker command not found&quot; Error in Jenkins Pipeline on macOS</h2>
+<p>This issue commonly occurs in Jenkins Pipeline on macOS when the Docker command is not found due to it not being installed or not being available in the system's PATH. To resolve this issue, follow these steps:</p>
+<h3 id="step-1%3A-find-jenkins-installation-directory" tabindex="-1">Step 1: Find Jenkins Installation Directory</h3>
+<ol>
+<li>Open Terminal.</li>
+<li>Run the following command to find the Jenkins installation directory:</li>
+</ol>
+<pre class='hljs'><code><div>brew --prefix jenkins
+</div></code></pre>
+<ul>
+<li>Note down the output path, which typically looks like /opt/homebrew/opt/jenkins-lts.</li>
+</ul>
+<h3 id="step-2%3A-update-jenkins-launch-configuration" tabindex="-1">Step 2: Update Jenkins Launch Configuration</h3>
+<p>Locate the file homebrew.mxcl.jenkins-lts.plist in the Jenkins installation directory found in Step 1 (/opt/homebrew/opt/jenkins-lts).
+Update the content of the file as follows:</p>
+<pre class='hljs'><code><div><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">plist</span> <span class="hljs-meta-keyword">PUBLIC</span> <span class="hljs-meta-string">&quot;-//Apple//DTD PLIST 1.0//EN&quot;</span> <span class="hljs-meta-string">&quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">plist</span> <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;1.0&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">dict</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>Label<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>homebrew.mxcl.jenkins-lts<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>ProgramArguments<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">array</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>/opt/homebrew/opt/openjdk@17/bin/java<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>-Dmail.smtp.starttls.enable=true<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>-jar<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>/opt/homebrew/opt/jenkins-lts/libexec/jenkins.war<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>--httpListenAddress=127.0.0.1<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>--httpPort=8080<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">array</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>RunAtLoad<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">true</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>EnvironmentVariables<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dict</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">key</span>&gt;</span>PATH<span class="hljs-tag">&lt;/<span class="hljs-name">key</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/Docker.app/Contents/Resources/bin/:/Users/himanshubector/Library/Group\ Containers/group.com.docker/Applications/Docker.app/Contents/Resources/bin<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dict</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dict</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">plist</span>&gt;</span>
+</div></code></pre>
+<h3 id="step-3%3A-restart-jenkins" tabindex="-1">Step 3: Restart Jenkins</h3>
+<p>After updating the file, restart Jenkins using the following brew command:</p>
+<pre class='hljs'><code><div>brew services restart jenkins-lts
+</div></code></pre>
+<h3 id="step-4%3A-verify" tabindex="-1">Step 4: Verify</h3>
+<ul>
+<li>Try running the Jenkins Pipeline build again. After following these steps, your Jenkins Pipeline on macOS should be able to find and use Docker for building Docker images without encountering the &quot;Docker command not found&quot; error.</li>
+</ul>
+
+    </div>
 </body>
 </html>

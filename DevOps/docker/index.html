@@ -419,10 +419,60 @@ blockquote {
 
 </head>
 <body>
-	<center>
-	<embed src="https://compiler.shubhamiitbhu.in"
-	width="75%" height="500px"
-	/>
-	</center>
+    <div class="content-wrapper">
+        <h1 id="docker" tabindex="-1">Docker</h1>
+<h2 id="what-is-docker%3F" tabindex="-1">What is Docker?</h2>
+<ul>
+<li>Docker is a platform for developers and sysadmins to develop, deploy, and run applications with containers. The use of Linux containers to deploy applications is called containerization. Containers are not new, but their use for easily deploying applications is.</li>
+<li>It provides the minimum things that are required to run a container. It is a lightweight software that makes it easier to create, deploy, and run applications by using containers. It is a tool designed to make it easier to create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.</li>
+</ul>
+<h2 id="why-docker%3F" tabindex="-1">Why Docker?</h2>
+<ul>
+<li>Docker is a tool that is designed to benefit both developers and system administrators, making it a part of many DevOps (developers + operations) toolchains. For developers, it means that they can focus on writing code without worrying about the system that it will ultimately be running on. It also allows them to get a head start by using one of thousands of programs already designed to run in a Docker container as a part of their application. For operations staff, Docker gives flexibility and potentially reduces the number of systems needed because of its small footprint and lower overhead.</li>
+</ul>
+<h2 id="how-docker-works%3F" tabindex="-1">How Docker Works?</h2>
+<ul>
+<li>Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface.</li>
+</ul>
+<h2 id="docker-architecture" tabindex="-1">Docker Architecture</h2>
+<ul>
+<li>Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface.</li>
+</ul>
+<h2 id="docker-commands" tabindex="-1">Docker Commands</h2>
+<p>in start.sh</p>
+<pre class='hljs'><code><div>touch Dockerfile
+content - 
+FROM python:3.8
+WORKDIR /app
+COPY . /app
+RUN pip install -r requirements.txt
+CMD [<span class="hljs-string">&quot;python&quot;</span>, <span class="hljs-string">&quot;app.py&quot;</span>]
+</div></code></pre>
+<pre class='hljs'><code><div>touch docker-compose.yml
+content - 
+version: <span class="hljs-string">&#x27;3&#x27;</span>
+services:
+  web:
+    build: .
+    ports:
+      - <span class="hljs-string">&quot;5000:5000&quot;</span>
+</div></code></pre>
+<pre class='hljs'><code><div>docker build -t myapp . <span class="hljs-comment"># Build an image from the Dockerfile in the current directory and tag the image</span>
+docker run -d -p 4000:80 myapp <span class="hljs-comment"># Run the app, mapping your machine’s port 4000 to the container’s published port 80 using -p</span>
+docker ps <span class="hljs-comment"># List all running containers</span>
+docker stop &lt;<span class="hljs-built_in">hash</span>&gt; <span class="hljs-comment"># Gracefully stop the specified container</span>
+docker ps -a <span class="hljs-comment"># List all containers, even those not running</span>
+docker rm &lt;<span class="hljs-built_in">hash</span>&gt; <span class="hljs-comment"># Remove the specified container from this machine</span>
+docker images <span class="hljs-comment"># List all images on this machine</span>
+docker rmi &lt;image id&gt; <span class="hljs-comment"># Remove the specified image from this machine</span>
+docker-compose up <span class="hljs-comment"># Build the app and run the container</span>
+docker-compose down <span class="hljs-comment"># Stop the container</span>
+</div></code></pre>
+<h2 id="conclusion" tabindex="-1">Conclusion</h2>
+<ul>
+<li>Docker is a platform for developers and sysadmins to develop, deploy, and run applications with containers. The use of Linux containers to deploy applications is called containerization. Containers are not new, but their use for easily deploying applications is. Docker is a tool that is designed to benefit both developers and system administrators, making it a part of many DevOps (developers + operations) toolchains. For developers, it means that they can focus on writing code without worrying about the system that it will ultimately be running on. It also allows them to get a head start by using one of thousands of programs already designed to run in a Docker container as a part of their application. For operations staff, Docker gives flexibility and potentially reduces the number of systems needed because of its small footprint and lower overhead. Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface.</li>
+</ul>
+
+    </div>
 </body>
 </html>

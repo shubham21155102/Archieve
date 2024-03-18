@@ -419,10 +419,153 @@ blockquote {
 
 </head>
 <body>
-	<center>
-	<embed src="https://compiler.shubhamiitbhu.in"
-	width="75%" height="500px"
-	/>
-	</center>
+    <div class="content-wrapper">
+        <h1 id="bit-manipulation" tabindex="-1">Bit Manipulation</h1>
+<h2 id="check-ith-bit" tabindex="-1">Check ith Bit</h2>
+<ul>
+<li>1 -&gt; 000....1</li>
+<li>now shfting this to i=3</li>
+<li>0000...100</li>
+<li>1&lt;&lt;(i-2)</li>
+<li>let n=2</li>
+<li>00...0010</li>
+<li>00...0100</li>
+<li>taking or and clearly getting 0 then not set</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n=<span class="hljs-number">2</span>;
+    <span class="hljs-keyword">int</span> i=<span class="hljs-number">3</span>;
+    <span class="hljs-keyword">int</span> mask=<span class="hljs-number">1</span>&lt;&lt;(i<span class="hljs-number">-1</span>);
+    <span class="hljs-keyword">if</span>(mask &amp; n) cout&lt;&lt;<span class="hljs-string">&quot;Set&quot;</span>;
+    <span class="hljs-keyword">else</span> cout&lt;&lt;<span class="hljs-string">&quot;Not Set&quot;</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h2 id="setting-ith-bit" tabindex="-1">Setting ith bit</h2>
+<ul>
+<li>just taken or</li>
+<li>00...0010</li>
+<li>00...0100</li>
+<li>so here we can set th ith bit</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n=<span class="hljs-number">9</span>;
+    bitset&lt;32&gt;<span class="hljs-built_in">b</span>(<span class="hljs-number">9</span>);
+    cout&lt;&lt;b&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+    <span class="hljs-keyword">int</span> i=<span class="hljs-number">3</span>;
+    <span class="hljs-keyword">int</span> mask=<span class="hljs-number">1</span>&lt;&lt;(i<span class="hljs-number">-1</span>);
+    cout&lt;&lt;(mask | n);
+}
+</div></code></pre>
+<h2 id="clearing-ith-bit" tabindex="-1">Clearing ith bit</h2>
+<ul>
+<li>1 -&gt; 000....1</li>
+<li>now shfting this to i=3</li>
+<li>0000...100</li>
+<li>1&lt;&lt;(i-2)</li>
+<li>now taking not of this</li>
+<li>1111...011</li>
+<li>and taking and with n</li>
+<li>let n=2</li>
+<li>00...0010</li>
+<li>00...0100</li>
+<li>taking and and clearly getting 0 then not set</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;
+<span class="hljs-keyword">int</span> mask=<span class="hljs-number">1</span>&lt;&lt;(i<span class="hljs-number">-1</span>);
+mask=~mask;
+<span class="hljs-keyword">int</span> n=<span class="hljs-number">81</span>;
+cout&lt;&lt;(mask &amp; n)&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h2 id="remove-last-set-bit-of-a-number" tabindex="-1">Remove last set bit of a number</h2>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+<span class="hljs-keyword">int</span> n=<span class="hljs-number">81</span>;
+cout&lt;&lt;((n<span class="hljs-number">-1</span>)&amp; n)&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h2 id="find-the-position-of-rightmost-setbit" tabindex="-1">Find the position of rightmost setbit</h2>
+<ul>
+<li>n&amp;(-n) will give the rightmost set bit</li>
+<li>n=8</li>
+<li>n // 00000000000000000000000000001000</li>
+<li>-n // 11111111111111111111111111111000</li>
+<li>// n&amp;(-n) -&gt; 1000</li>
+<li>// log10(1000) --&gt; 3</li>
+<li>then take log2 of this</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+<span class="hljs-keyword">int</span> n=<span class="hljs-number">8</span>;
+bitset&lt;32&gt;<span class="hljs-built_in">b1</span>(n);
+cout&lt;&lt;b1&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+bitset&lt;32&gt;<span class="hljs-built_in">b2</span>(-n);
+cout&lt;&lt;b2&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+cout&lt;&lt;(<span class="hljs-keyword">int</span>)<span class="hljs-built_in">log2</span>(n&amp;(-n))+<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h2 id="odd-or-even" tabindex="-1">Odd or Even</h2>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+<span class="hljs-keyword">int</span> n=<span class="hljs-number">8</span>;
+<span class="hljs-keyword">if</span>(n&amp;<span class="hljs-number">1</span>) cout&lt;&lt;<span class="hljs-string">&quot;Odd\n&quot;</span>;
+<span class="hljs-keyword">else</span> cout&lt;&lt;<span class="hljs-string">&quot;Even\n&quot;</span>;
+<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h2 id="power-of-two" tabindex="-1">Power Of Two</h2>
+<ul>
+<li>4 - 100</li>
+<li>8 - 1000</li>
+<li>16 - 10000</li>
+<li>32 - 100000</li>
+<li>7 - 00000000000000000000000000001000</li>
+<li>8 &amp; 7 =0</li>
+<li>then power of two</li>
+</ul>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bitset&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n = <span class="hljs-number">8</span>;
+
+    <span class="hljs-function">bitset&lt;32&gt; <span class="hljs-title">b</span><span class="hljs-params">(n<span class="hljs-number">-1</span>)</span></span>;
+    cout &lt;&lt; b &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+
+    <span class="hljs-function">bitset&lt;32&gt; <span class="hljs-title">b1</span><span class="hljs-params">(n)</span></span>;
+    cout &lt;&lt; b1 &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+
+    cout &lt;&lt; (b &amp; b1) &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+
+    <span class="hljs-function">bitset&lt;32&gt; <span class="hljs-title">c</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span></span>;
+    <span class="hljs-keyword">if</span> ((b &amp; b1) == c)
+        cout &lt;&lt; <span class="hljs-string">&quot;Yes\n&quot;</span>;
+    <span class="hljs-keyword">else</span>
+        cout &lt;&lt; <span class="hljs-string">&quot;No\n&quot;</span>;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+</div></code></pre>
+<h2 id="power-of-four" tabindex="-1">Power Of Four</h2>
+<pre class='hljs'><code><div>
+</div></code></pre>
+
+    </div>
 </body>
 </html>
