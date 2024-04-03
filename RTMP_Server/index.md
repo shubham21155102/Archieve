@@ -25,7 +25,6 @@ The custom RTMP server was successfully implemented and seamlessly integrated in
 To ensure the successful implementation of the custom RTMP server, several components and configurations were utilized. Below are the key working parts involved in the process:
 
 - **EC2 Instance Setup**: An EC2 instance was provisioned on AWS to serve as the host for the RTMP server.
-
 - **OBS Installations**: OBS (Open Broadcaster Software) was installed on the EC2 instance to facilitate video streaming. The following commands were executed for installation:
 
   ```bash
@@ -39,7 +38,6 @@ To ensure the successful implementation of the custom RTMP server, several compo
 
   sudo apt install obs-studio
   ```
-
 - **Nginx Installation**: Nginx, a high-performance web server, was installed on the EC2 instance to handle RTMP streaming. The installation process involved the following steps:
 
   ```bash
@@ -55,7 +53,6 @@ To ensure the successful implementation of the custom RTMP server, several compo
 
   sudo vi /etc/nginx/nginx.conf
   ```
-
 - **Configuration of Nginx for RTMP**: The Nginx configuration file was edited to include settings specific to RTMP streaming. The following lines were added to the configuration file:
 
   ```nginx
@@ -72,25 +69,21 @@ To ensure the successful implementation of the custom RTMP server, several compo
       }
   }
   ```
-
 - **Opening Port 1935**: To allow incoming connections on port 1935 for RTMP streaming, the firewall settings were adjusted:
 
   ```bash
   sudo ufw allow 1935/tcp
   ```
-
 - **Starting Nginx Service**: The Nginx service was started to enable RTMP streaming:
 
   ```bash
   sudo systemctl restart nginx
   ```
-
 - **Checking 1935 Port**: The status of port 1935 was verified to ensure that the RTMP server was running:
 
   ```bash
   ss -antpl | grep 1935
   ```
-
 - Now I just wrote code and added rtmp url as rtmp://**.\***.**.**/ (IP address of the EC2 instance)
 
 ## Configure RTMP Statistics for Monitoring
@@ -125,7 +118,7 @@ Remove all default lines and replace them with the following configuration:
 
 ```nginx
 server {
-    listen 8080;
+    listen 80;
     server_name  _;
 
     # RTMP stat
@@ -156,7 +149,7 @@ systemctl restart nginx
 
 ### 5. Access RTMP Stat Page
 
-Now, open your web browser and navigate to the RTMP stat page using the URL `http://your-server-ip:8080/stat`. You should be able to view the RTMP statistics on the displayed page.
+Now, open your web browser and navigate to the RTMP stat page using the URL `http://**.**.**.**/stat`. You should be able to view the RTMP statistics on the displayed page.
 
 Remember to refresh the page every time you stream a video to observe changes in the stream statistics effectively.
 
