@@ -10,6 +10,16 @@ struct Node
     this->next = nullptr;
   }
 };
+Node *reverseRecursive(Node *head)
+{
+  if (!head || !head->next)
+    return head;
+  Node *restHead = reverseRecursive(head->next);
+  head->next->next = head;
+  head->next = nullptr;
+  return restHead;
+}
+
 Node *insertAtHead(Node *head, int x)
 {
   Node *ll = new Node(x);
@@ -75,17 +85,21 @@ Node *insertAtPosition(int x, int pos, Node *head)
     head = insertAtTail(head, x);
     return head;
   }
-  temp->next=curr->next;
-  curr->next=temp;
+  temp->next = curr->next;
+  curr->next = temp;
   return head;
 }
-int search(int x,Node *head){
-  int pos=1;
-  if(head==nullptr) return -1;
-  Node* curr=head;
-  while(curr!=nullptr){
-    if(curr->data==x) return pos;
-    curr=curr->next;
+int search(int x, Node *head)
+{
+  int pos = 1;
+  if (head == nullptr)
+    return -1;
+  Node *curr = head;
+  while (curr != nullptr)
+  {
+    if (curr->data == x)
+      return pos;
+    curr = curr->next;
     pos++;
   }
   return -1;
@@ -134,10 +148,13 @@ int main()
   head = deleteAtHead(head);
   head = deleteAtTail(head);
   head = deleteAtTail(head);
-  head=insertAtPosition(3,5,head);
-  int x=search(90,head);
-  cout<<x<<"\n";
+  head = insertAtPosition(3, 5, head);
+  int x = search(90, head);
+  cout << x << "\n";
   PrintList(head);
   cout << "\n";
+  head = reverseRecursive(head);
+  PrintList(head);
+
   return 0;
 }
