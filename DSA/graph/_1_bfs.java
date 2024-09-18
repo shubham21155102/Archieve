@@ -1,5 +1,4 @@
 package graph;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Queue;
@@ -17,19 +16,15 @@ public class _1_bfs {
     }
     adj[0].add(1);
     adj[0].add(2);
-
     adj[1].add(0);
     adj[1].add(2);
     adj[1].add(3);
-
     adj[2].add(0);
     adj[2].add(1);
     adj[2].add(3);
-
     adj[3].add(1);
     adj[3].add(2);
     adj[3].add(4);
-
     adj[4].add(3);
     System.out.println(adj[0]);
     for(int i=0;i<n;i++){
@@ -38,7 +33,6 @@ public class _1_bfs {
       }
     }
   }
-
   public static void bfs(List<Integer> adj[], int v, int s,boolean visited[]) {
     visited[s]=true;
     Queue<Integer> q = new LinkedList<>();

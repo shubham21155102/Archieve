@@ -9,43 +9,41 @@
 
 ```js
 class Car extends React.Component {
-      render() {
-        return <h2>Hi, I am a Car!</h2>;
-      }
+  render() {
+    return <h2>Hi, I am a Car!</h2>;
+  }
 }
 ```
 
 ```js
-import React, { Component } from "react"; 
+import React, { Component } from "react";
 
-class ClassComponent extends React.Component { 
-	constructor() { 
-		super(); 
-		this.state = { 
-			count: 0 
-		}; 
-		this.increase = this.increase.bind(this); 
-	} 
+class ClassComponent extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      count: 0,
+    };
+    this.increase = this.increase.bind(this);
+  }
 
-	increase() { 
-		this.setState({ count: this.state.count + 1 }); 
-	} 
+  increase() {
+    this.setState({ count: this.state.count + 1 });
+  }
 
-	render() { 
-		return ( 
-			<div style={{ margin: '50px' }}> 
-				<h1>Welcome to Github </h1> 
-				<h3>Counter App using Class Component : </h3> 
-				<h2> {this.state.count}</h2> 
-				<button onClick={this.increase}> Add</button> 
+  render() {
+    return (
+      <div style={{ margin: "50px" }}>
+        <h1>Welcome to Github </h1>
+        <h3>Counter App using Class Component : </h3>
+        <h2> {this.state.count}</h2>
+        <button onClick={this.increase}> Add</button>
+      </div>
+    );
+  }
+}
 
-			</div> 
-		) 
-	} 
-} 
-
-export default ClassComponent; 
-
+export default ClassComponent;
 ```
 
 # Functional Components
@@ -53,30 +51,30 @@ export default ClassComponent;
 - Stateless Components
 
 ```js
-  const Car=()=> {
-        return <h2>Hi, I am also a Car!</h2>;
-  }
+const Car = () => {
+  return <h2>Hi, I am also a Car!</h2>;
+};
 ```
 
 ```js
-  import React, { useState } from "react"; 
+import React, { useState } from "react";
 
-  const FunctionalComponent = () => { 
-  	const [count, setCount] = useState(0); 
+const FunctionalComponent = () => {
+  const [count, setCount] = useState(0);
 
-  	const increase = () => { 
-  		setCount(count + 1); 
-  	} 
+  const increase = () => {
+    setCount(count + 1);
+  };
 
-  	return ( 
-  		<div style={{ margin: '50px' }}> 
-  			<h1>Welcome to GitHub </h1> 
-  			<h3>Counter App using Functional Component : </h3> 
-  			<h2>{count}</h2> 
-  			<button onClick={increase}>Add</button> 
-  		</div> 
-  	) 
-  } 
+  return (
+    <div style={{ margin: "50px" }}>
+      <h1>Welcome to GitHub </h1>
+      <h3>Counter App using Functional Component : </h3>
+      <h2>{count}</h2>
+      <button onClick={increase}>Add</button>
+    </div>
+  );
+};
 
-  export default FunctionalComponent; 
+export default FunctionalComponent;
 ```

@@ -1818,6 +1818,35 @@ G--&gt;H[Computation]
 X[First Computation then I/O&lt;br&gt; during I/O CPU will wait for &lt;br&gt;I/O completion after I/O Completion&lt;br&gt;Another Computation will start by CPU&lt;br&gt; So this is the disadvantage&lt;br&gt;Our Costly CPU is Waiting for I/O]
 end
 </pre>
+
+<h3 id="batch-processing" tabindex="-1">Batch Processing</h3>
+<pre class='mermaid'>graph LR;
+A[User 1]--&gt;B[Job 1]
+C[User 2]--&gt;D[Job 2]
+E[User 3]--&gt;F[Job 3]
+G[User 4]--&gt;H[Job 4]
+I[User 5]--&gt;J[Job 5]
+K[User 6]--&gt;L[Job 6]
+M[User 7]--&gt;N[Job 7]
+O[User 8]--&gt;P[Job 8]
+Q(OPERATOR)
+B--&gt;Q
+D--&gt;Q
+F--&gt;Q
+H--&gt;Q
+J--&gt;Q
+L--&gt;Q
+N--&gt;Q
+P--&gt;Q
+Q--&gt;R[BATCH 1&lt;br/&gt;Job 1,Job 2,Job 3,Job 4]
+R--&gt;S[BATCH 2&lt;br/&gt;Job 5,Job 6,Job 7,Job 8]
+S--&gt;T[CPU&lt;br/&gt;I/0]
+</pre>
+<ul>
+<li>Jobs are submitted to the operator</li>
+<li>Operator will create the batches of the jobs in priority order and submit them to the CPU</li>
+<li>CPU will execute the jobs in the batch</li>
+</ul>
 		<h3 id="multi-programming" tabindex="-1">Multi Programming</h3>
 		<pre class='mermaid'>graph LR;
 A[Multi Programming]--&gt;B[CPU]
@@ -1830,6 +1859,12 @@ G--&gt;H[Computation]
 X[During  Computation I/O &lt;br&gt;will be unassigned from CPU&lt;br&gt;and Another Computation sent to CPU so&lt;br&gt; here processes are running concurrently.&lt;br&gt;Also multiple processes in memory is there]
 end
 </pre>
+<ul>
+	<li>Single CPU</li>
+	<li>Multiple Processes in Memory</li>
+	<li>Context Switching</li>
+	<li>CPU Idle Time Reduced</li>
+	</ul>
 		<h3 id="multi-tasking" tabindex="-1">Multi Tasking</h3>
 		<pre class='mermaid'>graph LR;
 A[Multi Tasking]--&gt;B[CPU]
@@ -1843,12 +1878,14 @@ X[During  Computation I/O &lt;br&gt;will be unassigned from CPU&lt;br&gt;and Ano
 end
 AA[Here only we run the&lt;br&gt;Processes in time slot manner&lt;br&gt; More Responsiveness]
 </pre>
-		<ul>
-			<li>Multi Tasking is also known as Time Sharing</li>
-			<li>Multi Tasking is more responsive because we run the processes in time slot manner. We assign time t1 to
-				c1 and t1 to c2 and so on</li>
-			<li>Here only we run the Processes in time slot manner More Responsiveness</li>
-		</ul>
+<ul>
+	<li>Single CPU</li>
+	<li>Context Switching and Time Sharing</li>
+	<li>Multi Tasking is also known as Time Sharing</li>
+	<li>Multi Tasking is more responsive because we run the processes in time slot manner. We assign time t1 to c1 and t1 to c2 and so on</li>
+	<li>Here only we run the Processes in time slot manner More Responsiveness</li>
+	<li>CPU Idle Time Reduced further</li>
+	</ul>
 		<h3 id="multi-threading" tabindex="-1">Multi Threading</h3>
 		<ul>
 			<li>Multiple processes in a OS</li>
