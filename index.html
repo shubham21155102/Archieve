@@ -6,8 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Archive</title>
     <link rel="icon" href="https://www.shubhamiitbhu.in/_next/image?url=%2Fshubham.jpg&w=640&q=75">
-
     <style>
+        /* Container for the navigation links */
+        .quiz-container {
+            /* Removed overflow: auto; */
+        }
+
+        /* Style for the icon link */
+        .quiz-link {
+            float: right;
+            position: relative;
+            display: inline-block;
+            margin-left: 10px; /* Adjusts spacing between link and icon */
+        }
+
+        /* Tooltip styling */
+        .quiz-link .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position the tooltip above the icon */
+            left: 50%;
+            margin-left: -60px; /* Use negative margin to align tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Tooltip arrow */
+        .quiz-link .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%; /* Arrow below the tooltip */
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        /* Show the tooltip on hover */
+        .quiz-link:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
         body,
         ul {
             margin: 0;
@@ -20,7 +68,6 @@
             margin: 20px;
         }
 
-
         div {
             background-color: #fff;
             border-radius: 5px;
@@ -28,17 +75,14 @@
             padding: 20px;
         }
 
-
         ul {
             list-style: none;
             padding: 0;
         }
 
-
         li {
             margin-bottom: 10px;
         }
-
 
         a {
             text-decoration: none;
@@ -54,43 +98,94 @@
 
 <body>
     <br>
-    <div style="overflow: auto;">
-
-        <a href="/DSA/README.html"> DSA </a>
-       
+    <div>
+        <a href="/DSA/README.html">DSA</a>
+        <a href="https://www.shubhamiitbhu.in/progress" style="float: right;" target="_blank" class="quiz-link">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                <rect fill="none" height="24" width="24"/>
+                <path d="M12,2C6.48,2,2,6.48,2,12c0,4.42,3.22,8.14,7.45,8.84c0.55,0.1,0.75-0.75,0.29-0.97c-2.33-0.94-4.19-2.8-5.13-5.13
+                    c-0.22-0.46-1.07-0.26-0.97,0.29C4.86,18.78,8.78,22,12,22c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M13,18h-2v-2h2V18z
+                    M13,14h-2v-4h2V14z"/>
+            </svg>
+            <span class="tooltip-text">Practice DSA Questions</span>
+        </a>
     </div>
     <br>
-    <div style="overflow: auto;">
+    <div>
         <ul>
             <a href="/System_Design/index.html"> System Design </a> 
+            <a href="https://quiz.shubhamiitbhu.in/quiz/CSE_System_Design" style="float: right;" target="_blank" class="quiz-link">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                    <rect fill="none" height="24" width="24"/>
+                    <path d="M12,2C6.48,2,2,6.48,2,12c0,4.42,3.22,8.14,7.45,8.84c0.55,0.1,0.75-0.75,0.29-0.97c-2.33-0.94-4.19-2.8-5.13-5.13
+                        c-0.22-0.46-1.07-0.26-0.97,0.29C4.86,18.78,8.78,22,12,22c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M13,18h-2v-2h2V18z
+                        M13,14h-2v-4h2V14z"/>
+                </svg>
+                <span class="tooltip-text">Take Quiz</span>
+            </a>
       
         </ul>
     </div>
     <br>
-    <div style="overflow: auto;">
+    <div>
         <a href="/Computer_Networks/index.html"> Computer Networks</a>
-       
+       <a href="https://quiz.shubhamiitbhu.in/quiz/CSE_CN" style="float: right;" target="_blank" class="quiz-link">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                    <rect fill="none" height="24" width="24"/>
+                    <path d="M12,2C6.48,2,2,6.48,2,12c0,4.42,3.22,8.14,7.45,8.84c0.55,0.1,0.75-0.75,0.29-0.97c-2.33-0.94-4.19-2.8-5.13-5.13
+                        c-0.22-0.46-1.07-0.26-0.97,0.29C4.86,18.78,8.78,22,12,22c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M13,18h-2v-2h2V18z
+                        M13,14h-2v-4h2V14z"/>
+                </svg>
+                <span class="tooltip-text">Take Quiz</span>
+            </a>
 
     </div>
     <br>
-    <div style="overflow: auto;">
+    <div>
         <a href="/Backend/Node_js.html"> Backend</a>
+        <a href="https://quiz.shubhamiitbhu.in/quiz/CSE_CN" style="float: right;" target="_blank" class="quiz-link">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                <rect fill="none" height="24" width="24"/>
+                <path d="M12,2C6.48,2,2,6.48,2,12c0,4.42,3.22,8.14,7.45,8.84c0.55,0.1,0.75-0.75,0.29-0.97c-2.33-0.94-4.19-2.8-5.13-5.13
+                    c-0.22-0.46-1.07-0.26-0.97,0.29C4.86,18.78,8.78,22,12,22c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M13,18h-2v-2h2V18z
+                    M13,14h-2v-4h2V14z"/>
+            </svg>
+            <span class="tooltip-text">Take Quiz</span>
+        </a>
        
     </div>
     <br>
-    <div style="overflow: auto;">
+    <div>
         <a href="/Projects">Scalable Projects Using System Design Applications</a>
+        <a href="https://quiz.shubhamiitbhu.in/quiz/CSE_CN" style="float: right;" target="_blank" class="quiz-link">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                <rect fill="none" height="24" width="24"/>
+                <path d="M12,2C6.48,2,2,6.48,2,12c0,4.42,3.22,8.14,7.45,8.84c0.55,0.1,0.75-0.75,0.29-0.97c-2.33-0.94-4.19-2.8-5.13-5.13
+                    c-0.22-0.46-1.07-0.26-0.97,0.29C4.86,18.78,8.78,22,12,22c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M13,18h-2v-2h2V18z
+                    M13,14h-2v-4h2V14z"/>
+            </svg>
+            <span class="tooltip-text">Take Quiz</span>
+        </a>
        
     </div>
     <br>
-    <div style="overflow: auto;">
+    <div>
         <a href="/Data Science/">Data Science and Machine Learning</a>
+        <a href="https://quiz.shubhamiitbhu.in/quiz/CSE_CN" style="float: right;" target="_blank" class="quiz-link">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                <rect fill="none" height="24" width="24"/>
+                <path d="M12,2C6.48,2,2,6.48,2,12c0,4.42,3.22,8.14,7.45,8.84c0.55,0.1,0.75-0.75,0.29-0.97c-2.33-0.94-4.19-2.8-5.13-5.13
+                    c-0.22-0.46-1.07-0.26-0.97,0.29C4.86,18.78,8.78,22,12,22c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M13,18h-2v-2h2V18z
+                    M13,14h-2v-4h2V14z"/>
+            </svg>
+            <span class="tooltip-text">Take Quiz</span>
+        </a>
        
     </div>
     <br>
-    <div style="overflow: auto;">
+    <div>
         <a href="/Operating_System/">Operating System</a>
-        <a href="https://quiz.shubhamiitbhu.in/OS/" style="float: right;" target="_blank">
+        <a href="https://quiz.shubhamiitbhu.in/quiz/CSE_OS/" style="float: right;" target="_blank" class="quiz-link">
             <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24"
                 width="24">
                 <g>
@@ -105,54 +200,59 @@
                 </g>
             </svg>
         </a>
+        <span class="tooltip-text" style="float: right;">Take Quiz</span>
     </div>
     <br>
-    <div style="overflow: auto;">
-        <a href="/Projects/Scalable_Chat_App.html" style="float: left;">Scalable Chat App</a>
+    <div>
+        
+        <!-- Scalable Chat App Link -->
+        <a href="/Projects/Scalable_Chat_App.html">Scalable Chat App</a>
+        
+        
+    </div>
+    <br>
+    <div>
+        <a href="/DNS/DNS.html" >DNS</a>
        
     </div>
     <br>
-    <div style="overflow: auto;">
-        <a href="/DNS/DNS.html" style="float: left;">DNS</a>
-       
-    </div>
-    <br>
-    <div style="overflow: auto;">
-        <a href="Rust//README.html" style="float: left;">Rust</a>
+    <div>
+        <a href="Rust//README.html" >Rust</a>
         </a>
     </div>
     <br>
-    <div style="overflow: auto;">
-        <a href="DevOps/commands/" style="float: left;">Important Commands</a>
+    <div>
+        <a href="DevOps/commands/" >Important Commands</a>
         </a>
     </div>
     <br>
-    <div style="overflow: auto;">
-        <a href="DevOps/" style="float: left;">DevOps</a>
+    <div>
+        <a href="DevOps/" >DevOps</a>
         </a>
     </div>
     <br>
-    <div style="overflow: auto;">
-        <a href="interview-questions/" style="float: left;">HR Round Interview Questons</a>
+    <div>
+        <a href="interview-questions/" >HR Round Interview Questons</a>
         </a>
     </div>
     <br>
-    <div style="overflow: auto;">
-        <a href="Python/" style="float: left;">Python</a>
+    <div>
+        <a href="Python/" >Python</a>
         </a>
     </div>
     <br>
-    <div style="overflow: auto;">
-        <a href="LeetCode/" style="float: left;">LeetCode</a>
+    <div>
+        <a href="LeetCode/" >LeetCode</a>
         </a>
     </div>
     <br>
-    <div style="overflow: auto;">
-        <a href="RTMP_Server/" style="float: left;">Building Own RTMP Server</a>
+    <div>
+        <a href="RTMP_Server/" >Building Own RTMP Server</a>
         </a>
     </div>
-    <div style="overflow: auto;">
-        <a href="./GateVideoDownloader/" style="float: left;">Download Gate Lectures From Mining Gyan</a>
+    <br/>
+    <div>
+        <a href="./GateVideoDownloader/" >Download Gate Lectures From Mining Gyan</a>
         </a>
     </div>
     <script src="./script.js"></script>
