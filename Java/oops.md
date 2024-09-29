@@ -216,6 +216,7 @@ Hello from Singleton class!
        return instance;
    }
    ```
+
 2. **Eager Initialization**: Instead of lazy initialization (creating the instance when first requested), you can create the instance when the class is loaded. This is known as eager initialization:
 
    ```java
@@ -225,6 +226,7 @@ Hello from Singleton class!
        return instance;
    }
    ```
+
 3. **Enum Singleton**: In modern Java, an enum is a more robust way to implement a Singleton as it is inherently thread-safe and prevents multiple instances from being created even in complex serialization scenarios.
 
    ```java
@@ -540,6 +542,7 @@ Constructor called.
 1. **Initializing static variables**: You can initialize complex static variables or perform any necessary setup for static members.
 
    - For example, setting up a database connection or loading a configuration file.
+
 2. **Loading external resources**: It can be used to load external resources (like a configuration file or properties) once when the class is loaded.
 
 ### Example with Multiple Static Blocks:
@@ -804,9 +807,11 @@ Buddy is fetching the ball.
 1. **Single Inheritance**: A class inherits from one superclass.
 
    - Example: `Dog` inherits from `Animal`.
+
 2. **Multilevel Inheritance**: A class inherits from another class, which in turn inherits from a third class.
 
    - Example: `Puppy` inherits from `Dog`, which inherits from `Animal`.
+
 3. **Hierarchical Inheritance**: Multiple classes inherit from a single superclass.
 
    - Example: `Cat` and `Dog` both inherit from `Animal`.
@@ -1109,11 +1114,13 @@ Buddy is barking.
 
    - Contains a property `name` and a method `eat()` that prints a message indicating that the animal is eating.
    - The constructor initializes the `name` property.
+
 2. **Subclass (`Dog`)**:
 
    - Inherits from the `Animal` class using the `extends` keyword.
    - Has an additional property `breed` and a method `bark()`.
    - Uses the `super` keyword to call the constructor of the superclass (`Animal`) to set the name.
+
 3. **Main Class**:
 
    - An instance of the `Dog` class is created.
@@ -1220,16 +1227,19 @@ Buddy is fetching the ball.
 
    - Contains a property `name` and a method `eat()`.
    - The constructor initializes the `name`.
+
 2. **Intermediate Class (`Dog`)**:
 
    - Inherits from `Animal`.
    - Contains an additional property `breed` and a method `bark()`.
    - Calls the superclass constructor to set the `name`.
+
 3. **Subclass (`GoldenRetriever`)**:
 
    - Inherits from `Dog`.
    - Contains an additional property `color` and a method `fetch()`.
    - Calls the constructor of `Dog` using `super()`.
+
 4. **Main Class**:
 
    - An instance of `GoldenRetriever` is created.
@@ -1342,16 +1352,19 @@ Whiskers is meowing.
 
    - Contains a property `name` and a method `eat()`.
    - The constructor initializes the `name`.
+
 2. **Subclass (`Dog`)**:
 
    - Inherits from `Animal`.
    - Has an additional property `breed` and a method `bark()`.
    - Uses `super()` to initialize the name.
+
 3. **Subclass (`Cat`)**:
 
    - Also inherits from `Animal`.
    - Has an additional property `color` and a method `meow()`.
    - Uses `super()` to initialize the name.
+
 4. **Main Class**:
 
    - Creates instances of `Dog` and `Cat`.
@@ -1555,6 +1568,7 @@ public class Main {
 1. **Compile-time Polymorphism**:
 
    - In the `Calculator` class, the `add` method is overloaded with different parameter lists. The appropriate method is selected at compile time based on the method signature.
+
 2. **Runtime Polymorphism**:
 
    - The `Animal` class has a method `sound()`, which is overridden by the `Dog` and `Cat` subclasses. At runtime, the JVM determines which method to call based on the object type, not the reference type.
@@ -1652,6 +1666,7 @@ public class Main {
 
    - **Getters**: Methods like `getName()` and `getAge()` provide read access to the private attributes.
    - **Setters**: Methods like `setName()` and `setAge(int age)` allow controlled modification of the private attributes. In the `setAge` method, a simple validation is performed to ensure the age is not set to a negative value.
+
 3. **Data Integrity**: Encapsulation helps to maintain the integrity of the data by preventing external interference. For example, in the `setAge()` method, we can include checks to prevent invalid data.
 
 ### Benefits of Encapsulation
@@ -1672,17 +1687,21 @@ Encapsulation is a fundamental principle in OOP that enhances the security, flex
 1. **Private Attributes**:
 
    - Most attributes in your `CartModel` class are declared as private (e.g., `id`, `userId`, `Brand`, `Color`, etc.). This means they cannot be accessed directly from outside the class, which protects the integrity of the data.
+
 2. **Public Getters and Setters**:
 
    - Each private attribute has a corresponding public getter and setter method. This allows controlled access to the attributes:
      - **Getters**: Methods like `getId()`, `getUserId()`, `getBrand()`, etc., allow read access to the private attributes.
      - **Setters**: Methods like `setId(String id)`, `setUserId(String userId)`, etc., allow controlled modification of the private attributes.
+
 3. **Data Integrity**:
 
    - The use of setters can include validation logic (although not shown here, it can be easily added). For instance, you might want to ensure that the price cannot be negative when setting it.
+
 4. **Entity Annotation**:
 
    - The use of `@Entity` and JPA annotations like `@Id` and `@Column` indicates that this class is part of a persistence layer and will map to a database table. This allows the class to handle database operations while keeping the internal state encapsulated.
+
 5. **No Direct Access to Internal State**:
 
    - The actual fields (`Id`, `Brand`, `Color`, etc.) are accessed only through their respective methods, enforcing encapsulation by preventing direct manipulation of the attributes.
@@ -1708,34 +1727,34 @@ public class CartModel {
     private Long id;
 
     @Column(name = "product_id")
-    private String productId; 
+    private String productId;
 
     @Column(name = "user_id")
     private String userId;
 
     @Column(name = "brand")
-    private String brand; 
+    private String brand;
 
     @Column(name = "color")
-    private String color; 
+    private String color;
 
     @Column(name = "discount")
-    private String discount; 
+    private String discount;
 
     @Column(name = "imageUrl")
-    private String imageUrl; 
+    private String imageUrl;
 
     @Column(name = "price")
-    private String price; 
+    private String price;
 
     @Column(name = "sellingPrice")
-    private String sellingPrice; 
+    private String sellingPrice;
 
     @Column(name = "size")
-    private String size; 
+    private String size;
 
     @Column(name = "title")
-    private String title; 
+    private String title;
 
     // Getters and Setters
     public Long getId() {
@@ -1901,7 +1920,7 @@ public class Main {
     public static void main(String[] args) {
         Animal myDog = new Dog();
         Animal myCat = new Cat();
-      
+
         myDog.makeSound(); // Output: Woof!
         myCat.makeSound(); // Output: Meow!
     }
@@ -1915,6 +1934,7 @@ public class Main {
    - The `Vehicle` class is an abstract class with an abstract method `start()` and a concrete method `stop()`.
    - The `Car` class extends the `Vehicle` class and provides an implementation for the `start()` method.
    - The user can interact with the `Vehicle` class without knowing how each type of vehicle starts, focusing only on the necessary features.
+
 2. **Interface Example**:
 
    - The `Animal` interface defines a contract with a single method `makeSound()`.
@@ -2032,10 +2052,12 @@ public class Main {
 
    - The `Product` abstract class defines common properties (`id`, `title`, and `price`) and an abstract method `calculateDiscount()`, which forces subclasses to implement their own discount calculation logic.
    - It also provides a concrete method `getProductDetails()` to display common product details.
+
 2. **Concrete Classes**:
 
    - `DigitalProduct` and `PhysicalProduct` extend the `Product` class and implement the `calculateDiscount()` method according to their specific rules.
    - The `PhysicalProduct` class also includes a method `getTotalPrice()` to calculate the total cost, including shipping.
+
 3. **Main Class**:
 
    - In the `Main` class, we create instances of `DigitalProduct` and `PhysicalProduct`, showcasing how abstraction allows us to interact with different product types through a common interface.
@@ -2052,16 +2074,18 @@ Abstraction in an e-commerce backend enhances the system's organization and main
 
 # Ecommerce Backend Interface Implementation
 
-Understanding interfaces in Java is crucial for designing clean, modular, and maintainable code. Let's explore how  `CartService` and `CartServiceInterface` in the e-commerce backend exemplify the use of interfaces in real projects.
+Understanding interfaces in Java is crucial for designing clean, modular, and maintainable code. Let's explore how `CartService` and `CartServiceInterface` in the e-commerce backend exemplify the use of interfaces in real projects.
 
 ### Understanding Interfaces
 
 1. **Definition**:
 
    - An interface in Java is a reference type that can contain constants, method signatures, default methods, static methods, and nested types. It cannot contain instance fields and cannot be instantiated directly.
+
 2. **Purpose**:
 
    - Interfaces provide a way to achieve abstraction and multiple inheritance in Java. They allow different classes to implement the same set of methods, ensuring a consistent API while allowing different implementations.
+
 3. **Advantages**:
 
    - **Decoupling**: Interfaces promote loose coupling between components. By coding to an interface rather than a specific implementation, you can easily switch out implementations without changing the code that uses them.
@@ -2072,7 +2096,7 @@ Understanding interfaces in Java is crucial for designing clean, modular, and ma
 
 #### Interface Definition: `CartServiceInterface`
 
-Here's  interface:
+Here's interface:
 
 ```java
 public interface CartServiceInterface {
@@ -2144,12 +2168,15 @@ public class CartService implements CartServiceInterface {
        assertEquals(HttpStatus.OK, response.getStatus());
    }
    ```
+
 2. **Future Implementations**:
 
    - If you decide to introduce a new feature, such as a `WishlistService`, you can create another interface, `WishlistServiceInterface`, with a different set of methods. This keeps your code modular and allows for easier maintenance.
+
 3. **API Layer**:
 
    - Interfaces help define the API contracts for your service layer. If another developer wants to create a new implementation (e.g., `MockCartService` for testing), they can do so without affecting existing implementations.
+
 4. **Dependency Injection**:
 
    - Using interfaces allows for better integration with frameworks like Spring, which use dependency injection to manage object lifecycles. For instance, you can inject `CartServiceInterface` into your controllers, enabling flexibility in switching implementations.
