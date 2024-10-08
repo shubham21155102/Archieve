@@ -85,7 +85,27 @@
             const btn = document.getElementById('click');
             btn.remove();
         });
-
+        const sudokuSolver = (block) => {
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    if (board[i][j] == '.') {
+                        for (let ch = '1'; ch <= '9'; ch++) {
+                            setTimeout(() => {
+                                    createSudokuPuzzle(block);
+                                }, 5000);
+                            if (isValid(board, i, j, ch)) {
+                                block[i][j] = ch;
+                                
+                                if (sudokuSolver(block)) return true;
+                                else block[i][j] = '.';
+                            }
+                        }
+                        return false;
+                    }
+                }
+            }
+            return true;
+        };
         const visualizeSudokuSolver = (block) => {
             let delay = 0;
 
