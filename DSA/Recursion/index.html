@@ -450,14 +450,14 @@ blockquote {
 <span class="hljs-keyword">public</span>:
     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;ds,<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> n,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;ans)</span></span>{
            ans.<span class="hljs-built_in">push_back</span>(ds);
-           
+
            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=ind;i&lt;n;i++){
             <span class="hljs-keyword">if</span>(i!=ind &amp;&amp; nums[i]==nums[i<span class="hljs-number">-1</span>]) <span class="hljs-keyword">continue</span>;
             ds.<span class="hljs-built_in">push_back</span>(nums[i]);
             <span class="hljs-built_in">recursion</span>(nums,ds,i+<span class="hljs-number">1</span>,n,ans);
            ds.<span class="hljs-built_in">pop_back</span>();
            }
-           
+
     }
     vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">subsets</span>(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
         <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
@@ -827,8 +827,58 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;st;
 }
 <span class="hljs-comment">// } Driver Code Ends</span>
 </div></code></pre>
-<h2 id="subsets-ii" tabindex="-1"><a href="https://leetcode.com/problems/subsets-ii/"><strong>Subsets II</strong></a></h2>
-<pre class='hljs'><code><div>
+<h2 id="permutations" tabindex="-1"><a href="https://leetcode.com/problems/permutations/"><strong>Permutations</strong></a></h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;ans,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;ds,<span class="hljs-keyword">int</span> n,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums,vector&lt;<span class="hljs-keyword">bool</span>&gt; &amp;freq)</span></span>{
+        <span class="hljs-keyword">if</span>(ds.<span class="hljs-built_in">size</span>()==nums.<span class="hljs-built_in">size</span>()){
+            ans.<span class="hljs-built_in">push_back</span>(ds);
+            <span class="hljs-keyword">return</span>;
+        } 
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+           <span class="hljs-keyword">if</span>(!freq[i]){
+            ds.<span class="hljs-built_in">push_back</span>(nums[i]);
+            freq[i]=<span class="hljs-literal">true</span>;
+            <span class="hljs-built_in">recursion</span>(ans,ds,n,nums,freq);
+            freq[i]=<span class="hljs-literal">false</span>;
+            ds.<span class="hljs-built_in">pop_back</span>();
+
+           }
+        }
+
+    }
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">permute</span>(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+        vector&lt;<span class="hljs-keyword">int</span>&gt; ds;
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; ans;
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">freq</span><span class="hljs-params">(n+<span class="hljs-number">1</span>,<span class="hljs-literal">false</span>)</span></span>;
+        <span class="hljs-built_in">recursion</span>(ans,ds,n,nums,freq);
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
+<h4 id="using-swap" tabindex="-1">Using Swap</h4>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;ans,<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> n,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;arr)</span></span>{
+        <span class="hljs-keyword">if</span>(ind==n){
+            ans.<span class="hljs-built_in">push_back</span>(arr);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=ind;i&lt;n;i++){
+            <span class="hljs-built_in">swap</span>(arr[i],arr[ind]);
+            <span class="hljs-built_in">recursion</span>(ans,ind+<span class="hljs-number">1</span>,n,arr);
+            <span class="hljs-built_in">swap</span>(arr[i],arr[ind]);
+        }
+    }
+
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">permute</span>(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; ans;
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        <span class="hljs-built_in">recursion</span>(ans,<span class="hljs-number">0</span>,n,nums);
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
 </div></code></pre>
 
     </div>
