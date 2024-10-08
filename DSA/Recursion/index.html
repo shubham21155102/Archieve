@@ -445,6 +445,30 @@ blockquote {
 };
 </div></code></pre>
 <h2 id="subsetes-ii" tabindex="-1"><a href="https://leetcode.com/problems/subsets-ii/description/"><strong>Subsetes II</strong></a></h2>
+<h3 id="optimized" tabindex="-1">Optimized</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;ds,<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> n,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;ans)</span></span>{
+           ans.<span class="hljs-built_in">push_back</span>(ds);
+           
+           <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=ind;i&lt;n;i++){
+            <span class="hljs-keyword">if</span>(i!=ind &amp;&amp; nums[i]==nums[i<span class="hljs-number">-1</span>]) <span class="hljs-keyword">continue</span>;
+            ds.<span class="hljs-built_in">push_back</span>(nums[i]);
+            <span class="hljs-built_in">recursion</span>(nums,ds,i+<span class="hljs-number">1</span>,n,ans);
+           ds.<span class="hljs-built_in">pop_back</span>();
+           }
+           
+    }
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">subsets</span>(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; ans;
+        vector&lt;<span class="hljs-keyword">int</span>&gt; ds;
+        <span class="hljs-built_in">recursion</span>(nums,ds,<span class="hljs-number">0</span>,n,ans);
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
+<h4 id="using-set" tabindex="-1">Using Set</h4>
 <pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
 set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;st;
 <span class="hljs-keyword">public</span>:
@@ -769,14 +793,14 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;st;
         }
         <span class="hljs-built_in">recursion</span>(ind+<span class="hljs-number">1</span>,n,sum,ans,arr);
         <span class="hljs-built_in">recursion</span>(ind+<span class="hljs-number">1</span>,n,sum+arr[ind],ans,arr);
-        
+
     }
     <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">subsetSums</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; arr, <span class="hljs-keyword">int</span> n)</span> </span>{
         <span class="hljs-comment">// Write Your Code here</span>
         vector&lt;<span class="hljs-keyword">int</span>&gt; ans;
         <span class="hljs-built_in">recursion</span>(<span class="hljs-number">0</span>,n,<span class="hljs-number">0</span>,ans,arr);
         <span class="hljs-keyword">return</span> ans;
-        
+
     }
 };
 
