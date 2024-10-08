@@ -709,6 +709,103 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;st;
     }
 };
 </div></code></pre>
+<h2 id="subset-sums" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/subset-sums2234/1"><strong>Subset Sums</strong></a></h2>
+<h3 id="more-space" tabindex="-1">more Space</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;ans, vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;ds, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> ind, vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;arr)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (ind == n)
+    {
+        ans.<span class="hljs-built_in">push_back</span>(ds);
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-built_in">recursion</span>(ans, ds, n, ind + <span class="hljs-number">1</span>, arr);
+    ds.<span class="hljs-built_in">push_back</span>(arr[ind]);
+    <span class="hljs-built_in">recursion</span>(ans, ds, n, ind + <span class="hljs-number">1</span>, arr);
+    ds.<span class="hljs-built_in">pop_back</span>();
+}
+<span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">subsetSums</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; arr, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; ans;
+    vector&lt;<span class="hljs-keyword">int</span>&gt; ds;
+    vector&lt;<span class="hljs-keyword">int</span>&gt; temp;
+    <span class="hljs-built_in">recursion</span>(ans, ds, n, <span class="hljs-number">0</span>, arr);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; ans.<span class="hljs-built_in">size</span>(); i++)
+    {
+        <span class="hljs-keyword">if</span> (ans[i].<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>)
+        {
+            temp.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">0</span>);
+            <span class="hljs-keyword">continue</span>;
+        }
+        <span class="hljs-keyword">else</span>
+        {
+
+            <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; ans[i].<span class="hljs-built_in">size</span>(); j++)
+            {
+                sum += ans[i][j];
+            }
+            temp.<span class="hljs-built_in">push_back</span>(sum);
+        }
+    }
+    <span class="hljs-keyword">return</span> temp;
+}
+};
+</div></code></pre>
+<h3 id="less-space" tabindex="-1">Less Space</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">//{ Driver Code Starts</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> sum,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;ans,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;arr)</span></span>{
+        <span class="hljs-keyword">if</span>(ind==n) {
+            ans.<span class="hljs-built_in">push_back</span>(sum);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-built_in">recursion</span>(ind+<span class="hljs-number">1</span>,n,sum,ans,arr);
+        <span class="hljs-built_in">recursion</span>(ind+<span class="hljs-number">1</span>,n,sum+arr[ind],ans,arr);
+        
+    }
+    <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">subsetSums</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; arr, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-comment">// Write Your Code here</span>
+        vector&lt;<span class="hljs-keyword">int</span>&gt; ans;
+        <span class="hljs-built_in">recursion</span>(<span class="hljs-number">0</span>,n,<span class="hljs-number">0</span>,ans,arr);
+        <span class="hljs-keyword">return</span> ans;
+        
+    }
+};
+
+<span class="hljs-comment">//{ Driver Code Starts.</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> t;
+    cin &gt;&gt; t;
+    <span class="hljs-keyword">while</span> (t--) {
+        <span class="hljs-keyword">int</span> N;
+        cin &gt;&gt; N;
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">arr</span><span class="hljs-params">(N)</span></span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+            cin &gt;&gt; arr[i];
+        }
+        Solution ob;
+        vector&lt;<span class="hljs-keyword">int</span>&gt; ans = ob.<span class="hljs-built_in">subsetSums</span>(arr, N);
+        <span class="hljs-built_in">sort</span>(ans.<span class="hljs-built_in">begin</span>(), ans.<span class="hljs-built_in">end</span>());
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> sum : ans) {
+            cout &lt;&lt; sum &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+        }
+        cout &lt;&lt; endl;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+<span class="hljs-comment">// } Driver Code Ends</span>
+</div></code></pre>
+<h2 id="subsets-ii" tabindex="-1"><a href="https://leetcode.com/problems/subsets-ii/"><strong>Subsets II</strong></a></h2>
+<pre class='hljs'><code><div>
+</div></code></pre>
 
     </div>
 </body>
