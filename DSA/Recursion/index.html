@@ -834,7 +834,7 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;st;
         <span class="hljs-keyword">if</span>(ds.<span class="hljs-built_in">size</span>()==nums.<span class="hljs-built_in">size</span>()){
             ans.<span class="hljs-built_in">push_back</span>(ds);
             <span class="hljs-keyword">return</span>;
-        } 
+        }
         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
            <span class="hljs-keyword">if</span>(!freq[i]){
             ds.<span class="hljs-built_in">push_back</span>(nums[i]);
@@ -877,6 +877,156 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;st;
         <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
         <span class="hljs-built_in">recursion</span>(ans,<span class="hljs-number">0</span>,n,nums);
         <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
+<h2 id="permutations-ii" tabindex="-1"><a href="https://leetcode.com/problems/permutations-ii/"><strong>Permutations II</strong></a></h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">private</span>:
+vector&lt;<span class="hljs-keyword">int</span>&gt;ds;
+set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rsps</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums,vector&lt;<span class="hljs-keyword">bool</span>&gt;&amp; freq)</span></span>{
+    <span class="hljs-keyword">if</span>(ds.<span class="hljs-built_in">size</span>()==nums.<span class="hljs-built_in">size</span>()){
+        ans.<span class="hljs-built_in">insert</span>(ds);
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;nums.<span class="hljs-built_in">size</span>();i++){
+        <span class="hljs-keyword">if</span>(freq[i]);
+        <span class="hljs-keyword">else</span>{
+            ds.<span class="hljs-built_in">push_back</span>(nums[i]);
+            freq[i]=<span class="hljs-literal">true</span>;
+            <span class="hljs-built_in">rsps</span>(nums,freq);
+            freq[i]=<span class="hljs-literal">false</span>;
+            ds.<span class="hljs-built_in">pop_back</span>();
+        }
+    }
+}
+<span class="hljs-keyword">public</span>:
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">permuteUnique</span>(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+         <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+         <span class="hljs-function">vector&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">freq</span><span class="hljs-params">(n,<span class="hljs-literal">false</span>)</span></span>;
+         <span class="hljs-built_in">rsps</span>(nums,freq);
+         vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;v;
+         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> i:ans){
+             v.<span class="hljs-built_in">push_back</span>(i);
+         }
+         <span class="hljs-keyword">return</span> v;
+
+    }
+};
+</div></code></pre>
+<h2 id="n-queens" tabindex="-1"><a href="https://leetcode.com/problems/n-queens/"><strong>N Queens</strong></a></h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isSafe</span><span class="hljs-params">(<span class="hljs-keyword">int</span> row,<span class="hljs-keyword">int</span> col,<span class="hljs-keyword">int</span> n,vector&lt;string&gt; &amp;board)</span></span>{
+        <span class="hljs-keyword">int</span> dupRow=row;
+        <span class="hljs-keyword">int</span> dupCol=col;
+        <span class="hljs-keyword">while</span>(row&gt;=<span class="hljs-number">0</span> &amp;&amp; col&gt;=<span class="hljs-number">0</span>){
+            <span class="hljs-keyword">if</span>(board[row][col]==<span class="hljs-string">&#x27;Q&#x27;</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            row--;
+            col--;
+        }
+        row=dupRow;
+        col=dupCol;
+        <span class="hljs-keyword">while</span>(col&gt;=<span class="hljs-number">0</span>){
+            <span class="hljs-keyword">if</span>(board[row][col]==<span class="hljs-string">&#x27;Q&#x27;</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            col--;
+        }
+        row=dupRow;
+        col=dupCol;
+        <span class="hljs-keyword">while</span>(row&lt;n &amp;&amp; col&gt;=<span class="hljs-number">0</span>){
+            <span class="hljs-keyword">if</span>(board[row][col]==<span class="hljs-string">&#x27;Q&#x27;</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            row++;
+            col--;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> col,<span class="hljs-keyword">int</span> n,vector&lt;string&gt; &amp;board,vector&lt;vector&lt;string&gt;&gt;&amp;ans)</span></span>{
+        <span class="hljs-keyword">if</span>(col==n){
+            ans.<span class="hljs-built_in">push_back</span>(board);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> row=<span class="hljs-number">0</span>;row&lt;n;row++){
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isSafe</span>(row,col,n,board)){
+                board[row][col]=<span class="hljs-string">&#x27;Q&#x27;</span>;
+                <span class="hljs-built_in">solve</span>(col+<span class="hljs-number">1</span>,n,board,ans);
+                board[row][col]=<span class="hljs-string">&#x27;.&#x27;</span>;
+            }
+        }
+    }
+    vector&lt;vector&lt;string&gt;&gt; <span class="hljs-built_in">solveNQueens</span>(<span class="hljs-keyword">int</span> n) {
+        vector&lt;vector&lt;string&gt;&gt; ans;
+        <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">board</span><span class="hljs-params">(n)</span></span>;
+        <span class="hljs-function">string <span class="hljs-title">s</span><span class="hljs-params">(n,<span class="hljs-string">&#x27;.&#x27;</span>)</span></span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            board[i]=s;
+        }
+        <span class="hljs-built_in">solve</span>(<span class="hljs-number">0</span>,n,board,ans);
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
+<h2 id="n-queens-ii" tabindex="-1"><a href="https://leetcode.com/problems/n-queens-ii/"><strong>N Queens II</strong></a></h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> col,<span class="hljs-keyword">int</span> n,vector&lt;<span class="hljs-keyword">bool</span>&gt; &amp;leftRow,vector&lt;<span class="hljs-keyword">bool</span>&gt;&amp;lowerDiagonal,vector&lt;<span class="hljs-keyword">bool</span>&gt;&amp;upperDiagonal,vector&lt;string&gt;&amp;board,vector&lt;vector&lt;string&gt;&gt; &amp;ans)</span>
+    </span>{
+        <span class="hljs-keyword">if</span>(col==n){
+            ans.<span class="hljs-built_in">push_back</span>(board);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> row=<span class="hljs-number">0</span>;row&lt;n;row++){
+          <span class="hljs-keyword">if</span>(!leftRow[row] &amp;&amp; !upperDiagonal[n<span class="hljs-number">-1</span>+col-row] &amp;&amp; !lowerDiagonal[row+col]){
+            leftRow[row]=<span class="hljs-literal">true</span>;
+            upperDiagonal[n<span class="hljs-number">-1</span>+col-row]=<span class="hljs-literal">true</span>; 
+            lowerDiagonal[row+col]=<span class="hljs-literal">true</span>;
+            board[row][col]=<span class="hljs-string">&#x27;Q&#x27;</span>;
+            <span class="hljs-built_in">solve</span>(col+<span class="hljs-number">1</span>,n,leftRow,lowerDiagonal,upperDiagonal,board,ans);
+            leftRow[row]=<span class="hljs-literal">false</span>;
+            upperDiagonal[n<span class="hljs-number">-1</span>+col-row]=<span class="hljs-literal">false</span>;
+            lowerDiagonal[row+col]=<span class="hljs-literal">false</span>;
+            board[row][col]=<span class="hljs-string">&#x27;.&#x27;</span>;
+          }
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">totalNQueens</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        vector&lt;vector&lt;string&gt;&gt; ans;
+        <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">board</span><span class="hljs-params">(n,string(n,<span class="hljs-string">&#x27;.&#x27;</span>))</span></span>;
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">leftRow</span><span class="hljs-params">(n,<span class="hljs-literal">false</span>)</span>,<span class="hljs-title">lowerDiagonal</span><span class="hljs-params">(<span class="hljs-number">2</span>*n<span class="hljs-number">-1</span>,<span class="hljs-literal">false</span>)</span>,<span class="hljs-title">upperDiagonal</span><span class="hljs-params">(<span class="hljs-number">2</span>*n<span class="hljs-number">-1</span>,<span class="hljs-literal">false</span>)</span></span>;
+        <span class="hljs-built_in">solve</span>(<span class="hljs-number">0</span>,n,leftRow,lowerDiagonal,upperDiagonal,board,ans);
+        <span class="hljs-keyword">return</span> ans.<span class="hljs-built_in">size</span>();
+    }
+};
+</div></code></pre>
+<h3 id="optimized-1" tabindex="-1">Optimized</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> col,<span class="hljs-keyword">int</span> n,vector&lt;<span class="hljs-keyword">bool</span>&gt; &amp;leftRow,vector&lt;<span class="hljs-keyword">bool</span>&gt;&amp;lowerDiagonal,vector&lt;<span class="hljs-keyword">bool</span>&gt;&amp;upperDiagonal,vector&lt;string&gt;&amp;board,<span class="hljs-keyword">int</span> &amp;count)</span>
+    </span>{
+        <span class="hljs-keyword">if</span>(col==n){
+            count++;
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> row=<span class="hljs-number">0</span>;row&lt;n;row++){
+          <span class="hljs-keyword">if</span>(!leftRow[row] &amp;&amp; !upperDiagonal[n<span class="hljs-number">-1</span>+col-row] &amp;&amp; !lowerDiagonal[row+col]){
+            leftRow[row]=<span class="hljs-literal">true</span>;
+            upperDiagonal[n<span class="hljs-number">-1</span>+col-row]=<span class="hljs-literal">true</span>; 
+            lowerDiagonal[row+col]=<span class="hljs-literal">true</span>;
+            board[row][col]=<span class="hljs-string">&#x27;Q&#x27;</span>;
+            <span class="hljs-built_in">solve</span>(col+<span class="hljs-number">1</span>,n,leftRow,lowerDiagonal,upperDiagonal,board,count);
+            leftRow[row]=<span class="hljs-literal">false</span>;
+            upperDiagonal[n<span class="hljs-number">-1</span>+col-row]=<span class="hljs-literal">false</span>;
+            lowerDiagonal[row+col]=<span class="hljs-literal">false</span>;
+            board[row][col]=<span class="hljs-string">&#x27;.&#x27;</span>;
+          }
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">totalNQueens</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">board</span><span class="hljs-params">(n,string(n,<span class="hljs-string">&#x27;.&#x27;</span>))</span></span>;
+        <span class="hljs-keyword">int</span> count=<span class="hljs-number">0</span>;
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">leftRow</span><span class="hljs-params">(n,<span class="hljs-literal">false</span>)</span>,<span class="hljs-title">lowerDiagonal</span><span class="hljs-params">(<span class="hljs-number">2</span>*n<span class="hljs-number">-1</span>,<span class="hljs-literal">false</span>)</span>,<span class="hljs-title">upperDiagonal</span><span class="hljs-params">(<span class="hljs-number">2</span>*n<span class="hljs-number">-1</span>,<span class="hljs-literal">false</span>)</span></span>;
+        <span class="hljs-built_in">solve</span>(<span class="hljs-number">0</span>,n,leftRow,lowerDiagonal,upperDiagonal,board,count);
+        <span class="hljs-keyword">return</span> count;
     }
 };
 </div></code></pre>
