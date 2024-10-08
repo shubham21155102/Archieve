@@ -1030,6 +1030,43 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
     }
 };
 </div></code></pre>
+<h1 id="sudoku-solver" tabindex="-1"><a href="https://leetcode.com/problems/sudoku-solver/">Sudoku Solver</a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solveSudoku</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; board)</span> </span>{
+        <span class="hljs-built_in">solve</span>(board);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">solve</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">char</span>&gt;&gt; &amp;board)</span></span>{
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;board.<span class="hljs-built_in">size</span>();i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;board[i].<span class="hljs-built_in">size</span>();j++){
+                <span class="hljs-keyword">if</span>(board[i][j]==<span class="hljs-string">&#x27;.&#x27;</span>){
+                    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span> c=<span class="hljs-string">&#x27;1&#x27;</span>;c&lt;=<span class="hljs-string">&#x27;9&#x27;</span>;c++){
+                        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isValid</span>(board,i,j,c)){
+                            board[i][j]=c;
+                            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">solve</span>(board)){
+                                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                            }
+                            <span class="hljs-keyword">else</span> {
+                                board[i][j]=<span class="hljs-string">&#x27;.&#x27;</span>;
+                            }
+                        }
+                    }
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isValid</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">char</span>&gt;&gt; &amp;board,<span class="hljs-keyword">int</span> row,<span class="hljs-keyword">int</span> col,<span class="hljs-keyword">char</span> c)</span></span>{
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">9</span>;i++){
+            <span class="hljs-keyword">if</span>(board[i][col]==c) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">if</span>(board[row][i]==c) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">if</span>(board[<span class="hljs-number">3</span>*(row/<span class="hljs-number">3</span>)+(i/<span class="hljs-number">3</span>)][<span class="hljs-number">3</span>*(col/<span class="hljs-number">3</span>)+(i%<span class="hljs-number">3</span>)]==c) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+};
+</div></code></pre>
 
     </div>
 </body>
