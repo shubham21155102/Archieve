@@ -599,6 +599,89 @@ blockquote {
     }
 };
 </div></code></pre>
+<h2 id="combination-sum-iv" tabindex="-1"><a href="https://leetcode.com/problems/combination-sum-iii/"><strong>Combination Sum IV</strong></a></h2>
+<h5 id="mle" tabindex="-1">MLE</h5>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>: 
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;ans,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;ds,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> target,<span class="hljs-keyword">int</span> sum,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;arr)</span></span>{
+        <span class="hljs-keyword">if</span>(sum==target){
+            ans.<span class="hljs-built_in">push_back</span>(ds);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">if</span>(sum&gt; target) <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            ds.<span class="hljs-built_in">push_back</span>(arr[i]);
+            sum += arr[i]; 
+            <span class="hljs-built_in">recursion</span>(ans,ds,n,target,sum,arr);
+            sum -= arr[i];
+            ds.<span class="hljs-built_in">pop_back</span>();
+
+        }
+        
+        
+    }
+    
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">combinationSum4</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> target)</span> </span>{
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; ans;
+        vector&lt;<span class="hljs-keyword">int</span>&gt; ds;
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        <span class="hljs-built_in">recursion</span>(ans,ds,n,target,<span class="hljs-number">0</span>,nums);
+        <span class="hljs-keyword">if</span>(ans.<span class="hljs-built_in">size</span>()==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">return</span> ans.<span class="hljs-built_in">size</span>();
+    }
+};
+</div></code></pre>
+<h5 id="tle" tabindex="-1">TLE</h5>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>: 
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;ans,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;ds,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> target,<span class="hljs-keyword">int</span> sum,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;arr,<span class="hljs-keyword">int</span> &amp;count)</span></span>{
+        <span class="hljs-keyword">if</span>(sum==target){
+            <span class="hljs-comment">// ans.push_back(ds);</span>
+            count++;
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">if</span>(sum&gt; target) <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            <span class="hljs-comment">// ds.push_back(arr[i]);</span>
+            sum += arr[i]; 
+            <span class="hljs-built_in">recursion</span>(ans,ds,n,target,sum,arr,count);
+            sum -= arr[i];
+            <span class="hljs-comment">// ds.pop_back();</span>
+
+        }
+    }
+    
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">combinationSum4</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> target)</span> </span>{
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; ans;
+        vector&lt;<span class="hljs-keyword">int</span>&gt; ds;
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">int</span> count=<span class="hljs-number">0</span>;
+        <span class="hljs-built_in">recursion</span>(ans,ds,n,target,<span class="hljs-number">0</span>,nums,count);
+      
+        <span class="hljs-keyword">return</span> count;
+    }
+};
+</div></code></pre>
+<h5 id="optimized-with-dp" tabindex="-1">Optimized with DP</h5>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> target,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;dp,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;arr)</span></span>{
+       <span class="hljs-keyword">if</span>(target==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+       <span class="hljs-keyword">if</span>(target&lt;<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+       <span class="hljs-keyword">int</span> count=<span class="hljs-number">0</span>;
+       <span class="hljs-keyword">if</span>(dp[target]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[target];
+       <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;arr.<span class="hljs-built_in">size</span>();i++){
+        count+=<span class="hljs-built_in">solve</span>(target-arr[i],dp,arr);
+       }
+       dp[target]=count;
+        <span class="hljs-keyword">return</span> dp[target];
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">combinationSum4</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> target)</span> </span>{
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(target+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>)</span></span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">solve</span>(target,dp,nums);
+    }
+};
+</div></code></pre>
 
     </div>
 </body>
