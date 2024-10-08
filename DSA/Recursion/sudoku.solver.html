@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Board with Visualization</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        td {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 20px;
+            border: 1px solid black;
+        }
+        .empty {
+            background-color: white;
+        }
+        .filled {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align:center;">Sudoku Solver Visualization</h1>
+    <div id="sudoku-container" style="display:flex; justify-content:center;"></div>
+    <center>  
+        <button type="button" id="click">Solve</button>
+    </center> 
+
+    <script>
+        let board = [
+            ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
+            ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
+            ['.', '9', '8', '.', '.', '.', '.', '6', '.'],
+            ['8', '.', '.', '.', '6', '.', '.', '.', '3'],
+            ['4', '.', '.', '8', '.', '3', '.', '.', '1'],
+            ['7', '.', '.', '.', '2', '.', '.', '.', '6'],
+            ['.', '6', '.', '.', '.', '.', '2', '8', '.'],
+            ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
+            ['.', '.', '.', '.', '8', '.', '.', '7', '9']
+        ];
+
+        function createSudokuPuzzle(board) {
+            const puzzle = document.getElementById('sudoku-container');
+            puzzle.innerHTML = ""; 
+            const table = document.createElement('table');
+            table.style.backgroundColor = "black";
+            for (let i = 0; i < 9; i++) {
+                let row = document.createElement('tr');
+                for (let j = 0; j < 9; j++) {
+                    let cell = document.createElement('td');
+                    cell.id = `cell-${i}-${j}`; 
+                    if (board[i][j] == '.') {
+                        cell.classList.add("empty");
+                        cell.innerText = '.';
+                    } else {
+                        cell.style.backgroundColor = "white";
+                        cell.style.color = "black";
+                        cell.innerText = board[i][j];
+                    }
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+            puzzle.appendChild(table);
+        }
+
+        createSudokuPuzzle(board);
+
+        const btn = document.getElementById('click');
+        btn.style.borderRadius = "5px";
+        btn.style.color = 'white';
+        btn.style.backgroundColor = 'black';
+        btn.style.width = '180px';
+        btn.style.height = '30px';
+
+        btn.addEventListener('click', () => {
+            console.log("Clicked");
+            visualizeSudokuSolver(board);
+            const btn = document.getElementById('click');
+            btn.remove();
+        });
+
+        const visualizeSudokuSolver = (block) => {
+            let delay = 0;
+
+            const solver = (block, i, j) => {
+                if (i === 9) return true;
+
+                let [nextI, nextJ] = (j === 8) ? [i + 1, 0] : [i, j + 1]; 
+                if (block[i][j] !== '.') {
+                    return solver(block, nextI, nextJ);  
+                }
+
+                for (let ch = '1'; ch <= '9'; ch++) {
+                    if (isValid(block, i, j, ch)) {
+                        block[i][j] = ch;
+                        updateBoardVisual(i, j, ch, delay);
+                        delay += 100; 
+
+                        if (solver(block, nextI, nextJ)) {
+                            return true;
+                        }
+
+                        block[i][j] = '.';
+                        updateBoardVisual(i, j, '.', delay);
+                        delay += 100;
+                    }
+                }
+                return false;
+            };
+
+            solver(block, 0, 0);
+        };
+
+        const isValid = (board, row, col, c) => {
+            for (let i = 0; i < 9; i++) {
+                if (board[i][col] === c) return false;
+                if (board[row][i] === c) return false;
+                if (board[3 * parseInt((row / 3)) + parseInt(i / 3)][3 * parseInt(col / 3) + parseInt(i % 3)] === c) return false;
+            }
+            return true;
+        };
+
+        const updateBoardVisual = (row, col, value, delay) => {
+            setTimeout(() => {
+                const cell = document.getElementById(`cell-${row}-${col}`);
+                cell.innerText = value;
+                if (value !== '.') {
+                    cell.classList.add('filled');
+                } else {
+                    cell.classList.remove('filled');
+                }
+            }, delay);
+        };
+
+    </script>
+
+</body>
+</html>

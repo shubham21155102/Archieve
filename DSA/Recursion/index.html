@@ -978,7 +978,7 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> row=<span class="hljs-number">0</span>;row&lt;n;row++){
           <span class="hljs-keyword">if</span>(!leftRow[row] &amp;&amp; !upperDiagonal[n<span class="hljs-number">-1</span>+col-row] &amp;&amp; !lowerDiagonal[row+col]){
             leftRow[row]=<span class="hljs-literal">true</span>;
-            upperDiagonal[n<span class="hljs-number">-1</span>+col-row]=<span class="hljs-literal">true</span>; 
+            upperDiagonal[n<span class="hljs-number">-1</span>+col-row]=<span class="hljs-literal">true</span>;
             lowerDiagonal[row+col]=<span class="hljs-literal">true</span>;
             board[row][col]=<span class="hljs-string">&#x27;Q&#x27;</span>;
             <span class="hljs-built_in">solve</span>(col+<span class="hljs-number">1</span>,n,leftRow,lowerDiagonal,upperDiagonal,board,ans);
@@ -1010,7 +1010,7 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
         <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> row=<span class="hljs-number">0</span>;row&lt;n;row++){
           <span class="hljs-keyword">if</span>(!leftRow[row] &amp;&amp; !upperDiagonal[n<span class="hljs-number">-1</span>+col-row] &amp;&amp; !lowerDiagonal[row+col]){
             leftRow[row]=<span class="hljs-literal">true</span>;
-            upperDiagonal[n<span class="hljs-number">-1</span>+col-row]=<span class="hljs-literal">true</span>; 
+            upperDiagonal[n<span class="hljs-number">-1</span>+col-row]=<span class="hljs-literal">true</span>;
             lowerDiagonal[row+col]=<span class="hljs-literal">true</span>;
             board[row][col]=<span class="hljs-string">&#x27;Q&#x27;</span>;
             <span class="hljs-built_in">solve</span>(col+<span class="hljs-number">1</span>,n,leftRow,lowerDiagonal,upperDiagonal,board,count);
@@ -1067,6 +1067,7 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
     }
 };
 </div></code></pre>
+<h2 id="sudoku-visualizer" tabindex="-1"><a href="/sudoku.solver.html">Sudoku Visualizer</a></h2>
 
     </div>
 </body>
