@@ -8,3 +8,4 @@ __pycache__/**
 Rust/Backend/**
 satyam/**
 **.class
+*.md

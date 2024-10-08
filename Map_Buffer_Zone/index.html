@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Buffer Zones</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height:800px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
+  <script>
+    // Create a Leaflet map centered on the property
+    const map = L.map('map').setView([25.25921563077985,82.9934720660134], 13);
+
+    // Set up the tile layer from OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    // Sample property data (replace with your own GeoJSON)
+    const properties = [
+  {
+    name: "IIT BHU",
+    coords: [25.25921563077985, 82.9934720660134] // latitude, longitude swapped to correct order
+  },
+];
+
+    // Function to create a buffer zone and add it to the map
+    function createBufferZone(lat, lng, radius) {
+      // Create a GeoJSON point for the clicked property
+      const point = turf.point([lng, lat]);
+
+      // Calculate the buffer around the point (in meters)
+      const buffer = turf.buffer(point, radius, { units: 'meters' });
+
+      // Convert the buffer to a Leaflet-compatible GeoJSON object
+      const bufferGeoJson = L.geoJSON(buffer, {
+        style: {
+          color: 'blue',
+          fillColor: '#add8e6',
+          fillOpacity: 0.1,
+        }
+      });
+      bufferGeoJson.addTo(map);
+    }
+    properties.forEach(property => {
+      const marker = L.marker(property.coords).addTo(map)
+        .bindPopup(property.name);
+
+      marker.on('click', function () {
+        createBufferZone(property.coords[0], property.coords[1], 100);
+      });
+    });
+
+  </script>
+</body>
+</html>
