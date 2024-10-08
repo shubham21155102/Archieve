@@ -429,7 +429,7 @@ blockquote {
              ans.<span class="hljs-built_in">push_back</span>(ds);
              <span class="hljs-keyword">return</span>;
            }
-           
+
            ds.<span class="hljs-built_in">push_back</span>(nums[ind]);
            <span class="hljs-built_in">recursion</span>(nums,ds,ind+<span class="hljs-number">1</span>,n,ans);
            ds.<span class="hljs-built_in">pop_back</span>();
@@ -564,6 +564,36 @@ blockquote {
         <span class="hljs-keyword">int</span> n=v.<span class="hljs-built_in">size</span>();
         <span class="hljs-built_in">sort</span>(v.<span class="hljs-built_in">begin</span>(),v.<span class="hljs-built_in">end</span>());
         <span class="hljs-built_in">recursion</span>(ans,ds,<span class="hljs-number">0</span>,target,n,v);
+        <span class="hljs-keyword">return</span> ans;
+
+    }
+};
+</div></code></pre>
+<h2 id="combination-sum-iii" tabindex="-1"><a href="https://leetcode.com/problems/combination-sum-iii/"><strong>Combination Sum III</strong></a></h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;ans,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;ds,<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> k,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;arr)</span></span>{
+        <span class="hljs-keyword">if</span>(n==<span class="hljs-number">0</span>){
+            <span class="hljs-keyword">if</span>(ds.<span class="hljs-built_in">size</span>()==k)
+            ans.<span class="hljs-built_in">push_back</span>(ds);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=ind;i&lt;arr.<span class="hljs-built_in">size</span>();i++){
+            <span class="hljs-keyword">if</span>(arr[i]&gt;n) <span class="hljs-keyword">break</span>;
+            ds.<span class="hljs-built_in">push_back</span>(arr[i]);
+            <span class="hljs-built_in">recursion</span>(ans,ds,i+<span class="hljs-number">1</span>,n-arr[i],k,arr);
+            ds.<span class="hljs-built_in">pop_back</span>();
+        }
+
+    }
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">combinationSum3</span>(<span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> n) {
+        vector&lt;<span class="hljs-keyword">int</span>&gt;nums;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=<span class="hljs-number">9</span>;i++){
+         nums.<span class="hljs-built_in">push_back</span>(i);
+        }
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
+        vector&lt;<span class="hljs-keyword">int</span>&gt;ds;
+        <span class="hljs-built_in">recursion</span>(ans,ds,<span class="hljs-number">0</span>,n,k,nums);
         <span class="hljs-keyword">return</span> ans;
 
     }
