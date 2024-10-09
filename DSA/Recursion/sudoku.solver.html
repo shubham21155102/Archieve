@@ -154,7 +154,12 @@
                 if (value !== '.') {
                     cell.classList.add('filled');
                 } else {
+                    // cell.style.backgroundColor = 'red';
                     cell.classList.remove('filled');
+                    // cell.classList.add('empty');
+                    const btn=document.getElementById('click');
+                    btn.appendChild(cell);
+                    
                 }
             }, delay);
         };

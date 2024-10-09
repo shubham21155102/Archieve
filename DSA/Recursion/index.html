@@ -1068,6 +1068,118 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
 };
 </div></code></pre>
 <h2 id="sudoku-visualizer" tabindex="-1"><a href="https://learn.shubhamiitbhu.in/DSA/Recursion/sudoku.solver.html">Sudoku Visualizer</a></h2>
+<h2 id="m-coloring-problem" tabindex="-1"><a href="https://practice.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1"><strong>M Coloring Problem</strong></a></h2>
+<pre class='hljs'><code><div><span class="hljs-comment">//{ Driver Code Starts</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isSafe</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node,vector&lt;<span class="hljs-keyword">int</span>&gt; adj[],vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;color,<span class="hljs-keyword">int</span> col)</span></span>{
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> adjNode:adj[node]){
+            <span class="hljs-keyword">if</span>(color[adjNode]==col) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">solve</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; adj[],<span class="hljs-keyword">int</span> m,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> node,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;color)</span></span>{
+        <span class="hljs-keyword">if</span>(node==n) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=m;i++){
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isSafe</span>(node,adj,color,i)){
+                color[node]=i;
+                <span class="hljs-keyword">if</span>(<span class="hljs-built_in">solve</span>(adj,m,n,node+<span class="hljs-number">1</span>,color)) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                color[node]=<span class="hljs-number">0</span>;
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">graphColoring</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, vector&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;&amp; edges, <span class="hljs-keyword">int</span> m)</span> </span>{
+        <span class="hljs-comment">// code here</span>
+        vector&lt;<span class="hljs-keyword">int</span>&gt; adj[n];
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;edges.<span class="hljs-built_in">size</span>();i++){
+            adj[edges[i].first].<span class="hljs-built_in">push_back</span>(edges[i].second);
+            adj[edges[i].second].<span class="hljs-built_in">push_back</span>(edges[i].first);
+        }
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">color</span><span class="hljs-params">(n,<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">solve</span>(adj,m,n,<span class="hljs-number">0</span>,color);
+    }
+};
+
+<span class="hljs-comment">//{ Driver Code Starts.</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> t;
+    cin &gt;&gt; t;
+    cin.<span class="hljs-built_in">ignore</span>();
+    <span class="hljs-keyword">while</span> (t--) {
+        <span class="hljs-keyword">int</span> n, m;
+        cin &gt;&gt; n;
+        cin.<span class="hljs-built_in">ignore</span>(); <span class="hljs-comment">// Ignore newline after reading n</span>
+        vector&lt;<span class="hljs-keyword">int</span>&gt; arr;
+        string input;
+        <span class="hljs-built_in">getline</span>(cin, input); <span class="hljs-comment">// Read the entire line for the array elements</span>
+
+        <span class="hljs-function">stringstream <span class="hljs-title">ss</span><span class="hljs-params">(input)</span></span>;
+        <span class="hljs-keyword">int</span> number;
+        <span class="hljs-keyword">while</span> (ss &gt;&gt; number) {
+            arr.<span class="hljs-built_in">push_back</span>(number); <span class="hljs-comment">// Populate the array with edge values</span>
+        }
+        cin &gt;&gt; m;
+        cin.<span class="hljs-built_in">ignore</span>(); <span class="hljs-comment">// Ignore newline after reading m</span>
+
+        <span class="hljs-keyword">int</span> edges_count = arr.<span class="hljs-built_in">size</span>();
+        vector&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">edges</span>(edges_count /
+                                     <span class="hljs-number">2</span>); <span class="hljs-comment">// Correct size of the edges vector</span>
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; edges_count; i += <span class="hljs-number">2</span>) {
+            <span class="hljs-keyword">int</span> l1 = arr[i];
+            <span class="hljs-keyword">int</span> l2 = arr[i + <span class="hljs-number">1</span>];
+            edges[i / <span class="hljs-number">2</span>] = {l1, l2}; <span class="hljs-comment">// Properly assign the pair</span>
+        }
+
+        Solution ob;
+        cout &lt;&lt; (ob.<span class="hljs-built_in">graphColoring</span>(n, edges, m) ? <span class="hljs-string">&quot;true&quot;</span> : <span class="hljs-string">&quot;false&quot;</span>)
+             &lt;&lt; endl; <span class="hljs-comment">// Call the graph coloring function</span>
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+</div></code></pre>
+<h1 id="palindrome-partitioning" tabindex="-1"><a href="https://leetcode.com/problems/palindrome-partitioning/"><strong>Palindrome Partitioning</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+   <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isPalindrome</span><span class="hljs-params">(string temp)</span></span>{
+     <span class="hljs-keyword">int</span> n=temp.<span class="hljs-built_in">size</span>();
+     <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n/<span class="hljs-number">2</span>;i++){
+        <span class="hljs-keyword">if</span>(temp[i]!=temp[n-i<span class="hljs-number">-1</span>]) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+     }
+     <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+   }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(vector&lt;vector&lt;string&gt;&gt; &amp;ans,vector&lt;string&gt; &amp;ds,<span class="hljs-keyword">int</span> idx,<span class="hljs-keyword">int</span> n,string s)</span></span>{
+        <span class="hljs-keyword">if</span>(idx==n){
+            ans.<span class="hljs-built_in">push_back</span>(ds);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=idx;i&lt;n;i++){
+            string temp=s.<span class="hljs-built_in">substr</span>(idx,i-idx+<span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isPalindrome</span>(temp)){
+                ds.<span class="hljs-built_in">push_back</span>(temp);
+                <span class="hljs-built_in">solve</span>(ans,ds,i+<span class="hljs-number">1</span>,n,s);
+                ds.<span class="hljs-built_in">pop_back</span>();
+            }
+        }
+    }
+    vector&lt;vector&lt;string&gt;&gt; <span class="hljs-built_in">partition</span>(string s) {
+        vector&lt;vector&lt;string&gt;&gt; ans;
+        vector&lt;string&gt; ds;
+        <span class="hljs-keyword">int</span> n=s.<span class="hljs-built_in">size</span>();
+        <span class="hljs-built_in">solve</span>(ans,ds,<span class="hljs-number">0</span>,n,s);
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
 
     </div>
 </body>
