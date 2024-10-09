@@ -1424,6 +1424,164 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
     }
 };
 </div></code></pre>
+<h1 id="rat-in-a-maze-problem" tabindex="-1"><a href="https://practice.geeksforgeeks.org/problems/rat-in-a-maze-problem/1"><strong>Rat in a Maze Problem</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-comment">//{ Driver Code Starts</span>
+<span class="hljs-comment">// Initial template for C++</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+<span class="hljs-comment">// User function template for C++</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat,vector&lt;string&gt; &amp;ans,string &amp;ds,<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,<span class="hljs-keyword">int</span> n,vector&lt;vector&lt;<span class="hljs-keyword">bool</span>&gt;&gt; &amp;vis)</span></span>{
+        <span class="hljs-keyword">if</span>(i==n<span class="hljs-number">-1</span> &amp;&amp; j==n<span class="hljs-number">-1</span>){
+            ans.<span class="hljs-built_in">push_back</span>(ds);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-comment">//downward</span>
+        <span class="hljs-keyword">if</span>(i+<span class="hljs-number">1</span>&lt;n &amp;&amp; !vis[i+<span class="hljs-number">1</span>][j] &amp;&amp;mat[i+<span class="hljs-number">1</span>][j]==<span class="hljs-number">1</span>){
+            vis[i][j]=<span class="hljs-literal">true</span>;
+            ds+=<span class="hljs-string">&#x27;D&#x27;</span>;
+            <span class="hljs-built_in">solve</span>(mat,ans,ds,i+<span class="hljs-number">1</span>,j,n,vis);
+            ds.<span class="hljs-built_in">pop_back</span>();
+            vis[i][j]=<span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-comment">//left</span>
+         <span class="hljs-keyword">if</span>(j<span class="hljs-number">-1</span>&gt;=<span class="hljs-number">0</span> &amp;&amp; !vis[i][j<span class="hljs-number">-1</span>] &amp;&amp;mat[i][j<span class="hljs-number">-1</span>]==<span class="hljs-number">1</span>){
+            vis[i][j]=<span class="hljs-literal">true</span>;
+            ds+=<span class="hljs-string">&#x27;L&#x27;</span>;
+            <span class="hljs-built_in">solve</span>(mat,ans,ds,i,j<span class="hljs-number">-1</span>,n,vis);
+            ds.<span class="hljs-built_in">pop_back</span>();
+            vis[i][j]=<span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-comment">//right</span>
+         <span class="hljs-keyword">if</span>(j+<span class="hljs-number">1</span>&lt;n &amp;&amp; !vis[i][j+<span class="hljs-number">1</span>] &amp;&amp;mat[i][j+<span class="hljs-number">1</span>]==<span class="hljs-number">1</span>){
+            vis[i][j]=<span class="hljs-literal">true</span>;
+            ds+=<span class="hljs-string">&#x27;R&#x27;</span>;
+            <span class="hljs-built_in">solve</span>(mat,ans,ds,i,j+<span class="hljs-number">1</span>,n,vis);
+            ds.<span class="hljs-built_in">pop_back</span>();
+            vis[i][j]=<span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-comment">//upward</span>
+         <span class="hljs-keyword">if</span>(i<span class="hljs-number">-1</span>&gt;=<span class="hljs-number">0</span> &amp;&amp; !vis[i<span class="hljs-number">-1</span>][j] &amp;&amp;mat[i<span class="hljs-number">-1</span>][j]==<span class="hljs-number">1</span>){
+            vis[i][j]=<span class="hljs-literal">true</span>;
+            ds+=<span class="hljs-string">&#x27;U&#x27;</span>;
+            <span class="hljs-built_in">solve</span>(mat,ans,ds,i<span class="hljs-number">-1</span>,j,n,vis);
+            ds.<span class="hljs-built_in">pop_back</span>();
+            vis[i][j]=<span class="hljs-literal">false</span>;
+        }
+      
+    }
+    <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">findPath</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;mat)</span> </span>{
+        <span class="hljs-comment">// Your code goes here</span>
+        vector&lt;string&gt; ans;
+        string ds;
+        <span class="hljs-keyword">int</span> n=mat.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">if</span>(n==<span class="hljs-number">0</span> || mat[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]==<span class="hljs-number">0</span> || mat[n<span class="hljs-number">-1</span>][n<span class="hljs-number">-1</span>]==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> ans;
+        vector&lt;vector&lt;<span class="hljs-keyword">bool</span>&gt;&gt; <span class="hljs-built_in">vis</span>(n,vector&lt;<span class="hljs-keyword">bool</span>&gt;(n,<span class="hljs-literal">false</span>));
+        <span class="hljs-built_in">solve</span>(mat,ans,ds,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,n,vis);
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+
+
+<span class="hljs-comment">//{ Driver Code Starts.</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> t;
+    cin &gt;&gt; t;
+    <span class="hljs-keyword">while</span> (t--) {
+        <span class="hljs-keyword">int</span> n;
+        cin &gt;&gt; n;
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">m</span>(n, vector&lt;<span class="hljs-keyword">int</span>&gt;(n, <span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++) {
+                cin &gt;&gt; m[i][j];
+            }
+        }
+        Solution obj;
+        vector&lt;string&gt; result = obj.<span class="hljs-built_in">findPath</span>(m);
+        <span class="hljs-built_in">sort</span>(result.<span class="hljs-built_in">begin</span>(), result.<span class="hljs-built_in">end</span>());
+        <span class="hljs-keyword">if</span> (result.<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>)
+            cout &lt;&lt; <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">else</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; result.<span class="hljs-built_in">size</span>(); i++)
+                cout &lt;&lt; result[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+        cout &lt;&lt; endl;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+<span class="hljs-comment">// } Driver Code Ends</span>
+</div></code></pre>
+<h3 id="approach-1%3A-in-place-modification-with-backtracking" tabindex="-1">Approach 1: In-Place Modification with Backtracking</h3>
+<p>In this approach, we modify the string ds by adding the move 'D' (downward move) directly to it. After the recursive call is completed, we remove this move using pop_back() to backtrack and explore other possible paths.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">if</span>(i+<span class="hljs-number">1</span> &lt; n &amp;&amp; !vis[i+<span class="hljs-number">1</span>][j] &amp;&amp; mat[i+<span class="hljs-number">1</span>][j] == <span class="hljs-number">1</span>) {
+    vis[i][j] = <span class="hljs-literal">true</span>;
+    ds += <span class="hljs-string">&#x27;D&#x27;</span>;  <span class="hljs-comment">// Add move to path</span>
+    <span class="hljs-built_in">solve</span>(mat, ans, ds, i+<span class="hljs-number">1</span>, j, n, vis);  <span class="hljs-comment">// Recursive call with updated path</span>
+    ds.<span class="hljs-built_in">pop_back</span>();  <span class="hljs-comment">// Backtrack: remove the last move from path</span>
+    vis[i][j] = <span class="hljs-literal">false</span>;
+}
+</div></code></pre>
+<p>Key Points:</p>
+<pre><code>•	String modification in place: The string ds is modified in place, reflecting the current state of the path.
+•	Backtracking: After the recursive call, the move 'D' is removed by calling pop_back() to restore the original state of the string.
+•	Clear backtracking behavior: This approach explicitly shows the backtracking process, which can help ensure correctness in algorithms that explore multiple paths.
+</code></pre>
+<h3 id="approach-2%3A-passing-modified-string-in-recursive-call" tabindex="-1">Approach 2: Passing Modified String in Recursive Call</h3>
+<p>In this approach, instead of modifying the string ds in place, we create a new string by concatenating 'D' to ds and pass it into the recursive function directly.</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">if</span>(i+<span class="hljs-number">1</span> &lt; n &amp;&amp; !vis[i+<span class="hljs-number">1</span>][j] &amp;&amp; mat[i+<span class="hljs-number">1</span>][j] == <span class="hljs-number">1</span>) {
+    vis[i][j] = <span class="hljs-literal">true</span>;
+    <span class="hljs-built_in">solve</span>(mat, ans, ds + <span class="hljs-string">&#x27;D&#x27;</span>, i+<span class="hljs-number">1</span>, j, n, vis);  <span class="hljs-comment">// Recursive call with new string</span>
+    vis[i][j] = <span class="hljs-literal">false</span>;
+}
+</div></code></pre>
+<p>Key Points:</p>
+<pre><code>•	No in-place modification: A new string (ds + 'D') is passed to the recursive function, leaving the original string unchanged in the current stack frame.
+•	No explicit backtracking needed: Since we’re creating and passing a new string, there’s no need to explicitly backtrack or undo changes.
+•	Memory overhead: This approach may create new string objects at every recursive call, potentially increasing memory usage, though in many cases, this overhead is minimal.
+</code></pre>
+<p>Why Both Are Suitable:</p>
+<pre><code>•	1st Approach (In-Place Modification):
+•	Provides explicit control over path modifications and backtracking.
+•	Commonly used in recursive algorithms that explore multiple paths.
+•	2nd Approach (Passing Modified String):
+•	Simplifies code by avoiding the need for backtracking.
+•	Can be easier to implement when you don’t need to modify the current path object.
+</code></pre>
+<p>Both approaches will generate the correct paths for a maze or matrix traversal problem. The choice between them depends on personal preference, code clarity, or performance considerations.</p>
+<p>Conclusion:</p>
+<pre><code>•	Approach 1 is suitable when you want to manage backtracking explicitly and avoid creating new objects.
+•	Approach 2 is more concise but may involve slightly more memory usage due to creating new strings at each recursive step.
+</code></pre>
+<h1 id="permutation-sequence" tabindex="-1"><a href="https://leetcode.com/problems/permutation-sequence/"><strong>Permutation Sequence</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function">string <span class="hljs-title">getPermutation</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> k)</span> </span>{
+        <span class="hljs-keyword">int</span> fact=<span class="hljs-number">1</span>;
+        vector&lt;<span class="hljs-keyword">int</span>&gt; numbers;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;n;i++){
+            fact*=i;
+            numbers.<span class="hljs-built_in">push_back</span>(i);
+        }
+        numbers.<span class="hljs-built_in">push_back</span>(n);
+        string ans=<span class="hljs-string">&quot;&quot;</span>;
+        k--;
+        <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>){
+            ans+=<span class="hljs-built_in">to_string</span>(numbers[k/fact]);
+            numbers.<span class="hljs-built_in">erase</span>(numbers.<span class="hljs-built_in">begin</span>()+(k/fact));
+            <span class="hljs-keyword">if</span>(numbers.<span class="hljs-built_in">empty</span>()) <span class="hljs-keyword">break</span>;
+            k%=fact;
+            fact/=numbers.<span class="hljs-built_in">size</span>();
+        }
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
 
     </div>
 </body>
