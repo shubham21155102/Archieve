@@ -1180,6 +1180,98 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
     }
 };
 </div></code></pre>
+<h1 id="palindrome-partitioning-ii" tabindex="-1"><a href="https://leetcode.com/problems/palindrome-partitioning-ii/"><strong>Palindrome Partitioning II</strong></a></h1>
+<h3 id="mle-1" tabindex="-1">MLE</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isPalindrome</span><span class="hljs-params">(string temp)</span></span>{
+        <span class="hljs-keyword">int</span> n=temp.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n/<span class="hljs-number">2</span>;i++){
+            <span class="hljs-keyword">if</span>(temp[i]!=temp[n-i<span class="hljs-number">-1</span>]) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(vector&lt;vector&lt;string&gt;&gt; &amp;ans,vector&lt;string&gt; &amp;ds,<span class="hljs-keyword">int</span> idx,<span class="hljs-keyword">int</span> n,string s)</span></span>{
+        <span class="hljs-keyword">if</span>(idx==n) {
+            ans.<span class="hljs-built_in">push_back</span>(ds);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=idx;i&lt;n;i++){
+            string temp=s.<span class="hljs-built_in">substr</span>(idx,i-idx+<span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isPalindrome</span>(temp)){
+                ds.<span class="hljs-built_in">push_back</span>(temp);
+                <span class="hljs-built_in">solve</span>(ans,ds,i+<span class="hljs-number">1</span>,n,s);
+                ds.<span class="hljs-built_in">pop_back</span>();
+            }
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(string s)</span> </span>{
+      vector&lt;vector&lt;string&gt;&gt; ans;
+      vector&lt;string&gt; ds;
+      <span class="hljs-keyword">int</span> n=s.<span class="hljs-built_in">size</span>();
+      <span class="hljs-built_in">solve</span>(ans,ds,<span class="hljs-number">0</span>,n,s);
+      <span class="hljs-keyword">if</span>(ans.<span class="hljs-built_in">size</span>()==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+      <span class="hljs-keyword">int</span> temp=INT_MAX;
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;ans.<span class="hljs-built_in">size</span>();i++){
+        <span class="hljs-keyword">int</span> sz=ans[i].<span class="hljs-built_in">size</span>();
+        temp=<span class="hljs-built_in">min</span>(temp,sz);
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;ans[i].<span class="hljs-built_in">size</span>();j++){
+            cout&lt;&lt;ans[i][j]&lt;&lt;<span class="hljs-string">&quot; &quot;</span>;
+        }
+        cout&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+      }
+      <span class="hljs-keyword">return</span> temp<span class="hljs-number">-1</span>;
+    }
+};
+</div></code></pre>
+<h3 id="tle-1" tabindex="-1">TLE</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isPalindrome</span><span class="hljs-params">(string temp)</span></span>{
+        <span class="hljs-keyword">int</span> n=temp.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n/<span class="hljs-number">2</span>;i++){
+            <span class="hljs-keyword">if</span>(temp[i]!=temp[n-i<span class="hljs-number">-1</span>]) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;count,vector&lt;string&gt; &amp;ds,<span class="hljs-keyword">int</span> idx,<span class="hljs-keyword">int</span> n,string s)</span></span>{
+        <span class="hljs-keyword">if</span>(idx==n) {
+            <span class="hljs-comment">// ans.push_back(ds);</span>
+            <span class="hljs-keyword">int</span> sz=ds.<span class="hljs-built_in">size</span>();
+            count=<span class="hljs-built_in">min</span>(count,sz);
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=idx;i&lt;n;i++){
+            string temp=s.<span class="hljs-built_in">substr</span>(idx,i-idx+<span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isPalindrome</span>(temp)){
+                ds.<span class="hljs-built_in">push_back</span>(temp);
+                <span class="hljs-built_in">solve</span>(count,ds,i+<span class="hljs-number">1</span>,n,s);
+                ds.<span class="hljs-built_in">pop_back</span>();
+            }
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(string s)</span> </span>{
+      vector&lt;vector&lt;string&gt;&gt; ans;
+      vector&lt;string&gt; ds;
+      <span class="hljs-keyword">int</span> n=s.<span class="hljs-built_in">size</span>();
+       <span class="hljs-keyword">int</span> temp=INT_MAX;
+      <span class="hljs-built_in">solve</span>(temp,ds,<span class="hljs-number">0</span>,n,s);
+    <span class="hljs-comment">//   if(ans.size()==0) return 0;</span>
+    <span class="hljs-comment">//  </span>
+    <span class="hljs-comment">//   for(int i=0;i&lt;ans.size();i++){</span>
+    <span class="hljs-comment">//     int sz=ans[i].size();</span>
+    <span class="hljs-comment">//     temp=min(temp,sz);</span>
+    <span class="hljs-comment">//     for(int j=0;j&lt;ans[i].size();j++){</span>
+    <span class="hljs-comment">//         cout&lt;&lt;ans[i][j]&lt;&lt;&quot; &quot;;</span>
+    <span class="hljs-comment">//     }</span>
+    <span class="hljs-comment">//     cout&lt;&lt;&quot;\n&quot;;</span>
+    <span class="hljs-comment">//   }</span>
+      <span class="hljs-keyword">return</span> temp<span class="hljs-number">-1</span>;
+    }
+};
+</div></code></pre>
+<h3 id="optimized-2" tabindex="-1">Optimized</h3>
+<pre class='hljs'><code><div></div></code></pre>
 
     </div>
 </body>
