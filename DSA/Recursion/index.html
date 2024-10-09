@@ -1320,7 +1320,7 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
             <span class="hljs-keyword">bool</span> palindromic=<span class="hljs-literal">false</span>;
             <span class="hljs-keyword">if</span>(mp.<span class="hljs-built_in">find</span>(temp)!=mp.<span class="hljs-built_in">end</span>()){
                 <span class="hljs-keyword">if</span>(mp[temp])palindromic=<span class="hljs-literal">true</span>;
-               
+
             }
             <span class="hljs-keyword">else</span> {
 
@@ -1391,42 +1391,36 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
 <pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
 <span class="hljs-keyword">public</span>:
     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(string s)</span> </span>{
-        <span class="hljs-keyword">int</span> n = s.<span class="hljs-built_in">size</span>();
-        <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-
-        <span class="hljs-comment">// Step 1: Create a 2D array to keep track of palindrome substrings</span>
-        vector&lt;vector&lt;<span class="hljs-keyword">bool</span>&gt;&gt; <span class="hljs-built_in">palindrome</span>(n, vector&lt;<span class="hljs-keyword">bool</span>&gt;(n, <span class="hljs-literal">false</span>));
-
-        <span class="hljs-comment">// Step 2: Fill the palindrome table</span>
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> length = <span class="hljs-number">1</span>; length &lt;= n; length++) {
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n - length; i++) {
-                <span class="hljs-keyword">int</span> j = i + length - <span class="hljs-number">1</span>; <span class="hljs-comment">// End index</span>
-                <span class="hljs-keyword">if</span> (s[i] == s[j]) {
-                    <span class="hljs-keyword">if</span> (length &lt;= <span class="hljs-number">3</span>) {
-                        palindrome[i][j] = <span class="hljs-literal">true</span>; <span class="hljs-comment">// substring of length 1 or 2 or 3 is a palindrome</span>
-                    } <span class="hljs-keyword">else</span> {
-                        palindrome[i][j] = palindrome[i + <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>]; <span class="hljs-comment">// Check the inner substring</span>
+        <span class="hljs-keyword">int</span> n=s.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">if</span>(n==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        vector&lt;vector&lt;<span class="hljs-keyword">bool</span>&gt;&gt; <span class="hljs-built_in">palindrome</span>(n,vector&lt;<span class="hljs-keyword">bool</span>&gt; (n,<span class="hljs-literal">false</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> length=<span class="hljs-number">1</span>;length&lt;=n;length++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;=n-length;i++){
+                  <span class="hljs-comment">// end index</span>
+                  <span class="hljs-keyword">int</span> j=i+length<span class="hljs-number">-1</span>;
+                  <span class="hljs-keyword">if</span>(s[i]==s[j]){
+                    <span class="hljs-keyword">if</span>(length&lt;=<span class="hljs-number">3</span>){
+                        palindrome[i][j]=<span class="hljs-literal">true</span>;
                     }
-                }
+                    <span class="hljs-keyword">else</span> {
+                        palindrome[i][j]=palindrome[i+<span class="hljs-number">1</span>][j<span class="hljs-number">-1</span>];
+                    }
+                  }
             }
         }
-
-        <span class="hljs-comment">// Step 3: Create a DP array to store the minimum cuts</span>
-        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(n)</span></span>;
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
-            <span class="hljs-keyword">if</span> (palindrome[<span class="hljs-number">0</span>][i]) {
-                dp[i] = <span class="hljs-number">0</span>; <span class="hljs-comment">// No cuts needed if the whole substring is a palindrome</span>
-            } <span class="hljs-keyword">else</span> {
-                dp[i] = INT_MAX; <span class="hljs-comment">// Initialize to maximum cuts</span>
-                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
-                    <span class="hljs-keyword">if</span> (palindrome[j + <span class="hljs-number">1</span>][i]) {
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(n,<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            <span class="hljs-keyword">if</span>(palindrome[<span class="hljs-number">0</span>][i]) dp[i]=<span class="hljs-number">0</span>;
+            <span class="hljs-keyword">else</span> {
+                dp[i]=INT_MAX;
+                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;i;j++){
+                    <span class="hljs-keyword">if</span>(palindrome[j+<span class="hljs-number">1</span>][i]){
                         dp[i] = <span class="hljs-built_in">min</span>(dp[i], dp[j] + <span class="hljs-number">1</span>);
                     }
                 }
             }
         }
-
-        <span class="hljs-keyword">return</span> dp[n - <span class="hljs-number">1</span>]; <span class="hljs-comment">// Return the minimum cuts for the entire string</span>
+        <span class="hljs-keyword">return</span> dp[n<span class="hljs-number">-1</span>];
     }
 };
 </div></code></pre>
