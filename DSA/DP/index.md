@@ -268,9 +268,9 @@ public:
 
 ---
 
-#Starting 2D DP
+# Starting 2D DP
 
-# [**Ninja's Training**] (https://www.naukri.com/code360/problems/ninja%E2%80%99s-training_3621003?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf)
+# [**Ninja's Training**](https://www.naukri.com/code360/problems/ninja%E2%80%99s-training_3621003?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf)
 
 ## recursion
 
