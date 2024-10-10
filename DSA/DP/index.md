@@ -784,6 +784,160 @@ public:
 
 ---
 
+# [**Triangle**](https://leetcode.com/problems/triangle/description/)
+
+## Recursion
+
+```cpp
+class Solution {
+public:
+    int recursion(vector<vector<int>>& triangle,vector<vector<int>>&dp,int i,int j,int n){
+        if(i==n-1) return triangle[n-1][j];
+        int d=recursion(triangle,dp,i+1,j,n);
+        int dg=recursion(triangle,dp,i+1,j+1,n);
+        return triangle[i][j]+min(d,dg);
+    }
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n=triangle.size();
+        vector<vector<int>> dp(n,vector<int>(n,-1));
+        return recursion(triangle,dp,0,0,n);
+    }
+};
+```
+
+## Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(vector<vector<int>>& triangle,vector<vector<int>>&dp,int i,int j,int n){
+        if(i==n-1) return triangle[n-1][j];
+        if(dp[i][j]!=-1) return dp[i][j];
+        int d=recursion(triangle,dp,i+1,j,n);
+        int dg=recursion(triangle,dp,i+1,j+1,n);
+        return dp[i][j]=triangle[i][j]+min(d,dg);
+    }
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n=triangle.size();
+        vector<vector<int>> dp(n,vector<int>(n,-1));
+        return recursion(triangle,dp,0,0,n);
+    }
+};
+```
+
+## Tabulation
+
+```cpp
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n=triangle.size();
+        vector<vector<int>> dp(n,vector<int>(n,0));
+        for(int j=0;j<n;j++) dp[n-1][j]=triangle[n-1][j];
+        for(int i=n-2;i>=0;i--){
+            for(int j=i;j>=0;j--){
+                 int d=dp[i+1][j];
+                 int dg=dp[i+1][j+1];
+                 dp[i][j]=triangle[i][j]+min(d,dg);
+            }
+        }
+        return dp[0][0];
+    }
+};
+```
+
+---
+
+# [**Minimum Falling Path Sum**](https://leetcode.com/problems/minimum-falling-path-sum/description/)
+
+## Recursion + Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(vector<vector<int>> &dp, vector<vector<int>>& mat, int row, int col, int n) {
+        if (col < 0 || col >= n || row >= n) return 1e9;
+        if (row == n - 1) return mat[row][col];
+        if (dp[row][col] != -1) return dp[row][col];
+        int down = recursion(dp, mat, row + 1, col, n);
+        int downDiag = recursion(dp, mat, row + 1, col + 1, n);
+        int upperDiag = recursion(dp, mat, row + 1, col - 1, n);
+        return dp[row][col] = mat[row][col] + min({down, downDiag, upperDiag});
+    }
+    int minFallingPathSum(vector<vector<int>>& mat) {
+        int n = mat.size();
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+        int ans = 1e9;
+        for (int col = 0; col < n; col++) {
+            ans = min(ans, recursion(dp, mat, 0, col, n));
+        }
+
+        return ans;
+    }
+};
+```
+
+## Recursion + Memoization(Reverse)
+
+```cpp
+class Solution {
+public:
+    int recursion(vector<vector<int>> &dp, vector<vector<int>>& mat, int row, int col, int n) {
+        if (col < 0 || col >= n) return 1e9;
+        if (row == 0) return mat[row][col];
+        if (dp[row][col] != -1) return dp[row][col];
+        int down = recursion(dp, mat, row - 1, col, n);
+        int downDiag = recursion(dp, mat, row - 1, col - 1, n);
+        int upperDiag = recursion(dp, mat, row - 1, col + 1, n);
+        return dp[row][col] = mat[row][col] + min({down, downDiag, upperDiag});
+    }
+    int minFallingPathSum(vector<vector<int>>& mat) {
+        int n = mat.size();
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+
+        int ans = 1e9;
+        for (int col = 0; col < n; col++) {
+            ans = min(ans, recursion(dp, mat, n-1, col, n));
+        }
+
+        return ans;
+    }
+};
+```
+
+## Tabulation
+
+```cpp
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& mat) {
+        int n = mat.size();
+        vector<vector<int>> dp(n, vector<int>(n, 1e9));
+        for(int j=0;j<n;j++) dp[0][j]= mat[0][j];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i==0) continue;
+                int down=INT_MAX,downDiag=INT_MAX,upperDiag=INT_MAX;
+                down=dp[i-1][j];
+                if(j>0) downDiag=dp[i-1][j-1];
+                if(j<n-1)upperDiag=dp[i-1][j+1];
+                dp[i][j]=mat[i][j]+min({down,downDiag,upperDiag});
+            }
+        }
+        int ans = 1e9;
+        for (int col = 0; col < n; col++) {
+            ans=min(ans,dp[n-1][col]);
+        }
+
+        return ans;
+    }
+};
+```
+
+---
+
+---
+
 # [Maximize Number of Subsequences in a String](https://leetcode.com/problems/maximize-number-of-subsequences-in-a-string/)
 
 ---
@@ -914,7 +1068,3 @@ public:
 ```
 
 ---
-
-```cpp
-
-```
