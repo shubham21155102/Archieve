@@ -22,7 +22,7 @@ public:
 
 ---
 
-# [**Frog Jump CN**](https://www.naukri.com/code360/problems/frog-jump_3621012?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf&leftPanelTabValue=PROBLEM/)
+# [**Frog Jump Coding Ninjas**](https://www.naukri.com/code360/problems/frog-jump_3621012?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf&leftPanelTabValue=PROBLEM/)
 
 ## Recursion
 
@@ -142,6 +142,437 @@ public:
             }
         }
         return !dp[stones.back()].empty();
+    }
+};
+```
+
+---
+
+# [**Maximum Sum Of NonAdjacent Elements**](https://www.naukri.com/code360/problems/maximum-sum-of-non-adjacent-elements_843261?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf&leftPanelTabValue=PROBLEM)
+
+## Recursion+Memoization
+
+```cpp
+#include <bits/stdc++.h>
+int recursion(int ind,vector<int> &dp,vector<int> &nums){
+    if(ind==0) return nums[ind];
+    if(ind<0) return 0;
+    if(dp[ind]!=-1) return dp[ind];
+    int pick=nums[ind]+recursion(ind-2,dp,nums);
+    int notPick=0+recursion(ind-1,dp,nums);
+    return dp[ind]=max(pick,notPick);
+}
+int maximumNonAdjacentSum(vector<int> &nums){
+    // Write your code here.
+    int n=nums.size();
+    vector<int> dp(n,-1);
+    return recursion(n-1,dp,nums);
+}
+```
+
+## Tabulation
+
+```cpp
+int maximumNonAdjacentSum(vector<int> &nums){
+    // Write your code here.
+    int n=nums.size();
+    vector<int> dp(n,-1);
+    dp[0]=nums[0];
+    for(int i=1;i<n;i++){
+        int pick=nums[i];
+        if(i>1)
+        pick=nums[i]+dp[i-2];
+        int nonPick=0+dp[i-1];
+        dp[i]=max(pick,nonPick);
+    }
+    return dp[n-1];
+}
+```
+
+## Space Optimized
+
+```cpp
+int maximumNonAdjacentSum(vector<int> &nums){
+    // Write your code here.
+    int n=nums.size();
+    int prev=nums[0];
+    int prev2=0;
+    for(int i=1;i<n;i++){
+        int pick=nums[i];
+        if(i>1)
+        pick=nums[i]+prev2;
+        int nonPick=0+prev;
+        int curr=max(pick,nonPick);
+        prev2=prev;
+        prev=curr;
+    }
+    return prev;
+}
+```
+
+---
+
+# [**House Robber**](https://leetcode.com/problems/house-robber/description/)
+
+```cpp
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> dp(n,-1);
+        dp[0]=nums[0];
+        for(int i=1;i<n;i++){
+            int pick=nums[i];
+            if(i>1)
+            pick=nums[i]+dp[i-2];
+            int nonPick=0+dp[i-1];
+            dp[i]=max(pick,nonPick);
+        }
+        return dp[n-1];
+    }
+};
+```
+
+---
+
+# [**House Robber II**](https://leetcode.com/problems/house-robber-ii/description/)
+
+```cpp
+#define ll long long int
+class Solution {
+public:
+    ll solve(vector<int> &nums){
+        int n=nums.size();
+        vector<ll> dp(n,-1);
+        dp[0]=nums[0]*1LL;
+        for(int i=1;i<n;i++){
+            ll pick=nums[i];
+            if(i>1) pick=nums[i]+dp[i-2];
+            ll nonPick=0+dp[i-1];
+            dp[i]=max(pick,nonPick);
+        }
+        return dp[n-1];
+    }
+    int rob(vector<int>& nums) {
+        vector<int> nums1,nums2;
+        int n=nums.size();
+        if(n==1) return nums[0];
+        for(int i=0;i<n;i++){
+            if(i!=0) nums1.push_back(nums[i]);
+            if(i!=n-1) nums2.push_back(nums[i]);
+        }
+        return max(solve(nums1),solve(nums2));
+    }
+};
+```
+
+---
+
+#Starting 2D DP
+
+# [**Ninja's Training**] (https://www.naukri.com/code360/problems/ninja%E2%80%99s-training_3621003?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf)
+
+## recursion
+
+```cpp
+int recursion(vector<vector<int>>&points,int day,int lastIndex){
+    if(day==0){
+        int maxi=0;
+        for(int i=0;i<3;i++){
+            if(i!=lastIndex){
+                maxi=max(maxi,points[day][i]);
+            }
+        }
+        return maxi;
+    }
+    int maxi=0;
+    for(int i=0;i<3;i++){
+        if(i!=lastIndex){
+            int pointsToday=points[day][i]+recursion(points,day-1,i);
+            maxi=max(maxi,pointsToday);
+        }
+
+    }
+    return maxi;
+}
+int ninjaTraining(int n, vector<vector<int>> &points)
+{
+    // Write your code here.
+    vector<vector<int>> dp(n,vector<int>(3,0));
+    return recursion(points,n-1,4);
+
+}
+```
+
+## Memoization
+
+```cpp
+int recursion(vector<vector<int>>&points,int day,int lastIndex,vector<vector<int>>&dp){
+    if(day==0){
+        int maxi=0;
+        for(int i=0;i<3;i++){
+            if(i!=lastIndex){
+                maxi=max(maxi,points[day][i]);
+            }
+        }
+        return maxi;
+    }
+    if(dp[day][lastIndex]!=-1) return dp[day][lastIndex];
+    int maxi=0;
+    for(int i=0;i<3;i++){
+        if(i!=lastIndex){
+            int pointsToday=points[day][i]+recursion(points,day-1,i,dp);
+            maxi=max(maxi,pointsToday);
+        }
+
+    }
+    // return maxi;
+    return dp[day][lastIndex]=maxi;
+}
+int ninjaTraining(int n, vector<vector<int>> &points)
+{
+    // Write your code here.
+    vector<vector<int>> dp(n,vector<int>(4,-1));
+    return recursion(points,n-1,3,dp);
+
+}
+```
+
+## Tabulation
+
+```cpp
+int ninjaTraining(int n, vector<vector<int>> &points)
+{
+    // Write your code here.
+    vector<vector<int>> dp(n,vector<int>(4,-1));
+    dp[0][0]=max(points[0][1],points[0][2]);
+    dp[0][1]=max(points[0][0],points[0][2]);
+    dp[0][2]=max(points[0][0],points[0][1]);
+    dp[0][3] = max(points[0][1], max(points[0][2], points[0][0]));
+    for(int day=1;day<n;day++){
+        for(int lastIndex=0;lastIndex<4;lastIndex++){
+            dp[day][lastIndex]=0;
+            int maxi=0;
+            for(int task=0;task<3;task++){
+                if(lastIndex!=task){
+                    int pointToday=points[day][task]+dp[day-1][task];
+                    maxi=max(pointToday,maxi);
+                }
+            }
+            dp[day][lastIndex]=maxi;
+        }
+    }
+    return dp[n-1][3];
+
+}
+```
+
+## Space Optimized
+
+```cpp
+int ninjaTraining(int n, vector<vector<int>> &points)
+{
+    // Write your code here.
+    vector<int> dp(4,-1);
+    dp[0]=max(points[0][1],points[0][2]);
+    dp[1]=max(points[0][0],points[0][2]);
+    dp[2]=max(points[0][0],points[0][1]);
+    dp[3]=max(points[0][0],max(points[0][1],points[0][2]));
+    for(int day=1;day<n;day++){
+        vector<int> temp(4,-1);
+        for(int lastIndex=0;lastIndex<4;lastIndex++){
+            temp[lastIndex]=0;
+            int maxi=0;
+            for(int task=0;task<3;task++){
+                if(lastIndex!=task){
+                    int pointToday=points[day][task]+dp[task];
+                    maxi=max(pointToday,maxi);
+                }
+            }
+            temp[lastIndex]=maxi;
+        }
+        dp=temp;
+    }
+    return dp[3];
+
+}
+```
+
+---
+
+# [**Unique Paths**](https://leetcode.com/problems/unique-paths/description/)
+
+## Recursion
+
+```cpp
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        if(m==1 && n==1) return 1;
+        if(m<0 || n<0) return 0;
+        int l=uniquePaths(m-1,n);
+        int r=uniquePaths(m,n-1);
+        return l+r;
+    }
+};
+```
+
+## Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(int m,int n ,vector<vector<int>> &dp){
+        if(m==1 && n==1) return 1;
+        if(m<0 || n<0) return 0;
+        if(dp[m][n]!=-1) return dp[m][n];
+        int l=recursion(m-1,n,dp);
+        int r=recursion(m,n-1,dp);
+        return dp[m][n]=l+r;
+    }
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> dp(m+1,vector<int>(n+1,-1));
+        return recursion(m,n,dp);
+    }
+};
+```
+
+## Tabulation
+
+```cpp
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> dp(m,vector<int>(n,0));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(i==0 && j==0)
+                dp[i][j]=1;
+                else
+                {
+                int l=0,r=0;
+                if(i>0) l=dp[i-1][j];
+                if(j>0) r=dp[i][j-1];
+                dp[i][j]=l+r;
+                }
+            }
+        }
+        return dp[m-1][n-1];
+    }
+};
+```
+
+---
+
+# [**Minimum Path Sum**](https://leetcode.com/problems/minimum-path-sum/description/)
+
+## Recursion+Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(int m,int n,vector<vector<int>> &grid,vector<vector<int>>&dp){
+        if(m==0 && n==0) return grid[m][n];
+        if(m<0 || n<0) return INT_MAX;
+        if(dp[m][n]!=-1) return dp[m][n];
+        int l=recursion(m-1,n,grid,dp);
+        int r=recursion(m,n-1,grid,dp);
+        return dp[m][n]=grid[m][n]+min(l,r);
+    }
+    int minPathSum(vector<vector<int>>& grid) {
+        int m=grid.size();
+        if(m==0) return 0;
+        int n=grid[0].size();
+        vector<vector<int>>dp(m,vector<int>(n,-1));
+        return recursion(m-1,n-1,grid,dp);
+    }
+};
+```
+
+## Tabulation
+
+```cpp
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        int m=grid.size();
+        if(m==0) return 0;
+        int n=grid[0].size();
+        vector<vector<int>>dp(m,vector<int>(n,0));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+               if(i==0 && j==0) dp[i][j]=grid[i][j];
+               else {
+                   int l=INT_MAX,r=INT_MAX;
+                   if(i>0) l=grid[i][j]+dp[i-1][j];
+                   if(j>0) r=grid[i][j]+dp[i][j-1];
+                    dp[i][j]=min(l,r);
+               }
+
+            }
+        }
+        return dp[m-1][n-1];
+    }
+};
+```
+
+---
+
+# [**Unique Paths II**](https://leetcode.com/problems/unique-paths-ii/description/)
+
+## Recursion+Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(int m,int n,vector<vector<int>> &dp,vector<vector<int>> &grid){
+        if(m==0 && n==0) return 1;
+        if(m<0 || n<0 || grid[m][n]==1) return 0;
+        int l=0,r=0;
+        if(dp[m][n]!=-1) return dp[m][n];
+        if(m>0) l=recursion(m-1,n,dp,grid);
+        if(n>0) r=recursion(m,n-1,dp,grid);
+        return dp[m][n]=l+r;
+    }
+    int uniquePathsWithObstacles(vector<vector<int>>& grid) {
+        int m=grid.size();
+        if(m==0) return 0;
+        int n=grid[0].size();
+        if(grid[m-1][n-1]) return 0;
+        if(grid[0][0]) return 0;
+        vector<vector<int>> dp(m,vector<int>(n,-1));
+        return recursion(m-1,n-1,dp,grid);
+    }
+};
+```
+
+## Tabulation
+
+```cpp
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& grid) {
+        int m=grid.size();
+        if(m==0) return 0;
+        int n=grid[0].size();
+        if(grid[m-1][n-1]) return 0;
+        if(grid[0][0]) return 0;
+        vector<vector<int>> dp(m,vector<int>(n,0));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(i==0 && j==0) dp[i][j]=1;
+                else {
+                    if(grid[i][j]==1) dp[i][j]=0;
+                    else {
+                        int l=0,r=0;
+                        if(i>0) l=dp[i-1][j];
+                        if(j>0) r=dp[i][j-1];
+                        dp[i][j]=l+r;
+                    }
+                }
+            }
+        }
+        return dp[m-1][n-1];
     }
 };
 ```
