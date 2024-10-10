@@ -579,6 +579,56 @@ public:
 
 ---
 
+# [**Unique Paths III**](https://leetcode.com/problems/unique-paths-iii/description/)
+
+```cpp
+class Solution {
+public:
+    int recursion(int i,int j,int fi,int fj,vector<vector<int>>&grid,int n,int m,int toVisit,vector<vector<int>> &dp){
+        if(i==fi && j==fj){
+            return (toVisit==1)?1:0;
+        }
+        if(i<0 || j <0 || i>=m || j >=n ||grid[i][j]==-1) return 0;
+        // if(dp[i][j]!=-1) return dp[i][j];
+        grid[i][j]=-1;
+        int l=0,r=0,u=0,d=0;
+        if(i>0) l=recursion(i-1,j,fi,fj,grid,n,m,toVisit-1,dp);
+        if(j>0) r=recursion(i,j-1,fi,fj,grid,n,m,toVisit-1,dp);
+        if(i<m) u=recursion(i+1,j,fi,fj,grid,n,m,toVisit-1,dp);
+        if(j<n) d=recursion(i,j+1,fi,fj,grid,n,m,toVisit-1,dp);
+        grid[i][j]=0;
+        return r+l+u+d;
+    }
+    int uniquePathsIII(vector<vector<int>>& grid) {
+     int m=grid.size();
+     if(m==0) return 0;
+     int n=grid[0].size();
+     int toVisit = 0;
+     pair<int,int> start={-1,-1},end={-1,-1};
+     vector<vector<int>> dp(n,vector<int>(m,-1));
+     for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    start = {i, j};
+                }
+                if (grid[i][j] == 2) {
+                    end = {i, j};
+                }
+                if (grid[i][j] != -1) {
+                    toVisit++;
+                }
+            }
+        }
+     return recursion(start.first, start.second, end.first, end.second, grid, n, m,toVisit,dp);
+
+
+
+    }
+};
+```
+
+---
+
 ## [ Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)
 
 ---

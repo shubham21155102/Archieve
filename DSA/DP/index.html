@@ -912,6 +912,52 @@ blockquote {
 };
 </div></code></pre>
 <hr>
+<h1 id="unique-paths-iii" tabindex="-1"><a href="https://leetcode.com/problems/unique-paths-iii/description/"><strong>Unique Paths III</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,<span class="hljs-keyword">int</span> fi,<span class="hljs-keyword">int</span> fj,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;grid,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> m,<span class="hljs-keyword">int</span> toVisit,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(i==fi &amp;&amp; j==fj){
+            <span class="hljs-keyword">return</span> (toVisit==<span class="hljs-number">1</span>)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;
+        }
+        <span class="hljs-keyword">if</span>(i&lt;<span class="hljs-number">0</span> || j &lt;<span class="hljs-number">0</span> || i&gt;=m || j &gt;=n ||grid[i][j]==<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-comment">// if(dp[i][j]!=-1) return dp[i][j];</span>
+        grid[i][j]=<span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">int</span> l=<span class="hljs-number">0</span>,r=<span class="hljs-number">0</span>,u=<span class="hljs-number">0</span>,d=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(i&gt;<span class="hljs-number">0</span>) l=<span class="hljs-built_in">recursion</span>(i<span class="hljs-number">-1</span>,j,fi,fj,grid,n,m,toVisit<span class="hljs-number">-1</span>,dp);
+        <span class="hljs-keyword">if</span>(j&gt;<span class="hljs-number">0</span>) r=<span class="hljs-built_in">recursion</span>(i,j<span class="hljs-number">-1</span>,fi,fj,grid,n,m,toVisit<span class="hljs-number">-1</span>,dp);
+        <span class="hljs-keyword">if</span>(i&lt;m) u=<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,j,fi,fj,grid,n,m,toVisit<span class="hljs-number">-1</span>,dp);
+        <span class="hljs-keyword">if</span>(j&lt;n) d=<span class="hljs-built_in">recursion</span>(i,j+<span class="hljs-number">1</span>,fi,fj,grid,n,m,toVisit<span class="hljs-number">-1</span>,dp);
+        grid[i][j]=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">return</span> r+l+u+d;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">uniquePathsIII</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; grid)</span> </span>{
+     <span class="hljs-keyword">int</span> m=grid.<span class="hljs-built_in">size</span>();
+     <span class="hljs-keyword">if</span>(m==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+     <span class="hljs-keyword">int</span> n=grid[<span class="hljs-number">0</span>].<span class="hljs-built_in">size</span>();
+     <span class="hljs-keyword">int</span> toVisit = <span class="hljs-number">0</span>;
+     pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; start={<span class="hljs-number">-1</span>,<span class="hljs-number">-1</span>},end={<span class="hljs-number">-1</span>,<span class="hljs-number">-1</span>};
+     vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(m,<span class="hljs-number">-1</span>));
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++) {
+                <span class="hljs-keyword">if</span> (grid[i][j] == <span class="hljs-number">1</span>) {
+                    start = {i, j};
+                }
+                <span class="hljs-keyword">if</span> (grid[i][j] == <span class="hljs-number">2</span>) {
+                    end = {i, j};
+                }
+                <span class="hljs-keyword">if</span> (grid[i][j] != <span class="hljs-number">-1</span>) {
+                    toVisit++;
+                }
+            }
+        }
+     <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(start.first, start.second, end.first, end.second, grid, n, m,toVisit,dp);
+     
+
+
+    }
+};
+</div></code></pre>
+<hr>
 <h2 id="longest-common-subsequence" tabindex="-1"><a href="https://leetcode.com/problems/longest-common-subsequence/"> Longest Common Subsequence</a></h2>
 <hr>
 <p>Given two strings <code>text1</code> and <code>text2</code>, return *the length of their longest <strong>common subsequence</strong> . *If there is no <strong>common subsequence</strong> , return <code>0</code>.</p>
