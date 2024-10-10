@@ -544,7 +544,7 @@ blockquote {
 <hr>
 <h1 id="maximum-sum-of-nonadjacent-elements" tabindex="-1"><a href="https://www.naukri.com/code360/problems/maximum-sum-of-non-adjacent-elements_843261?utm_source=striver&amp;utm_medium=website&amp;utm_campaign=a_zcoursetuf&amp;leftPanelTabValue=PROBLEM"><strong>Maximum Sum Of NonAdjacent Elements</strong></a></h1>
 <h2 id="recursion%2Bmemoization" tabindex="-1">Recursion+Memoization</h2>
-<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span> </span>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> ind,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;dp,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums)</span></span>{
     <span class="hljs-keyword">if</span>(ind==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> nums[ind];
     <span class="hljs-keyword">if</span>(ind&lt;<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
@@ -643,8 +643,8 @@ blockquote {
 };
 </div></code></pre>
 <hr>
-<p>#Starting 2D DP</p>
-<h1 id="%5Bninja's-training%5D-(https%3A%2F%2Fwww.naukri.com%2Fcode360%2Fproblems%2Fninja%25e2%2580%2599s-training_3621003%3Futm_source%3Dstriver%26utm_medium%3Dwebsite%26utm_campaign%3Da_zcoursetuf)" tabindex="-1">[<strong>Ninja's Training</strong>] (https://www.naukri.com/code360/problems/ninja%E2%80%99s-training_3621003?utm_source=striver&amp;utm_medium=website&amp;utm_campaign=a_zcoursetuf)</h1>
+<h1 id="starting-2d-dp" tabindex="-1">Starting 2D DP</h1>
+<h1 id="ninja's-training" tabindex="-1"><a href="https://www.naukri.com/code360/problems/ninja%E2%80%99s-training_3621003?utm_source=striver&amp;utm_medium=website&amp;utm_campaign=a_zcoursetuf"><strong>Ninja's Training</strong></a></h1>
 <h2 id="recursion-1" tabindex="-1">recursion</h2>
 <pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;points,<span class="hljs-keyword">int</span> day,<span class="hljs-keyword">int</span> lastIndex)</span></span>{
     <span class="hljs-keyword">if</span>(day==<span class="hljs-number">0</span>){
@@ -662,7 +662,7 @@ blockquote {
             <span class="hljs-keyword">int</span> pointsToday=points[day][i]+<span class="hljs-built_in">recursion</span>(points,day<span class="hljs-number">-1</span>,i);
             maxi=<span class="hljs-built_in">max</span>(maxi,pointsToday);
         }
-      
+
     }
     <span class="hljs-keyword">return</span> maxi;
 }
@@ -671,7 +671,7 @@ blockquote {
     <span class="hljs-comment">// Write your code here.</span>
     vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">3</span>,<span class="hljs-number">0</span>));
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(points,n<span class="hljs-number">-1</span>,<span class="hljs-number">4</span>);
-  
+
 }
 </div></code></pre>
 <h2 id="memoization-1" tabindex="-1">Memoization</h2>
@@ -692,7 +692,7 @@ blockquote {
             <span class="hljs-keyword">int</span> pointsToday=points[day][i]+<span class="hljs-built_in">recursion</span>(points,day<span class="hljs-number">-1</span>,i,dp);
             maxi=<span class="hljs-built_in">max</span>(maxi,pointsToday);
         }
-      
+
     }
     <span class="hljs-comment">// return maxi;</span>
     <span class="hljs-keyword">return</span> dp[day][lastIndex]=maxi;
@@ -702,7 +702,7 @@ blockquote {
     <span class="hljs-comment">// Write your code here.</span>
     vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">4</span>,<span class="hljs-number">-1</span>));
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(points,n<span class="hljs-number">-1</span>,<span class="hljs-number">3</span>,dp);
-  
+
 }
 </div></code></pre>
 <h2 id="tabulation-2" tabindex="-1">Tabulation</h2>
@@ -710,7 +710,7 @@ blockquote {
 </span>{
     <span class="hljs-comment">// Write your code here.</span>
     vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">4</span>,<span class="hljs-number">-1</span>));
-    dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]=<span class="hljs-built_in">max</span>(points[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>],points[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>]);  
+    dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]=<span class="hljs-built_in">max</span>(points[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>],points[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>]);
     dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]=<span class="hljs-built_in">max</span>(points[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>],points[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>]);
     dp[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>]=<span class="hljs-built_in">max</span>(points[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>],points[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]);
     dp[<span class="hljs-number">0</span>][<span class="hljs-number">3</span>] = <span class="hljs-built_in">max</span>(points[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>], <span class="hljs-built_in">max</span>(points[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>], points[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]));
@@ -728,7 +728,7 @@ blockquote {
         }
     }
     <span class="hljs-keyword">return</span> dp[n<span class="hljs-number">-1</span>][<span class="hljs-number">3</span>];
-  
+
 }
 </div></code></pre>
 <h2 id="space-optimized-2" tabindex="-1">Space Optimized</h2>
@@ -756,7 +756,7 @@ blockquote {
         dp=temp;
     }
     <span class="hljs-keyword">return</span> dp[<span class="hljs-number">3</span>];
-  
+
 }
 </div></code></pre>
 <hr>
@@ -799,7 +799,7 @@ blockquote {
             <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++){
                 <span class="hljs-keyword">if</span>(i==<span class="hljs-number">0</span> &amp;&amp; j==<span class="hljs-number">0</span>)
                 dp[i][j]=<span class="hljs-number">1</span>;
-                <span class="hljs-keyword">else</span> 
+                <span class="hljs-keyword">else</span>
                 {
                 <span class="hljs-keyword">int</span> l=<span class="hljs-number">0</span>,r=<span class="hljs-number">0</span>;
                 <span class="hljs-keyword">if</span>(i&gt;<span class="hljs-number">0</span>) l=dp[i<span class="hljs-number">-1</span>][j];
@@ -851,7 +851,7 @@ blockquote {
                    <span class="hljs-keyword">if</span>(j&gt;<span class="hljs-number">0</span>) r=grid[i][j]+dp[i][j<span class="hljs-number">-1</span>];
                     dp[i][j]=<span class="hljs-built_in">min</span>(l,r);
                }
-              
+
             }
         }
         <span class="hljs-keyword">return</span> dp[m<span class="hljs-number">-1</span>][n<span class="hljs-number">-1</span>];
