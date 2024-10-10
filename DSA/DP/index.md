@@ -2,15 +2,161 @@
 
 ---
 
+# [**Climbing Stairs**](https://leetcode.com/problems/climbing-stairs/description/)
+
+```cpp
+class Solution {
+public:
+    int recursion(int n,vector<int> &dp){
+        if(n==0 || n==1) return 1;
+        if(dp[n]!=-1) return dp[n];
+        return dp[n]=recursion(n-1,dp)+recursion(n-2,dp);
+    }
+    int climbStairs(int n) {
+        vector<int> dp(n+1,-1);
+        return recursion(n,dp);
+
+    }
+};
+```
+
+---
+
+# [**Frog Jump CN**](https://www.naukri.com/code360/problems/frog-jump_3621012?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf&leftPanelTabValue=PROBLEM/)
+
+## Recursion
+
+```cpp
+#include <bits/stdc++.h>
+int recursion(int ind,vector<int> &v){
+     if(ind==0) return 0;
+     int l=recursion(ind-1,v)+abs(v[ind]-v[ind-1]);
+     int r=INT_MAX;
+     if(ind>1) r=recursion(ind-2,v)+abs(v[ind]-v[ind-2]);
+     return min(l,r);
+}
+int frogJump(int n, vector<int> &v)
+{
+    return recursion(n-1,v);
+}
+```
+
+## Memoization
+
+```cpp
+#include <bits/stdc++.h>
+int recursion(int ind,vector<int> &v,vector<int> &dp){
+     if(ind==0) return 0;
+     if(dp[ind]!=-1) return dp[ind];
+     int l=recursion(ind-1,v,dp)+abs(v[ind]-v[ind-1]);
+     int r=INT_MAX;
+     if(ind>1) r=recursion(ind-2,v,dp)+abs(v[ind]-v[ind-2]);
+     return dp[ind]=min(l,r);
+}
+int frogJump(int n, vector<int> &v)
+{
+     vector<int> dp(n,-1);
+    return recursion(n-1,v,dp);
+}
+```
+
+## Tabulation
+
+```cpp
+int frogJump(int n, vector<int> &v)
+{
+     vector<int> dp(n,-1);
+     dp[0]=0;
+     for(int i=1;i<n;i++){
+          int fs=dp[i-1]+abs(v[i]-v[i-1]);
+          int ss=INT_MAX;
+          if(i>1)
+          ss= dp[i-2]+abs(v[i]-v[i-2]);
+          dp[i]=min(fs,ss);
+     }
+     return dp[n-1];
+}
+```
+
+## Space Optimized
+
+```cpp
+int frogJump(int n, vector<int> &v)
+{
+     int prev=0,prev2=0;
+     for(int i=1;i<n;i++){
+          int fs=prev+abs(v[i]-v[i-1]);
+          int ss=INT_MAX;
+          if(i>1)
+          ss= prev2+abs(v[i]-v[i-2]);
+          int curr=min(fs,ss);
+          prev2=prev;
+          prev=curr;
+     }
+     return prev;
+}
+```
+
+---
+
+# [**Frog Jump with k distances**](https://www.naukri.com/code360/problems/minimal-cost_8180930?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf)
+
+```cpp
+int minimizeCost(int n, int k, vector<int> &v){
+    // Write your code here.
+    vector<int> dp(n);
+    dp[0]=0;
+    for(int i=1;i<n;i++){
+        int minSteps=INT_MAX;
+        for(int j=1;j<=k;j++){
+            if((i-j)>=0){
+                int steps=dp[i-j]+abs(v[i]-v[i-j]);
+                minSteps=min(minSteps,steps);
+            }
+        }
+        dp[i]=minSteps;
+    }
+    return dp[n-1];
+}
+```
+
+---
+
+# [**Frog Jump Leetcode**](https://leetcode.com/problems/frog-jump/description/)
+
+```cpp
+class Solution {
+public:
+     bool canCross(vector<int>& stones) {
+        unordered_map<int, unordered_set<int>> dp;
+        for(auto position: stones)dp[position]=unordered_set<int>();
+        dp[0].insert(0);
+        for(auto position:stones){
+            for(auto k:dp[position]){
+                if(k-1>0 && dp.find(position+k-1)!=dp.end())
+                dp[position+k-1].insert(k-1);
+                if(dp.find(position+k)!=dp.end())
+                dp[position+k].insert(k);
+                if(dp.find(position+k+1)!=dp.end())
+                dp[position+k+1].insert(k+1);
+            }
+        }
+        return !dp[stones.back()].empty();
+    }
+};
+```
+
+---
+
 ## [ Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)
 
 ---
 
-Given two strings `text1` and `text2`, return *the length of their longest  **common subsequence** . *If there is no  **common subsequence** , return `0`.
+Given two strings `text1` and `text2`, return *the length of their longest **common subsequence** . *If there is no **common subsequence** , return `0`.
 
 A **subsequence** of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
 
-* For example, `"ace"` is a subsequence of `"abcde"`.
+- For example, `"ace"` is a subsequence of `"abcde"`.
 
 A **common subsequence** of two strings is a subsequence that is common to both strings.
 
@@ -45,8 +191,8 @@ A **common subsequence** of two strings is a subsequence that is common to both 
 
 **Constraints:**
 
-* `1 <= text1.length, text2.length <= 1000`
-* `text1` and `text2` consist of only lowercase English characters.
+- `1 <= text1.length, text2.length <= 1000`
+- `text1` and `text2` consist of only lowercase English characters.
 
 ---
 
@@ -163,13 +309,14 @@ public:
 
 You are given a **0-indexed** string `text` and another **0-indexed** string `pattern` of length `2`, both of which consist of only lowercase English letters.
 
-You can add **either** `pattern[0]` **or** `pattern[1]` anywhere in `text`  **exactly once** . Note that the character can be added even at the beginning or at the end of `text`.
+You can add **either** `pattern[0]` **or** `pattern[1]` anywhere in `text` **exactly once** . Note that the character can be added even at the beginning or at the end of `text`.
 
-Return *the **maximum** number of times* `pattern` *can occur as a **subsequence** of the modified *`text`.
+Return _the **maximum** number of times_ `pattern` _can occur as a **subsequence** of the modified _`text`.
 
 A **subsequence** is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.
 
 ---
+
 **Example 1:**
 
 <pre><strong>Input:</strong> text = "abdcdbc", pattern = "ac"
@@ -180,6 +327,7 @@ Some other strings which have 4 subsequences "ac" after adding a character to te
 However, strings such as "abdc<u><strong>a</strong></u>dbc", "abd<u><strong>c</strong></u>cdbc", and "abdcdbc<u><strong>c</strong></u>", although obtainable, have only 3 subsequences "ac" and are thus suboptimal.
 It can be shown that it is not possible to get more than 4 subsequences "ac" by adding only one character.
 </pre>
+
 ---
 
 **Example 2:**
@@ -189,19 +337,23 @@ It can be shown that it is not possible to get more than 4 subsequences "ac" by 
 <strong>Explanation:</strong>
 Some of the strings which can be obtained from text and have 6 subsequences "ab" are "<u><strong>a</strong></u>aabb", "aa<u><strong>a</strong></u>bb", and "aab<u><strong>b</strong></u>b".
 </pre>
+
 ---
+
 **Constraints:**
 
-* `1 <= text.length <= 10<sup>5</sup>`
-* `pattern.length == 2`
-* `text` and `pattern` consist only of lowercase English letters.
+- `1 <= text.length <= 10<sup>5</sup>`
+- `pattern.length == 2`
+- `text` and `pattern` consist only of lowercase English letters.
+
 ---
+
 ```cpp
 class Solution {
 public:
     long long Helper(string text, string pattern){
         vector<int> pfx(text.size(), 0);
-        
+
         for(int i = 0; i < text.size(); i++) {
             if(text[i] == pattern[0]) {
                 pfx[i] = 1;
@@ -228,7 +380,7 @@ public:
         for(int i = 1; i < pfx.size(); i++) {
             pfx[i] += pfx[i-1];
         }
-        
+
         long long ans = 0;
         // for(int i=0;i<pfx.size();i++){
         //     cout<<pfx[i]<<" ";
@@ -239,24 +391,26 @@ public:
                 ans += pfx[i];
             }
         }
-        
-       
-      
+
+
+
         // cout<<"\n";
         return ans;
     }
-    
+
     long long maximumSubsequenceCount(string text, string pattern) {
-        string s1 = pattern[0] + text; 
-        // string s2 = text + pattern[0];  
-        // string s3 = pattern[1] + text;  
-        string s4 = text + pattern[1]; 
-        
+        string s1 = pattern[0] + text;
+        // string s2 = text + pattern[0];
+        // string s3 = pattern[1] + text;
+        string s4 = text + pattern[1];
+
         return max({Helper(s1, pattern),Helper(s4, pattern)});
     }
 };
 ```
+
 ---
+
 ```cpp
 class Solution {
 public:
@@ -277,8 +431,9 @@ public:
     }
 };
 ```
+
 ---
+
 ```cpp
 
 ```
-
