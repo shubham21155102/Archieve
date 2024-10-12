@@ -1062,6 +1062,111 @@ public:
 
 ---
 
+# [**Array partition with minimum difference**]()
+
+```cpp
+bool recursion(vector<vector<int>> &dp,vector<int>&arr,int ind,int target){
+	if(target==0) return true;
+	if(ind<0 || target<0) return false;
+	bool notTake=recursion(dp,arr,ind-1,target);
+	bool take=false;
+        if (target >= arr[ind]) {
+          take = recursion(dp, arr, ind - 1, target - arr[ind]);
+        }
+        int ans=(take|| notTake);
+		dp[ind][target]=(ans==true)?1:0;
+		return dp[ind][target]==1;
+}
+int minSubsetSumDifference(vector<int>& arr, int n)
+{
+	int sum=accumulate(begin(arr),end(arr),0LL);
+	vector<vector<bool>> dp(n,vector<bool>(sum+1,0));
+    for(int i=0;i<n;i++) dp[i][0]=1;
+	if(arr[0]<=sum) dp[0][arr[0]]=1;
+	for(int ind=1;ind<n;ind++){
+		for(int target=1;target<=sum;target++){
+			bool notTake=dp[ind-1][target];
+			bool take=false;
+			if(arr[ind]<=target) take=dp[ind-1][target-arr[ind]];
+			dp[ind][target]=(take | notTake);
+
+		}
+	}
+	// recursion(dp,arr,n-1,sum);
+	int mini=1e9;
+	for(int s1=0;s1<=sum/2;s1++){
+		if(dp[n-1][s1]==1){
+			 mini = min(mini, abs((sum - s1) - s1));
+		}
+	}
+	return mini;
+}
+
+```
+
+---
+
+# [**GFG Minimum sum partition**](https://www.geeksforgeeks.org/problems/minimum-sum-partition3317/1)
+
+```cpp
+int minDifference(int arr[], int n)  {
+	    // Your code goes here
+	    int sum=accumulate(arr,arr+n,0);
+	    vector<vector<bool>> dp(n,vector<bool>(sum,0));
+	    for(int i=0;i<n;i++) dp[i][0]=true;
+	    if(arr[0]<=sum) dp[0][arr[0]]=true;
+	    for(int ind=1;ind<n;ind++){
+	        for(int target=1;target<=sum;target++){
+	            bool take=false;
+	            bool notTake=dp[ind-1][target];
+	            if(target>=arr[ind]) take=dp[ind-1][target-arr[ind]];
+	            dp[ind][target]=(take | notTake);
+	        }
+	    }
+	    int mini=1e9;
+	    for(int s1=0;s1<=sum/2;s1++){
+	        if(dp[n-1][s1]){
+	            mini=min(mini,abs((sum-s1)-s1));
+	        }
+	    }
+	    return mini;
+
+	}
+```
+
+```apache
+1.Why if(arr[0] <= sum) dp[0][arr[0]] = true;:
+This is initializing the first element of the dp array. It means that if the first element arr[0] is less than or equal to the total sum, then it is possible to form a subset with this sum. This initialization is necessary to handle the base case for dynamic programming when processing subsequent elements.
+2.Why if(dp[n-1][s1]) mini = min(mini, abs((sum-s1) - s1));:
+Here, dp[n-1][s1] checks whether it’s possible to form a subset with sum s1 using all elements (up to index n-1). If so, you compute the absolute difference between sum - s1 (the sum of the other subset) and s1 and update the minimum difference (mini). The goal is to minimize the difference between the two subset sums.
+3.Why use n-1:
+n-1 represents the last element in the array arr when using 0-based indexing. The dynamic programming table dp has size n, where dp[i][target] tells if it’s possible to form the sum target using elements from arr[0] to arr[i]. Thus, dp[n-1] checks if it’s possible to form the sum using all elements from the array.
+```
+
+## Optimized
+
+```cpp
+int minSubsetSumDifference(vector<int>& arr, int n) {
+    int sum = accumulate(arr.begin(), arr.end(), 0);
+    vector<bool> dp(sum / 2 + 1, false);
+
+    dp[0] = true;
+    for (int num : arr) {
+        for (int target = sum / 2; target >= num; target--) {
+            dp[target] = dp[target] || dp[target - num];
+        }
+    }
+    int mini = INT_MAX;
+    for (int s1 = sum / 2; s1 >= 0; s1--) {
+        if (dp[s1]) {
+            mini = min(mini, abs((sum - s1) - s1));
+        }
+    }
+
+    return mini;
+}
+```
+
 ---
 
 ## [ Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)

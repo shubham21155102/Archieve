@@ -1346,6 +1346,99 @@ blockquote {
 };
 </div></code></pre>
 <hr>
+<h1 id="array-partition-with-minimum-difference" tabindex="-1"><a href=""><strong>Array partition with minimum difference</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;arr,<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> target)</span></span>{
+	<span class="hljs-keyword">if</span>(target==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	<span class="hljs-keyword">if</span>(ind&lt;<span class="hljs-number">0</span> || target&lt;<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+	<span class="hljs-keyword">bool</span> notTake=<span class="hljs-built_in">recursion</span>(dp,arr,ind<span class="hljs-number">-1</span>,target);
+	<span class="hljs-keyword">bool</span> take=<span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">if</span> (target &gt;= arr[ind]) {
+          take = <span class="hljs-built_in">recursion</span>(dp, arr, ind - <span class="hljs-number">1</span>, target - arr[ind]);
+        }
+        <span class="hljs-keyword">int</span> ans=(take|| notTake);
+		dp[ind][target]=(ans==<span class="hljs-literal">true</span>)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;
+		<span class="hljs-keyword">return</span> dp[ind][target]==<span class="hljs-number">1</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minSubsetSumDifference</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+	<span class="hljs-keyword">int</span> sum=<span class="hljs-built_in">accumulate</span>(<span class="hljs-built_in">begin</span>(arr),<span class="hljs-built_in">end</span>(arr),<span class="hljs-number">0LL</span>);
+	vector&lt;vector&lt;<span class="hljs-keyword">bool</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">bool</span>&gt;(sum+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>));
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) dp[i][<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;
+	<span class="hljs-keyword">if</span>(arr[<span class="hljs-number">0</span>]&lt;=sum) dp[<span class="hljs-number">0</span>][arr[<span class="hljs-number">0</span>]]=<span class="hljs-number">1</span>;
+	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> ind=<span class="hljs-number">1</span>;ind&lt;n;ind++){
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> target=<span class="hljs-number">1</span>;target&lt;=sum;target++){
+			<span class="hljs-keyword">bool</span> notTake=dp[ind<span class="hljs-number">-1</span>][target];
+			<span class="hljs-keyword">bool</span> take=<span class="hljs-literal">false</span>;
+			<span class="hljs-keyword">if</span>(arr[ind]&lt;=target) take=dp[ind<span class="hljs-number">-1</span>][target-arr[ind]];
+			dp[ind][target]=(take | notTake);
+
+		}
+	}
+	<span class="hljs-comment">// recursion(dp,arr,n-1,sum);</span>
+	<span class="hljs-keyword">int</span> mini=<span class="hljs-number">1e9</span>;
+	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> s1=<span class="hljs-number">0</span>;s1&lt;=sum/<span class="hljs-number">2</span>;s1++){
+		<span class="hljs-keyword">if</span>(dp[n<span class="hljs-number">-1</span>][s1]==<span class="hljs-number">1</span>){
+			 mini = <span class="hljs-built_in">min</span>(mini, <span class="hljs-built_in">abs</span>((sum - s1) - s1));
+		}
+	}
+	<span class="hljs-keyword">return</span> mini;
+}
+
+</div></code></pre>
+<hr>
+<h1 id="gfg-minimum-sum-partition" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/minimum-sum-partition3317/1"><strong>GFG Minimum sum partition</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minDifference</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> n)</span>  </span>{ 
+	    <span class="hljs-comment">// Your code goes here</span>
+	    <span class="hljs-keyword">int</span> sum=<span class="hljs-built_in">accumulate</span>(arr,arr+n,<span class="hljs-number">0</span>);
+	    vector&lt;vector&lt;<span class="hljs-keyword">bool</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">bool</span>&gt;(sum,<span class="hljs-number">0</span>));
+	    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) dp[i][<span class="hljs-number">0</span>]=<span class="hljs-literal">true</span>;
+	    <span class="hljs-keyword">if</span>(arr[<span class="hljs-number">0</span>]&lt;=sum) dp[<span class="hljs-number">0</span>][arr[<span class="hljs-number">0</span>]]=<span class="hljs-literal">true</span>;
+	    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> ind=<span class="hljs-number">1</span>;ind&lt;n;ind++){
+	        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> target=<span class="hljs-number">1</span>;target&lt;=sum;target++){
+	            <span class="hljs-keyword">bool</span> take=<span class="hljs-literal">false</span>;
+	            <span class="hljs-keyword">bool</span> notTake=dp[ind<span class="hljs-number">-1</span>][target];
+	            <span class="hljs-keyword">if</span>(target&gt;=arr[ind]) take=dp[ind<span class="hljs-number">-1</span>][target-arr[ind]];
+	            dp[ind][target]=(take | notTake);
+	        }
+	    }
+	    <span class="hljs-keyword">int</span> mini=<span class="hljs-number">1e9</span>;
+	    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> s1=<span class="hljs-number">0</span>;s1&lt;=sum/<span class="hljs-number">2</span>;s1++){
+	        <span class="hljs-keyword">if</span>(dp[n<span class="hljs-number">-1</span>][s1]){
+	            mini=<span class="hljs-built_in">min</span>(mini,<span class="hljs-built_in">abs</span>((sum-s1)-s1));
+	        }
+	    }
+	    <span class="hljs-keyword">return</span> mini;
+	  
+	} 
+</div></code></pre>
+<pre class='hljs'><code><div><span class="hljs-attribute">1</span>.Why if(arr[<span class="hljs-number">0</span>] &lt;= sum) dp[<span class="hljs-number">0</span>][arr[<span class="hljs-number">0</span>]] = true;:
+<span class="hljs-attribute">This</span> is initializing the first element of the dp array. It means that if the first element arr[<span class="hljs-number">0</span>] is less than or equal to the total sum, then it is possible to form a subset with this sum. This initialization is necessary to handle the base case for dynamic programming when processing subsequent elements.
+<span class="hljs-attribute">2</span>.Why if(dp[n-<span class="hljs-number">1</span>][s<span class="hljs-number">1</span>]) mini = min(mini, abs((sum-s<span class="hljs-number">1</span>) - s<span class="hljs-number">1</span>));:
+<span class="hljs-attribute">Here</span>, dp[n-<span class="hljs-number">1</span>][s<span class="hljs-number">1</span>] checks whether it’s possible to form a subset with sum s<span class="hljs-number">1</span> using <span class="hljs-literal">all</span> elements (up to index n-<span class="hljs-number">1</span>). If so, you compute the absolute difference between sum - s<span class="hljs-number">1</span> (the sum of the other subset) and s<span class="hljs-number">1</span> and update the minimum difference (mini). The goal is to minimize the difference between the two subset sums.
+<span class="hljs-attribute">3</span>.Why use n-<span class="hljs-number">1</span>:
+<span class="hljs-attribute">n</span>-<span class="hljs-number">1</span> represents the last element in the array arr when using <span class="hljs-number">0</span>-based indexing. The dynamic programming table dp has size n, where dp[i][target] tells if it’s possible to form the sum target using elements from arr[<span class="hljs-number">0</span>] to arr[i]. Thus, dp[n-<span class="hljs-number">1</span>] checks if it’s possible to form the sum using <span class="hljs-literal">all</span> elements from the array.
+</div></code></pre>
+<h2 id="optimized" tabindex="-1">Optimized</h2>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minSubsetSumDifference</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr, <span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">int</span> sum = <span class="hljs-built_in">accumulate</span>(arr.<span class="hljs-built_in">begin</span>(), arr.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);
+    <span class="hljs-function">vector&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(sum / <span class="hljs-number">2</span> + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>)</span></span>;
+    
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>; 
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> num : arr) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> target = sum / <span class="hljs-number">2</span>; target &gt;= num; target--) {
+            dp[target] = dp[target] || dp[target - num];
+        }
+    }
+    <span class="hljs-keyword">int</span> mini = INT_MAX;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> s1 = sum / <span class="hljs-number">2</span>; s1 &gt;= <span class="hljs-number">0</span>; s1--) {
+        <span class="hljs-keyword">if</span> (dp[s1]) {
+            mini = <span class="hljs-built_in">min</span>(mini, <span class="hljs-built_in">abs</span>((sum - s1) - s1));
+        }
+    }
+
+    <span class="hljs-keyword">return</span> mini;
+}
+</div></code></pre>
 <hr>
 <h2 id="longest-common-subsequence" tabindex="-1"><a href="https://leetcode.com/problems/longest-common-subsequence/"> Longest Common Subsequence</a></h2>
 <hr>
