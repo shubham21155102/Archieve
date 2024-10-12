@@ -958,8 +958,138 @@ blockquote {
 };
 </div></code></pre>
 <hr>
-<h1 id="chocolated-pickup-3d-dp" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/chocolates-pickup/1"><strong>Chocolated Pickup 3D DP</strong></a></h1>
+<h1 id="triangle" tabindex="-1"><a href="https://leetcode.com/problems/triangle/description/"><strong>Triangle</strong></a></h1>
 <h2 id="recursion-3" tabindex="-1">Recursion</h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;dp,<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,<span class="hljs-keyword">int</span> n)</span></span>{
+        <span class="hljs-keyword">if</span>(i==n<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> triangle[n<span class="hljs-number">-1</span>][j];
+        <span class="hljs-keyword">int</span> d=<span class="hljs-built_in">recursion</span>(triangle,dp,i+<span class="hljs-number">1</span>,j,n);
+        <span class="hljs-keyword">int</span> dg=<span class="hljs-built_in">recursion</span>(triangle,dp,i+<span class="hljs-number">1</span>,j+<span class="hljs-number">1</span>,n);
+        <span class="hljs-keyword">return</span> triangle[i][j]+<span class="hljs-built_in">min</span>(d,dg);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minimumTotal</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>{
+        <span class="hljs-keyword">int</span> n=triangle.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(n,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(triangle,dp,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,n);
+    }
+};
+</div></code></pre>
+<h2 id="memoization-3" tabindex="-1">Memoization</h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;dp,<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,<span class="hljs-keyword">int</span> n)</span></span>{
+        <span class="hljs-keyword">if</span>(i==n<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> triangle[n<span class="hljs-number">-1</span>][j];
+        <span class="hljs-keyword">if</span>(dp[i][j]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[i][j];
+        <span class="hljs-keyword">int</span> d=<span class="hljs-built_in">recursion</span>(triangle,dp,i+<span class="hljs-number">1</span>,j,n);
+        <span class="hljs-keyword">int</span> dg=<span class="hljs-built_in">recursion</span>(triangle,dp,i+<span class="hljs-number">1</span>,j+<span class="hljs-number">1</span>,n);
+        <span class="hljs-keyword">return</span> dp[i][j]=triangle[i][j]+<span class="hljs-built_in">min</span>(d,dg);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minimumTotal</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>{
+        <span class="hljs-keyword">int</span> n=triangle.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(n,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(triangle,dp,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,n);
+    }
+};
+</div></code></pre>
+<h2 id="tabulation-6" tabindex="-1">Tabulation</h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minimumTotal</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>{
+        <span class="hljs-keyword">int</span> n=triangle.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(n,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++) dp[n<span class="hljs-number">-1</span>][j]=triangle[n<span class="hljs-number">-1</span>][j];
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-2</span>;i&gt;=<span class="hljs-number">0</span>;i--){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=i;j&gt;=<span class="hljs-number">0</span>;j--){
+                 <span class="hljs-keyword">int</span> d=dp[i+<span class="hljs-number">1</span>][j];
+                 <span class="hljs-keyword">int</span> dg=dp[i+<span class="hljs-number">1</span>][j+<span class="hljs-number">1</span>];
+                 dp[i][j]=triangle[i][j]+<span class="hljs-built_in">min</span>(d,dg);
+            }
+        }
+        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];
+    }
+};
+</div></code></pre>
+<hr>
+<h1 id="minimum-falling-path-sum" tabindex="-1"><a href="https://leetcode.com/problems/minimum-falling-path-sum/description/"><strong>Minimum Falling Path Sum</strong></a></h1>
+<h2 id="recursion-%2B-memoization" tabindex="-1">Recursion + Memoization</h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp, vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat, <span class="hljs-keyword">int</span> row, <span class="hljs-keyword">int</span> col, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">if</span> (col &lt; <span class="hljs-number">0</span> || col &gt;= n || row &gt;= n) <span class="hljs-keyword">return</span> <span class="hljs-number">1e9</span>;
+        <span class="hljs-keyword">if</span> (row == n - <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> mat[row][col];
+        <span class="hljs-keyword">if</span> (dp[row][col] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[row][col];
+        <span class="hljs-keyword">int</span> down = <span class="hljs-built_in">recursion</span>(dp, mat, row + <span class="hljs-number">1</span>, col, n);
+        <span class="hljs-keyword">int</span> downDiag = <span class="hljs-built_in">recursion</span>(dp, mat, row + <span class="hljs-number">1</span>, col + <span class="hljs-number">1</span>, n);
+        <span class="hljs-keyword">int</span> upperDiag = <span class="hljs-built_in">recursion</span>(dp, mat, row + <span class="hljs-number">1</span>, col - <span class="hljs-number">1</span>, n);
+        <span class="hljs-keyword">return</span> dp[row][col] = mat[row][col] + <span class="hljs-built_in">min</span>({down, downDiag, upperDiag});
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minFallingPathSum</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat)</span> </span>{
+        <span class="hljs-keyword">int</span> n = mat.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n, vector&lt;<span class="hljs-keyword">int</span>&gt;(n, <span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">int</span> ans = <span class="hljs-number">1e9</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> col = <span class="hljs-number">0</span>; col &lt; n; col++) {
+            ans = <span class="hljs-built_in">min</span>(ans, <span class="hljs-built_in">recursion</span>(dp, mat, <span class="hljs-number">0</span>, col, n));
+        }
+
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
+<h2 id="recursion-%2B-memoization(reverse)" tabindex="-1">Recursion + Memoization(Reverse)</h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp, vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat, <span class="hljs-keyword">int</span> row, <span class="hljs-keyword">int</span> col, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">if</span> (col &lt; <span class="hljs-number">0</span> || col &gt;= n) <span class="hljs-keyword">return</span> <span class="hljs-number">1e9</span>;
+        <span class="hljs-keyword">if</span> (row == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> mat[row][col];
+        <span class="hljs-keyword">if</span> (dp[row][col] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[row][col];
+        <span class="hljs-keyword">int</span> down = <span class="hljs-built_in">recursion</span>(dp, mat, row - <span class="hljs-number">1</span>, col, n);
+        <span class="hljs-keyword">int</span> downDiag = <span class="hljs-built_in">recursion</span>(dp, mat, row - <span class="hljs-number">1</span>, col - <span class="hljs-number">1</span>, n);
+        <span class="hljs-keyword">int</span> upperDiag = <span class="hljs-built_in">recursion</span>(dp, mat, row - <span class="hljs-number">1</span>, col + <span class="hljs-number">1</span>, n);
+        <span class="hljs-keyword">return</span> dp[row][col] = mat[row][col] + <span class="hljs-built_in">min</span>({down, downDiag, upperDiag});
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minFallingPathSum</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat)</span> </span>{
+        <span class="hljs-keyword">int</span> n = mat.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n, vector&lt;<span class="hljs-keyword">int</span>&gt;(n, <span class="hljs-number">-1</span>));
+
+        <span class="hljs-keyword">int</span> ans = <span class="hljs-number">1e9</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> col = <span class="hljs-number">0</span>; col &lt; n; col++) {
+            ans = <span class="hljs-built_in">min</span>(ans, <span class="hljs-built_in">recursion</span>(dp, mat, n<span class="hljs-number">-1</span>, col, n));
+        }
+
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
+<h2 id="tabulation-7" tabindex="-1">Tabulation</h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minFallingPathSum</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat)</span> </span>{
+        <span class="hljs-keyword">int</span> n = mat.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n, vector&lt;<span class="hljs-keyword">int</span>&gt;(n, <span class="hljs-number">1e9</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++) dp[<span class="hljs-number">0</span>][j]= mat[<span class="hljs-number">0</span>][j];
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++){
+                <span class="hljs-keyword">if</span>(i==<span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;
+                <span class="hljs-keyword">int</span> down=INT_MAX,downDiag=INT_MAX,upperDiag=INT_MAX;
+                down=dp[i<span class="hljs-number">-1</span>][j];
+                <span class="hljs-keyword">if</span>(j&gt;<span class="hljs-number">0</span>) downDiag=dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];
+                <span class="hljs-keyword">if</span>(j&lt;n<span class="hljs-number">-1</span>)upperDiag=dp[i<span class="hljs-number">-1</span>][j+<span class="hljs-number">1</span>];
+                dp[i][j]=mat[i][j]+<span class="hljs-built_in">min</span>({down,downDiag,upperDiag});
+            }
+        }
+        <span class="hljs-keyword">int</span> ans = <span class="hljs-number">1e9</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> col = <span class="hljs-number">0</span>; col &lt; n; col++) {
+            ans=<span class="hljs-built_in">min</span>(ans,dp[n<span class="hljs-number">-1</span>][col]);
+        }
+
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
+<hr>
+<h1 id="chocolated-pickup-3d-dp" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/chocolates-pickup/1"><strong>Chocolated Pickup 3D DP</strong></a></h1>
+<h2 id="recursion-4" tabindex="-1">Recursion</h2>
 <pre class='hljs'><code><div><span class="hljs-comment">//{ Driver Code Starts</span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
@@ -1019,7 +1149,7 @@ blockquote {
 }
 <span class="hljs-comment">// } Driver Code Ends</span>
 </div></code></pre>
-<h2 id="memoization-3" tabindex="-1">Memoization</h2>
+<h2 id="memoization-4" tabindex="-1">Memoization</h2>
 <pre class='hljs'><code><div><span class="hljs-comment">//{ Driver Code Starts</span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
@@ -1081,7 +1211,7 @@ blockquote {
 }
 <span class="hljs-comment">// } Driver Code Ends</span>
 </div></code></pre>
-<h2 id="tabulation-6" tabindex="-1">Tabulation</h2>
+<h2 id="tabulation-8" tabindex="-1">Tabulation</h2>
 <pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
   <span class="hljs-keyword">public</span>:
     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j1,<span class="hljs-keyword">int</span> j2,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> m,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;grid,vector&lt;vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&gt;&amp;dp)</span></span>{
@@ -1145,6 +1275,74 @@ blockquote {
         <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>][m<span class="hljs-number">-1</span>];
     }
 
+};
+</div></code></pre>
+<hr>
+<h1 id="subset-sum-problem" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1"><strong>Subset Sum Problem</strong></a></h1>
+<h2 id="recursion-%2B-memoization-1" tabindex="-1">Recursion + Memoization</h2>
+<pre class='hljs'><code><div>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;arr,<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> target,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(target==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">if</span>(ind==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> arr[ind]==target;
+        <span class="hljs-keyword">if</span>(dp[ind][target]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][target]==<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">bool</span> notTake=<span class="hljs-built_in">recursion</span>(arr,ind<span class="hljs-number">-1</span>,target,dp);
+        <span class="hljs-keyword">bool</span> take=<span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">if</span>(target&gt;=arr[ind]){
+            take=<span class="hljs-built_in">recursion</span>(arr,ind<span class="hljs-number">-1</span>,target-arr[ind],dp);
+        }
+        <span class="hljs-keyword">bool</span> ans=(take || notTake);
+        dp[ind][target]=(ans==<span class="hljs-literal">true</span>)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">return</span> dp[ind][target]==<span class="hljs-number">1</span>?<span class="hljs-literal">true</span>:<span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isSubsetSum</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;arr, <span class="hljs-keyword">int</span> sum)</span></span>{
+        <span class="hljs-keyword">int</span> n=arr.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(sum+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(arr,n<span class="hljs-number">-1</span>,sum,dp);
+    }
+</div></code></pre>
+<h2 id="tabulation-9" tabindex="-1">Tabulation</h2>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isSubsetSum</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;arr, <span class="hljs-keyword">int</span> sum)</span></span>{
+        <span class="hljs-keyword">int</span> n=arr.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(sum+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) dp[i][<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span>(arr[<span class="hljs-number">0</span>]&lt;=sum)
+        dp[<span class="hljs-number">0</span>][arr[<span class="hljs-number">0</span>]]=<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=sum;j++){
+                <span class="hljs-keyword">bool</span> notTake=(dp[i<span class="hljs-number">-1</span>][j]==<span class="hljs-number">1</span>);
+                <span class="hljs-keyword">bool</span> take=<span class="hljs-literal">false</span>;
+                <span class="hljs-keyword">if</span>(j&gt;=arr[i]){
+                    take=(dp[i<span class="hljs-number">-1</span>][j-arr[i]]==<span class="hljs-number">1</span>);
+                }
+                <span class="hljs-keyword">bool</span> ans=(take || notTake);
+                dp[i][j]=(ans==<span class="hljs-literal">true</span>)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;
+            }
+        }
+        <span class="hljs-keyword">return</span> dp[n<span class="hljs-number">-1</span>][sum]==<span class="hljs-number">1</span>;
+    }
+</div></code></pre>
+<hr>
+<h1 id="partition-equal-subset-sum" tabindex="-1"><a href="https://leetcode.com/problems/partition-equal-subset-sum/"><strong>Partition Equal Subset Sum</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums,<span class="hljs-keyword">int</span> sum,<span class="hljs-keyword">int</span> ind,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(sum==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">if</span>(ind&lt;<span class="hljs-number">0</span> || sum&lt;<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">if</span>(ind==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> sum==nums[<span class="hljs-number">0</span>];
+        <span class="hljs-keyword">if</span>(dp[ind][sum]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][sum];
+        <span class="hljs-keyword">bool</span> notTake=<span class="hljs-built_in">recursion</span>(nums,sum,ind<span class="hljs-number">-1</span>,dp);
+        <span class="hljs-keyword">bool</span> take=<span class="hljs-built_in">recursion</span>(nums,sum-nums[ind],ind<span class="hljs-number">-1</span>,dp);
+        <span class="hljs-keyword">bool</span> ans=(take || notTake);
+        dp[ind][sum]=((ans==<span class="hljs-literal">true</span>)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">return</span> dp[ind][sum]==<span class="hljs-number">1</span>;
+
+    }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canPartition</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+        <span class="hljs-keyword">int</span> sum=<span class="hljs-built_in">accumulate</span>(<span class="hljs-built_in">begin</span>(nums),<span class="hljs-built_in">end</span>(nums),<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">if</span>(sum&amp;<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(sum/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(nums,sum/<span class="hljs-number">2</span>,n<span class="hljs-number">-1</span>,dp);
+    }
 };
 </div></code></pre>
 <hr>
@@ -1280,137 +1478,6 @@ blockquote {
     }
 };
 </div></code></pre>
-<hr>
-<h1 id="triangle" tabindex="-1"><a href="https://leetcode.com/problems/triangle/description/"><strong>Triangle</strong></a></h1>
-<h2 id="recursion-4" tabindex="-1">Recursion</h2>
-<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;dp,<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,<span class="hljs-keyword">int</span> n)</span></span>{
-        <span class="hljs-keyword">if</span>(i==n<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> triangle[n<span class="hljs-number">-1</span>][j];
-        <span class="hljs-keyword">int</span> d=<span class="hljs-built_in">recursion</span>(triangle,dp,i+<span class="hljs-number">1</span>,j,n);
-        <span class="hljs-keyword">int</span> dg=<span class="hljs-built_in">recursion</span>(triangle,dp,i+<span class="hljs-number">1</span>,j+<span class="hljs-number">1</span>,n);
-        <span class="hljs-keyword">return</span> triangle[i][j]+<span class="hljs-built_in">min</span>(d,dg);
-    }
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minimumTotal</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>{
-        <span class="hljs-keyword">int</span> n=triangle.<span class="hljs-built_in">size</span>();
-        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(n,<span class="hljs-number">-1</span>));
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(triangle,dp,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,n);
-    }
-};
-</div></code></pre>
-<h2 id="memoization-4" tabindex="-1">Memoization</h2>
-<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;dp,<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,<span class="hljs-keyword">int</span> n)</span></span>{
-        <span class="hljs-keyword">if</span>(i==n<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> triangle[n<span class="hljs-number">-1</span>][j];
-        <span class="hljs-keyword">if</span>(dp[i][j]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[i][j];
-        <span class="hljs-keyword">int</span> d=<span class="hljs-built_in">recursion</span>(triangle,dp,i+<span class="hljs-number">1</span>,j,n);
-        <span class="hljs-keyword">int</span> dg=<span class="hljs-built_in">recursion</span>(triangle,dp,i+<span class="hljs-number">1</span>,j+<span class="hljs-number">1</span>,n);
-        <span class="hljs-keyword">return</span> dp[i][j]=triangle[i][j]+<span class="hljs-built_in">min</span>(d,dg);
-    }
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minimumTotal</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>{
-        <span class="hljs-keyword">int</span> n=triangle.<span class="hljs-built_in">size</span>();
-        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(n,<span class="hljs-number">-1</span>));
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(triangle,dp,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,n);
-    }
-};
-</div></code></pre>
-<h2 id="tabulation-7" tabindex="-1">Tabulation</h2>
-<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minimumTotal</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; triangle)</span> </span>{
-        <span class="hljs-keyword">int</span> n=triangle.<span class="hljs-built_in">size</span>();
-        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(n,<span class="hljs-number">0</span>));
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++) dp[n<span class="hljs-number">-1</span>][j]=triangle[n<span class="hljs-number">-1</span>][j];
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-2</span>;i&gt;=<span class="hljs-number">0</span>;i--){
-            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=i;j&gt;=<span class="hljs-number">0</span>;j--){
-                 <span class="hljs-keyword">int</span> d=dp[i+<span class="hljs-number">1</span>][j];
-                 <span class="hljs-keyword">int</span> dg=dp[i+<span class="hljs-number">1</span>][j+<span class="hljs-number">1</span>];
-                 dp[i][j]=triangle[i][j]+<span class="hljs-built_in">min</span>(d,dg);
-            }
-        }
-        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];
-    }
-};
-</div></code></pre>
-<hr>
-<h1 id="minimum-falling-path-sum" tabindex="-1"><a href="https://leetcode.com/problems/minimum-falling-path-sum/description/"><strong>Minimum Falling Path Sum</strong></a></h1>
-<h2 id="recursion-%2B-memoization" tabindex="-1">Recursion + Memoization</h2>
-<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp, vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat, <span class="hljs-keyword">int</span> row, <span class="hljs-keyword">int</span> col, <span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">if</span> (col &lt; <span class="hljs-number">0</span> || col &gt;= n || row &gt;= n) <span class="hljs-keyword">return</span> <span class="hljs-number">1e9</span>;
-        <span class="hljs-keyword">if</span> (row == n - <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> mat[row][col];
-        <span class="hljs-keyword">if</span> (dp[row][col] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[row][col];
-        <span class="hljs-keyword">int</span> down = <span class="hljs-built_in">recursion</span>(dp, mat, row + <span class="hljs-number">1</span>, col, n);
-        <span class="hljs-keyword">int</span> downDiag = <span class="hljs-built_in">recursion</span>(dp, mat, row + <span class="hljs-number">1</span>, col + <span class="hljs-number">1</span>, n);
-        <span class="hljs-keyword">int</span> upperDiag = <span class="hljs-built_in">recursion</span>(dp, mat, row + <span class="hljs-number">1</span>, col - <span class="hljs-number">1</span>, n);
-        <span class="hljs-keyword">return</span> dp[row][col] = mat[row][col] + <span class="hljs-built_in">min</span>({down, downDiag, upperDiag});
-    }
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minFallingPathSum</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat)</span> </span>{
-        <span class="hljs-keyword">int</span> n = mat.<span class="hljs-built_in">size</span>();
-        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n, vector&lt;<span class="hljs-keyword">int</span>&gt;(n, <span class="hljs-number">-1</span>));
-        <span class="hljs-keyword">int</span> ans = <span class="hljs-number">1e9</span>;
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> col = <span class="hljs-number">0</span>; col &lt; n; col++) {
-            ans = <span class="hljs-built_in">min</span>(ans, <span class="hljs-built_in">recursion</span>(dp, mat, <span class="hljs-number">0</span>, col, n));
-        }
-
-        <span class="hljs-keyword">return</span> ans;
-    }
-};
-</div></code></pre>
-<h2 id="recursion-%2B-memoization(reverse)" tabindex="-1">Recursion + Memoization(Reverse)</h2>
-<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp, vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat, <span class="hljs-keyword">int</span> row, <span class="hljs-keyword">int</span> col, <span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">if</span> (col &lt; <span class="hljs-number">0</span> || col &gt;= n) <span class="hljs-keyword">return</span> <span class="hljs-number">1e9</span>;
-        <span class="hljs-keyword">if</span> (row == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> mat[row][col];
-        <span class="hljs-keyword">if</span> (dp[row][col] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[row][col];
-        <span class="hljs-keyword">int</span> down = <span class="hljs-built_in">recursion</span>(dp, mat, row - <span class="hljs-number">1</span>, col, n);
-        <span class="hljs-keyword">int</span> downDiag = <span class="hljs-built_in">recursion</span>(dp, mat, row - <span class="hljs-number">1</span>, col - <span class="hljs-number">1</span>, n);
-        <span class="hljs-keyword">int</span> upperDiag = <span class="hljs-built_in">recursion</span>(dp, mat, row - <span class="hljs-number">1</span>, col + <span class="hljs-number">1</span>, n);
-        <span class="hljs-keyword">return</span> dp[row][col] = mat[row][col] + <span class="hljs-built_in">min</span>({down, downDiag, upperDiag});
-    }
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minFallingPathSum</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat)</span> </span>{
-        <span class="hljs-keyword">int</span> n = mat.<span class="hljs-built_in">size</span>();
-        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n, vector&lt;<span class="hljs-keyword">int</span>&gt;(n, <span class="hljs-number">-1</span>));
-
-        <span class="hljs-keyword">int</span> ans = <span class="hljs-number">1e9</span>;
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> col = <span class="hljs-number">0</span>; col &lt; n; col++) {
-            ans = <span class="hljs-built_in">min</span>(ans, <span class="hljs-built_in">recursion</span>(dp, mat, n<span class="hljs-number">-1</span>, col, n));
-        }
-
-        <span class="hljs-keyword">return</span> ans;
-    }
-};
-</div></code></pre>
-<h2 id="tabulation-8" tabindex="-1">Tabulation</h2>
-<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minFallingPathSum</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; mat)</span> </span>{
-        <span class="hljs-keyword">int</span> n = mat.<span class="hljs-built_in">size</span>();
-        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n, vector&lt;<span class="hljs-keyword">int</span>&gt;(n, <span class="hljs-number">1e9</span>));
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++) dp[<span class="hljs-number">0</span>][j]= mat[<span class="hljs-number">0</span>][j];
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
-            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;n;j++){
-                <span class="hljs-keyword">if</span>(i==<span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;
-                <span class="hljs-keyword">int</span> down=INT_MAX,downDiag=INT_MAX,upperDiag=INT_MAX;
-                down=dp[i<span class="hljs-number">-1</span>][j];
-                <span class="hljs-keyword">if</span>(j&gt;<span class="hljs-number">0</span>) downDiag=dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];
-                <span class="hljs-keyword">if</span>(j&lt;n<span class="hljs-number">-1</span>)upperDiag=dp[i<span class="hljs-number">-1</span>][j+<span class="hljs-number">1</span>];
-                dp[i][j]=mat[i][j]+<span class="hljs-built_in">min</span>({down,downDiag,upperDiag});
-            }
-        }
-        <span class="hljs-keyword">int</span> ans = <span class="hljs-number">1e9</span>;
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> col = <span class="hljs-number">0</span>; col &lt; n; col++) {
-            ans=<span class="hljs-built_in">min</span>(ans,dp[n<span class="hljs-number">-1</span>][col]);
-        }
-
-        <span class="hljs-keyword">return</span> ans;
-    }
-};
-</div></code></pre>
-<hr>
 <hr>
 <h1 id="maximize-number-of-subsequences-in-a-string" tabindex="-1"><a href="https://leetcode.com/problems/maximize-number-of-subsequences-in-a-string/">Maximize Number of Subsequences in a String</a></h1>
 <hr>
