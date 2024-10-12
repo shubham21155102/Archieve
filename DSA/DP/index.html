@@ -1387,7 +1387,7 @@ blockquote {
 </div></code></pre>
 <hr>
 <h1 id="gfg-minimum-sum-partition" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/minimum-sum-partition3317/1"><strong>GFG Minimum sum partition</strong></a></h1>
-<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minDifference</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> n)</span>  </span>{ 
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minDifference</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> n)</span>  </span>{
 	    <span class="hljs-comment">// Your code goes here</span>
 	    <span class="hljs-keyword">int</span> sum=<span class="hljs-built_in">accumulate</span>(arr,arr+n,<span class="hljs-number">0</span>);
 	    vector&lt;vector&lt;<span class="hljs-keyword">bool</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">bool</span>&gt;(sum,<span class="hljs-number">0</span>));
@@ -1408,8 +1408,8 @@ blockquote {
 	        }
 	    }
 	    <span class="hljs-keyword">return</span> mini;
-	  
-	} 
+
+	}
 </div></code></pre>
 <pre class='hljs'><code><div><span class="hljs-attribute">1</span>.Why if(arr[<span class="hljs-number">0</span>] &lt;= sum) dp[<span class="hljs-number">0</span>][arr[<span class="hljs-number">0</span>]] = true;:
 <span class="hljs-attribute">This</span> is initializing the first element of the dp array. It means that if the first element arr[<span class="hljs-number">0</span>] is less than or equal to the total sum, then it is possible to form a subset with this sum. This initialization is necessary to handle the base case for dynamic programming when processing subsequent elements.
@@ -1422,8 +1422,8 @@ blockquote {
 <pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minSubsetSumDifference</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr, <span class="hljs-keyword">int</span> n)</span> </span>{
     <span class="hljs-keyword">int</span> sum = <span class="hljs-built_in">accumulate</span>(arr.<span class="hljs-built_in">begin</span>(), arr.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);
     <span class="hljs-function">vector&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(sum / <span class="hljs-number">2</span> + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>)</span></span>;
-    
-    dp[<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>; 
+
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>;
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> num : arr) {
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> target = sum / <span class="hljs-number">2</span>; target &gt;= num; target--) {
             dp[target] = dp[target] || dp[target - num];
@@ -1438,6 +1438,164 @@ blockquote {
 
     <span class="hljs-keyword">return</span> mini;
 }
+</div></code></pre>
+<hr>
+<h1 id="partition-equal-subset-sum-1" tabindex="-1"><a href="https://leetcode.com/problems/partition-equal-subset-sum/description/"><strong>Partition Equal Subset Sum</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums,<span class="hljs-keyword">int</span> sum,<span class="hljs-keyword">int</span> ind,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(sum==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">if</span>(ind&lt;<span class="hljs-number">0</span> || sum&lt;<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">if</span>(ind==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> sum==nums[<span class="hljs-number">0</span>];
+        <span class="hljs-keyword">if</span>(dp[ind][sum]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][sum];
+        <span class="hljs-keyword">bool</span> notTake=<span class="hljs-built_in">recursion</span>(nums,sum,ind<span class="hljs-number">-1</span>,dp);
+        <span class="hljs-keyword">bool</span> take=<span class="hljs-built_in">recursion</span>(nums,sum-nums[ind],ind<span class="hljs-number">-1</span>,dp);
+        <span class="hljs-keyword">bool</span> ans=(take || notTake);
+        dp[ind][sum]=((ans==<span class="hljs-literal">true</span>)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">return</span> dp[ind][sum]==<span class="hljs-number">1</span>;
+
+    }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canPartition</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+        <span class="hljs-keyword">int</span> sum=<span class="hljs-built_in">accumulate</span>(<span class="hljs-built_in">begin</span>(nums),<span class="hljs-built_in">end</span>(nums),<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">if</span>(sum&amp;<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(sum/<span class="hljs-number">2</span>+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(nums,sum/<span class="hljs-number">2</span>,n<span class="hljs-number">-1</span>,dp);
+    }
+};
+</div></code></pre>
+<hr>
+<h1 id="partition-to-k-equal-sum-subsets" tabindex="-1"><a href="https://leetcode.com/problems/partition-to-k-equal-sum-subsets/description/"><strong>Partition to K Equal Sum Subsets</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-comment">// class Solution {</span>
+<span class="hljs-comment">// public:</span>
+<span class="hljs-comment">//     bool recursion(vector&lt;vector&lt;int&gt;&gt; &amp;dp,vector&lt;int&gt; &amp;nums,int k,int ind,int target){</span>
+<span class="hljs-comment">//           if(k==0) return true;</span>
+<span class="hljs-comment">//           if(ind&lt;0) return false;</span>
+<span class="hljs-comment">//           if(dp[ind][target]!=-1) return dp[ind][target]==1;</span>
+<span class="hljs-comment">//           if(target==0) {</span>
+<span class="hljs-comment">//             bool x=recursion(dp,nums,k-1,ind,target);</span>
+<span class="hljs-comment">//             dp[ind][target]=(x==true?1:0);</span>
+<span class="hljs-comment">//             return x;</span>
+<span class="hljs-comment">//            }</span>
+<span class="hljs-comment">//            bool pick=false;</span>
+<span class="hljs-comment">//            bool nonPick=recursion(dp,nums,k,ind-1,target);</span>
+<span class="hljs-comment">//            if(target&gt;=nums[ind]) pick=recursion(dp,nums,k,ind-1,target-nums[ind]);</span>
+<span class="hljs-comment">//            bool ans=(pick || nonPick);</span>
+<span class="hljs-comment">//            dp[ind][target]=(ans==true?1:0);</span>
+<span class="hljs-comment">//            return ans;</span>
+
+<span class="hljs-comment">//     }</span>
+<span class="hljs-comment">//     bool canPartitionKSubsets(vector&lt;int&gt;&amp; nums, int k) {</span>
+<span class="hljs-comment">//         int n=nums.size();</span>
+<span class="hljs-comment">//         sort(nums.begin(), nums.end(), greater&lt;int&gt;()); </span>
+      
+<span class="hljs-comment">//         int sum=accumulate(begin(nums),end(nums),0);</span>
+<span class="hljs-comment">//         int target=sum/k;</span>
+<span class="hljs-comment">//         if (nums[0] &gt; target) return false; </span>
+<span class="hljs-comment">//         if(sum % k !=0) return false;</span>
+<span class="hljs-comment">//         vector&lt;vector&lt;int&gt;&gt; dp(n,vector&lt;int&gt;(target+1,-1));</span>
+<span class="hljs-comment">//         return recursion(dp,nums,k,n-1,target);</span>
+<span class="hljs-comment">//     }</span>
+<span class="hljs-comment">// };</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canPartitionHelper</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, vector&lt;<span class="hljs-keyword">bool</span>&gt;&amp; used, <span class="hljs-keyword">int</span> target, <span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> currSum)</span> </span>{
+        <span class="hljs-keyword">if</span> (k == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; 
+        <span class="hljs-keyword">if</span> (currSum == target)
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">canPartitionHelper</span>(nums, used, target, k - <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+      
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start; i &lt; nums.<span class="hljs-built_in">size</span>(); ++i) {
+            <span class="hljs-keyword">if</span> (!used[i] &amp;&amp; currSum + nums[i] &lt;= target) { 
+                used[i] = <span class="hljs-literal">true</span>;
+                <span class="hljs-keyword">if</span> (<span class="hljs-built_in">canPartitionHelper</span>(nums, used, target, k, i + <span class="hljs-number">1</span>, currSum + nums[i]))
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                used[i] = <span class="hljs-literal">false</span>;
+            }
+        }
+      
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canPartitionKSubsets</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> k)</span> </span>{
+        <span class="hljs-keyword">int</span> sum = <span class="hljs-built_in">accumulate</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">if</span> (sum % k != <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">int</span> target = sum / k;
+        <span class="hljs-built_in">sort</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>(), greater&lt;<span class="hljs-keyword">int</span>&gt;());
+        <span class="hljs-keyword">if</span> (nums[<span class="hljs-number">0</span>] &gt; target) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+      
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">used</span><span class="hljs-params">(nums.size(), <span class="hljs-literal">false</span>)</span></span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">canPartitionHelper</span>(nums, used, target, k, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    }
+};
+</div></code></pre>
+<hr>
+<h1 id="perfect-sum-problem" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1"><strong>Perfect Sum Problem</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sum,<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> arr[],vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+	    <span class="hljs-keyword">if</span>(ind&lt;<span class="hljs-number">0</span>) {
+	        <span class="hljs-keyword">if</span>(sum==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+	        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+	    }
+	    <span class="hljs-keyword">if</span>(dp[ind][sum]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][sum];
+	    <span class="hljs-keyword">int</span> pick=<span class="hljs-number">0</span>;
+	    <span class="hljs-keyword">int</span> notPick=<span class="hljs-built_in">recursion</span>(sum,ind<span class="hljs-number">-1</span>,arr,dp);
+	    <span class="hljs-keyword">if</span>(sum&gt;=arr[ind]) pick=<span class="hljs-built_in">recursion</span>(sum-arr[ind],ind<span class="hljs-number">-1</span>,arr,dp);
+	    <span class="hljs-keyword">return</span> dp[ind][sum]=(pick+notPick)%mod;
+	  
+	}
+	<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">perfectSum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> sum)</span>
+	</span>{
+	    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(sum+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(sum,n<span class="hljs-number">-1</span>,arr,dp);
+	}
+</div></code></pre>
+<hr>
+<h1 id="partitions-with-given-difference" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/partitions-with-given-difference/1"><strong>Partitions with Given Difference</strong></a></h1>
+<h1 id="same-problem-on-cn" tabindex="-1"><a href="https://www.naukri.com/code360/problems/partitions-with-given-difference_3751628?utm_source=striver&amp;utm_medium=website&amp;utm_campaign=a_zcoursetuf&amp;leftPanelTabValue=PROBLEM"><strong>Same Problem on CN</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp, vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;arr, <span class="hljs-keyword">int</span> ind, <span class="hljs-keyword">int</span> target)</span> </span>{
+    <span class="hljs-keyword">if</span>(ind&lt;<span class="hljs-number">0</span>) {
+         <span class="hljs-keyword">if</span> (target == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;  
+         <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+    <span class="hljs-keyword">if</span> (dp[ind][target] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][target];
+
+    <span class="hljs-keyword">int</span> notPick = <span class="hljs-built_in">recursion</span>(dp, arr, ind - <span class="hljs-number">1</span>, target);
+    <span class="hljs-keyword">int</span> pick = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (target &gt;= arr[ind]) pick = <span class="hljs-built_in">recursion</span>(dp, arr, ind - <span class="hljs-number">1</span>, target - arr[ind]);
+
+    <span class="hljs-keyword">return</span> dp[ind][target] = (pick + notPick)%mod;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">countPartitions</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> d, vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr)</span> </span>{
+    <span class="hljs-keyword">int</span> sum = <span class="hljs-built_in">accumulate</span>(arr.<span class="hljs-built_in">begin</span>(), arr.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">if</span> ((sum + d) % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">int</span> target = (sum + d) / <span class="hljs-number">2</span>;
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n, vector&lt;<span class="hljs-keyword">int</span>&gt;(target + <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>));
+  
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(dp, arr, n - <span class="hljs-number">1</span>, target);
+}
+</div></code></pre>
+<hr>
+<h1 id="0-1-knapsack-problem" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1"><strong>0-1 KnapSack Problem</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> target,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;wt,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;val,<span class="hljs-keyword">int</span> ind,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(ind==<span class="hljs-number">0</span>){
+            <span class="hljs-keyword">if</span>(wt[<span class="hljs-number">0</span>]&lt;=target) <span class="hljs-keyword">return</span> val[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        }
+        <span class="hljs-keyword">if</span>(dp[ind][target]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][target];
+        <span class="hljs-keyword">int</span> pick=INT_MIN;
+        <span class="hljs-keyword">int</span> notPick=<span class="hljs-number">0</span>+<span class="hljs-built_in">recursion</span>(target,wt,val,ind<span class="hljs-number">-1</span>,dp);
+        <span class="hljs-keyword">if</span>(wt[ind]&lt;=target) pick=val[ind]+<span class="hljs-built_in">recursion</span>(target-wt[ind],wt,val,ind<span class="hljs-number">-1</span>,dp);
+        <span class="hljs-keyword">return</span> dp[ind][target]=<span class="hljs-built_in">max</span>(pick,notPick);
+        
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">knapSack</span><span class="hljs-params">(<span class="hljs-keyword">int</span> target, vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; wt, vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; val)</span> </span>{
+        <span class="hljs-comment">// Your code here</span>
+        <span class="hljs-keyword">int</span> n=wt.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(target+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(target,wt,val,n<span class="hljs-number">-1</span>,dp);
+        
+    }
 </div></code></pre>
 <hr>
 <h2 id="longest-common-subsequence" tabindex="-1"><a href="https://leetcode.com/problems/longest-common-subsequence/"> Longest Common Subsequence</a></h2>
@@ -1571,7 +1729,6 @@ blockquote {
     }
 };
 </div></code></pre>
-<hr>
 <h1 id="maximize-number-of-subsequences-in-a-string" tabindex="-1"><a href="https://leetcode.com/problems/maximize-number-of-subsequences-in-a-string/">Maximize Number of Subsequences in a String</a></h1>
 <hr>
 <p>You are given a <strong>0-indexed</strong> string <code>text</code> and another <strong>0-indexed</strong> string <code>pattern</code> of length <code>2</code>, both of which consist of only lowercase English letters.</p>

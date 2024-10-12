@@ -1169,6 +1169,185 @@ int minSubsetSumDifference(vector<int>& arr, int n) {
 
 ---
 
+# [**Partition Equal Subset Sum**](https://leetcode.com/problems/partition-equal-subset-sum/description/)
+
+```cpp
+class Solution {
+public:
+    bool recursion(vector<int> &nums,int sum,int ind,vector<vector<int>> &dp){
+        if(sum==0) return true;
+        if(ind<0 || sum<0) return false;
+        if(ind==0) return sum==nums[0];
+        if(dp[ind][sum]!=-1) return dp[ind][sum];
+        bool notTake=recursion(nums,sum,ind-1,dp);
+        bool take=recursion(nums,sum-nums[ind],ind-1,dp);
+        bool ans=(take || notTake);
+        dp[ind][sum]=((ans==true)?1:0);
+        return dp[ind][sum]==1;
+
+    }
+    bool canPartition(vector<int>& nums) {
+        int sum=accumulate(begin(nums),end(nums),0);
+        if(sum&1) return false;
+        int n=nums.size();
+        vector<vector<int>> dp(n,vector<int>(sum/2+1,-1));
+        return recursion(nums,sum/2,n-1,dp);
+    }
+};
+```
+
+---
+
+# [**Partition to K Equal Sum Subsets**](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/description/)
+
+```cpp
+// class Solution {
+// public:
+//     bool recursion(vector<vector<int>> &dp,vector<int> &nums,int k,int ind,int target){
+//           if(k==0) return true;
+//           if(ind<0) return false;
+//           if(dp[ind][target]!=-1) return dp[ind][target]==1;
+//           if(target==0) {
+//             bool x=recursion(dp,nums,k-1,ind,target);
+//             dp[ind][target]=(x==true?1:0);
+//             return x;
+//            }
+//            bool pick=false;
+//            bool nonPick=recursion(dp,nums,k,ind-1,target);
+//            if(target>=nums[ind]) pick=recursion(dp,nums,k,ind-1,target-nums[ind]);
+//            bool ans=(pick || nonPick);
+//            dp[ind][target]=(ans==true?1:0);
+//            return ans;
+
+//     }
+//     bool canPartitionKSubsets(vector<int>& nums, int k) {
+//         int n=nums.size();
+//         sort(nums.begin(), nums.end(), greater<int>());
+
+//         int sum=accumulate(begin(nums),end(nums),0);
+//         int target=sum/k;
+//         if (nums[0] > target) return false;
+//         if(sum % k !=0) return false;
+//         vector<vector<int>> dp(n,vector<int>(target+1,-1));
+//         return recursion(dp,nums,k,n-1,target);
+//     }
+// };
+class Solution {
+public:
+    bool canPartitionHelper(vector<int>& nums, vector<bool>& used, int target, int k, int start, int currSum) {
+        if (k == 1) return true;
+        if (currSum == target)
+            return canPartitionHelper(nums, used, target, k - 1, 0, 0);
+
+        for (int i = start; i < nums.size(); ++i) {
+            if (!used[i] && currSum + nums[i] <= target) {
+                used[i] = true;
+                if (canPartitionHelper(nums, used, target, k, i + 1, currSum + nums[i]))
+                    return true;
+                used[i] = false;
+            }
+        }
+
+        return false;
+    }
+
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if (sum % k != 0) return false;
+        int target = sum / k;
+        sort(nums.begin(), nums.end(), greater<int>());
+        if (nums[0] > target) return false;
+
+        vector<bool> used(nums.size(), false);
+        return canPartitionHelper(nums, used, target, k, 0, 0);
+    }
+};
+```
+
+---
+
+# [**Perfect Sum Problem**](https://www.geeksforgeeks.org/problems/perfect-sum-problem5633/1)
+
+```cpp
+int recursion(int sum,int ind,int arr[],vector<vector<int>> &dp){
+	    if(ind<0) {
+	        if(sum==0) return 1;
+	        return 0;
+	    }
+	    if(dp[ind][sum]!=-1) return dp[ind][sum];
+	    int pick=0;
+	    int notPick=recursion(sum,ind-1,arr,dp);
+	    if(sum>=arr[ind]) pick=recursion(sum-arr[ind],ind-1,arr,dp);
+	    return dp[ind][sum]=(pick+notPick)%mod;
+
+	}
+	int perfectSum(int arr[], int n, int sum)
+	{
+	    vector<vector<int>> dp(n,vector<int>(sum+1,-1));
+        return recursion(sum,n-1,arr,dp);
+	}
+```
+
+---
+
+# [**Partitions with Given Difference**](https://www.geeksforgeeks.org/problems/partitions-with-given-difference/1)
+
+# [**Same Problem on CN**](https://www.naukri.com/code360/problems/partitions-with-given-difference_3751628?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf&leftPanelTabValue=PROBLEM)
+
+```cpp
+int recursion(vector<vector<int>> &dp, vector<int> &arr, int ind, int target) {
+    if(ind<0) {
+         if (target == 0) return 1;
+         return 0;
+    }
+    if (dp[ind][target] != -1) return dp[ind][target];
+
+    int notPick = recursion(dp, arr, ind - 1, target);
+    int pick = 0;
+    if (target >= arr[ind]) pick = recursion(dp, arr, ind - 1, target - arr[ind]);
+
+    return dp[ind][target] = (pick + notPick)%mod;
+}
+
+int countPartitions(int n, int d, vector<int>& arr) {
+    int sum = accumulate(arr.begin(), arr.end(), 0);
+    if ((sum + d) % 2 != 0) return 0;
+
+    int target = (sum + d) / 2;
+    vector<vector<int>> dp(n, vector<int>(target + 1, -1));
+
+    return recursion(dp, arr, n - 1, target);
+}
+```
+
+---
+
+# [**0-1 KnapSack Problem**](https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1)
+
+```cpp
+int recursion(int target,vector<int> &wt,vector<int> &val,int ind,vector<vector<int>> &dp){
+        if(ind==0){
+            if(wt[0]<=target) return val[0];
+            return 0;
+        }
+        if(dp[ind][target]!=-1) return dp[ind][target];
+        int pick=INT_MIN;
+        int notPick=0+recursion(target,wt,val,ind-1,dp);
+        if(wt[ind]<=target) pick=val[ind]+recursion(target-wt[ind],wt,val,ind-1,dp);
+        return dp[ind][target]=max(pick,notPick);
+
+    }
+    int knapSack(int target, vector<int>& wt, vector<int>& val) {
+        // Your code here
+        int n=wt.size();
+        vector<vector<int>> dp(n,vector<int>(target+1,-1));
+        return recursion(target,wt,val,n-1,dp);
+
+    }
+```
+
+---
+
 ## [ Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)
 
 ---
@@ -1321,8 +1500,6 @@ public:
     }
 };
 ```
-
----
 
 # [Maximize Number of Subsequences in a String](https://leetcode.com/problems/maximize-number-of-subsequences-in-a-string/)
 
