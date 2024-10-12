@@ -1487,11 +1487,11 @@ blockquote {
 <span class="hljs-comment">//     }</span>
 <span class="hljs-comment">//     bool canPartitionKSubsets(vector&lt;int&gt;&amp; nums, int k) {</span>
 <span class="hljs-comment">//         int n=nums.size();</span>
-<span class="hljs-comment">//         sort(nums.begin(), nums.end(), greater&lt;int&gt;()); </span>
-      
+<span class="hljs-comment">//         sort(nums.begin(), nums.end(), greater&lt;int&gt;());</span>
+
 <span class="hljs-comment">//         int sum=accumulate(begin(nums),end(nums),0);</span>
 <span class="hljs-comment">//         int target=sum/k;</span>
-<span class="hljs-comment">//         if (nums[0] &gt; target) return false; </span>
+<span class="hljs-comment">//         if (nums[0] &gt; target) return false;</span>
 <span class="hljs-comment">//         if(sum % k !=0) return false;</span>
 <span class="hljs-comment">//         vector&lt;vector&lt;int&gt;&gt; dp(n,vector&lt;int&gt;(target+1,-1));</span>
 <span class="hljs-comment">//         return recursion(dp,nums,k,n-1,target);</span>
@@ -1500,19 +1500,19 @@ blockquote {
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
 <span class="hljs-keyword">public</span>:
     <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canPartitionHelper</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, vector&lt;<span class="hljs-keyword">bool</span>&gt;&amp; used, <span class="hljs-keyword">int</span> target, <span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> currSum)</span> </span>{
-        <span class="hljs-keyword">if</span> (k == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; 
+        <span class="hljs-keyword">if</span> (k == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
         <span class="hljs-keyword">if</span> (currSum == target)
             <span class="hljs-keyword">return</span> <span class="hljs-built_in">canPartitionHelper</span>(nums, used, target, k - <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
-      
+
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start; i &lt; nums.<span class="hljs-built_in">size</span>(); ++i) {
-            <span class="hljs-keyword">if</span> (!used[i] &amp;&amp; currSum + nums[i] &lt;= target) { 
+            <span class="hljs-keyword">if</span> (!used[i] &amp;&amp; currSum + nums[i] &lt;= target) {
                 used[i] = <span class="hljs-literal">true</span>;
                 <span class="hljs-keyword">if</span> (<span class="hljs-built_in">canPartitionHelper</span>(nums, used, target, k, i + <span class="hljs-number">1</span>, currSum + nums[i]))
                     <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
                 used[i] = <span class="hljs-literal">false</span>;
             }
         }
-      
+
         <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
     }
 
@@ -1522,7 +1522,7 @@ blockquote {
         <span class="hljs-keyword">int</span> target = sum / k;
         <span class="hljs-built_in">sort</span>(nums.<span class="hljs-built_in">begin</span>(), nums.<span class="hljs-built_in">end</span>(), greater&lt;<span class="hljs-keyword">int</span>&gt;());
         <span class="hljs-keyword">if</span> (nums[<span class="hljs-number">0</span>] &gt; target) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-      
+
         <span class="hljs-function">vector&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">used</span><span class="hljs-params">(nums.size(), <span class="hljs-literal">false</span>)</span></span>;
         <span class="hljs-keyword">return</span> <span class="hljs-built_in">canPartitionHelper</span>(nums, used, target, k, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
     }
@@ -1540,7 +1540,7 @@ blockquote {
 	    <span class="hljs-keyword">int</span> notPick=<span class="hljs-built_in">recursion</span>(sum,ind<span class="hljs-number">-1</span>,arr,dp);
 	    <span class="hljs-keyword">if</span>(sum&gt;=arr[ind]) pick=<span class="hljs-built_in">recursion</span>(sum-arr[ind],ind<span class="hljs-number">-1</span>,arr,dp);
 	    <span class="hljs-keyword">return</span> dp[ind][sum]=(pick+notPick)%mod;
-	  
+
 	}
 	<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">perfectSum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> sum)</span>
 	</span>{
@@ -1553,7 +1553,7 @@ blockquote {
 <h1 id="same-problem-on-cn" tabindex="-1"><a href="https://www.naukri.com/code360/problems/partitions-with-given-difference_3751628?utm_source=striver&amp;utm_medium=website&amp;utm_campaign=a_zcoursetuf&amp;leftPanelTabValue=PROBLEM"><strong>Same Problem on CN</strong></a></h1>
 <pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp, vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;arr, <span class="hljs-keyword">int</span> ind, <span class="hljs-keyword">int</span> target)</span> </span>{
     <span class="hljs-keyword">if</span>(ind&lt;<span class="hljs-number">0</span>) {
-         <span class="hljs-keyword">if</span> (target == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;  
+         <span class="hljs-keyword">if</span> (target == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
          <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
     }
     <span class="hljs-keyword">if</span> (dp[ind][target] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][target];
@@ -1571,7 +1571,7 @@ blockquote {
 
     <span class="hljs-keyword">int</span> target = (sum + d) / <span class="hljs-number">2</span>;
     vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n, vector&lt;<span class="hljs-keyword">int</span>&gt;(target + <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>));
-  
+
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(dp, arr, n - <span class="hljs-number">1</span>, target);
 }
 </div></code></pre>
@@ -1587,15 +1587,57 @@ blockquote {
         <span class="hljs-keyword">int</span> notPick=<span class="hljs-number">0</span>+<span class="hljs-built_in">recursion</span>(target,wt,val,ind<span class="hljs-number">-1</span>,dp);
         <span class="hljs-keyword">if</span>(wt[ind]&lt;=target) pick=val[ind]+<span class="hljs-built_in">recursion</span>(target-wt[ind],wt,val,ind<span class="hljs-number">-1</span>,dp);
         <span class="hljs-keyword">return</span> dp[ind][target]=<span class="hljs-built_in">max</span>(pick,notPick);
-        
+
     }
     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">knapSack</span><span class="hljs-params">(<span class="hljs-keyword">int</span> target, vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; wt, vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; val)</span> </span>{
         <span class="hljs-comment">// Your code here</span>
         <span class="hljs-keyword">int</span> n=wt.<span class="hljs-built_in">size</span>();
         vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(target+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
         <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(target,wt,val,n<span class="hljs-number">-1</span>,dp);
-        
+
     }
+</div></code></pre>
+<hr>
+<h1 id="**-coin-change-problem**)" tabindex="-1"><a href="https://leetcode.com/problems/coin-change/">** Coin Change Problem**</a>)</h1>
+<h2 id="recursion%2Bmemoization-3" tabindex="-1">Recursion+Memoization</h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;coins,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;dp,<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> amt)</span></span>{
+        <span class="hljs-keyword">if</span>(amt==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(ind&lt; <span class="hljs-number">0</span> || amt&lt;<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1e9</span>;
+        <span class="hljs-keyword">if</span>(dp[ind][amt]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][amt];
+        <span class="hljs-keyword">int</span> notPick=<span class="hljs-built_in">recursion</span>(coins,dp,ind<span class="hljs-number">-1</span>,amt);
+        <span class="hljs-keyword">int</span> pick=<span class="hljs-number">1e9</span>;
+        <span class="hljs-keyword">if</span>(amt&gt;=coins[ind]) pick=<span class="hljs-number">1</span>+<span class="hljs-built_in">recursion</span>(coins,dp,ind,amt-coins[ind]);
+        <span class="hljs-keyword">return</span> dp[ind][amt]=<span class="hljs-built_in">min</span>(pick,notPick);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">coinChange</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; coins, <span class="hljs-keyword">int</span> amount)</span> </span>{
+        <span class="hljs-keyword">int</span> n=coins.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt; (amount+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">int</span> result=<span class="hljs-built_in">recursion</span>(coins,dp,n<span class="hljs-number">-1</span>,amount);
+        <span class="hljs-keyword">return</span> result==<span class="hljs-number">1e9</span>?<span class="hljs-number">-1</span>:result;
+    }
+};
+</div></code></pre>
+<h2 id="tabulation-10" tabindex="-1">Tabulation</h2>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">coinChange</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; coins, <span class="hljs-keyword">int</span> amount)</span> </span>{
+        <span class="hljs-keyword">int</span> n=coins.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt; (amount+<span class="hljs-number">1</span>,<span class="hljs-number">1e9</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) dp[i][<span class="hljs-number">0</span>]=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> amt=<span class="hljs-number">1</span>;amt&lt;=amount;amt++){
+                 <span class="hljs-keyword">int</span> notPick = (i &gt; <span class="hljs-number">0</span>) ? dp[i - <span class="hljs-number">1</span>][amt] : <span class="hljs-number">1e9</span>;
+                 <span class="hljs-keyword">int</span> pick=<span class="hljs-number">1e9</span>;
+                 <span class="hljs-keyword">if</span>(amt&gt;=coins[i]) pick=<span class="hljs-number">1</span>+dp[i][amt-coins[i]];
+                 dp[i][amt]=<span class="hljs-built_in">min</span>(pick,notPick);
+            }
+        }
+       <span class="hljs-keyword">int</span> result= dp[n<span class="hljs-number">-1</span>][amount];
+       <span class="hljs-keyword">return</span> result==<span class="hljs-number">1e9</span>?<span class="hljs-number">-1</span>:result;
+    }
+};
 </div></code></pre>
 <hr>
 <h2 id="longest-common-subsequence" tabindex="-1"><a href="https://leetcode.com/problems/longest-common-subsequence/"> Longest Common Subsequence</a></h2>

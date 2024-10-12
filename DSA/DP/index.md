@@ -1348,6 +1348,56 @@ int recursion(int target,vector<int> &wt,vector<int> &val,int ind,vector<vector<
 
 ---
 
+# [** Coin Change Problem**](https://leetcode.com/problems/coin-change/))
+
+## Recursion+Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(vector<int> &coins,vector<vector<int>>&dp,int ind,int amt){
+        if(amt==0) return 0;
+        if(ind< 0 || amt<0) return 1e9;
+        if(dp[ind][amt]!=-1) return dp[ind][amt];
+        int notPick=recursion(coins,dp,ind-1,amt);
+        int pick=1e9;
+        if(amt>=coins[ind]) pick=1+recursion(coins,dp,ind,amt-coins[ind]);
+        return dp[ind][amt]=min(pick,notPick);
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        int n=coins.size();
+        vector<vector<int>> dp(n,vector<int> (amount+1,-1));
+        int result=recursion(coins,dp,n-1,amount);
+        return result==1e9?-1:result;
+    }
+};
+```
+
+## Tabulation
+
+```cpp
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int n=coins.size();
+        vector<vector<int>> dp(n,vector<int> (amount+1,1e9));
+        for(int i=0;i<n;i++) dp[i][0]=0;
+        for(int i=0;i<n;i++){
+            for(int amt=1;amt<=amount;amt++){
+                 int notPick = (i > 0) ? dp[i - 1][amt] : 1e9;
+                 int pick=1e9;
+                 if(amt>=coins[i]) pick=1+dp[i][amt-coins[i]];
+                 dp[i][amt]=min(pick,notPick);
+            }
+        }
+       int result= dp[n-1][amount];
+       return result==1e9?-1:result;
+    }
+};
+```
+
+---
+
 ## [ Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)
 
 ---
