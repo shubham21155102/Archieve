@@ -477,298 +477,167 @@ blockquote {
 <p>0 &lt;= M &lt;= 10^18</p>
 <h2 id="code-template" tabindex="-1">Code Template</h2>
 <pre class='hljs'><code><div>
-importjava.util.Scanner;
-
-
-publicclassMain{
-
-
-staticintMinReq(intN,<span class="hljs-keyword">int</span>[]A,<span class="hljs-keyword">int</span>[]B,longM){
-
-<span class="hljs-keyword">long</span>[][] dp =newlong[N +<span class="hljs-number">1</span>][N +<span class="hljs-number">1</span>];<span class="hljs-comment">// DP array to store max sums</span>
-
-<span class="hljs-keyword">long</span>[] val =newlong[N];<span class="hljs-comment">// Array to store OR values</span>
-
-
-<span class="hljs-comment">// Calculate the OR values for each element in A with every element in B</span>
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j =<span class="hljs-number">0</span>; j &lt; N; j++){
-
-            val[j]=<span class="hljs-number">0</span>;<span class="hljs-comment">// Initialize val[j]</span>
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">0</span>; i &lt; N; i++){
-
-                val[j]+=(A[i]|B[j]);<span class="hljs-comment">// Calculate A[i] OR B[j]</span>
-
-}
-
-}
-
-
-<span class="hljs-comment">// Initialize DP table</span>
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">0</span>; i &lt;= N; i++){
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j =<span class="hljs-number">0</span>; j &lt;= N; j++){
-
-                dp[i][j]= Long.MIN_VALUE;<span class="hljs-comment">// Initialize with minimum value</span>
-
-}
-
-}
-
-
-        dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]=<span class="hljs-number">0</span>;<span class="hljs-comment">// Base case: using 0 elements gives a sum of 0</span>
-
-
-<span class="hljs-comment">// Fill the DP table</span>
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">1</span>; i &lt;= N; i++){
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j =<span class="hljs-number">1</span>; j &lt;= N; j++){
-
-                dp[i][j]= dp[i][j -<span class="hljs-number">1</span>];<span class="hljs-comment">// Not choosing current B[j]</span>
-
-<span class="hljs-comment">// Choose current B[j], ensure we do not pick adjacent elements</span>
-
-<span class="hljs-keyword">if</span>(j &gt;=<span class="hljs-number">2</span>){
-
-                    dp[i][j]= Math.max(dp[i][j], dp[i -<span class="hljs-number">1</span>][j -<span class="hljs-number">2</span>]+ val[j -<span class="hljs-number">1</span>]);<span class="hljs-comment">// Choosing B[j-1]</span>
-
-}
-
-}
-
-}
-
-
-<span class="hljs-comment">// Find the minimum K such that the sum is &gt;= M</span>
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k =<span class="hljs-number">1</span>; k &lt;= N; k++){
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j =<span class="hljs-number">0</span>; j &lt;= N; j++){
-
-<span class="hljs-keyword">if</span>(dp[k][j]&gt;= M){
-
-<span class="hljs-keyword">return</span> k;<span class="hljs-comment">// Minimum K found</span>
-
-}
-
-}
-
-}
-
-
-<span class="hljs-keyword">return</span>-<span class="hljs-number">1</span>;<span class="hljs-comment">// If not possible to reach M</span>
-
-}
-
-
-publicstaticvoidmain(String[]args){
-
-Scanner sc =newScanner(System.in);
-
-
-<span class="hljs-comment">// Read number of test cases</span>
-
-<span class="hljs-keyword">int</span> T = sc.nextInt();
-
-
-<span class="hljs-comment">// Loop through each test case</span>
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t =<span class="hljs-number">0</span>; t &lt; T; t++){
-
-<span class="hljs-comment">// Read the size of the arrays</span>
-
-<span class="hljs-keyword">int</span> N = sc.nextInt();
-
-
-<span class="hljs-comment">// Read array A</span>
-
-<span class="hljs-keyword">int</span>[] A =newint[N];
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">0</span>; i &lt; N; i++){
-
-A[i]= sc.nextInt();
-
-}
-
-
-<span class="hljs-comment">// Read array B</span>
-
-<span class="hljs-keyword">int</span>[] B =newint[N];
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">0</span>; i &lt; N; i++){
-
-B[i]= sc.nextInt();
-
-}
-
-
-<span class="hljs-comment">// Read the lower limit for the sum M</span>
-
-<span class="hljs-keyword">long</span> M = sc.nextLong();
-
-
-<span class="hljs-comment">// Call the MinReq function and print the result</span>
-
-<span class="hljs-keyword">int</span> result =MinReq(N, A, B, M);
-
+<span class="hljs-keyword">import</span> java.util.Scanner;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">MinReq</span><span class="hljs-params">(<span class="hljs-keyword">int</span> N, <span class="hljs-keyword">int</span>[] A, <span class="hljs-keyword">int</span>[] B, <span class="hljs-keyword">long</span> M)</span> </span>{
+        <span class="hljs-keyword">long</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[N + <span class="hljs-number">1</span>][N + <span class="hljs-number">1</span>]; <span class="hljs-comment">// DP array to store max sums</span>
+        <span class="hljs-keyword">long</span>[] val = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[N]; <span class="hljs-comment">// Array to store OR values</span>
+
+        <span class="hljs-comment">// Calculate the OR values for each element in A with every element in B</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; N; j++) {
+            val[j] = <span class="hljs-number">0</span>; <span class="hljs-comment">// Initialize val[j]</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+                val[j] += (A[i] | B[j]); <span class="hljs-comment">// Calculate A[i] OR B[j]</span>
+            }
+        }
+
+        <span class="hljs-comment">// Initialize DP table</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= N; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= N; j++) {
+                dp[i][j] = Long.MIN_VALUE; <span class="hljs-comment">// Initialize with minimum value</span>
+            }
+        }
+
+        dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">// Base case: using 0 elements gives a sum of 0</span>
+
+        <span class="hljs-comment">// Fill the DP table</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= N; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= N; j++) {
+                dp[i][j] = dp[i][j - <span class="hljs-number">1</span>]; <span class="hljs-comment">// Not choosing current B[j]</span>
+                <span class="hljs-comment">// Choose current B[j], ensure we do not pick adjacent elements</span>
+                <span class="hljs-keyword">if</span> (j &gt;= <span class="hljs-number">2</span>) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">2</span>] + val[j - <span class="hljs-number">1</span>]); <span class="hljs-comment">// Choosing B[j-1]</span>
+                }
+            }
+        }
+
+        <span class="hljs-comment">// Find the minimum K such that the sum is &gt;= M</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt;= N; k++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= N; j++) {
+                <span class="hljs-keyword">if</span> (dp[k][j] &gt;= M) {
+                    <span class="hljs-keyword">return</span> k; <span class="hljs-comment">// Minimum K found</span>
+                }
+            }
+        }
+
+        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>; <span class="hljs-comment">// If not possible to reach M</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        Scanner sc = <span class="hljs-keyword">new</span> Scanner(System.in);
+
+        <span class="hljs-comment">// Read number of test cases</span>
+        <span class="hljs-keyword">int</span> T = sc.nextInt();
+        
+        <span class="hljs-comment">// Loop through each test case</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>; t &lt; T; t++) {
+            <span class="hljs-comment">// Read the size of the arrays</span>
+            <span class="hljs-keyword">int</span> N = sc.nextInt();
+
+            <span class="hljs-comment">// Read array A</span>
+            <span class="hljs-keyword">int</span>[] A = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[N];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+                A[i] = sc.nextInt();
+            }
+
+            <span class="hljs-comment">// Read array B</span>
+            <span class="hljs-keyword">int</span>[] B = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[N];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+                B[i] = sc.nextInt();
+            }
+
+            <span class="hljs-comment">// Read the lower limit for the sum M</span>
+            <span class="hljs-keyword">long</span> M = sc.nextLong();
+
+            <span class="hljs-comment">// Call the MinReq function and print the result</span>
+            <span class="hljs-keyword">int</span> result = MinReq(N, A, B, M);
             System.out.println(result);
-
-}
-
+        }
 
         sc.close();
-
-}
-
-}staticintMinReq(<span class="hljs-keyword">int</span> N,<span class="hljs-keyword">int</span>[] A,<span class="hljs-keyword">int</span>[] B,Long M){
-
-<span class="hljs-comment">// Write your code here</span>
-
+    }
 }
 
 </div></code></pre>
 <pre class='hljs'><code><div>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
 
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
 
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
-
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;climits&gt;</span></span>
-
-
-usingnamespacestd;
-
-
-<span class="hljs-built_in">intMinReq</span>(intN,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;A,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;B,longlongM){
-
-vector&lt;vector&lt;longlong&gt;&gt;<span class="hljs-built_in">dp</span>(N +<span class="hljs-number">1</span>,vector&lt;longlong&gt;(N +<span class="hljs-number">1</span>, LLONG_MIN)); <span class="hljs-comment">// DP array to store max sums</span>
-
-vector&lt;longlong&gt;<span class="hljs-built_in">val</span>(N); <span class="hljs-comment">// Array to store OR values</span>
-
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">MinReq</span><span class="hljs-params">(<span class="hljs-keyword">int</span> N, vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; A, vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; B, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> M)</span> </span>{
+    vector&lt;vector&lt;<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>&gt;&gt; <span class="hljs-built_in">dp</span>(N + <span class="hljs-number">1</span>, vector&lt;<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>&gt;(N + <span class="hljs-number">1</span>, LLONG_MIN)); <span class="hljs-comment">// DP array to store max sums</span>
+    <span class="hljs-function">vector&lt;<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>&gt; <span class="hljs-title">val</span><span class="hljs-params">(N)</span></span>; <span class="hljs-comment">// Array to store OR values</span>
 
     <span class="hljs-comment">// Calculate the OR values for each element in A with every element in B</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; N; j++) {
+        val[j] = <span class="hljs-number">0</span>; <span class="hljs-comment">// Initialize val[j]</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+            val[j] += (A[i] | B[j]); <span class="hljs-comment">// Calculate A[i] OR B[j]</span>
+        }
+    }
 
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j =<span class="hljs-number">0</span>; j &lt; N; j++){
-
-val[j]=<span class="hljs-number">0</span>; <span class="hljs-comment">// Initialize val[j]</span>
-
-<span class="hljs-keyword">for</span>(inti=<span class="hljs-number">0</span>;i&lt;N;i++){
-
-val[j]+=(A[i]|B[j]); <span class="hljs-comment">// Calculate A[i] OR B[j]</span>
-
-}
-
-}
-
-
-    dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]=<span class="hljs-number">0</span>; <span class="hljs-comment">// Base case: using 0 elements gives a sum of 0</span>
-
+    dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">// Base case: using 0 elements gives a sum of 0</span>
 
     <span class="hljs-comment">// Fill the DP table</span>
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">1</span>; i &lt;= N; i++){
-
-<span class="hljs-keyword">for</span>(intj=<span class="hljs-number">1</span>;j&lt;=N;j++){
-
-dp[i][j]=dp[i][j<span class="hljs-number">-1</span>]; <span class="hljs-comment">// Not choosing current B[j-1]</span>
-
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= N; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= N; j++) {
+            dp[i][j] = dp[i][j - <span class="hljs-number">1</span>]; <span class="hljs-comment">// Not choosing current B[j-1]</span>
             <span class="hljs-comment">// Choose current B[j-1], ensure we do not pick adjacent elements</span>
-
-<span class="hljs-keyword">if</span>(j&gt;=<span class="hljs-number">2</span>){
-
-dp[i][j]=<span class="hljs-built_in">max</span>(dp[i][j],dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-2</span>]+val[j<span class="hljs-number">-1</span>]); <span class="hljs-comment">// Choosing B[j-1]</span>
-
-}
-
-}
-
-}
-
+            <span class="hljs-keyword">if</span> (j &gt;= <span class="hljs-number">2</span>) {
+                dp[i][j] = <span class="hljs-built_in">max</span>(dp[i][j], dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">2</span>] + val[j - <span class="hljs-number">1</span>]); <span class="hljs-comment">// Choosing B[j-1]</span>
+            }
+        }
+    }
 
     <span class="hljs-comment">// Find the minimum K such that the sum is &gt;= M</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt;= N; k++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= N; j++) {
+            <span class="hljs-keyword">if</span> (dp[k][j] &gt;= M) {
+                <span class="hljs-keyword">return</span> k; <span class="hljs-comment">// Minimum K found</span>
+            }
+        }
+    }
 
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k =<span class="hljs-number">1</span>; k &lt;= N; k++){
-
-<span class="hljs-keyword">for</span>(intj=<span class="hljs-number">1</span>;j&lt;=N;j++){
-
-<span class="hljs-keyword">if</span>(dp[k][j]&gt;=M){
-
-returnk; <span class="hljs-comment">// Minimum K found</span>
-
+    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>; <span class="hljs-comment">// If not possible to reach M</span>
 }
 
-}
-
-}
-
-
-<span class="hljs-keyword">return</span><span class="hljs-number">-1</span>; <span class="hljs-comment">// If not possible to reach M</span>
-
-}
-
-
-<span class="hljs-built_in">intmain</span>(){
-
-<span class="hljs-keyword">int</span> T;
-
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> T;
     cin &gt;&gt; T;
 
-
     <span class="hljs-comment">// Loop through each test case</span>
-
-<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> t =<span class="hljs-number">0</span>; t &lt; T; t++){
-
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>; t &lt; T; t++) {
         <span class="hljs-comment">// Read the size of the arrays</span>
-
-intN;
-
-cin&gt;&gt;N;
-
+        <span class="hljs-keyword">int</span> N;
+        cin &gt;&gt; N;
 
         <span class="hljs-comment">// Read array A</span>
-
-vector&lt;<span class="hljs-keyword">int</span>&gt;<span class="hljs-built_in">A</span>(N);
-
-<span class="hljs-keyword">for</span>(inti=<span class="hljs-number">0</span>;i&lt;N;i++){
-
-cin&gt;&gt;A[i];
-
-}
-
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">A</span><span class="hljs-params">(N)</span></span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+            cin &gt;&gt; A[i];
+        }
 
         <span class="hljs-comment">// Read array B</span>
-
-vector&lt;<span class="hljs-keyword">int</span>&gt;<span class="hljs-built_in">B</span>(N);
-
-<span class="hljs-keyword">for</span>(inti=<span class="hljs-number">0</span>;i&lt;N;i++){
-
-cin&gt;&gt;B[i];
-
-}
-
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">B</span><span class="hljs-params">(N)</span></span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+            cin &gt;&gt; B[i];
+        }
 
         <span class="hljs-comment">// Read the lower limit for the sum M</span>
-
-longlongM;
-
-cin&gt;&gt;M;
-
+        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> M;
+        cin &gt;&gt; M;
 
         <span class="hljs-comment">// Call the MinReq function and print the result</span>
+        <span class="hljs-keyword">int</span> result = <span class="hljs-built_in">MinReq</span>(N, A, B, M);
+        cout &lt;&lt; result &lt;&lt; endl;
+    }
 
-intresult=<span class="hljs-built_in">MinReq</span>(N,A,B,M);
-
-cout&lt;&lt;result&lt;&lt;endl;
-
-}
-
-
-return0;
-
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 
 </div></code></pre>
