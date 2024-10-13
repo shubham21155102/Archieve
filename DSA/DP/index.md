@@ -1395,6 +1395,34 @@ public:
     }
 };
 ```
+---
+# [**Target Sum**](https://leetcode.com/problems/target-sum/)
+
+```cpp
+class Solution {
+public:
+    int recursion(vector<vector<int>> &dp,vector<int> &nums,int ind,int target){
+          if(ind==0) {
+            if(target==0 && nums[0]==0) return 2;
+            if(target==nums[0] || target==0) return 1;
+            return 0;
+          }
+          if(dp[ind][target]!=-1) return dp[ind][target];
+          int pick=0;
+          int notPick=recursion(dp,nums,ind-1,target);
+          if(target>=nums[ind]) pick=recursion(dp,nums,ind-1,target-nums[ind]);
+          return dp[ind][target]=(pick+notPick);
+    }
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int sum=accumulate(begin(nums),end(nums),0);
+         if (sum < abs(target) || (sum + target) % 2 != 0) return 0;
+        int n=nums.size();
+        target=(sum+target)/2;
+        vector<vector<int>> dp(n,vector<int>(target+1,-1));
+        return recursion(dp,nums,n-1,target);
+    }
+};
+```
 
 ---
 
