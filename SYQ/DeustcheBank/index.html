@@ -445,18 +445,10 @@ blockquote {
 <h3 id="function-description" tabindex="-1">Function Description</h3>
 <p>Complete the <code>MinReq</code> function provided in the editor. This function takes the following 4 parameters and returns the required answer:</p>
 <ul>
-<li>
-<p><strong>N</strong>: Represents the size of the array.</p>
-</li>
-<li>
-<p><strong>A</strong>: Represents the first array.</p>
-</li>
-<li>
-<p><strong>B</strong>: Represents the second array from which we have to choose <code>K</code> elements.</p>
-</li>
-<li>
-<p><strong>M</strong>: Represents the lower limit of the sum.</p>
-</li>
+<li><strong>N</strong>: Represents the size of the array.</li>
+<li><strong>A</strong>: Represents the first array.</li>
+<li><strong>B</strong>: Represents the second array from which we have to choose <code>K</code> elements.</li>
+<li><strong>M</strong>: Represents the lower limit of the sum.</li>
 </ul>
 <h3 id="input-format" tabindex="-1">Input Format</h3>
 <p><strong>Note:</strong> This is the input format that you must use to provide custom input (available above the Compile and Test button).</p>
@@ -530,7 +522,7 @@ blockquote {
 
         <span class="hljs-comment">// Read number of test cases</span>
         <span class="hljs-keyword">int</span> T = sc.nextInt();
-        
+
         <span class="hljs-comment">// Loop through each test case</span>
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>; t &lt; T; t++) {
             <span class="hljs-comment">// Read the size of the arrays</span>
@@ -641,6 +633,93 @@ blockquote {
 }
 
 </div></code></pre>
+<h2 id="problem%3A-calculate-sum" tabindex="-1">Problem: Calculate Sum</h2>
+<h3 id="problem-description" tabindex="-1">Problem Description</h3>
+<p>A function <code>S(x)</code> is defined as the sum of all divisors of <code>x</code>. For example:</p>
+<ul>
+<li><code>S(4) = 1 + 2 + 4 = 7</code></li>
+<li><code>S(10) = 1 + 2 + 5 + 10 = 18</code></li>
+</ul>
+<p>Now, let us define a function <code>F(x)</code> as the sum of <code>S(y)</code> where <code>y</code> is a divisor of <code>x</code>, i.e., <code>y</code> divides <code>x</code>.</p>
+<p>You are given multiple tasks. In each task, you are provided two integers <code>L</code> and <code>R</code>. Your task is to calculate the sum of <code>F(x)</code> for all <code>x</code> from <code>L</code> to <code>R</code>, i.e., compute the sum <code>F(L) + F(L+1) + ... + F(R)</code>.</p>
+<h3 id="input-format-1" tabindex="-1">Input Format</h3>
+<ul>
+<li>The first line contains a single integer <code>Q</code> denoting the number of tasks.</li>
+<li>The next <code>Q</code> lines each contain two space-separated integers <code>L</code> and <code>R</code> representing the lower and upper bounds of a range.</li>
+</ul>
+<h3 id="output-format-1" tabindex="-1">Output Format</h3>
+<p>For each task, print a single integer in a new line representing the sum of <code>F(x)</code> for all <code>x</code> in the range <code>[L, R]</code>.</p>
+<h3 id="constraints-1" tabindex="-1">Constraints</h3>
+<ul>
+<li><code>1 ≤ Q ≤ 100,000</code></li>
+<li><code>1 ≤ L ≤ R ≤ 1,000,000</code></li>
+</ul>
+<h3 id="example-input" tabindex="-1">Example Input</h3>
+<ul>
+<li>1</li>
+<li>8 10</li>
+</ul>
+<h3 id="example-output" tabindex="-1">Example Output</h3>
+<ul>
+<li>72</li>
+</ul>
+<h3 id="explanation" tabindex="-1">Explanation</h3>
+<p>For the given example where <code>L = 8</code> and <code>R = 10</code>:</p>
+<ul>
+<li><code>F(8) = S(1) + S(2) + S(4) + S(8) = 1 + 3 + 7 + 15 = 26</code></li>
+<li><code>F(9) = S(1) + S(3) + S(9) = 1 + 4 + 13 = 18</code></li>
+<li><code>F(10) = S(1) + S(2) + S(5) + S(10) = 1 + 3 + 6 + 18 = 28</code></li>
+</ul>
+<p>Thus, <code>F(8) + F(9) + F(10) = 26 + 18 + 28 = 72</code>.</p>
+<h2 id="code-template-1" tabindex="-1">Code Template</h2>
+<pre class='hljs'><code><div>
+</div></code></pre>
+<pre class='hljs'><code><div>
+</div></code></pre>
+<h2 id="problem%3A-value-of-an-expression" tabindex="-1">Problem: Value of an Expression</h2>
+<h3 id="problem-description-1" tabindex="-1">Problem Description</h3>
+<p>Given a sequence of <code>n</code> integers <code>a1, a2, ..., an</code>, you are asked to perform the following operation and return the obtained result:</p>
+<p>For a given integer <code>x</code>, calculate the value of the expression <code>min(m₁, m₂, ..., mz-1)</code> where:</p>
+<ul>
+<li><code>fun(a_i, a_{i+1}, ..., a_z-1)</code> returns the value of the rightmost number with the highest number of distinct prime factors.</li>
+<li><code>m_i = fun(a_i, a_{i+1}, ..., a_z-1)</code></li>
+</ul>
+<p>In other words, you need to find the minimum of the values <code>m₁, m₂, ..., m_{z-1}</code>.</p>
+<h3 id="function-description-1" tabindex="-1">Function Description</h3>
+<p>Complete the <code>solve</code> function provided in the editor. The function takes the following 3 parameters and returns the answer:</p>
+<ul>
+<li><code>x</code>: Represents the given integer value.</li>
+<li><code>n</code>: Represents the size of the array <code>a</code>.</li>
+<li><code>a</code>: Represents the values in the array.</li>
+</ul>
+<h3 id="input-format-2" tabindex="-1">Input Format</h3>
+<p>The first line contains two integers <code>x</code> and <code>n</code>.</p>
+<p>The second line contains <code>n</code> space-separated integers representing the array <code>a</code>.</p>
+<h3 id="output-format-2" tabindex="-1">Output Format</h3>
+<p>Print an integer denoting the value of the expression.</p>
+<h3 id="constraints-2" tabindex="-1">Constraints</h3>
+<ul>
+<li><code>1 ≤ n ≤ 10</code></li>
+<li><code>0 ≤ a_i ≤ 10^6</code></li>
+</ul>
+<h3 id="example-input-1" tabindex="-1">Example Input</h3>
+<ul>
+<li>3 5</li>
+<li>2 4 6 10 15</li>
+</ul>
+<h3 id="example-output-1" tabindex="-1">Example Output</h3>
+<ul>
+<li>6</li>
+</ul>
+<h3 id="explanation-1" tabindex="-1">Explanation</h3>
+<ul>
+<li><code>m₁ = fun(a₁, a₂, a₃) = 6</code></li>
+<li><code>m₂ = fun(a₂, a₃, a₄) = 10</code></li>
+<li><code>m₃ = fun(a₃, a₄, a₅) = 10</code></li>
+</ul>
+<p>Thus, <code>min(m₁, m₂, m₃) = 6</code>.</p>
+<h3 id="notes" tabindex="-1">Notes</h3>
+<p>Your code must print the correct output for the provided sample input. However, it will be tested against hidden test cases, so make sure your solution is optimized and correct.</p>
 
     </div>
 </body>
