@@ -674,7 +674,71 @@ blockquote {
 <h2 id="code-template-1" tabindex="-1">Code Template</h2>
 <pre class='hljs'><code><div>
 </div></code></pre>
-<pre class='hljs'><code><div>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bitset&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cassert&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cctype&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;complex&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdlib&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ctime&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;deque&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;functional&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iomanip&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iterator&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;limits&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;list&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;map&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;numeric&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;set&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stack&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_map&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_set&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;utility&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fstream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sstream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">S</span><span class="hljs-params">(<span class="hljs-number">1000001</span>, <span class="hljs-number">0</span>)</span></span>;
+<span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">F</span><span class="hljs-params">(<span class="hljs-number">1000001</span>, <span class="hljs-number">0</span>)</span></span>;
+<span class="hljs-function">vector&lt;<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>&gt; <span class="hljs-title">prefix_sum</span><span class="hljs-params">(<span class="hljs-number">1000001</span>, <span class="hljs-number">0</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">1e6</span>; i++)
+    {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i; j &lt;= <span class="hljs-number">1e6</span>; j += i)
+        {
+            S[j] += i;
+        }
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">1e6</span>; i++)
+    {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i; j &lt;= <span class="hljs-number">1e6</span>; j += i)
+        {
+            F[j] += S[i];
+        }
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">1e6</span>; i++)
+    {
+        prefix_sum[i] = prefix_sum[i - <span class="hljs-number">1</span>] + F[i];
+    }
+    <span class="hljs-keyword">int</span> n;
+    cin &gt;&gt; n;
+
+    <span class="hljs-keyword">while</span> (n--)
+    {
+        <span class="hljs-keyword">int</span> a, b;
+        cin &gt;&gt; a &gt;&gt; b;
+        cout &lt;&lt; prefix_sum[b] - prefix_sum[a - <span class="hljs-number">1</span>] &lt;&lt; endl;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
 </div></code></pre>
 <h2 id="problem%3A-value-of-an-expression" tabindex="-1">Problem: Value of an Expression</h2>
 <h3 id="problem-description-1" tabindex="-1">Problem Description</h3>
@@ -926,16 +990,49 @@ blockquote {
 <h4 id="approach-1" tabindex="-1">Approach</h4>
 <p>We evaluate the possible operations for each index:</p>
 <ul>
-<li><strong>Choosing index 0</strong>: The sum up to index 0 is <code>0</code>. Dividing <code>0</code> by <code>Arr[0] = 1</code>, we get:
-- <code>0 / 1 = 0</code>. The sum after the operation is <code>0 + 4 + 5 + 5 + 10 = 24</code>.</li>
-<li><strong>Choosing index 2</strong>: The sum up to index 1 is <code>1 + 4 = 5</code>. Dividing <code>5</code> by <code>Arr[2] = 5</code>, we get:
-- <code>(1 + 4) / 5 + 5 + 10 = 16</code>.</li>
-<li><strong>Choosing index 3</strong>: The sum up to index 2 is <code>1 + 4 + 5 = 10</code>. Dividing <code>10</code> by <code>Arr[3] = 5</code>, we get:
-- <code>(1 + 4 + 5) / 5 + 10 = 12</code>.</li>
-<li><strong>Choosing index 4</strong>: The sum up to index 3 is <code>1 + 4 + 5 + 5 = 15</code>. Dividing <code>15</code> by <code>Arr[4] = 10</code>, we get:
-- <code>1 + 4 + 5 + 5 + 10 = 25</code>.
-Out of all possible places to apply the operation, the minimum possible result is <strong>12</strong>.</li>
+<li><strong>Choosing index 0</strong>: The sum up to index 0 is <code>0</code>. Dividing <code>0</code> by <code>Arr[0] = 1</code>, we get: - <code>0 / 1 = 0</code>. The sum after the operation is <code>0 + 4 + 5 + 5 + 10 = 24</code>.</li>
+<li><strong>Choosing index 2</strong>: The sum up to index 1 is <code>1 + 4 = 5</code>. Dividing <code>5</code> by <code>Arr[2] = 5</code>, we get: - <code>(1 + 4) / 5 + 5 + 10 = 16</code>.</li>
+<li><strong>Choosing index 3</strong>: The sum up to index 2 is <code>1 + 4 + 5 = 10</code>. Dividing <code>10</code> by <code>Arr[3] = 5</code>, we get: - <code>(1 + 4 + 5) / 5 + 10 = 12</code>.</li>
+<li><strong>Choosing index 4</strong>: The sum up to index 3 is <code>1 + 4 + 5 + 5 = 15</code>. Dividing <code>15</code> by <code>Arr[4] = 10</code>, we get: - <code>1 + 4 + 5 + 5 + 10 = 25</code>.
+Out of all possible places to apply the operation, the minimum possible result is <strong>12</strong>.
+Here’s the provided problem statement formatted in Markdown:</li>
 </ul>
+<p><strong>Description:</strong><br>
+Given an integer array <code>nums</code> of size <code>N</code> and an integer <code>K</code>, find the largest positive number less than or equal to (10^9) such that at least <code>K</code> numbers from the array <code>nums</code> are divisible by it.</p>
+<h3 id="function-signature" tabindex="-1">Function Signature</h3>
+<h3 id="input-format-5" tabindex="-1">Input Format</h3>
+<pre><code>-	The first line contains an integer `T`, representing the number of test cases.
+-	For each test case:
+-	The first line contains an integer `N`, denoting the size of array `nums`.
+-	The second line contains integer `K`.
+-	The third line contains `N` spaced integers of the array `nums`.
+</code></pre>
+<h3 id="output-format-6" tabindex="-1">Output Format</h3>
+<pre><code>-	For each test case, print the required answer on a new line.
+</code></pre>
+<h3 id="constraints-6" tabindex="-1">Constraints</h3>
+<pre class='hljs'><code><div>1&lt;= T &lt;= 1000
+1&lt;= N &lt;= 10^5
+1&lt;= K &lt;= N
+1&lt;= nums[i] &lt;= 10^6, where 1&lt;= i &lt;= N
+</div></code></pre>
+<h3 id="sample-input-1" tabindex="-1">Sample Input</h3>
+<pre class='hljs'><code><div>2
+5
+3
+12 16 32 2 45
+5
+3
+12 16 32 2 0
+</div></code></pre>
+<h3 id="sample-output-1" tabindex="-1">Sample Output</h3>
+<pre class='hljs'><code><div>4
+16
+</div></code></pre>
+<h3 id="explanation-5" tabindex="-1">Explanation</h3>
+<pre><code>-	In the first test case, the largest positive integer that divides at least 3 numbers in the array is 4.
+-	In the second test case, the largest positive integer that divides at least 3 numbers in the array is 16.
+</code></pre>
 
     </div>
 </body>
