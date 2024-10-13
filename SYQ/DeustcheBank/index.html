@@ -720,6 +720,67 @@ blockquote {
 <p>Thus, <code>min(m₁, m₂, m₃) = 6</code>.</p>
 <h3 id="notes" tabindex="-1">Notes</h3>
 <p>Your code must print the correct output for the provided sample input. However, it will be tested against hidden test cases, so make sure your solution is optimized and correct.</p>
+<h2 id="problem%3A-black-and-white-tree" tabindex="-1">Problem: Black and White Tree</h2>
+<h3 id="problem-description-2" tabindex="-1">Problem Description</h3>
+<p>Given a tree with <code>N</code> vertices labeled from 1 to <code>N</code>, rooted at vertex 1. The tree is an undirected graph with <code>N-1</code> edges. Each edge <code>i</code> connects two vertices <code>a_i</code> and <code>b_i</code>. Each vertex <code>i</code> is colored either white (represented by '0') or black (represented by '1').</p>
+<p>The beauty of a vertex <code>i</code> is defined as the number of paths in its subtree that have end vertices of the opposite color.</p>
+<p>You are required to find the beauty of all <code>N</code> vertices.</p>
+<h3 id="definitions" tabindex="-1">Definitions</h3>
+<ul>
+<li>A subtree of a vertex <code>i</code> is a connected subgraph consisting of all the descendants of <code>i</code>, including <code>i</code>.</li>
+</ul>
+<h3 id="function-description-2" tabindex="-1">Function Description</h3>
+<p>Complete the function <code>solve</code>. This function takes the following 3 parameters:</p>
+<ul>
+<li><code>N</code>: Represents the number of vertices in the tree.</li>
+<li><code>Color</code>: A string representing the color of the vertices (<code>'0'</code> for white and <code>'1'</code> for black).</li>
+<li><code>Edges</code>: A list of <code>N-1</code> pairs, each denoting an undirected edge connecting two vertices.</li>
+</ul>
+<p>The function should return the beauty for all <code>N</code> vertices as space-separated integers.</p>
+<h3 id="input-format-for-custom-testing" tabindex="-1">Input Format for Custom Testing</h3>
+<ol>
+<li>The first line contains a single integer <code>N</code>, denoting the number of vertices in the tree.</li>
+<li>The second line contains a string <code>Color</code> of size <code>N</code>, consisting of characters <code>'0'</code> (white) and <code>'1'</code> (black).</li>
+<li>The next <code>N-1</code> lines contain two integers <code>a_i</code> and <code>b_i</code>, denoting an undirected edge between the vertices numbered <code>a_i</code> and <code>b_i</code>.</li>
+</ol>
+<h3 id="output-format-3" tabindex="-1">Output Format</h3>
+<p>Print <code>N</code> space-separated integers, where each integer denotes the beauty of the corresponding vertex.</p>
+<h3 id="constraints-3" tabindex="-1">Constraints</h3>
+<ul>
+<li><code>1 ≤ N ≤ 10^5</code></li>
+<li><code>Color[i] ∈ {0, 1}</code> for all <code>i</code> in <code>[1, N]</code></li>
+<li><code>1 ≤ a_i, b_i ≤ N</code> for all <code>i</code> in <code>[1, N-1]</code></li>
+</ul>
+<h3 id="example-input-2" tabindex="-1">Example Input</h3>
+<pre class='hljs'><code><div>5
+01101
+1 2
+1 3
+3 4
+3 5
+</div></code></pre>
+<h3 id="example-output-2" tabindex="-1">Example Output</h3>
+<pre class='hljs'><code><div>4 0 3 0 0
+</div></code></pre>
+<h3 id="explanation-2" tabindex="-1">Explanation</h3>
+<p>For the given tree:</p>
+<ul>
+<li>For vertex 1, there are 4 simple paths (5-3-1, 5-3, 5-3-4, 5-3-4-1).</li>
+<li>For vertex 3, there are 3 simple paths (5-3, 5-3-4, 5-3-4-1).</li>
+<li>For vertices 2, 4, and 5, there are no paths with opposite-colored endpoints in their subtrees.</li>
+</ul>
+<p>Thus, the answer is <code>4 0 3 0 0</code>.</p>
+<h3 id="notes-1" tabindex="-1">Notes</h3>
+<ul>
+<li>Your code must be able to handle the sample output from the provided input. However, it will also be run against multiple hidden test cases.</li>
+<li>Ensure that your solution is optimized for performance to handle the constraints.</li>
+</ul>
+<h3 id="limits" tabindex="-1">Limits</h3>
+<ul>
+<li>Time Limit: 1.0 sec per input file</li>
+<li>Memory Limit: 256 MB</li>
+<li>Source Limit: 1024 KB</li>
+</ul>
 
     </div>
 </body>
