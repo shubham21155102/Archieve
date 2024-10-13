@@ -754,10 +754,10 @@ blockquote {
 <h3 id="example-input-2" tabindex="-1">Example Input</h3>
 <pre class='hljs'><code><div>5
 01101
-1 2
-1 3
-3 4
-3 5
+3 1
+4 3
+5 3
+2 4
 </div></code></pre>
 <h3 id="example-output-2" tabindex="-1">Example Output</h3>
 <pre class='hljs'><code><div>4 0 3 0 0
@@ -780,6 +780,161 @@ blockquote {
 <li>Time Limit: 1.0 sec per input file</li>
 <li>Memory Limit: 256 MB</li>
 <li>Source Limit: 1024 KB</li>
+</ul>
+<h2 id="problem%3A-the-maze-runner" tabindex="-1">Problem: The Maze Runner</h2>
+<h3 id="problem-description-3" tabindex="-1">Problem Description</h3>
+<p>You bought two virtual reality glasses. Each glasses has a unique feature:</p>
+<ol>
+<li>The first glasses allows you to pass through <strong>doors</strong>.</li>
+<li>The second glasses allows you to walk through <strong>walls</strong>.</li>
+</ol>
+<p>The maze is represented as a grid of size <code>N x M</code>. You start at the top-left corner of the grid and your goal is to reach the bottom-right corner. You can move vertically or horizontally, and each movement takes 1 minute.</p>
+<p>Some cells in the maze contain obstacles:</p>
+<ul>
+<li><code>'#'</code>: Represents a <strong>door</strong>, passable only with the first glasses.</li>
+<li><code>'+'</code>: Represents a <strong>wall</strong>, passable only with the second glasses.</li>
+<li><code>'.'</code>: Represents a clear passage, which can be traversed by both glasses.</li>
+</ul>
+<p>You need to determine how long it takes to reach the bottom-right corner of the maze using each pair of glasses. If it is impossible to reach the goal with either pair, return <code>-1</code> for that pair.</p>
+<h3 id="function-description-3" tabindex="-1">Function Description</h3>
+<p>Complete the function <code>solve</code>. This function takes the following 3 parameters and returns an array of length 2:</p>
+<ul>
+<li><code>N</code>: An integer representing the number of rows in the grid.</li>
+<li><code>M</code>: An integer representing the number of columns in the grid.</li>
+<li><code>maze</code>: A list of <code>N</code> strings representing the maze, where each character in <code>maze[i]</code> can be:
+<ul>
+<li><code>.</code> for a clear passage,</li>
+<li><code>#</code> for a door,</li>
+<li><code>+</code> for a wall.</li>
+</ul>
+</li>
+</ul>
+<p>The function should return an array with two integers:</p>
+<ul>
+<li>The first integer represents the minimum time required to reach the bottom-right corner using the first glasses.</li>
+<li>The second integer represents the minimum time required to reach the bottom-right corner using the second glasses.</li>
+</ul>
+<p>If it's impossible to reach the bottom-right corner using either glasses, return <code>-1</code> for that glasses.</p>
+<h3 id="input-format-3" tabindex="-1">Input Format</h3>
+<ul>
+<li>The first line contains two integers, <code>N</code> and <code>M</code>, denoting the number of rows and columns in the grid.</li>
+<li>The next <code>N</code> lines contain strings of length <code>M</code>, where each string represents a row of the maze.</li>
+</ul>
+<h3 id="output-format-4" tabindex="-1">Output Format</h3>
+<ul>
+<li>The first line contains the minimum time required to reach the bottom-right corner using the <strong>first glasses</strong>.</li>
+<li>The second line contains the minimum time required to reach the bottom-right corner using the <strong>second glasses</strong>.</li>
+</ul>
+<p>If reaching the bottom-right corner is not possible with either glasses, print <code>-1</code>.</p>
+<h3 id="constraints-4" tabindex="-1">Constraints</h3>
+<ul>
+<li><code>1 ≤ N, M ≤ 500</code></li>
+<li>The maze contains only the following characters:
+<ul>
+<li><code>.</code> for paths,</li>
+<li><code>#</code> for doors,</li>
+<li><code>+</code> for walls.</li>
+</ul>
+</li>
+<li>The top-left and bottom-right corners of the maze will not be obstacles.</li>
+</ul>
+<h3 id="example-input-3" tabindex="-1">Example Input</h3>
+<pre class='hljs'><code><div>5 5
+..#..
+.#.#.
+..#..
+#+.#.
+…..
+</div></code></pre>
+<h3 id="example-output-3" tabindex="-1">Example Output</h3>
+<pre class='hljs'><code><div>-1
+8
+</div></code></pre>
+<h3 id="explanation-3" tabindex="-1">Explanation</h3>
+<ul>
+<li>With the first glasses (pass through doors, but not walls), you can't find a path to the bottom-right corner. So, the answer for the first glasses is <code>-1</code>.</li>
+<li>With the second glasses (pass through walls, but not doors), you can reach the bottom-right corner in 8 minutes.</li>
+</ul>
+<h3 id="notes-2" tabindex="-1">Notes</h3>
+<ul>
+<li>Your code must be able to print the sample output from the provided sample input. However, it will also be tested against multiple hidden test cases.</li>
+<li>Ensure that your solution is optimized for performance to handle the constraints.</li>
+</ul>
+<h3 id="time-limit" tabindex="-1">Time Limit</h3>
+<ul>
+<li>Time Limit: 20 sec(s) per input file</li>
+</ul>
+<h2 id="problem%3A-find-the-minimum-sum-after-operations" tabindex="-1">Problem: Find the Minimum Sum After Operations</h2>
+<h3 id="problem-description-4" tabindex="-1">Problem Description</h3>
+<p>You are given an array of integers of size <code>N</code>. You need to find the minimum possible sum that can be formed by adding all the elements in the array after performing the following operation at most once:</p>
+<ol>
+<li><strong>Operation</strong>: Select an index <code>i</code>. If the sum of all the elements from index <code>0</code> to index <code>i-1</code> is divisible by the element at index <code>i</code>, divide the sum by the element at index <code>i</code>.</li>
+<li>After dividing, you do not have to add the element at index <code>i</code> to the resultant sum. Instead, you will add all other elements from index <code>i+1</code> to the end of the array.</li>
+</ol>
+<p><strong>Return the minimum possible sum</strong> that can be obtained after performing the operation once.</p>
+<h3 id="notes-3" tabindex="-1">Notes</h3>
+<ul>
+<li>If index <code>i</code> is chosen, the sum of elements from index <code>0</code> to <code>i-1</code> (denoted as <code>S</code>) must be divisible by the element at index <code>i</code>.</li>
+<li>After performing the division, do not include the element at index <code>i</code> in the final sum, but include all the elements after index <code>i</code>.</li>
+<li>You can choose to perform the operation at most once.</li>
+</ul>
+<h3 id="function-description-4" tabindex="-1">Function Description</h3>
+<p>Complete the function <code>solve</code>. This function takes the following 2 parameters and returns a 64-bit integer representing the minimum possible sum:</p>
+<ul>
+<li><code>N</code>: An integer representing the size of the array.</li>
+<li><code>Arr</code>: An array of size <code>N</code> containing integers.</li>
+</ul>
+<h3 id="input-format-4" tabindex="-1">Input Format</h3>
+<ul>
+<li>The first line contains the number of test cases <code>T</code>.</li>
+<li>For each test case:
+<ul>
+<li>The first line contains an integer <code>N</code>, the size of the array.</li>
+<li>The second line contains <code>N</code> integers, representing the elements of the array.</li>
+</ul>
+</li>
+</ul>
+<h3 id="output-format-5" tabindex="-1">Output Format</h3>
+<p>For each test case, output a single integer representing the minimum possible sum after performing the operation.</p>
+<h3 id="constraints-5" tabindex="-1">Constraints</h3>
+<ul>
+<li><code>1 ≤ T ≤ 500</code></li>
+<li><code>1 ≤ N ≤ 10</code></li>
+<li><code>1 ≤ Arr[i] ≤ 10</code></li>
+<li>The sum of <code>N</code> across all test cases will not exceed 10^5.</li>
+</ul>
+<h3 id="sample-input" tabindex="-1">Sample Input</h3>
+<pre class='hljs'><code><div>2
+5
+1 4 5 5 10
+3
+100 2 1
+</div></code></pre>
+<h3 id="sample-output" tabindex="-1">Sample Output</h3>
+<pre class='hljs'><code><div>12
+3
+</div></code></pre>
+<h3 id="explanation-4" tabindex="-1">Explanation</h3>
+<h4 id="input" tabindex="-1">Input</h4>
+<p>The first line contains <code>T</code>, denoting the number of test cases.</p>
+<p>For the first test case:</p>
+<p>Given:</p>
+<ul>
+<li><code>N = 5</code></li>
+<li><code>Arr = [1, 4, 5, 5, 10]</code></li>
+</ul>
+<h4 id="approach-1" tabindex="-1">Approach</h4>
+<p>We evaluate the possible operations for each index:</p>
+<ul>
+<li><strong>Choosing index 0</strong>: The sum up to index 0 is <code>0</code>. Dividing <code>0</code> by <code>Arr[0] = 1</code>, we get:
+- <code>0 / 1 = 0</code>. The sum after the operation is <code>0 + 4 + 5 + 5 + 10 = 24</code>.</li>
+<li><strong>Choosing index 2</strong>: The sum up to index 1 is <code>1 + 4 = 5</code>. Dividing <code>5</code> by <code>Arr[2] = 5</code>, we get:
+- <code>(1 + 4) / 5 + 5 + 10 = 16</code>.</li>
+<li><strong>Choosing index 3</strong>: The sum up to index 2 is <code>1 + 4 + 5 = 10</code>. Dividing <code>10</code> by <code>Arr[3] = 5</code>, we get:
+- <code>(1 + 4 + 5) / 5 + 10 = 12</code>.</li>
+<li><strong>Choosing index 4</strong>: The sum up to index 3 is <code>1 + 4 + 5 + 5 = 15</code>. Dividing <code>15</code> by <code>Arr[4] = 10</code>, we get:
+- <code>1 + 4 + 5 + 5 + 10 = 25</code>.
+Out of all possible places to apply the operation, the minimum possible result is <strong>12</strong>.</li>
 </ul>
 
     </div>
