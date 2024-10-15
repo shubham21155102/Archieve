@@ -420,7 +420,7 @@ blockquote {
 </head>
 <body>
     <div class="content-wrapper">
-        <h1 id="trie" tabindex="-1">Trie</h1>
+        <h1 id="trie-index" tabindex="-1">Trie Index</h1>
 <hr>
 <ol>
 <li><a href="#find-the-length-of-the-longest-common-prefix">Find the Length of the Longest Common Prefix</a></li>
@@ -553,7 +553,7 @@ Note that common prefixes between elements of the same array do not count.
             ans=<span class="hljs-built_in">max</span>(len,ans);
         }
         <span class="hljs-keyword">return</span> ans;
-  
+
     }
 };
 </div></code></pre>
@@ -674,7 +674,7 @@ Note that common prefixes between elements of the same array do not count.
 <ul>
 <li>For example, if <code>words = [&quot;a&quot;, &quot;ab&quot;, &quot;abc&quot;, &quot;cab&quot;]</code>, then the score of <code>&quot;ab&quot;</code> is <code>2</code>, since <code>&quot;ab&quot;</code> is a prefix of both <code>&quot;ab&quot;</code> and <code>&quot;abc&quot;</code>.</li>
 </ul>
-<p>Return *an array <em><code>answer</code></em> of size <em><code>n</code></em> where <em><code>answer[i]</code></em> is the <strong>sum</strong> of scores of every <strong>non-empty</strong> prefix of *<code>words[i]</code>.</p>
+<p>Return _an array <em><code>answer</code></em> of size <em><code>n</code></em> where <em><code>answer[i]</code></em> is the <strong>sum</strong> of scores of every <strong>non-empty</strong> prefix of _<code>words[i]</code>.</p>
 <p><strong>Note</strong> that a string is considered as a prefix of itself.</p>
 <p><strong>Example 1:</strong></p>
 <pre><strong>Input:</strong> words = ["abc","ab","bc","b"]
@@ -729,7 +729,7 @@ Each prefix has a score of one, so the total is answer[0] = 1 + 1 + 1 + 1 = 4.
                      node-&gt;children[c]=<span class="hljs-keyword">new</span> <span class="hljs-built_in">Trie</span>();
                 }
                 node=node-&gt;children[c];
-                node-&gt;count=node-&gt;count+<span class="hljs-number">1</span>;  
+                node-&gt;count=node-&gt;count+<span class="hljs-number">1</span>;
             }
         }
         vector&lt;<span class="hljs-keyword">int</span>&gt; ans;
