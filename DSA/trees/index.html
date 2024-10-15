@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .node {
+            fill: #6fa3ef;
+            stroke: black;
+            stroke-width: 1px;
+        }
+
+        text {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            fill: white;
+        }
+    </style>
+    <title>Tree with SVG</title>
+</head>
+<body>
+
+<h2>Tree Visualization with SVG</h2>
+
+<svg width="300" height="200">
+    <circle cx="150" cy="30" r="20" class="node"></circle>
+    <text x="140" y="35">Root</text>
+    <circle cx="100" cy="90" r="15" class="node"></circle>
+    <text x="90" y="95">C1</text>
+    <circle cx="200" cy="90" r="15" class="node"></circle>
+    <text x="190" y="95">C2</text>
+    <line x1="150" y1="50" x2="100" y2="75" stroke="black"></line>
+    <line x1="150" y1="50" x2="200" y2="75" stroke="black"></line>
+    <circle cx="80" cy="150" r="10" class="node"></circle>
+    <text x="75" y="155">GC1</text>
+    <circle cx="120" cy="150" r="10" class="node"></circle>
+    <text x="115" y="155">GC2</text>
+    <line x1="100" y1="105" x2="80" y2="140" stroke="black"></line>
+    <line x1="100" y1="105" x2="120" y2="140" stroke="black"></line>
+</svg>
+
+</body>
+</html>

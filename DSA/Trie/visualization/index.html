@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .node {
+            fill: #6fa3ef;
+            stroke: black;
+            stroke-width: 1px;
+        }
+
+        text {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            fill: white;
+        }
+
+        line {
+            stroke: black;
+            stroke-width: 2px;
+        }
+    </style>
+    <title>Trie Visualization</title>
+</head>
+<body>
+
+<h2>Trie Visualization with Delayed Insertion</h2>
+<svg id="trie-svg" width="1000" height="600">
+</svg>
+<input type="text" id="word" placeholder="Enter a word">
+<script>
+    class TrieNode {
+        constructor(value = "") {
+            this.children = new Map();
+            this.isEnd = false;
+            this.value = value; 
+        }
+    }
+
+    class Trie {
+        constructor() {
+            this.root = new TrieNode();
+        }
+        insert(word, callback) {
+            let node = this.root;
+            let x = 500; 
+            let y = 50;  
+            let offsetX = 100; 
+
+            const insertChar = (i, word, node, x, y, offsetX, svg, delay) => {
+                if (i >= word.length) {
+                    node.isEnd = true;
+                    if (callback) callback();
+                    return;
+                }
+
+                let c = word[i];
+                if (!node.children.has(c)) {
+                    node.children.set(c, new TrieNode(c));
+                    let childX = x - (offsetX * (node.children.size - 1)) / 2 + (i * offsetX);
+                    let childY = y + 80;
+                    setTimeout(() => {
+                        drawNode(svg, node.children.get(c), childX, childY);
+                        drawEdge(svg, x, y, childX, childY);
+                        insertChar(i + 1, word, node.children.get(c), childX, childY, offsetX / 2, svg, delay);
+                    }, delay * i);
+                } else {
+                    let childX = x - (offsetX * (node.children.size - 1)) / 2 + (i * offsetX);
+                    let childY = y + 80;
+                    insertChar(i + 1, word, node.children.get(c), childX, childY, offsetX / 2, svg, delay);
+                }
+            };
+
+            insertChar(0, word, node, x, y, offsetX, document.getElementById("trie-svg"), 500);
+        }
+    }
+    function drawNode(svg, node, x, y) {
+        const radius = 20;
+        svg.innerHTML += `
+            <circle cx="${x}" cy="${y}" r="${radius}" class="node"></circle>
+            <text x="${x - 10}" y="${y + 5}">${node.value}</text>
+        `;
+    }
+    function drawEdge(svg, x1, y1, x2, y2) {
+        svg.innerHTML += `
+            <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="black"></line>
+        `;
+    }
+    const newWord = document.getElementById("word");
+    let trie = new Trie();
+    newWord.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            trie.insert(newWord.value, () => {
+                newWord.value = "";
+            });
+        }
+        console.log(trie)
+    });
+   
+</script>
+
+</body>
+</html>
