@@ -464,6 +464,32 @@ Print an integer representing the maximum number of balls Bob can give to every 
 <li><code>2 ≤ N ≤ 10^5</code></li>
 <li><code>1 ≤ marks[i] ≤ 10^9</code></li>
 </ul>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+  <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-keyword">int</span> n;
+    cin&gt;&gt;n;
+    <span class="hljs-keyword">int</span> arr[n];
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) cin&gt;&gt;arr[i];
+    <span class="hljs-keyword">int</span> ans=INT_MAX;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;n;i++){
+      <span class="hljs-keyword">int</span> x=<span class="hljs-built_in">gcd</span>(arr[i],arr[i<span class="hljs-number">-1</span>]);
+      <span class="hljs-keyword">if</span>(x!=<span class="hljs-number">1</span>) ans=<span class="hljs-built_in">min</span>(ans,x);
+    }
+    <span class="hljs-keyword">if</span>(ans==INT_MAX) {
+      cout&lt;&lt;<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+    }
+    <span class="hljs-keyword">else</span> {
+      cout&lt;&lt;ans&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+  }
+</div></code></pre>
 <hr>
 <h3 id="question-2%3A-special-edge" tabindex="-1">Question 2: Special Edge</h3>
 <p><strong>Problem Statement</strong><br>
@@ -513,6 +539,140 @@ For each test case, print an integer in a new line, denoting the number of unord
 <li><code>1 ≤ u_i, v_i ≤ N</code></li>
 <li><code>u_i ≠ v_i</code></li>
 </ul>
+<pre class='hljs'><code><div>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+  <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Disjointset</span>{</span>
+   
+    <span class="hljs-keyword">public</span>:
+     vector&lt; <span class="hljs-keyword">int</span>&gt;size,rank,parent;
+    <span class="hljs-built_in">Disjointset</span>( <span class="hljs-keyword">int</span> n){
+      rank.<span class="hljs-built_in">resize</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
+       parent.<span class="hljs-built_in">resize</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
+        size.<span class="hljs-built_in">resize</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;=n;i++){
+          size[i]=<span class="hljs-number">1</span>;
+          parent[i]=i;
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">up</span><span class="hljs-params">( <span class="hljs-keyword">int</span> node)</span></span>{
+       <span class="hljs-keyword">if</span>(parent[node]==node){
+         <span class="hljs-keyword">return</span> node;
+       }
+       <span class="hljs-keyword">return</span> parent[node]= <span class="hljs-built_in">up</span>(parent[node]);
+    }
+    
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unionbyrank</span><span class="hljs-params">( <span class="hljs-keyword">int</span> u,  <span class="hljs-keyword">int</span> v)</span></span>{
+      <span class="hljs-keyword">int</span> uu= <span class="hljs-built_in">up</span>(u);
+       <span class="hljs-keyword">int</span> uv= <span class="hljs-built_in">up</span>(v);
+      <span class="hljs-keyword">if</span>(uv==uu){
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span>(rank[uv]&gt;rank[uu]){
+        parent[uu]=uv;
+      }
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(rank[uv]&lt;rank[uu]){
+        parent[uv]=uu;
+      }
+      <span class="hljs-keyword">else</span>{
+        parent[uv]=uu;
+        rank[uu]++;
+      }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unionbysize</span><span class="hljs-params">( <span class="hljs-keyword">int</span> u,  <span class="hljs-keyword">int</span> v)</span></span>{
+       <span class="hljs-keyword">int</span> uu= <span class="hljs-built_in">up</span>(u);
+       <span class="hljs-keyword">int</span> uv= <span class="hljs-built_in">up</span>(v);
+      <span class="hljs-keyword">if</span>(uv==uu){
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span>(size[uv]&gt;size[uu]){
+        parent[uu]=uv;
+        size[uv]+=size[uu];
+      }
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(size[uv]&lt;=size[uu]){
+        parent[uv]=uu;
+        size[uu]+=size[uv];
+      }
+     
+    }
+    
+};
+
+  <span class="hljs-keyword">int</span> t=<span class="hljs-number">1</span>;
+<span class="hljs-comment">//vector&lt;pair&lt;int,int&gt;&gt;ans;</span>
+set&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;st;
+ <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, <span class="hljs-keyword">int</span> parent,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;vis,vector&lt;<span class="hljs-keyword">int</span>&gt;adj[], 
+ vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;mint,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;timei)</span></span>{
+   vis[node]=<span class="hljs-number">1</span>;
+   mint[node]=t;
+   timei[node]=t;
+   t++;
+   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it:adj[node]){
+     <span class="hljs-keyword">if</span>(it==parent){
+       <span class="hljs-keyword">continue</span>;
+     }
+     <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(!vis[it]){
+       <span class="hljs-built_in">dfs</span>(it,node,vis,adj,mint,timei);
+       mint[node]=<span class="hljs-built_in">min</span>(mint[node],mint[it]);
+       <span class="hljs-keyword">if</span>(mint[it]&gt;timei[node]){
+         st.<span class="hljs-built_in">insert</span>({node,it});
+          <span class="hljs-comment">//st.insert({it,node});</span>
+        
+       }
+     }
+     <span class="hljs-keyword">else</span>{
+         mint[node]=<span class="hljs-built_in">min</span>(mint[node],mint[it]);
+     }
+   }
+   
+ }
+
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+   <span class="hljs-comment">//finding sepcial edges</span>
+   <span class="hljs-keyword">int</span> n,m;
+   cin&gt;&gt;n&gt;&gt;m;
+   vector&lt;<span class="hljs-keyword">int</span>&gt;adj[n+<span class="hljs-number">1</span>];
+   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;m; i++){
+     <span class="hljs-keyword">int</span> x,y;
+     cin&gt;&gt;x&gt;&gt;y;
+     adj[x].<span class="hljs-built_in">push_back</span>(y);
+     adj[y].<span class="hljs-built_in">push_back</span>(x);
+   }
+   vector&lt;<span class="hljs-keyword">int</span>&gt;<span class="hljs-built_in">vis</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
+   vector&lt;<span class="hljs-keyword">int</span>&gt;<span class="hljs-built_in">mint</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
+   vector&lt;<span class="hljs-keyword">int</span>&gt;<span class="hljs-built_in">timei</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
+   <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>,vis,adj,mint,timei);
+   
+   <span class="hljs-function">Disjointset <span class="hljs-title">ds</span><span class="hljs-params">(n+<span class="hljs-number">1</span>)</span></span>;
+   
+   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=n; i++){
+     <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it:adj[i]){
+       <span class="hljs-keyword">if</span>(st.<span class="hljs-built_in">find</span>({it,i})==st.<span class="hljs-built_in">end</span>() &amp;&amp; st.<span class="hljs-built_in">find</span>({i,it})==st.<span class="hljs-built_in">end</span>()){
+         ds.<span class="hljs-built_in">unionbysize</span>(it,i);
+       }
+       
+     }
+   }
+  <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> s= st.<span class="hljs-built_in">size</span>()/<span class="hljs-number">2</span>;
+   <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> ans=<span class="hljs-number">0</span>;
+   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it:st){
+     <span class="hljs-keyword">int</span> u=it.first;
+     <span class="hljs-keyword">int</span> v= it.second;
+     
+     <span class="hljs-keyword">int</span> x= ds.size[ds.<span class="hljs-built_in">up</span>(u)];
+     <span class="hljs-keyword">int</span> y= ds.size[ds.<span class="hljs-built_in">up</span>(v)];
+     ans+=(x*<span class="hljs-number">1ll</span>*y);
+   }
+   cout&lt;&lt;ans&lt;&lt;endl;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+  }
+</div></code></pre>
 
     </div>
 </body>
