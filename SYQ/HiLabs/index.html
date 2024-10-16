@@ -420,84 +420,99 @@ blockquote {
 </head>
 <body>
     <div class="content-wrapper">
-        <h2 id="company-index" tabindex="-1">Company Index</h2>
+        <h3 id="question-1%3A-maximum-balls" tabindex="-1">Question 1: Maximum Balls</h3>
+<p><strong>Problem Statement</strong><br>
+Bob is a maths teacher of a class of <code>N</code> students. The examination results are out, and the marks obtained by the students are stored in the array <code>marks</code>. Bob is happy with the performance and decides to gift every student in his class an equal number of balls.<br>
+As Bob loves mathematics, he decides to pick a number that is a factor of the marks of all <code>N</code> students in his class and decides to gift that number of balls to every student.</p>
+<p>However, Bob can change the marks of at most one student to any positive number of his choice so that he can distribute the maximum number of balls to the students.</p>
+<p><strong>Task</strong><br>
+Determine the maximum number of balls Bob can give to every student after changing the marks of at most one student to any positive number of his choice.</p>
+<p><strong>Example</strong></p>
+<ul>
+<li>
+<p><strong>Assumptions</strong>:</p>
+<ul>
+<li><code>N = 3</code></li>
+<li><code>Marks = [12, 3, 11]</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Approach</strong>:<br>
+The maximum possible number of balls each student can have is <code>3</code>.<br>
+Here, Bob can change the marks of the 3rd student to <code>39</code>, allowing every student to receive <code>3</code> balls.</p>
+</li>
+<li>
+<p><strong>Sample Output</strong>:<br>
+The output is <code>3</code>.</p>
+</li>
+</ul>
+<p><strong>Function Description</strong><br>
+Complete the <code>max_balls</code> function provided in the editor. This function takes the following two parameters and returns an integer that represents the answer to the task:</p>
+<ul>
+<li><code>N</code>: The number of students in the class.</li>
+<li><code>marks</code>: An array representing the marks of <code>N</code> students.</li>
+</ul>
+<p><strong>Input Format</strong></p>
 <ol>
-<li><a href="#deutsche-bank">Deutsche Bank</a></li>
-<li><a href="#26-miles-capital">26 Miles Capital</a></li>
-<li><a href="#hilabs">HiLabs</a></li>
+<li>The first line contains the function parameter <code>N</code>.</li>
+<li>The second line contains <code>N</code> space-separated integers denoting the values in the array <code>marks</code>.</li>
 </ol>
-<h2 id="deutsche-bank" tabindex="-1">Deutsche Bank</h2>
-<p><a href="#company-index">[back to top]</a></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:right">Occurence</th>
-<th style="text-align:left">Problem</th>
-<th style="text-align:left">Difficulty</th>
-<th style="text-align:left">Solution</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right">1</td>
-<td style="text-align:left"><a href="">Debugging - Minimum Required Value - Java</a></td>
-<td style="text-align:left">Medium</td>
-<td style="text-align:left"><a href="./DeustcheBank/">Solution</a></td>
-</tr>
-<tr>
-<td style="text-align:right"></td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-</tbody>
-</table>
-<h2 id="26-miles-capital" tabindex="-1">26 Miles Capital</h2>
-<p><a href="#company-index">[back to top]</a></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:right">Occurence</th>
-<th style="text-align:left">Problem</th>
-<th style="text-align:left">Difficulty</th>
-<th style="text-align:left">Solution</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right"></td>
-<td style="text-align:left"><a href="./26Miles/">All</a></td>
-<td style="text-align:left">Medium</td>
-<td style="text-align:left"><a href="./26Miles/">Solution</a></td>
-</tr>
-<tr>
-<td style="text-align:right"></td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-<td style="text-align:left"></td>
-</tr>
-</tbody>
-</table>
-<h2 id="hilabs" tabindex="-1">HiLabs</h2>
-<p><a href="#company-index">[back to top]</a></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:right">Occurence</th>
-<th style="text-align:left">Problem</th>
-<th style="text-align:left">Difficulty</th>
-<th style="text-align:left">Solution</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right"></td>
-<td style="text-align:left"><a href="./HiLabs/">All</a></td>
-<td style="text-align:left">Medium</td>
-<td style="text-align:left"><a href="./HiLabs/">Solution</a></td>
-</tr>
-</tbody>
-</table>
+<p><strong>Output Format</strong><br>
+Print an integer representing the maximum number of balls Bob can give to every student.</p>
+<p><strong>Constraints</strong></p>
+<ul>
+<li><code>2 ≤ N ≤ 10^5</code></li>
+<li><code>1 ≤ marks[i] ≤ 10^9</code></li>
+</ul>
+<hr>
+<h3 id="question-2%3A-special-edge" tabindex="-1">Question 2: Special Edge</h3>
+<p><strong>Problem Statement</strong><br>
+You are given a connected undirected graph having <code>N</code> nodes and <code>M</code> edges between the nodes. It is guaranteed that the input graph is connected and consists of no self-loops and no multiple edges between two vertices.<br>
+An edge is considered <em>special</em> if, when removed, the number of connected components in the graph increases.</p>
+<p><strong>Task</strong><br>
+Determine the number of unordered pairs of nodes <code>(u, v)</code> such that every simple path (path with no repeated edges) between node <code>u</code> and node <code>v</code> consists of exactly 1 special edge.</p>
+<p><strong>Example</strong></p>
+<ul>
+<li>
+<p><strong>Assumptions</strong>:</p>
+<ul>
+<li><code>N = 4</code>, <code>M = 4</code></li>
+<li><code>Edges = [(1, 2), (2, 3), (3, 4), (2, 4)]</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Approach</strong>:<br>
+In this graph, the paths between nodes <code>(1, 2)</code>, <code>(1, 3)</code>, and <code>(1, 4)</code> consist of exactly one special edge, which is the edge <code>[1, 2]</code>.<br>
+Hence, the answer is <code>3</code>.</p>
+</li>
+</ul>
+<p><strong>Function Description</strong><br>
+Complete the function <code>special_sol</code> provided in the editor. This function takes the following parameters and returns the required answer:</p>
+<ul>
+<li><code>N</code>: The number of nodes in the graph.</li>
+<li><code>M</code>: The number of edges in the graph.</li>
+<li><code>Edg</code>: A list of edges between two nodes in the graph.</li>
+</ul>
+<p><strong>Input Format</strong></p>
+<ol>
+<li>The first line contains an integer <code>T</code>, denoting the number of test cases.</li>
+<li>For each test case:
+<ul>
+<li>The first line contains an integer <code>N</code>, representing the number of nodes in the graph.</li>
+<li>The second line contains an integer <code>M</code>, representing the number of edges in the graph.</li>
+<li>The next <code>M</code> lines contain integers <code>ui</code> and <code>vi</code>, denoting an edge between vertex <code>ui</code> and vertex <code>vi</code>.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Output Format</strong><br>
+For each test case, print an integer in a new line, denoting the number of unordered pairs <code>(u, v)</code> such that there is exactly 1 special edge in every simple path between them.</p>
+<p><strong>Constraints</strong></p>
+<ul>
+<li><code>1 ≤ T ≤ 10</code></li>
+<li><code>1 ≤ N, M ≤ 2 x 10^5</code></li>
+<li><code>1 ≤ u_i, v_i ≤ N</code></li>
+<li><code>u_i ≠ v_i</code></li>
+</ul>
 
     </div>
 </body>
