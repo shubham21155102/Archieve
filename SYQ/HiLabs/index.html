@@ -421,11 +421,11 @@ blockquote {
 <body>
     <div class="content-wrapper">
         <h3 id="question-1%3A-maximum-balls" tabindex="-1">Question 1: Maximum Balls</h3>
-<p><strong>Problem Statement</strong><br>
-Bob is a maths teacher of a class of <code>N</code> students. The examination results are out, and the marks obtained by the students are stored in the array <code>marks</code>. Bob is happy with the performance and decides to gift every student in his class an equal number of balls.<br>
+<p><strong>Problem Statement</strong>
+Bob is a maths teacher of a class of <code>N</code> students. The examination results are out, and the marks obtained by the students are stored in the array <code>marks</code>. Bob is happy with the performance and decides to gift every student in his class an equal number of balls.
 As Bob loves mathematics, he decides to pick a number that is a factor of the marks of all <code>N</code> students in his class and decides to gift that number of balls to every student.</p>
 <p>However, Bob can change the marks of at most one student to any positive number of his choice so that he can distribute the maximum number of balls to the students.</p>
-<p><strong>Task</strong><br>
+<p><strong>Task</strong>
 Determine the maximum number of balls Bob can give to every student after changing the marks of at most one student to any positive number of his choice.</p>
 <p><strong>Example</strong></p>
 <ul>
@@ -437,17 +437,14 @@ Determine the maximum number of balls Bob can give to every student after changi
 </ul>
 </li>
 <li>
-<p><strong>Approach</strong>:<br>
-The maximum possible number of balls each student can have is <code>3</code>.<br>
-Here, Bob can change the marks of the 3rd student to <code>39</code>, allowing every student to receive <code>3</code> balls.</p>
+<p><strong>Approach</strong>:The maximum possible number of balls each student can have is <code>3</code>.Here, Bob can change the marks of the 3rd student to <code>39</code>, allowing every student to receive <code>3</code> balls.</p>
 </li>
 <li>
-<p><strong>Sample Output</strong>:<br>
+<p><strong>Sample Output</strong>:
 The output is <code>3</code>.</p>
 </li>
 </ul>
-<p><strong>Function Description</strong><br>
-Complete the <code>max_balls</code> function provided in the editor. This function takes the following two parameters and returns an integer that represents the answer to the task:</p>
+<p><strong>Function Description</strong>Complete the <code>max_balls</code> function provided in the editor. This function takes the following two parameters and returns an integer that represents the answer to the task:</p>
 <ul>
 <li><code>N</code>: The number of students in the class.</li>
 <li><code>marks</code>: An array representing the marks of <code>N</code> students.</li>
@@ -457,7 +454,7 @@ Complete the <code>max_balls</code> function provided in the editor. This functi
 <li>The first line contains the function parameter <code>N</code>.</li>
 <li>The second line contains <code>N</code> space-separated integers denoting the values in the array <code>marks</code>.</li>
 </ol>
-<p><strong>Output Format</strong><br>
+<p><strong>Output Format</strong>
 Print an integer representing the maximum number of balls Bob can give to every student.</p>
 <p><strong>Constraints</strong></p>
 <ul>
@@ -492,10 +489,10 @@ Print an integer representing the maximum number of balls Bob can give to every 
 </div></code></pre>
 <hr>
 <h3 id="question-2%3A-special-edge" tabindex="-1">Question 2: Special Edge</h3>
-<p><strong>Problem Statement</strong><br>
-You are given a connected undirected graph having <code>N</code> nodes and <code>M</code> edges between the nodes. It is guaranteed that the input graph is connected and consists of no self-loops and no multiple edges between two vertices.<br>
+<p><strong>Problem Statement</strong>
+You are given a connected undirected graph having <code>N</code> nodes and <code>M</code> edges between the nodes. It is guaranteed that the input graph is connected and consists of no self-loops and no multiple edges between two vertices.
 An edge is considered <em>special</em> if, when removed, the number of connected components in the graph increases.</p>
-<p><strong>Task</strong><br>
+<p><strong>Task</strong>
 Determine the number of unordered pairs of nodes <code>(u, v)</code> such that every simple path (path with no repeated edges) between node <code>u</code> and node <code>v</code> consists of exactly 1 special edge.</p>
 <p><strong>Example</strong></p>
 <ul>
@@ -507,13 +504,12 @@ Determine the number of unordered pairs of nodes <code>(u, v)</code> such that e
 </ul>
 </li>
 <li>
-<p><strong>Approach</strong>:<br>
-In this graph, the paths between nodes <code>(1, 2)</code>, <code>(1, 3)</code>, and <code>(1, 4)</code> consist of exactly one special edge, which is the edge <code>[1, 2]</code>.<br>
+<p><strong>Approach</strong>:
+In this graph, the paths between nodes <code>(1, 2)</code>, <code>(1, 3)</code>, and <code>(1, 4)</code> consist of exactly one special edge, which is the edge <code>[1, 2]</code>.
 Hence, the answer is <code>3</code>.</p>
 </li>
 </ul>
-<p><strong>Function Description</strong><br>
-Complete the function <code>special_sol</code> provided in the editor. This function takes the following parameters and returns the required answer:</p>
+<p><strong>Function Description</strong>Complete the function <code>special_sol</code> provided in the editor. This function takes the following parameters and returns the required answer:</p>
 <ul>
 <li><code>N</code>: The number of nodes in the graph.</li>
 <li><code>M</code>: The number of edges in the graph.</li>
@@ -530,7 +526,7 @@ Complete the function <code>special_sol</code> provided in the editor. This func
 </ul>
 </li>
 </ol>
-<p><strong>Output Format</strong><br>
+<p><strong>Output Format</strong>
 For each test case, print an integer in a new line, denoting the number of unordered pairs <code>(u, v)</code> such that there is exactly 1 special edge in every simple path between them.</p>
 <p><strong>Constraints</strong></p>
 <ul>
@@ -539,139 +535,153 @@ For each test case, print an integer in a new line, denoting the number of unord
 <li><code>1 ≤ u_i, v_i ≤ N</code></li>
 <li><code>u_i ≠ v_i</code></li>
 </ul>
-<pre class='hljs'><code><div>
-
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
-  <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-
-
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Disjointset</span>{</span>
-   
-    <span class="hljs-keyword">public</span>:
-     vector&lt; <span class="hljs-keyword">int</span>&gt;size,rank,parent;
-    <span class="hljs-built_in">Disjointset</span>( <span class="hljs-keyword">int</span> n){
-      rank.<span class="hljs-built_in">resize</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
-       parent.<span class="hljs-built_in">resize</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
-        size.<span class="hljs-built_in">resize</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">1</span>);
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;=n;i++){
-          size[i]=<span class="hljs-number">1</span>;
-          parent[i]=i;
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DSU</span>
+{</span>
+<span class="hljs-keyword">public</span>:
+    vector&lt;<span class="hljs-keyword">int</span>&gt; parent, rank, size;
+    <span class="hljs-built_in">DSU</span>(<span class="hljs-keyword">int</span> n)
+    {
+        parent.<span class="hljs-built_in">resize</span>(n);
+        rank.<span class="hljs-built_in">resize</span>(n);
+        size.<span class="hljs-built_in">resize</span>(n);
+        <span class="hljs-comment">// try{</span>
+        <span class="hljs-comment">//     iota(parent.begin(), parent.end(), 0);</span>
+        <span class="hljs-comment">// }catch(exception e){</span>
+        <span class="hljs-comment">//     cout&lt;&lt;e.what();</span>
+        <span class="hljs-comment">// }</span>
+        <span class="hljs-built_in">iota</span>(parent.<span class="hljs-built_in">begin</span>(), parent.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(size.<span class="hljs-built_in">begin</span>(), size.<span class="hljs-built_in">end</span>(), <span class="hljs-number">1</span>);
+        <span class="hljs-built_in">fill</span>(rank.<span class="hljs-built_in">begin</span>(), rank.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findParent</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node)</span>
+    </span>{
+        <span class="hljs-keyword">if</span> (parent[node] == node)
+        {
+            <span class="hljs-keyword">return</span> node;
+        }
+        <span class="hljs-keyword">return</span> parent[node] = <span class="hljs-built_in">findParent</span>(parent[node]);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unionByRank</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span>
+    </span>{
+        <span class="hljs-keyword">int</span> pu = <span class="hljs-built_in">findParent</span>(u);
+        <span class="hljs-keyword">int</span> pv = <span class="hljs-built_in">findParent</span>(v);
+        <span class="hljs-keyword">if</span> (pu == pv)
+            <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">if</span> (rank[pu] &lt; rank[pv])
+        {
+            parent[pu] = pv;
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rank[pu] &gt; rank[pv])
+        {
+            parent[pv] = pu;
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            parent[pu] = pv;
+            rank[pv]++;
         }
     }
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">up</span><span class="hljs-params">( <span class="hljs-keyword">int</span> node)</span></span>{
-       <span class="hljs-keyword">if</span>(parent[node]==node){
-         <span class="hljs-keyword">return</span> node;
-       }
-       <span class="hljs-keyword">return</span> parent[node]= <span class="hljs-built_in">up</span>(parent[node]);
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unionBySize</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span>
+    </span>{
+        <span class="hljs-keyword">int</span> pu = <span class="hljs-built_in">findParent</span>(u);
+        <span class="hljs-keyword">int</span> pv = <span class="hljs-built_in">findParent</span>(v);
+        <span class="hljs-keyword">if</span> (pu == pv)
+            <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">if</span> (size[pu] &lt; size[pv])
+        {
+            parent[pu] = pv;
+            size[pv] += size[pu];
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            parent[pv] = pu;
+            size[pu] += size[pv];
+        }
     }
-    
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unionbyrank</span><span class="hljs-params">( <span class="hljs-keyword">int</span> u,  <span class="hljs-keyword">int</span> v)</span></span>{
-      <span class="hljs-keyword">int</span> uu= <span class="hljs-built_in">up</span>(u);
-       <span class="hljs-keyword">int</span> uv= <span class="hljs-built_in">up</span>(v);
-      <span class="hljs-keyword">if</span>(uv==uu){
-        <span class="hljs-keyword">return</span>;
-      }
-      <span class="hljs-keyword">if</span>(rank[uv]&gt;rank[uu]){
-        parent[uu]=uv;
-      }
-      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(rank[uv]&lt;rank[uu]){
-        parent[uv]=uu;
-      }
-      <span class="hljs-keyword">else</span>{
-        parent[uv]=uu;
-        rank[uu]++;
-      }
-    }
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unionbysize</span><span class="hljs-params">( <span class="hljs-keyword">int</span> u,  <span class="hljs-keyword">int</span> v)</span></span>{
-       <span class="hljs-keyword">int</span> uu= <span class="hljs-built_in">up</span>(u);
-       <span class="hljs-keyword">int</span> uv= <span class="hljs-built_in">up</span>(v);
-      <span class="hljs-keyword">if</span>(uv==uu){
-        <span class="hljs-keyword">return</span>;
-      }
-      <span class="hljs-keyword">if</span>(size[uv]&gt;size[uu]){
-        parent[uu]=uv;
-        size[uv]+=size[uu];
-      }
-      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(size[uv]&lt;=size[uu]){
-        parent[uv]=uu;
-        size[uu]+=size[uv];
-      }
-     
-    }
-    
 };
+<span class="hljs-keyword">int</span> timer = <span class="hljs-number">1</span>;
 
-  <span class="hljs-keyword">int</span> t=<span class="hljs-number">1</span>;
-<span class="hljs-comment">//vector&lt;pair&lt;int,int&gt;&gt;ans;</span>
-set&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;st;
- <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, <span class="hljs-keyword">int</span> parent,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;vis,vector&lt;<span class="hljs-keyword">int</span>&gt;adj[], 
- vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;mint,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;timei)</span></span>{
-   vis[node]=<span class="hljs-number">1</span>;
-   mint[node]=t;
-   timei[node]=t;
-   t++;
-   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it:adj[node]){
-     <span class="hljs-keyword">if</span>(it==parent){
-       <span class="hljs-keyword">continue</span>;
-     }
-     <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(!vis[it]){
-       <span class="hljs-built_in">dfs</span>(it,node,vis,adj,mint,timei);
-       mint[node]=<span class="hljs-built_in">min</span>(mint[node],mint[it]);
-       <span class="hljs-keyword">if</span>(mint[it]&gt;timei[node]){
-         st.<span class="hljs-built_in">insert</span>({node,it});
-          <span class="hljs-comment">//st.insert({it,node});</span>
-        
-       }
-     }
-     <span class="hljs-keyword">else</span>{
-         mint[node]=<span class="hljs-built_in">min</span>(mint[node],mint[it]);
-     }
-   }
-   
- }
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, <span class="hljs-keyword">int</span> parent, vector&lt;<span class="hljs-keyword">int</span>&gt; adj[], <span class="hljs-keyword">int</span> low[], <span class="hljs-keyword">int</span> tin[], vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;vis, vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;bridges)</span>
+</span>{
+    vis[node] = <span class="hljs-number">1</span>;
+    tin[node] = low[node] = timer;
+    timer++;
 
-  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it : adj[node])
+    {
+        <span class="hljs-keyword">if</span> (it == parent)
+            <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">if</span> (vis[it] == <span class="hljs-number">0</span>)
+        {
+            <span class="hljs-built_in">dfs</span>(it, node, adj, low, tin, vis, bridges);
+            <span class="hljs-comment">// done the dfs and came back to node or parent</span>
+            low[node] = <span class="hljs-built_in">min</span>(low[node], low[it]);
+            <span class="hljs-comment">// if the low of the child is greater than the tin of the parent then it is a bridge</span>
+            <span class="hljs-keyword">if</span> (low[it] &gt; tin[node])
+            {
+                bridges.<span class="hljs-built_in">push_back</span>({node, it});
+            }
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            low[node] = <span class="hljs-built_in">min</span>(low[node], tin[it]);
+        }
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> n, m;
+    cin &gt;&gt; n &gt;&gt; m;
+    vector&lt;<span class="hljs-keyword">int</span>&gt; adj[n];
+    <span class="hljs-keyword">while</span> (m--)
+    {
+        <span class="hljs-keyword">int</span> x, y;
+        cin &gt;&gt; x &gt;&gt; y;
+        <span class="hljs-comment">// cout&lt;&lt;x&lt;&lt;&quot; &quot;&lt;&lt;y&lt;&lt;&quot;\n&quot;;</span>
+        adj[x - <span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(y - <span class="hljs-number">1</span>);
+        adj[y - <span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(x - <span class="hljs-number">1</span>);
+    }
 
-   <span class="hljs-comment">//finding sepcial edges</span>
-   <span class="hljs-keyword">int</span> n,m;
-   cin&gt;&gt;n&gt;&gt;m;
-   vector&lt;<span class="hljs-keyword">int</span>&gt;adj[n+<span class="hljs-number">1</span>];
-   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;m; i++){
-     <span class="hljs-keyword">int</span> x,y;
-     cin&gt;&gt;x&gt;&gt;y;
-     adj[x].<span class="hljs-built_in">push_back</span>(y);
-     adj[y].<span class="hljs-built_in">push_back</span>(x);
-   }
-   vector&lt;<span class="hljs-keyword">int</span>&gt;<span class="hljs-built_in">vis</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
-   vector&lt;<span class="hljs-keyword">int</span>&gt;<span class="hljs-built_in">mint</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
-   vector&lt;<span class="hljs-keyword">int</span>&gt;<span class="hljs-built_in">timei</span>(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);
-   <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>,vis,adj,mint,timei);
-   
-   <span class="hljs-function">Disjointset <span class="hljs-title">ds</span><span class="hljs-params">(n+<span class="hljs-number">1</span>)</span></span>;
-   
-   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=n; i++){
-     <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it:adj[i]){
-       <span class="hljs-keyword">if</span>(st.<span class="hljs-built_in">find</span>({it,i})==st.<span class="hljs-built_in">end</span>() &amp;&amp; st.<span class="hljs-built_in">find</span>({i,it})==st.<span class="hljs-built_in">end</span>()){
-         ds.<span class="hljs-built_in">unionbysize</span>(it,i);
-       }
-       
-     }
-   }
-  <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> s= st.<span class="hljs-built_in">size</span>()/<span class="hljs-number">2</span>;
-   <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> ans=<span class="hljs-number">0</span>;
-   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it:st){
-     <span class="hljs-keyword">int</span> u=it.first;
-     <span class="hljs-keyword">int</span> v= it.second;
-     
-     <span class="hljs-keyword">int</span> x= ds.size[ds.<span class="hljs-built_in">up</span>(u)];
-     <span class="hljs-keyword">int</span> y= ds.size[ds.<span class="hljs-built_in">up</span>(v)];
-     ans+=(x*<span class="hljs-number">1ll</span>*y);
-   }
-   cout&lt;&lt;ans&lt;&lt;endl;
+    <span class="hljs-keyword">int</span> low[n];
+    <span class="hljs-keyword">int</span> tin[n];
+    <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">vis</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; bridges;
+    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>, adj, low, tin, vis, bridges);
+    <span class="hljs-comment">// for (int i = 0; i &lt; bridges.size(); i++)</span>
+    <span class="hljs-comment">// {</span>
+    <span class="hljs-comment">//     cout &lt;&lt; bridges[i][0] &lt;&lt; &quot; &quot; &lt;&lt; bridges[i][1] &lt;&lt; &quot;\n&quot;;</span>
+    <span class="hljs-comment">// }</span>
+    <span class="hljs-function">DSU <span class="hljs-title">dsu</span><span class="hljs-params">(n)</span></span>;
+    set&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt; st;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; bridges.<span class="hljs-built_in">size</span>(); i++)
+    {
+        st.<span class="hljs-built_in">insert</span>({bridges[i][<span class="hljs-number">0</span>], bridges[i][<span class="hljs-number">1</span>]});
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it : adj[i])
+        {
+            <span class="hljs-keyword">if</span> (st.<span class="hljs-built_in">find</span>({i, it}) == st.<span class="hljs-built_in">end</span>() &amp;&amp; st.<span class="hljs-built_in">find</span>({it, i}) == st.<span class="hljs-built_in">end</span>())
+            {
+                dsu.<span class="hljs-built_in">unionBySize</span>(i, it);
+            }
+        }
+    }
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it : st)
+    {
+        <span class="hljs-keyword">int</span> u = it.first;
+        <span class="hljs-keyword">int</span> v = it.second;
+        <span class="hljs-keyword">int</span> x = dsu.size[dsu.<span class="hljs-built_in">findParent</span>(u)];
+        <span class="hljs-keyword">int</span> y = dsu.size[dsu.<span class="hljs-built_in">findParent</span>(v)];
+        ans += x * <span class="hljs-number">1LL</span> * y;
+    }
+    cout &lt;&lt; ans &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
 
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-
-  }
+}
 </div></code></pre>
 
     </div>
