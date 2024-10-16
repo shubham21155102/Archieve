@@ -718,6 +718,65 @@ For (i = 1) and (j = 2), (\text{LCM}(2, 1000000) \leq 10^6). Therefore, there is
 <p>For (i = 2) and (j = 3), (\text{LCM}(1000000, 999999) &gt; 10^6). No edge exists between 2 and 3.</p>
 <p>For (i = 1) and (j = 3), (\text{LCM}(2, 999999) &gt; 10^6). No edge exists between 1 and 3.</p>
 <p>The components are ([1, 2]) and ([3]). Hence, the answer is 2.</p>
+<pre class='hljs'><code><div><span class="hljs-meta">#may be tle</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PI 3.141592653589793238462</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> set_bits __builtin_popcount</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> mod = (<span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = (<span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>);
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, vector&lt;<span class="hljs-keyword">int</span>&gt; adj[], vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;vis)</span>
+</span>{
+    vis[node] = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it : adj[node])
+    {
+        <span class="hljs-keyword">if</span> (vis[it] == <span class="hljs-number">0</span>)
+        {
+            <span class="hljs-built_in">dfs</span>(it, adj, vis);
+        }
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> n;
+    cin &gt;&gt; n;
+    <span class="hljs-keyword">int</span> arr[n];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        cin &gt;&gt; arr[i];
+    }
+    vector&lt;<span class="hljs-keyword">int</span>&gt; adj[n];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)
+        {
+            <span class="hljs-keyword">if</span> (i != j)
+            {
+                <span class="hljs-keyword">int</span> hcf = <span class="hljs-built_in">gcd</span>(arr[i], arr[j]);
+                <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> pdt = arr[i] * arr[j];
+                <span class="hljs-keyword">int</span> lcm = pdt / hcf;
+                <span class="hljs-keyword">if</span> (lcm &lt;= <span class="hljs-number">1e6</span>)
+                {
+                    adj[i].<span class="hljs-built_in">push_back</span>(j);
+                }
+            }
+        }
+    }
+    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">vis</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        <span class="hljs-keyword">if</span> (!vis[i])
+        {
+            cnt++;
+            <span class="hljs-built_in">dfs</span>(i, adj, vis);
+        }
+    }
+    cout &lt;&lt; cnt &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
 <hr>
 <h3 id="question-4%3A-the-coin-problem" tabindex="-1">Question 4: The Coin Problem</h3>
 <p>Given (N) coins with values ranging from 0 to (N-1), your friend wants to take (K) coins out of your collection. You can only give them a set of coins if the sum of the chosen coins is divisible by a given integer (M).</p>
