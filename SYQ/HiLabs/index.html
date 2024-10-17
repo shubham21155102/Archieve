@@ -1026,6 +1026,218 @@ There are two ways to choose the coins:</p>
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </div></code></pre>
+<h2 id="objectives" tabindex="-1">Objectives</h2>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PI 3.141592653589793238462</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> set_bits __builtin_popcount</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> mod = (<span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = (<span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>);
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span>
+</span>{
+}
+<span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> i, n;
+    <span class="hljs-keyword">char</span> *x = <span class="hljs-string">&quot;Hacker&quot;</span>;
+    n = <span class="hljs-built_in">strlen</span>(x);
+    *x=x[n];
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt;= n; i++)
+    {
+       <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s&quot;</span>, x);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>,x);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h3 id="ans%3A-runtime-error" tabindex="-1">Ans: Runtime Error</h3>
+<h4 id="static-polymorphism" tabindex="-1">Static Polymorphism</h4>
+<p>In C++, static polymorphism is achieved through function overloading and template programming. One common example is function overloading, where multiple functions share the same name but have different parameter lists, allowing the compiler to choose the correct function at compile time.</p>
+<p>Here’s a simple example using function overloading:</p>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Math</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// Overloaded function for adding integers</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+        <span class="hljs-keyword">return</span> a + b;
+    }
+
+    <span class="hljs-comment">// Overloaded function for adding doubles</span>
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">double</span> a, <span class="hljs-keyword">double</span> b)</span> </span>{
+        <span class="hljs-keyword">return</span> a + b;
+    }
+
+    <span class="hljs-comment">// Overloaded function for adding three integers</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b, <span class="hljs-keyword">int</span> c)</span> </span>{
+        <span class="hljs-keyword">return</span> a + b + c;
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    Math mathObj;
+
+    <span class="hljs-comment">// Calls add(int, int)</span>
+    cout &lt;&lt; <span class="hljs-string">&quot;Sum of 2 and 3: &quot;</span> &lt;&lt; mathObj.<span class="hljs-built_in">add</span>(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>) &lt;&lt; endl;
+
+    <span class="hljs-comment">// Calls add(double, double)</span>
+    cout &lt;&lt; <span class="hljs-string">&quot;Sum of 2.5 and 3.7: &quot;</span> &lt;&lt; mathObj.<span class="hljs-built_in">add</span>(<span class="hljs-number">2.5</span>, <span class="hljs-number">3.7</span>) &lt;&lt; endl;
+
+    <span class="hljs-comment">// Calls add(int, int, int)</span>
+    cout &lt;&lt; <span class="hljs-string">&quot;Sum of 1, 2, and 3: &quot;</span> &lt;&lt; mathObj.<span class="hljs-built_in">add</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) &lt;&lt; endl;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<pre class='hljs'><code><div>Output:
+
+Sum of 2 and 3: 5
+Sum of 2.5 and 3.7: 6.2
+Sum of 1, 2, and 3: 6
+</div></code></pre>
+<p>In this example:</p>
+<p>The add function is overloaded to handle different numbers of arguments and different types (integers and doubles).</p>
+<p>The compiler selects the appropriate function based on the argument types at compile time, demonstrating static polymorphism.</p>
+<p>Yes, operator overloading in C++ can be considered an example of static polymorphism because the decision of which overloaded operator function to invoke is made at compile time.</p>
+<p>In operator overloading, just like function overloading, multiple versions of the same operator (like +, -, etc.) can be defined for different types or scenarios. The compiler determines which operator to invoke based on the operands' types at compile time, which makes it a form of static (compile-time) polymorphism.</p>
+<p>Example:</p>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> `<span class="hljs-meta-string">&lt;iostream&gt;</span>`</span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">double</span> real, imag;
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// Constructor</span>
+    <span class="hljs-built_in">Complex</span>(<span class="hljs-keyword">double</span> r, <span class="hljs-keyword">double</span> i) : <span class="hljs-built_in">real</span>(r), <span class="hljs-built_in">imag</span>(i) {}
+
+    <span class="hljs-comment">// Overloading the + operator</span>
+    Complex <span class="hljs-keyword">operator</span> + (<span class="hljs-keyword">const</span> Complex&amp; obj) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Complex</span>(real + obj.real, imag + obj.imag);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>{
+        cout &lt;&lt; real &lt;&lt; <span class="hljs-string">&quot; + &quot;</span> &lt;&lt; imag &lt;&lt; <span class="hljs-string">&quot;i&quot;</span> &lt;&lt; endl;
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Complex <span class="hljs-title">c1</span><span class="hljs-params">(<span class="hljs-number">2.5</span>, <span class="hljs-number">3.5</span>)</span></span>;
+    <span class="hljs-function">Complex <span class="hljs-title">c2</span><span class="hljs-params">(<span class="hljs-number">1.5</span>, <span class="hljs-number">2.0</span>)</span></span>;
+
+    Complex c3 = c1 + c2; <span class="hljs-comment">// Calls overloaded + operator</span>
+
+    cout &lt;&lt; <span class="hljs-string">&quot;Result of c1 + c2: &quot;</span>;
+    c3.<span class="hljs-built_in">display</span>();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<pre class='hljs'><code><div>Output:
+
+Result of c1 + c2: 4 + 5.5i
+</div></code></pre>
+<p>Here:</p>
+<p>The + operator is overloaded to add two Complex numbers.</p>
+<p>The decision about which + operator to use is resolved at compile time, hence it qualifies as static polymorphism.</p>
+<p>Summary:</p>
+<p>Yes, operator overloading is a form of static polymorphism because the overloaded operators are resolved during compile time, similar to function overloading.</p>
+<pre class='hljs'><code><div>Which of the following statements is correct about RDBMS?
+
+Statement 1: RDBMS contains normalization.
+Statement 2: Distributed data databases are not supported by RDBMS.
+</div></code></pre>
+<pre class='hljs'><code><div>Options:
+
+1. Only 1
+2. Only 2
+3. Both 1 and 2
+4. None of these
+</div></code></pre>
+<p>The correct answer is &quot;only 1&quot;.</p>
+<p>Explanation:</p>
+<ol>
+<li>Statement 1: RDBMS contains normalization.</li>
+</ol>
+<p>This statement is correct. Normalization is a process used in relational databases to organize data to reduce redundancy and improve data integrity. RDBMSs support and encourage normalization to ensure efficient and accurate data storage.</p>
+<ol start="2">
+<li>Statement 2: Distributed data databases are not supported by RDBMS.</li>
+</ol>
+<p>This statement is incorrect. Modern RDBMSs do support distributed databases. Many RDBMSs, like MySQL, PostgreSQL, and Oracle, provide mechanisms for distributed database architectures where data can be spread across multiple locations or systems while still maintaining consistency and integrity.</p>
+<p>Conclusion:</p>
+<p>Thus, the correct option is &quot;only 1&quot; because the first statement is true and the second one is false.</p>
+<h2 id="in-c%2B%2B%2C-there-are-two-main-types-of-polymorphism%3A" tabindex="-1">In C++, there are two main types of polymorphism:</h2>
+<ul>
+<li>
+<ol>
+<li>Compile-time polymorphism (Static Polymorphism)
+This type of polymorphism is resolved during the compile time. It includes:</li>
+</ol>
+</li>
+</ul>
+<p>Function Overloading: Defining multiple functions with the same name but different parameters.</p>
+<p>Operator Overloading: Defining custom behavior for operators like +, -, etc., for user-defined types.</p>
+<p>Template Polymorphism: Using templates to write generic functions or classes that work with any data type.</p>
+<ul>
+<li>
+<ol start="2">
+<li>Run-time polymorphism (Dynamic Polymorphism)
+This type of polymorphism is resolved at runtime using pointers or references. It includes:</li>
+</ol>
+</li>
+</ul>
+<p>Inheritance and Virtual Functions: When a derived class overrides a base class method, the method to be invoked is determined at runtime based on the type of the object pointed to or referenced.</p>
+<ul>
+<li>Summary:</li>
+</ul>
+<p>Compile-time (Static) polymorphism:</p>
+<p>Function Overloading</p>
+<p>Operator Overloading</p>
+<p>Template Polymorphism</p>
+<ul>
+<li>
+<p>Run-time (Dynamic) polymorphism:</p>
+</li>
+<li>
+<p>Virtual Functions (through inheritance)</p>
+</li>
+</ul>
+<p>In Data Structures, what is the best-case and worst-case time complexity analysis for the following pseudocode in the insertion sort algorithm?</p>
+<pre class='hljs'><code><div><span class="hljs-keyword">final</span> Node&lt;E&gt; sorted = null;
+Node&lt;E&gt; current = first;
+
+<span class="hljs-keyword">while</span> (current != <span class="hljs-literal">NULL</span>) {
+    Node&lt;E&gt; next = current.next;
+    <span class="hljs-built_in">Unlink</span>(current);
+    <span class="hljs-built_in">sortedInsert</span>(current.data);
+    current = next;
+}
+</div></code></pre>
+<pre class='hljs'><code><div>Options:
+1. Best-case: O(n), Worst-case: O(n^2)
+2. Best-case: O(n^2), Worst-case: O(n)
+3. Best-case: O(log n), Worst-case: O(n log n)
+4. None of these
+</div></code></pre>
+<p>To analyze the time complexity of the given pseudocode, which appears to implement the insertion sort algorithm, we need to understand the key operations within it.</p>
+<p>The pseudocode iterates over a linked list of nodes (Node<E> current = first), extracting each node and inserting it into a new sorted list (sortedInsert(current.data)).</p>
+<p>Insertion Sort Time Complexity Analysis:</p>
+<ol>
+<li>Best-case complexity:</li>
+</ol>
+<p>The best case occurs when the input list is already sorted. In this scenario, each new element is simply compared once with the last element of the sorted list.</p>
+<p>In the best case, each insertion takes constant time (O(1)), and since there are n elements, the best-case time complexity is O(n).</p>
+<ol start="2">
+<li>Worst-case complexity:</li>
+</ol>
+<p>The worst case occurs when the input list is sorted in reverse order. In this case, every new element has to be compared with every element already in the sorted list, resulting in comparisons that grow as the sorted list increases in size.</p>
+<p>The worst-case time complexity of insertion sort is O(n^2) because for every element, it might need to be compared with all the previously sorted elements, leading to a quadratic number of comparisons.</p>
+<p>Conclusion:</p>
+<p>Best-case complexity: O(n) (when the list is already sorted)</p>
+<p>Worst-case complexity: O(n^2) (when the list is in reverse order)</p>
 
     </div>
 </body>
