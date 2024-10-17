@@ -683,6 +683,140 @@ For each test case, print an integer in a new line, denoting the number of unord
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </div></code></pre>
+<h5 id="efficient-solution" tabindex="-1">Efficient Solution</h5>
+<pre class='hljs'><code><div><span class="hljs-comment">// Time Complexity: O(n * sqrt(m) + n * log n)</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PI 3.141592653589793238462</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> set_bits __builtin_popcount</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> mod = (<span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = (<span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>);
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DSU</span>
+{</span>
+<span class="hljs-keyword">public</span>:
+    vector&lt;<span class="hljs-keyword">int</span>&gt; parent, rank, size;
+    <span class="hljs-built_in">DSU</span>(<span class="hljs-keyword">int</span> n)
+    {
+        parent.<span class="hljs-built_in">resize</span>(n + <span class="hljs-number">1</span>);
+        rank.<span class="hljs-built_in">resize</span>(n + <span class="hljs-number">1</span>);
+        size.<span class="hljs-built_in">resize</span>(n + <span class="hljs-number">1</span>);
+        <span class="hljs-built_in">iota</span>(<span class="hljs-built_in">begin</span>(parent), <span class="hljs-built_in">end</span>(parent), <span class="hljs-number">0</span>);
+        <span class="hljs-built_in">fill</span>(<span class="hljs-built_in">begin</span>(size), <span class="hljs-built_in">end</span>(size), <span class="hljs-number">1</span>);
+        <span class="hljs-built_in">fill</span>(<span class="hljs-built_in">begin</span>(rank), <span class="hljs-built_in">end</span>(rank), <span class="hljs-number">0</span>);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findParent</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node)</span>
+    </span>{
+        <span class="hljs-keyword">if</span> (parent[node] == node)
+            <span class="hljs-keyword">return</span> node;
+        <span class="hljs-keyword">return</span> parent[node] = <span class="hljs-built_in">findParent</span>(parent[node]);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unionByRank</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span>
+    </span>{
+        <span class="hljs-keyword">int</span> pu = <span class="hljs-built_in">findParent</span>(u);
+        <span class="hljs-keyword">int</span> pv = <span class="hljs-built_in">findParent</span>(v);
+        <span class="hljs-keyword">if</span> (pu == pv)
+            <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">if</span> (rank[pu] &lt; rank[pv])
+            parent[pu] = pv;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rank[pv] &lt; rank[pu])
+            parent[pv] = pu;
+        <span class="hljs-keyword">else</span>
+        {
+            rank[pu]++;
+            parent[pv] = pu;
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rankBySize</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span>
+    </span>{
+        <span class="hljs-keyword">int</span> pu = <span class="hljs-built_in">findParent</span>(u);
+        <span class="hljs-keyword">int</span> pv = <span class="hljs-built_in">findParent</span>(v);
+        <span class="hljs-keyword">if</span> (pu == pv)
+            <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">if</span> (size[pu] &lt; size[pv])
+        {
+            parent[pu] = pv;
+            size[pv] += size[pu];
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (size[pv] &lt; size[pu])
+        {
+            parent[pv] = pu;
+            size[pu] += size[pv];
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            parent[pu] = pv;
+            size[pv] += size[pu];
+        }
+    }
+};
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, vector&lt;<span class="hljs-keyword">int</span>&gt; adj[], vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;vis)</span>
+</span>{
+    vis[node] = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it : adj[node])
+    {
+        <span class="hljs-keyword">if</span> (vis[it] == <span class="hljs-number">0</span>)
+        {
+            <span class="hljs-built_in">dfs</span>(it, adj, vis);
+        }
+    }
+}
+<span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">primeFactors</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span>
+</span>{
+    vector&lt;<span class="hljs-keyword">int</span>&gt; factors;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i * i &lt;= n; i++)
+    {
+        <span class="hljs-keyword">if</span> (n % i == <span class="hljs-number">0</span>)
+        {
+            factors.<span class="hljs-built_in">push_back</span>(i);
+            <span class="hljs-keyword">while</span> (n % i == <span class="hljs-number">0</span>)
+            {
+                n /= i;
+            }
+        }
+    }
+    <span class="hljs-keyword">if</span> (n &gt; <span class="hljs-number">1</span>)
+    {
+        factors.<span class="hljs-built_in">push_back</span>(n);
+    }
+    <span class="hljs-keyword">return</span> factors;
+}
+<span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> n;
+    cin &gt;&gt; n;
+    <span class="hljs-keyword">int</span> arr[n];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        cin &gt;&gt; arr[i];
+    }
+    <span class="hljs-function">DSU <span class="hljs-title">dsu</span><span class="hljs-params">(n)</span></span>;
+    unordered_map&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; prime_map;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        vector&lt;<span class="hljs-keyword">int</span>&gt; factors = <span class="hljs-built_in">primeFactors</span>(arr[i]);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> prime : factors)
+        {
+            <span class="hljs-keyword">if</span> (prime_map.<span class="hljs-built_in">find</span>(prime) != prime_map.<span class="hljs-built_in">end</span>())
+            {
+                dsu.<span class="hljs-built_in">unionByRank</span>(i, prime_map[prime]);
+            }
+            <span class="hljs-keyword">else</span>
+            {
+                prime_map[prime] = i;
+            }
+        }
+    }
+    unordered_set&lt;<span class="hljs-keyword">int</span>&gt; unique_components;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        unique_components.<span class="hljs-built_in">insert</span>(dsu.<span class="hljs-built_in">findParent</span>(i));
+    }
+    cout &lt;&lt; unique_components.<span class="hljs-built_in">size</span>() &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+</div></code></pre>
 <hr>
 <h3 id="question-3%3A-connected-components-in-a-graph" tabindex="-1">Question 3: Connected Components in a Graph</h3>
 <p>Given an undirected graph consisting of (N) nodes. Each node has a number written on it, represented in an array <code>arr</code> of (N) distinct integers. There is an edge between two nodes (i) and (j) if:
@@ -713,12 +847,16 @@ LCM (a[i],a[j]) &lt;= 10^6</p>
 <p><strong>Output:</strong></p>
 <pre class='hljs'><code><div>2
 </div></code></pre>
+<p><strong>Constraints</strong></p>
+<pre class='hljs'><code><div>1 &lt;= N &lt;= 10^6
+1 &lt;= arr[i] &lt;= 10^9
+</div></code></pre>
 <p><strong>Explanation:</strong>
 For (i = 1) and (j = 2), (\text{LCM}(2, 1000000) \leq 10^6). Therefore, there is an edge between 1 and 2.</p>
 <p>For (i = 2) and (j = 3), (\text{LCM}(1000000, 999999) &gt; 10^6). No edge exists between 2 and 3.</p>
 <p>For (i = 1) and (j = 3), (\text{LCM}(2, 999999) &gt; 10^6). No edge exists between 1 and 3.</p>
 <p>The components are ([1, 2]) and ([3]). Hence, the answer is 2.</p>
-<pre class='hljs'><code><div><span class="hljs-meta">#may be tle</span>
+<pre class='hljs'><code><div><span class="hljs-comment">// Time Complexity: O(n^2) : Worst Solution</span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PI 3.141592653589793238462</span>
@@ -749,17 +887,15 @@ For (i = 1) and (j = 2), (\text{LCM}(2, 1000000) \leq 10^6). Therefore, there is
     vector&lt;<span class="hljs-keyword">int</span>&gt; adj[n];
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
     {
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt; n; j++)
         {
-            <span class="hljs-keyword">if</span> (i != j)
+
+            <span class="hljs-keyword">int</span> hcf = <span class="hljs-built_in">gcd</span>(arr[i], arr[j]);
+            <span class="hljs-keyword">int</span> lcm = (arr[i] / hcf) * arr[j];
+            <span class="hljs-keyword">if</span> (lcm &lt;= <span class="hljs-number">1e6</span>)
             {
-                <span class="hljs-keyword">int</span> hcf = <span class="hljs-built_in">gcd</span>(arr[i], arr[j]);
-                <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> pdt = arr[i] * arr[j];
-                <span class="hljs-keyword">int</span> lcm = pdt / hcf;
-                <span class="hljs-keyword">if</span> (lcm &lt;= <span class="hljs-number">1e6</span>)
-                {
-                    adj[i].<span class="hljs-built_in">push_back</span>(j);
-                }
+                adj[i].<span class="hljs-built_in">push_back</span>(j);
+                adj[j].<span class="hljs-built_in">push_back</span>(i);
             }
         }
     }
