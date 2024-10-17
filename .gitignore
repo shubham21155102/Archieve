@@ -9,3 +9,7 @@ Rust/Backend/**
 satyam/**
 **.class
 *.md
+*.cpp
+*.c
+*.h
+1

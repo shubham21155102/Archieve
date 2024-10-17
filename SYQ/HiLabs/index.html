@@ -943,6 +943,64 @@ There are two ways to choose the coins:</p>
 <li>Set ([1, 3]) has a sum of (1 + 3 = 4), which is divisible by 2.</li>
 </ul>
 <p>Hence, the answer is 2.</p>
+<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+  <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+  <span class="hljs-keyword">int</span> mod= <span class="hljs-number">1e9</span>+<span class="hljs-number">7</span>;
+  <span class="hljs-comment">//int dp[1000][102][1000];</span>
+  
+  <span class="hljs-comment">/*int f(int i,int k,int sum, int m, int n,vector&lt;vector&lt;vector&lt;int&gt;&gt;&gt;&amp;dp){
+    if(k==0){
+      if(sum%m==0){
+        return 1;
+      }
+      else{
+        return 0;
+      }
+    }
+    if(i&gt;=n){
+      return 0;
+    }
+    if(dp[i][k][sum]!=-1){
+      return dp[i][k][sum];
+    }
+     int notake= (f(i+1,k,sum,m,n,dp))%mod;
+     int take= (f(i+1,k-1,(sum+(i)%m)%m,m,n,dp))%mod;
+  
+    return dp[i][k][sum]= (notake+take)%mod;
+  } */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n,k,m;
+    cin&gt;&gt;n&gt;&gt;k&gt;&gt;m;
+    <span class="hljs-comment">//vector&lt;vector&lt;vector&lt; int&gt;&gt;&gt;dp(n,vector&lt;vector&lt; int&gt;&gt;(k+1,vector&lt; int&gt;(m,-1)));</span>
+    <span class="hljs-comment">//memset(dp,-1, sizeof(dp));</span>
+  
+   <span class="hljs-comment">// cout&lt;&lt; (f(0,k,0,m,n,dp))%mod;</span>
+   <span class="hljs-keyword">if</span>(k&gt;n){
+     cout&lt;&lt;<span class="hljs-number">0</span>&lt;&lt;endl;
+     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+   }
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;<span class="hljs-built_in">prev</span>(k+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(m,<span class="hljs-number">0</span>));
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;<span class="hljs-built_in">curr</span>(k+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(m,<span class="hljs-number">0</span>));
+    prev[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-1</span>; i&gt;=<span class="hljs-number">0</span>; i--){
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>; j&lt;=k; j++){
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> sum=m<span class="hljs-number">-1</span>; sum&gt;=<span class="hljs-number">0</span>; sum--){
+      
+           <span class="hljs-keyword">int</span> notake= (prev[j][sum])%mod;
+           <span class="hljs-keyword">int</span> take=<span class="hljs-number">0</span>;
+           <span class="hljs-keyword">if</span>(j&gt;<span class="hljs-number">0</span>){
+           take+= (prev[j<span class="hljs-number">-1</span>][(sum+(i))%m])%mod;
+           }
+           curr[j][sum]= (notake+take)%mod;
+
+        }
+      }
+      prev=curr;
+    }
+    cout&lt;&lt; prev[k][<span class="hljs-number">0</span>]&lt;&lt;endl;
+
+  }
+</div></code></pre>
 
     </div>
 </body>
