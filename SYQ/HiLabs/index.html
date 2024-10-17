@@ -683,6 +683,102 @@ For each test case, print an integer in a new line, denoting the number of unord
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </div></code></pre>
+<hr>
+<h3 id="question-3%3A-connected-components-in-a-graph" tabindex="-1">Question 3: Connected Components in a Graph</h3>
+<p>Given an undirected graph consisting of (N) nodes. Each node has a number written on it, represented in an array <code>arr</code> of (N) distinct integers. There is an edge between two nodes (i) and (j) if:
+LCM (a[i],a[j]) &lt;= 10^6</p>
+<p>Where the LCM of two numbers is the smallest positive integer that is divisible by both of them.</p>
+<p>Print the number of connected components in this graph.</p>
+<h4 id="notes%3A" tabindex="-1">Notes:</h4>
+<ul>
+<li>1-based indexing is followed.</li>
+<li>A connected component of an undirected graph is an induced subgraph in which any two vertices are connected to each other by paths, and which is connected to no additional vertices in the rest of the graph.</li>
+</ul>
+<h4 id="function-description%3A" tabindex="-1">Function Description:</h4>
+<p>Complete the function <code>solve</code> which takes the following 2 parameters and returns the number of connected components:</p>
+<ul>
+<li><code>N</code>: Integer representing the size of array <code>arr</code>.</li>
+<li><code>arr</code>: Array of (N) distinct integers representing the numbers written on the nodes.</li>
+</ul>
+<h4 id="input%3A" tabindex="-1">Input:</h4>
+<ul>
+<li>The first line contains a single integer (N).</li>
+<li>The second line contains (N) space-separated integers representing the array <code>arr</code>.</li>
+</ul>
+<h4 id="example%3A" tabindex="-1">Example:</h4>
+<p><strong>Input:</strong></p>
+<pre class='hljs'><code><div>3
+2 1000000 999999
+</div></code></pre>
+<p><strong>Output:</strong></p>
+<pre class='hljs'><code><div>2
+</div></code></pre>
+<p><strong>Constraints</strong></p>
+<pre class='hljs'><code><div>1 &lt;= N &lt;= 10^6
+1 &lt;= arr[i] &lt;= 10^9
+</div></code></pre>
+<p><strong>Explanation:</strong>
+For (i = 1) and (j = 2), (\text{LCM}(2, 1000000) \leq 10^6). Therefore, there is an edge between 1 and 2.</p>
+<p>For (i = 2) and (j = 3), (\text{LCM}(1000000, 999999) &gt; 10^6). No edge exists between 2 and 3.</p>
+<p>For (i = 1) and (j = 3), (\text{LCM}(2, 999999) &gt; 10^6). No edge exists between 1 and 3.</p>
+<p>The components are ([1, 2]) and ([3]). Hence, the answer is 2.</p>
+<pre class='hljs'><code><div><span class="hljs-comment">// Time Complexity: O(n^2) : Worst Solution</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PI 3.141592653589793238462</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> set_bits __builtin_popcount</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> mod = (<span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = (<span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>);
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, vector&lt;<span class="hljs-keyword">int</span>&gt; adj[], vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;vis)</span>
+</span>{
+    vis[node] = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it : adj[node])
+    {
+        <span class="hljs-keyword">if</span> (vis[it] == <span class="hljs-number">0</span>)
+        {
+            <span class="hljs-built_in">dfs</span>(it, adj, vis);
+        }
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> n;
+    cin &gt;&gt; n;
+    <span class="hljs-keyword">int</span> arr[n];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        cin &gt;&gt; arr[i];
+    }
+    vector&lt;<span class="hljs-keyword">int</span>&gt; adj[n];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt; n; j++)
+        {
+
+            <span class="hljs-keyword">int</span> hcf = <span class="hljs-built_in">gcd</span>(arr[i], arr[j]);
+            <span class="hljs-keyword">int</span> lcm = (arr[i] / hcf) * arr[j];
+            <span class="hljs-keyword">if</span> (lcm &lt;= <span class="hljs-number">1e6</span>)
+            {
+                adj[i].<span class="hljs-built_in">push_back</span>(j);
+                adj[j].<span class="hljs-built_in">push_back</span>(i);
+            }
+        }
+    }
+    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">vis</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        <span class="hljs-keyword">if</span> (!vis[i])
+        {
+            cnt++;
+            <span class="hljs-built_in">dfs</span>(i, adj, vis);
+        }
+    }
+    cout &lt;&lt; cnt &lt;&lt; endl;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
 <h5 id="efficient-solution" tabindex="-1">Efficient Solution</h5>
 <pre class='hljs'><code><div><span class="hljs-comment">// Time Complexity: O(n * sqrt(m) + n * log n)</span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
@@ -816,102 +912,6 @@ For each test case, print an integer in a new line, denoting the number of unord
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 
-</div></code></pre>
-<hr>
-<h3 id="question-3%3A-connected-components-in-a-graph" tabindex="-1">Question 3: Connected Components in a Graph</h3>
-<p>Given an undirected graph consisting of (N) nodes. Each node has a number written on it, represented in an array <code>arr</code> of (N) distinct integers. There is an edge between two nodes (i) and (j) if:
-LCM (a[i],a[j]) &lt;= 10^6</p>
-<p>Where the LCM of two numbers is the smallest positive integer that is divisible by both of them.</p>
-<p>Print the number of connected components in this graph.</p>
-<h4 id="notes%3A" tabindex="-1">Notes:</h4>
-<ul>
-<li>1-based indexing is followed.</li>
-<li>A connected component of an undirected graph is an induced subgraph in which any two vertices are connected to each other by paths, and which is connected to no additional vertices in the rest of the graph.</li>
-</ul>
-<h4 id="function-description%3A" tabindex="-1">Function Description:</h4>
-<p>Complete the function <code>solve</code> which takes the following 2 parameters and returns the number of connected components:</p>
-<ul>
-<li><code>N</code>: Integer representing the size of array <code>arr</code>.</li>
-<li><code>arr</code>: Array of (N) distinct integers representing the numbers written on the nodes.</li>
-</ul>
-<h4 id="input%3A" tabindex="-1">Input:</h4>
-<ul>
-<li>The first line contains a single integer (N).</li>
-<li>The second line contains (N) space-separated integers representing the array <code>arr</code>.</li>
-</ul>
-<h4 id="example%3A" tabindex="-1">Example:</h4>
-<p><strong>Input:</strong></p>
-<pre class='hljs'><code><div>3
-2 1000000 999999
-</div></code></pre>
-<p><strong>Output:</strong></p>
-<pre class='hljs'><code><div>2
-</div></code></pre>
-<p><strong>Constraints</strong></p>
-<pre class='hljs'><code><div>1 &lt;= N &lt;= 10^6
-1 &lt;= arr[i] &lt;= 10^9
-</div></code></pre>
-<p><strong>Explanation:</strong>
-For (i = 1) and (j = 2), (\text{LCM}(2, 1000000) \leq 10^6). Therefore, there is an edge between 1 and 2.</p>
-<p>For (i = 2) and (j = 3), (\text{LCM}(1000000, 999999) &gt; 10^6). No edge exists between 2 and 3.</p>
-<p>For (i = 1) and (j = 3), (\text{LCM}(2, 999999) &gt; 10^6). No edge exists between 1 and 3.</p>
-<p>The components are ([1, 2]) and ([3]). Hence, the answer is 2.</p>
-<pre class='hljs'><code><div><span class="hljs-comment">// Time Complexity: O(n^2) : Worst Solution</span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PI 3.141592653589793238462</span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> set_bits __builtin_popcount</span>
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> mod = (<span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>);
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = (<span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>);
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, vector&lt;<span class="hljs-keyword">int</span>&gt; adj[], vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;vis)</span>
-</span>{
-    vis[node] = <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> it : adj[node])
-    {
-        <span class="hljs-keyword">if</span> (vis[it] == <span class="hljs-number">0</span>)
-        {
-            <span class="hljs-built_in">dfs</span>(it, adj, vis);
-        }
-    }
-}
-<span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>{
-    <span class="hljs-keyword">int</span> n;
-    cin &gt;&gt; n;
-    <span class="hljs-keyword">int</span> arr[n];
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
-    {
-        cin &gt;&gt; arr[i];
-    }
-    vector&lt;<span class="hljs-keyword">int</span>&gt; adj[n];
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
-    {
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt; n; j++)
-        {
-
-            <span class="hljs-keyword">int</span> hcf = <span class="hljs-built_in">gcd</span>(arr[i], arr[j]);
-            <span class="hljs-keyword">int</span> lcm = (arr[i] / hcf) * arr[j];
-            <span class="hljs-keyword">if</span> (lcm &lt;= <span class="hljs-number">1e6</span>)
-            {
-                adj[i].<span class="hljs-built_in">push_back</span>(j);
-                adj[j].<span class="hljs-built_in">push_back</span>(i);
-            }
-        }
-    }
-    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
-    <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">vis</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
-    {
-        <span class="hljs-keyword">if</span> (!vis[i])
-        {
-            cnt++;
-            <span class="hljs-built_in">dfs</span>(i, adj, vis);
-        }
-    }
-    cout &lt;&lt; cnt &lt;&lt; endl;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-}
 </div></code></pre>
 <hr>
 <h3 id="question-4%3A-the-coin-problem" tabindex="-1">Question 4: The Coin Problem</h3>
