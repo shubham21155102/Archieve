@@ -1640,6 +1640,32 @@ blockquote {
 };
 </div></code></pre>
 <hr>
+<h1 id="target-sum" tabindex="-1"><a href="https://leetcode.com/problems/target-sum/"><strong>Target Sum</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums,<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> target)</span></span>{
+          <span class="hljs-keyword">if</span>(ind==<span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">if</span>(target==<span class="hljs-number">0</span> &amp;&amp; nums[<span class="hljs-number">0</span>]==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span>(target==nums[<span class="hljs-number">0</span>] || target==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+          }
+          <span class="hljs-keyword">if</span>(dp[ind][target]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][target];
+          <span class="hljs-keyword">int</span> pick=<span class="hljs-number">0</span>;
+          <span class="hljs-keyword">int</span> notPick=<span class="hljs-built_in">recursion</span>(dp,nums,ind<span class="hljs-number">-1</span>,target);
+          <span class="hljs-keyword">if</span>(target&gt;=nums[ind]) pick=<span class="hljs-built_in">recursion</span>(dp,nums,ind<span class="hljs-number">-1</span>,target-nums[ind]);
+          <span class="hljs-keyword">return</span> dp[ind][target]=(pick+notPick);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findTargetSumWays</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> target)</span> </span>{
+        <span class="hljs-keyword">int</span> sum=<span class="hljs-built_in">accumulate</span>(<span class="hljs-built_in">begin</span>(nums),<span class="hljs-built_in">end</span>(nums),<span class="hljs-number">0</span>);
+         <span class="hljs-keyword">if</span> (sum &lt; <span class="hljs-built_in">abs</span>(target) || (sum + target) % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        target=(sum+target)/<span class="hljs-number">2</span>;
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(target+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(dp,nums,n<span class="hljs-number">-1</span>,target);
+    }
+};
+</div></code></pre>
+<hr>
 <h2 id="longest-common-subsequence" tabindex="-1"><a href="https://leetcode.com/problems/longest-common-subsequence/"> Longest Common Subsequence</a></h2>
 <hr>
 <p>Given two strings <code>text1</code> and <code>text2</code>, return *the length of their longest <strong>common subsequence</strong> . *If there is no <strong>common subsequence</strong> , return <code>0</code>.</p>
@@ -1673,104 +1699,398 @@ blockquote {
 <li><code>text1</code> and <code>text2</code> consist of only lowercase English characters.</li>
 </ul>
 <hr>
-<h3 id="raw-solution" tabindex="-1">Raw Solution</h3>
 <hr>
-<pre class='hljs'><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_map&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">subSequence</span><span class="hljs-params">(string s, <span class="hljs-keyword">int</span> i, string temp, vector&lt;string&gt; &amp;ans, unordered_map&lt;string, vector&lt;string&gt;&gt; &amp;mp)</span>
-</span>{
-    <span class="hljs-keyword">if</span> (i == s.<span class="hljs-built_in">size</span>())
-    {
-        ans.<span class="hljs-built_in">push_back</span>(temp);
-        mp[temp].<span class="hljs-built_in">push_back</span>(temp);
-        <span class="hljs-keyword">return</span>;
-    }
-    <span class="hljs-built_in">subSequence</span>(s, i + <span class="hljs-number">1</span>, temp + s[i], ans, mp);
-    <span class="hljs-built_in">subSequence</span>(s, i + <span class="hljs-number">1</span>, temp, ans, mp);
-}
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lcs_recursion</span><span class="hljs-params">(string s1, string s2, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> n)</span>
-</span>{
-    <span class="hljs-keyword">if</span> (m == <span class="hljs-number">0</span> || n == <span class="hljs-number">0</span>)
-        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">if</span> (s1[m - <span class="hljs-number">1</span>] == s2[n - <span class="hljs-number">1</span>])
-    {
-        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> + <span class="hljs-built_in">lcs_recursion</span>(s1, s2, m - <span class="hljs-number">1</span>, n - <span class="hljs-number">1</span>);
-    }
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(<span class="hljs-built_in">lcs_recursion</span>(s1, s2, m - <span class="hljs-number">1</span>, n), <span class="hljs-built_in">lcs_recursion</span>(s1, s2, m, n - <span class="hljs-number">1</span>));
-}
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lcs_d_bottom_up</span><span class="hljs-params">(string s1, string s2, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> n)</span>
-</span>{
-    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(m + <span class="hljs-number">1</span>, vector&lt;<span class="hljs-keyword">int</span>&gt;(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)
-    {
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++)
-        {
-            <span class="hljs-keyword">if</span> (s1[i] == s2[j])
-            {
-                dp[m][n] = <span class="hljs-number">1</span> + dp[m - <span class="hljs-number">1</span>][n - <span class="hljs-number">1</span>];
-            }
-            <span class="hljs-keyword">else</span>
-            {
-                dp[i][j] = <span class="hljs-built_in">max</span>({dp[i - <span class="hljs-number">1</span>][j], dp[i][j - <span class="hljs-number">1</span>]});
-            }
-        }
-    }
-    <span class="hljs-keyword">return</span> dp[m][n];
-}
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lcs_dp_top_down</span><span class="hljs-params">(string s1, string s2, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> n, vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span>
-</span>{
-    <span class="hljs-keyword">if</span> (m == <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> n == <span class="hljs-number">0</span>)
-        <span class="hljs-keyword">return</span> dp[m][n] = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">if</span> (dp[m][n] != <span class="hljs-number">-1</span>)
-        <span class="hljs-keyword">return</span> dp[m][n];
-    <span class="hljs-keyword">if</span> (s1[m - <span class="hljs-number">1</span>] == s2[n - <span class="hljs-number">1</span>])
-    {
-        <span class="hljs-keyword">return</span> dp[m][n] = <span class="hljs-number">1</span> + <span class="hljs-built_in">lcs_dp_top_down</span>(s1, s2, m - <span class="hljs-number">1</span>, n - <span class="hljs-number">1</span>, dp);
-    }
-    <span class="hljs-keyword">return</span> dp[m][n] = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">lcs_dp_top_down</span>(s1, s2, m - <span class="hljs-number">1</span>, n, dp), <span class="hljs-built_in">lcs_dp_top_down</span>(s1, s2, m, n - <span class="hljs-number">1</span>, dp));
-}
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
-</span>{
-    string s1 = <span class="hljs-string">&quot;GEOGRAPHY&quot;</span>;
-    <span class="hljs-comment">// vector&lt;string&gt; words;</span>
-    <span class="hljs-comment">// unordered_map&lt;string, vector&lt;string&gt;&gt; mp;</span>
-    <span class="hljs-comment">// subSequence(s1, 0, &quot;&quot;, words, mp);</span>
-    <span class="hljs-comment">// for (auto x : words)</span>
-    <span class="hljs-comment">// {</span>
-    <span class="hljs-comment">//     cout &lt;&lt; x &lt;&lt; endl;</span>
-    <span class="hljs-comment">// }</span>
-    s1 = <span class="hljs-string">&quot;ABCDGH&quot;</span>;
-    string s2 = <span class="hljs-string">&quot;AEDFHR&quot;</span>;
-    cout &lt;&lt; <span class="hljs-built_in">lcs_recursion</span>(s1, s2, s1.<span class="hljs-built_in">size</span>(), s2.<span class="hljs-built_in">size</span>());
-    cout &lt;&lt; endl;
-    cout &lt;&lt; <span class="hljs-built_in">lcs_d_bottom_up</span>(s1, s2, s1.<span class="hljs-built_in">size</span>(), s2.<span class="hljs-built_in">size</span>());
-    cout &lt;&lt; endl;
-    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(s1.<span class="hljs-built_in">size</span>() + <span class="hljs-number">1</span>, vector&lt;<span class="hljs-keyword">int</span>&gt;(s2.<span class="hljs-built_in">size</span>() + <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>));
-    cout &lt;&lt; <span class="hljs-built_in">lcs_dp_top_down</span>(s1, s2, s1.<span class="hljs-built_in">size</span>(), s2.<span class="hljs-built_in">size</span>(), dp);
-
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-}
-</div></code></pre>
-<hr>
+<h3 id="recursion-5" tabindex="-1">Recursion</h3>
 <pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
 <span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,string text1,string text2)</span></span>{
+        <span class="hljs-keyword">if</span>(i&lt;<span class="hljs-number">0</span> || j&lt;<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(text1[i]==text2[j]) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>+<span class="hljs-built_in">recursion</span>(i<span class="hljs-number">-1</span>,j<span class="hljs-number">-1</span>,text1,text2);
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(<span class="hljs-built_in">recursion</span>(i<span class="hljs-number">-1</span>,j,text1,text2),<span class="hljs-built_in">recursion</span>(i,j<span class="hljs-number">-1</span>,text1,text2));
+    }
     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">longestCommonSubsequence</span><span class="hljs-params">(string text1, string text2)</span> </span>{
-        <span class="hljs-keyword">int</span> m=text1.<span class="hljs-built_in">size</span>();
-        <span class="hljs-keyword">int</span> n=text2.<span class="hljs-built_in">size</span>();
-        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(m+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>));
-        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=m;i++){
-            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=n;j++){
-                <span class="hljs-keyword">if</span>(text1[i<span class="hljs-number">-1</span>]==text2[j<span class="hljs-number">-1</span>]) dp[i][j]=dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>]+<span class="hljs-number">1</span>;
-                <span class="hljs-keyword">else</span> dp[i][j]=<span class="hljs-built_in">max</span>({dp[i<span class="hljs-number">-1</span>][j],dp[i][j<span class="hljs-number">-1</span>]});
-            }
-        }
-        <span class="hljs-keyword">return</span> dp[m][n];
+        <span class="hljs-keyword">int</span> n=text1.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">int</span> m=text2.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(n<span class="hljs-number">-1</span>,m<span class="hljs-number">-1</span>,text1,text2);
     }
 };
 </div></code></pre>
+<h3 id="memoization-5" tabindex="-1">Memoization</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,string text1,string text2,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(i&lt;<span class="hljs-number">0</span> || j&lt;<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(dp[i][j]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[i][j];
+        <span class="hljs-keyword">if</span>(text1[i]==text2[j]) <span class="hljs-keyword">return</span> dp[i][j]=<span class="hljs-number">1</span>+<span class="hljs-built_in">recursion</span>(i<span class="hljs-number">-1</span>,j<span class="hljs-number">-1</span>,text1,text2,dp);
+        <span class="hljs-keyword">return</span> dp[i][j]= <span class="hljs-built_in">max</span>(<span class="hljs-built_in">recursion</span>(i<span class="hljs-number">-1</span>,j,text1,text2,dp),<span class="hljs-built_in">recursion</span>(i,j<span class="hljs-number">-1</span>,text1,text2,dp));
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">longestCommonSubsequence</span><span class="hljs-params">(string text1, string text2)</span> </span>{
+        <span class="hljs-keyword">int</span> n=text1.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">int</span> m=text2.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(m,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(n<span class="hljs-number">-1</span>,m<span class="hljs-number">-1</span>,text1,text2,dp);
+    }
+};
+</div></code></pre>
+<h3 id="shifted-memoization" tabindex="-1">Shifted Memoization</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,string text1,string text2,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(i==<span class="hljs-number">0</span> || j==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(dp[i][j]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[i][j];
+        <span class="hljs-keyword">if</span>(text1[i<span class="hljs-number">-1</span>]==text2[j<span class="hljs-number">-1</span>]) <span class="hljs-keyword">return</span> dp[i][j]=<span class="hljs-number">1</span>+<span class="hljs-built_in">recursion</span>(i<span class="hljs-number">-1</span>,j<span class="hljs-number">-1</span>,text1,text2,dp);
+        <span class="hljs-keyword">return</span> dp[i][j]= <span class="hljs-built_in">max</span>(<span class="hljs-built_in">recursion</span>(i<span class="hljs-number">-1</span>,j,text1,text2,dp),<span class="hljs-built_in">recursion</span>(i,j<span class="hljs-number">-1</span>,text1,text2,dp));
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">longestCommonSubsequence</span><span class="hljs-params">(string text1, string text2)</span> </span>{
+        <span class="hljs-keyword">int</span> n=text1.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">int</span> m=text2.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(m+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(n,m,text1,text2,dp);
+    }
+};
+</div></code></pre>
+<h3 id="why-shifted-memoization" tabindex="-1">Why Shifted Memoization</h3>
+<pre class='hljs'><code><div><span class="hljs-attribute">1</span>. Why is the memoization array shifted by <span class="hljs-number">1</span>?
+<span class="hljs-attribute">The</span> memoization array is shifted by <span class="hljs-number">1</span> because the base case of the recursion is when i or j becomes <span class="hljs-number">0</span>. In the recursion, we are using <span class="hljs-number">0</span>-based indexing, so we need to shift the indices by <span class="hljs-number">1</span> to match the base case of the recursion.
+</div></code></pre>
+<h3 id="tabulation-11" tabindex="-1">Tabulation</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">longestCommonSubsequence</span><span class="hljs-params">(string text1, string text2)</span> </span>{
+        <span class="hljs-keyword">int</span> n=text1.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">int</span> m=text2.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(m+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++) dp[i][<span class="hljs-number">0</span>]=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;m;j++) dp[<span class="hljs-number">0</span>][j]=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++){
+                <span class="hljs-keyword">if</span>(text1[i<span class="hljs-number">-1</span>]==text2[j<span class="hljs-number">-1</span>]) dp[i][j]=<span class="hljs-number">1</span>+dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];
+                <span class="hljs-keyword">else</span> dp[i][j]=<span class="hljs-built_in">max</span>(dp[i<span class="hljs-number">-1</span>][j],dp[i][j<span class="hljs-number">-1</span>]);
+            }
+        }
+        <span class="hljs-keyword">return</span> dp[n][m];
+    }
+};
+</div></code></pre>
+<h3 id="space-optimized-tabulation" tabindex="-1">Space Optimized Tabulation</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">longestCommonSubsequence</span><span class="hljs-params">(string text1, string text2)</span> </span>{
+        <span class="hljs-keyword">int</span> n=text1.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">int</span> m=text2.<span class="hljs-built_in">size</span>();
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">prev</span><span class="hljs-params">(m+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)</span>,<span class="hljs-title">curr</span><span class="hljs-params">(m+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++){
+                <span class="hljs-keyword">if</span>(text1[i<span class="hljs-number">-1</span>]==text2[j<span class="hljs-number">-1</span>]) curr[j]=<span class="hljs-number">1</span>+prev[j<span class="hljs-number">-1</span>];
+                <span class="hljs-keyword">else</span> curr[j]=<span class="hljs-built_in">max</span>(prev[j],curr[j<span class="hljs-number">-1</span>]);
+            }
+            prev=curr;
+        }
+        <span class="hljs-keyword">return</span> curr[m];
+    }
+};
+</div></code></pre>
+<hr>
+<h1 id="print-lcs" tabindex="-1">Print LCS</h1>
+<h2 id="method-1" tabindex="-1">Method 1</h2>
+<pre class='hljs'><code><div><span class="hljs-function">string <span class="hljs-title">findLCS</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> m,string &amp;s1, string &amp;s2)</span></span>{
+	vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt; (m+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>));
+	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++){
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++){
+			<span class="hljs-keyword">if</span>(s1[i<span class="hljs-number">-1</span>]==s2[j<span class="hljs-number">-1</span>]) dp[i][j]=<span class="hljs-number">1</span>+dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];
+			<span class="hljs-keyword">else</span> dp[i][j]=<span class="hljs-built_in">max</span>(dp[i<span class="hljs-number">-1</span>][j],dp[i][j<span class="hljs-number">-1</span>]);
+		}
+	}
+	<span class="hljs-keyword">int</span> len=dp[n][m];
+	<span class="hljs-keyword">int</span> i=n,j=m;
+	string ans;
+	<span class="hljs-keyword">int</span> ind=len<span class="hljs-number">-1</span>;
+	<span class="hljs-keyword">while</span>(i&gt;<span class="hljs-number">0</span> &amp;&amp; j&gt;<span class="hljs-number">0</span>){
+        <span class="hljs-keyword">if</span>(s1[i<span class="hljs-number">-1</span>]==s2[j<span class="hljs-number">-1</span>]){
+		ans.<span class="hljs-built_in">push_back</span>(s1[i<span class="hljs-number">-1</span>]);
+		   ind--;
+		   i--;
+		   j--;
+		}
+		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(dp[i<span class="hljs-number">-1</span>][j]&gt;dp[i][j<span class="hljs-number">-1</span>]){
+            i--;
+		}
+		<span class="hljs-keyword">else</span> {
+           j--;
+		}
+	}
+	<span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">begin</span>(ans),<span class="hljs-built_in">end</span>(ans));
+	<span class="hljs-keyword">return</span> ans;
+}
+</div></code></pre>
+<h2 id="method-2" tabindex="-1">Method 2</h2>
+<pre class='hljs'><code><div><span class="hljs-function">string <span class="hljs-title">findLCS</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> m,string &amp;s1, string &amp;s2)</span></span>{
+	vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt; (m+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>));
+	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++){
+		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++){
+			<span class="hljs-keyword">if</span>(s1[i<span class="hljs-number">-1</span>]==s2[j<span class="hljs-number">-1</span>]) dp[i][j]=<span class="hljs-number">1</span>+dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];
+			<span class="hljs-keyword">else</span> dp[i][j]=<span class="hljs-built_in">max</span>(dp[i<span class="hljs-number">-1</span>][j],dp[i][j<span class="hljs-number">-1</span>]);
+		}
+	}
+	<span class="hljs-keyword">int</span> len=dp[n][m];
+	<span class="hljs-keyword">int</span> i=n,j=m;
+	<span class="hljs-function">string <span class="hljs-title">ans</span><span class="hljs-params">(len,<span class="hljs-string">&#x27;-&#x27;</span>)</span></span>;
+	<span class="hljs-keyword">int</span> ind=len<span class="hljs-number">-1</span>;
+	<span class="hljs-keyword">while</span>(i&gt;<span class="hljs-number">0</span> &amp;&amp; j&gt;<span class="hljs-number">0</span>){
+        <span class="hljs-keyword">if</span>(s1[i<span class="hljs-number">-1</span>]==s2[j<span class="hljs-number">-1</span>]){
+           ans[ind]=s1[i<span class="hljs-number">-1</span>];
+		   ind--;
+		   i--;
+		   j--;
+		}
+		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(dp[i<span class="hljs-number">-1</span>][j]&gt;dp[i][j<span class="hljs-number">-1</span>]){
+            i--;
+		}
+		<span class="hljs-keyword">else</span> {
+           j--;
+		}
+	}
+	<span class="hljs-keyword">return</span> ans;
+}
+</div></code></pre>
+<hr>
+<h1 id="print-all-lcs-sequences" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/print-all-lcs-sequences3413/1?itm_source=geeksforgeeks&amp;itm_medium=article&amp;itm_campaign=practice_card"><strong>Print all LCS sequences</strong></a></h1>
+<p>You are given two strings <code>s</code> and <code>t</code>. Now your task is to print all longest common subsequences in lexicographical order.</p>
+<blockquote>
+<p><strong>Note:</strong> A subsequence is derived from another string by deleting some or none of the elements without changing the order of the remaining elements.</p>
+</blockquote>
+<h3 id="example-1%3A" tabindex="-1">Example 1:</h3>
+<p><strong>Input:</strong><br>
+<code>s = abaaa</code><br>
+<code>t = baabaca</code></p>
+<p><strong>Output:</strong></p>
+<pre class='hljs'><code><div>aaaa
+abaa
+baaa
+</div></code></pre>
+<p><strong>Explanation:</strong><br>
+Length of LCS is 4. In lexicographical order, the longest common subsequences are:<br>
+<code>aaaa, abaa, baaa</code></p>
+<h3 id="example-2%3A" tabindex="-1">Example 2:</h3>
+<p><strong>Input:</strong><br>
+<code>s = aaa</code><br>
+<code>t = a</code></p>
+<p><strong>Output:</strong></p>
+<pre class='hljs'><code><div>a
+</div></code></pre>
+<h3 id="your-task%3A" tabindex="-1">Your Task:</h3>
+<p>You do not need to read or print anything. Your task is to complete the function <code>all_longest_common_subsequences()</code> which takes strings <code>s</code> and <code>t</code> as first and second parameters respectively and returns a list of strings that contains all possible longest common subsequences in lexicographical order.</p>
+<h3 id="expected-time-complexity%3A" tabindex="-1">Expected Time Complexity:</h3>
+<p>O(n<sup>3</sup>)</p>
+<h3 id="expected-space-complexity%3A" tabindex="-1">Expected Space Complexity:</h3>
+<p>O(k * n) where <code>k</code> is a constant less than <code>n</code>.</p>
+<h3 id="constraints%3A" tabindex="-1">Constraints:</h3>
+<ul>
+<li>1 ≤ Length of both strings ≤ 50</li>
+</ul>
+<h4 id="tle" tabindex="-1">TLE</h4>
+<pre class='hljs'><code><div><span class="hljs-comment">//{ Driver Code Starts</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;string&gt; &amp;ans,string &amp;ds,<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp,string s,string t)</span></span>{
+        <span class="hljs-keyword">if</span>(i==<span class="hljs-number">0</span> &amp;&amp; j==<span class="hljs-number">0</span>){
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">begin</span>(ds),<span class="hljs-built_in">end</span>(ds));
+            ans.<span class="hljs-built_in">push_back</span>(ds);
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">begin</span>(ds),<span class="hljs-built_in">end</span>(ds));
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">if</span>(s[i<span class="hljs-number">-1</span>]==t[j<span class="hljs-number">-1</span>]){
+            ds.<span class="hljs-built_in">push_back</span>(s[i<span class="hljs-number">-1</span>]);
+            <span class="hljs-built_in">recursion</span>(ans,ds,i<span class="hljs-number">-1</span>,j<span class="hljs-number">-1</span>,dp,s,t);
+            ds.<span class="hljs-built_in">pop_back</span>();
+        }
+       <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; dp[i<span class="hljs-number">-1</span>][j] == dp[i][j]) <span class="hljs-built_in">recursion</span>(ans, ds, i<span class="hljs-number">-1</span>, j, dp, s, t);
+    <span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; dp[i][j<span class="hljs-number">-1</span>] == dp[i][j]) <span class="hljs-built_in">recursion</span>(ans, ds, i, j<span class="hljs-number">-1</span>, dp, s, t);
+}
+    }
+    <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">all_longest_common_subsequences</span><span class="hljs-params">(string s, string t)</span> </span>{
+        <span class="hljs-keyword">int</span> n=s.<span class="hljs-built_in">size</span>(),m=t.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt; (m+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++){
+                <span class="hljs-keyword">if</span>(s[i<span class="hljs-number">-1</span>]==t[j<span class="hljs-number">-1</span>]) dp[i][j]=<span class="hljs-number">1</span>+dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];
+                <span class="hljs-keyword">else</span> dp[i][j]=<span class="hljs-built_in">max</span>(dp[i<span class="hljs-number">-1</span>][j],dp[i][j<span class="hljs-number">-1</span>]);
+            }
+        }
+        vector&lt;string&gt; ans;
+        string ds;
+        <span class="hljs-built_in">recursion</span>(ans,ds,n,m,dp,s,t);
+        <span class="hljs-function">set&lt;string&gt; <span class="hljs-title">st</span><span class="hljs-params">(ans.begin(),ans.end())</span></span>;
+        <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">ans2</span><span class="hljs-params">(st.begin(),st.end())</span></span>;
+        <span class="hljs-keyword">return</span> ans2;
+    }
+};
+
+
+<span class="hljs-comment">//{ Driver Code Starts.</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> T;
+    cin &gt;&gt; T;
+    <span class="hljs-keyword">while</span> (T--) {
+        string s, t;
+        cin &gt;&gt; s &gt;&gt; t;
+        Solution ob;
+        vector&lt;string&gt; ans = ob.<span class="hljs-built_in">all_longest_common_subsequences</span>(s, t);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i : ans)
+            cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+        cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+
+</div></code></pre>
+<h4 id="again-tle" tabindex="-1">Again TLE</h4>
+<pre class='hljs'><code><div><span class="hljs-comment">//{ Driver Code Starts</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(vector&lt;vector&lt;set&lt;string&gt;&gt;&gt; &amp;memo,string &amp;ds,<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp,string s,string t,set&lt;string&gt;&amp;temp)</span></span>{
+        <span class="hljs-keyword">if</span>(i==<span class="hljs-number">0</span> &amp;&amp; j==<span class="hljs-number">0</span>){
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">begin</span>(ds),<span class="hljs-built_in">end</span>(ds));
+            temp.<span class="hljs-built_in">insert</span>(ds);
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">begin</span>(ds),<span class="hljs-built_in">end</span>(ds));
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">if</span>(!memo[i][j].<span class="hljs-built_in">empty</span>()) {
+            <span class="hljs-comment">// temp.insert(memo[i][j].begin(),memo[i][j].end());</span>
+            <span class="hljs-comment">// return;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> string &amp;subseq : memo[i][j]) {
+                temp.<span class="hljs-built_in">insert</span>(subseq);
+            }
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">if</span>(s[i<span class="hljs-number">-1</span>]==t[j<span class="hljs-number">-1</span>]){
+            ds.<span class="hljs-built_in">push_back</span>(s[i<span class="hljs-number">-1</span>]);
+            <span class="hljs-built_in">recursion</span>(memo,ds,i<span class="hljs-number">-1</span>,j<span class="hljs-number">-1</span>,dp,s,t,temp);
+            ds.<span class="hljs-built_in">pop_back</span>();
+        }
+       <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; dp[i<span class="hljs-number">-1</span>][j] == dp[i][j]) <span class="hljs-built_in">recursion</span>(memo, ds, i<span class="hljs-number">-1</span>, j, dp, s, t,temp);
+    <span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; dp[i][j<span class="hljs-number">-1</span>] == dp[i][j]) <span class="hljs-built_in">recursion</span>(memo, ds, i, j<span class="hljs-number">-1</span>, dp, s, t,temp);
+        }
+        temp.<span class="hljs-built_in">insert</span>(memo[i][j].<span class="hljs-built_in">begin</span>(),memo[i][j].<span class="hljs-built_in">end</span>());
+    }
+    <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">all_longest_common_subsequences</span><span class="hljs-params">(string s, string t)</span> </span>{
+        <span class="hljs-keyword">int</span> n=s.<span class="hljs-built_in">size</span>(),m=t.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt; (m+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++){
+                <span class="hljs-keyword">if</span>(s[i<span class="hljs-number">-1</span>]==t[j<span class="hljs-number">-1</span>]) dp[i][j]=<span class="hljs-number">1</span>+dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];
+                <span class="hljs-keyword">else</span> dp[i][j]=<span class="hljs-built_in">max</span>(dp[i<span class="hljs-number">-1</span>][j],dp[i][j<span class="hljs-number">-1</span>]);
+            }
+        }
+      
+        string ds;
+        vector&lt;vector&lt;set&lt;string&gt;&gt;&gt; <span class="hljs-built_in">memo</span>(n+<span class="hljs-number">1</span>,vector&lt;set&lt;string&gt;&gt;(m+<span class="hljs-number">1</span>));
+        set&lt;string&gt;temp;
+        <span class="hljs-built_in">recursion</span>(memo,ds,n,m,dp,s,t,temp);
+        <span class="hljs-keyword">return</span> vector&lt;string&gt;(temp.<span class="hljs-built_in">begin</span>(), temp.<span class="hljs-built_in">end</span>());
+    }
+};
+
+
+<span class="hljs-comment">//{ Driver Code Starts.</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> T;
+    cin &gt;&gt; T;
+    <span class="hljs-keyword">while</span> (T--) {
+        string s, t;
+        cin &gt;&gt; s &gt;&gt; t;
+        Solution ob;
+        vector&lt;string&gt; ans = ob.<span class="hljs-built_in">all_longest_common_subsequences</span>(s, t);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i : ans)
+            cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+        cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+</div></code></pre>
+<h3 id="optimized-with-map" tabindex="-1">Optimized with Map</h3>
+<pre class='hljs'><code><div><span class="hljs-comment">//{ Driver Code Starts</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(unordered_map&lt;string,<span class="hljs-keyword">bool</span>&gt; &amp;mp,string &amp;ds,<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> j,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp,string s,string t,set&lt;string&gt;&amp;temp)</span></span>{
+        <span class="hljs-keyword">if</span>(i==<span class="hljs-number">0</span> &amp;&amp; j==<span class="hljs-number">0</span>){
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">begin</span>(ds),<span class="hljs-built_in">end</span>(ds));
+            temp.<span class="hljs-built_in">insert</span>(ds);
+            <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">begin</span>(ds),<span class="hljs-built_in">end</span>(ds));
+            <span class="hljs-keyword">return</span>;
+        }
+        string key=<span class="hljs-built_in">to_string</span>(i)+<span class="hljs-string">&#x27;,&#x27;</span>+<span class="hljs-built_in">to_string</span>(j)+ds;
+        <span class="hljs-keyword">if</span>(mp.<span class="hljs-built_in">find</span>(key)!=mp.<span class="hljs-built_in">end</span>()) <span class="hljs-keyword">return</span>;
+        mp[key]=<span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">if</span>(s[i<span class="hljs-number">-1</span>]==t[j<span class="hljs-number">-1</span>]){
+            ds.<span class="hljs-built_in">push_back</span>(s[i<span class="hljs-number">-1</span>]);
+            <span class="hljs-built_in">recursion</span>(mp,ds,i<span class="hljs-number">-1</span>,j<span class="hljs-number">-1</span>,dp,s,t,temp);
+            ds.<span class="hljs-built_in">pop_back</span>();
+        }
+       <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; dp[i<span class="hljs-number">-1</span>][j] == dp[i][j]) <span class="hljs-built_in">recursion</span>(mp, ds, i<span class="hljs-number">-1</span>, j, dp, s, t,temp);
+    <span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; dp[i][j<span class="hljs-number">-1</span>] == dp[i][j]) <span class="hljs-built_in">recursion</span>(mp, ds, i, j<span class="hljs-number">-1</span>, dp, s, t,temp);
+        }
+    }
+    <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">all_longest_common_subsequences</span><span class="hljs-params">(string s, string t)</span> </span>{
+        <span class="hljs-keyword">int</span> n=s.<span class="hljs-built_in">size</span>(),m=t.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt; (m+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>;j&lt;=m;j++){
+                <span class="hljs-keyword">if</span>(s[i<span class="hljs-number">-1</span>]==t[j<span class="hljs-number">-1</span>]) dp[i][j]=<span class="hljs-number">1</span>+dp[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];
+                <span class="hljs-keyword">else</span> dp[i][j]=<span class="hljs-built_in">max</span>(dp[i<span class="hljs-number">-1</span>][j],dp[i][j<span class="hljs-number">-1</span>]);
+            }
+        }
+      
+        string ds;
+        unordered_map&lt;string,<span class="hljs-keyword">bool</span>&gt; mp;
+        set&lt;string&gt;temp;
+        <span class="hljs-built_in">recursion</span>(mp,ds,n,m,dp,s,t,temp);
+        <span class="hljs-keyword">return</span> vector&lt;string&gt;(temp.<span class="hljs-built_in">begin</span>(), temp.<span class="hljs-built_in">end</span>());
+    }
+};
+
+
+<span class="hljs-comment">//{ Driver Code Starts.</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> T;
+    cin &gt;&gt; T;
+    <span class="hljs-keyword">while</span> (T--) {
+        string s, t;
+        cin &gt;&gt; s &gt;&gt; t;
+        Solution ob;
+        vector&lt;string&gt; ans = ob.<span class="hljs-built_in">all_longest_common_subsequences</span>(s, t);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i : ans)
+            cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+        cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+</div></code></pre>
+<hr>
 <h1 id="maximize-number-of-subsequences-in-a-string" tabindex="-1"><a href="https://leetcode.com/problems/maximize-number-of-subsequences-in-a-string/">Maximize Number of Subsequences in a String</a></h1>
 <hr>
 <p>You are given a <strong>0-indexed</strong> string <code>text</code> and another <strong>0-indexed</strong> string <code>pattern</code> of length <code>2</code>, both of which consist of only lowercase English letters.</p>

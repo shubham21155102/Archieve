@@ -1395,7 +1395,9 @@ public:
     }
 };
 ```
+
 ---
+
 # [**Target Sum**](https://leetcode.com/problems/target-sum/)
 
 ```cpp
@@ -1474,110 +1476,453 @@ A **common subsequence** of two strings is a subsequence that is common to both 
 
 ---
 
-### Raw Solution
-
 ---
+
+### Recursion
 
 ```cpp
-#include <iostream>
-#include <unordered_map>
-#include <vector>
-using namespace std;
-
-void subSequence(string s, int i, string temp, vector<string> &ans, unordered_map<string, vector<string>> &mp)
-{
-    if (i == s.size())
-    {
-        ans.push_back(temp);
-        mp[temp].push_back(temp);
-        return;
+class Solution {
+public:
+    int recursion(int i,int j,string text1,string text2){
+        if(i<0 || j<0) return 0;
+        if(text1[i]==text2[j]) return 1+recursion(i-1,j-1,text1,text2);
+        return max(recursion(i-1,j,text1,text2),recursion(i,j-1,text1,text2));
     }
-    subSequence(s, i + 1, temp + s[i], ans, mp);
-    subSequence(s, i + 1, temp, ans, mp);
-}
-int lcs_recursion(string s1, string s2, int m, int n)
-{
-    if (m == 0 || n == 0)
-        return 0;
-    if (s1[m - 1] == s2[n - 1])
-    {
-        return 1 + lcs_recursion(s1, s2, m - 1, n - 1);
+    int longestCommonSubsequence(string text1, string text2) {
+        int n=text1.size();
+        int m=text2.size();
+        return recursion(n-1,m-1,text1,text2);
     }
-    return max(lcs_recursion(s1, s2, m - 1, n), lcs_recursion(s1, s2, m, n - 1));
-}
-int lcs_d_bottom_up(string s1, string s2, int m, int n)
-{
-    vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
-    for (int i = 1; i <= m; i++)
-    {
-        for (int j = 1; j <= n; j++)
-        {
-            if (s1[i] == s2[j])
-            {
-                dp[m][n] = 1 + dp[m - 1][n - 1];
-            }
-            else
-            {
-                dp[i][j] = max({dp[i - 1][j], dp[i][j - 1]});
-            }
-        }
-    }
-    return dp[m][n];
-}
-int lcs_dp_top_down(string s1, string s2, int m, int n, vector<vector<int>> &dp)
-{
-    if (m == 0 or n == 0)
-        return dp[m][n] = 0;
-    if (dp[m][n] != -1)
-        return dp[m][n];
-    if (s1[m - 1] == s2[n - 1])
-    {
-        return dp[m][n] = 1 + lcs_dp_top_down(s1, s2, m - 1, n - 1, dp);
-    }
-    return dp[m][n] = max(lcs_dp_top_down(s1, s2, m - 1, n, dp), lcs_dp_top_down(s1, s2, m, n - 1, dp));
-}
-int main()
-{
-    string s1 = "GEOGRAPHY";
-    // vector<string> words;
-    // unordered_map<string, vector<string>> mp;
-    // subSequence(s1, 0, "", words, mp);
-    // for (auto x : words)
-    // {
-    //     cout << x << endl;
-    // }
-    s1 = "ABCDGH";
-    string s2 = "AEDFHR";
-    cout << lcs_recursion(s1, s2, s1.size(), s2.size());
-    cout << endl;
-    cout << lcs_d_bottom_up(s1, s2, s1.size(), s2.size());
-    cout << endl;
-    vector<vector<int>> dp(s1.size() + 1, vector<int>(s2.size() + 1, -1));
-    cout << lcs_dp_top_down(s1, s2, s1.size(), s2.size(), dp);
-
-    return 0;
-}
+};
 ```
 
----
+### Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(int i,int j,string text1,string text2,vector<vector<int>> &dp){
+        if(i<0 || j<0) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(text1[i]==text2[j]) return dp[i][j]=1+recursion(i-1,j-1,text1,text2,dp);
+        return dp[i][j]= max(recursion(i-1,j,text1,text2,dp),recursion(i,j-1,text1,text2,dp));
+    }
+    int longestCommonSubsequence(string text1, string text2) {
+        int n=text1.size();
+        int m=text2.size();
+        vector<vector<int>> dp(n,vector<int>(m,-1));
+        return recursion(n-1,m-1,text1,text2,dp);
+    }
+};
+```
+
+### Shifted Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(int i,int j,string text1,string text2,vector<vector<int>> &dp){
+        if(i==0 || j==0) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(text1[i-1]==text2[j-1]) return dp[i][j]=1+recursion(i-1,j-1,text1,text2,dp);
+        return dp[i][j]= max(recursion(i-1,j,text1,text2,dp),recursion(i,j-1,text1,text2,dp));
+    }
+    int longestCommonSubsequence(string text1, string text2) {
+        int n=text1.size();
+        int m=text2.size();
+        vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
+        return recursion(n,m,text1,text2,dp);
+    }
+};
+```
+
+### Why Shifted Memoization
+
+```apache
+1. Why is the memoization array shifted by 1?
+The memoization array is shifted by 1 because the base case of the recursion is when i or j becomes 0. In the recursion, we are using 0-based indexing, so we need to shift the indices by 1 to match the base case of the recursion.
+```
+
+### Tabulation
 
 ```cpp
 class Solution {
 public:
     int longestCommonSubsequence(string text1, string text2) {
-        int m=text1.size();
-        int n=text2.size();
-        vector<vector<int>>dp(m+1,vector<int>(n+1,0));
-        for(int i=1;i<=m;i++){
-            for(int j=1;j<=n;j++){
-                if(text1[i-1]==text2[j-1]) dp[i][j]=dp[i-1][j-1]+1;
-                else dp[i][j]=max({dp[i-1][j],dp[i][j-1]});
+        int n=text1.size();
+        int m=text2.size();
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+        for(int i=0;i<n;i++) dp[i][0]=0;
+        for(int j=0;j<m;j++) dp[0][j]=0;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(text1[i-1]==text2[j-1]) dp[i][j]=1+dp[i-1][j-1];
+                else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
             }
         }
-        return dp[m][n];
+        return dp[n][m];
     }
 };
 ```
+
+### Space Optimized Tabulation
+
+```cpp
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        int n=text1.size();
+        int m=text2.size();
+        vector<int> prev(m+1,0),curr(m+1,0);
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(text1[i-1]==text2[j-1]) curr[j]=1+prev[j-1];
+                else curr[j]=max(prev[j],curr[j-1]);
+            }
+            prev=curr;
+        }
+        return curr[m];
+    }
+};
+```
+
+---
+
+# Print LCS
+
+## Method 1
+
+```cpp
+string findLCS(int n, int m,string &s1, string &s2){
+	vector<vector<int>> dp(n+1,vector<int> (m+1,0));
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			if(s1[i-1]==s2[j-1]) dp[i][j]=1+dp[i-1][j-1];
+			else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+		}
+	}
+	int len=dp[n][m];
+	int i=n,j=m;
+	string ans;
+	int ind=len-1;
+	while(i>0 && j>0){
+        if(s1[i-1]==s2[j-1]){
+		ans.push_back(s1[i-1]);
+		   ind--;
+		   i--;
+		   j--;
+		}
+		else if(dp[i-1][j]>dp[i][j-1]){
+            i--;
+		}
+		else {
+           j--;
+		}
+	}
+	reverse(begin(ans),end(ans));
+	return ans;
+}
+```
+
+## Method 2
+
+```cpp
+string findLCS(int n, int m,string &s1, string &s2){
+	vector<vector<int>> dp(n+1,vector<int> (m+1,0));
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			if(s1[i-1]==s2[j-1]) dp[i][j]=1+dp[i-1][j-1];
+			else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+		}
+	}
+	int len=dp[n][m];
+	int i=n,j=m;
+	string ans(len,'-');
+	int ind=len-1;
+	while(i>0 && j>0){
+        if(s1[i-1]==s2[j-1]){
+           ans[ind]=s1[i-1];
+		   ind--;
+		   i--;
+		   j--;
+		}
+		else if(dp[i-1][j]>dp[i][j-1]){
+            i--;
+		}
+		else {
+           j--;
+		}
+	}
+	return ans;
+}
+```
+
+---
+
+# [**Print all LCS sequences**](https://www.geeksforgeeks.org/problems/print-all-lcs-sequences3413/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=practice_card)
+
+You are given two strings `s` and `t`. Now your task is to print all longest common subsequences in lexicographical order.
+
+> **Note:** A subsequence is derived from another string by deleting some or none of the elements without changing the order of the remaining elements.
+
+### Example 1:
+
+**Input:**  
+`s = abaaa`  
+`t = baabaca`
+
+**Output:**
+
+```plaintext
+aaaa
+abaa
+baaa
+```
+
+**Explanation:**  
+Length of LCS is 4. In lexicographical order, the longest common subsequences are:  
+`aaaa, abaa, baaa`
+
+### Example 2:
+
+**Input:**  
+`s = aaa`  
+`t = a`
+
+**Output:**
+
+```plaintext
+a
+```
+
+### Your Task:
+
+You do not need to read or print anything. Your task is to complete the function `all_longest_common_subsequences()` which takes strings `s` and `t` as first and second parameters respectively and returns a list of strings that contains all possible longest common subsequences in lexicographical order.
+
+### Expected Time Complexity:
+
+O(n<sup>3</sup>)
+
+### Expected Space Complexity:
+
+O(k \* n) where `k` is a constant less than `n`.
+
+### Constraints:
+
+- 1 ≤ Length of both strings ≤ 50
+
+#### TLE
+
+```cpp
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public:
+    void recursion(vector<string> &ans,string &ds,int i,int j,vector<vector<int>> &dp,string s,string t){
+        if(i==0 && j==0){
+            reverse(begin(ds),end(ds));
+            ans.push_back(ds);
+            reverse(begin(ds),end(ds));
+            return;
+        }
+        if(s[i-1]==t[j-1]){
+            ds.push_back(s[i-1]);
+            recursion(ans,ds,i-1,j-1,dp,s,t);
+            ds.pop_back();
+        }
+       else {
+    if (i > 0 && dp[i-1][j] == dp[i][j]) recursion(ans, ds, i-1, j, dp, s, t);
+    if (j > 0 && dp[i][j-1] == dp[i][j]) recursion(ans, ds, i, j-1, dp, s, t);
+}
+    }
+    vector<string> all_longest_common_subsequences(string s, string t) {
+        int n=s.size(),m=t.size();
+        vector<vector<int>> dp(n+1,vector<int> (m+1,0));
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s[i-1]==t[j-1]) dp[i][j]=1+dp[i-1][j-1];
+                else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        vector<string> ans;
+        string ds;
+        recursion(ans,ds,n,m,dp,s,t);
+        set<string> st(ans.begin(),ans.end());
+        vector<string> ans2(st.begin(),st.end());
+        return ans2;
+    }
+};
+
+
+//{ Driver Code Starts.
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        string s, t;
+        cin >> s >> t;
+        Solution ob;
+        vector<string> ans = ob.all_longest_common_subsequences(s, t);
+        for (auto i : ans)
+            cout << i << " ";
+        cout << "\n";
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+
+```
+
+#### Again TLE
+
+```cpp
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public:
+    void recursion(vector<vector<set<string>>> &memo,string &ds,int i,int j,vector<vector<int>> &dp,string s,string t,set<string>&temp){
+        if(i==0 && j==0){
+            reverse(begin(ds),end(ds));
+            temp.insert(ds);
+            reverse(begin(ds),end(ds));
+            return;
+        }
+        if(!memo[i][j].empty()) {
+            // temp.insert(memo[i][j].begin(),memo[i][j].end());
+            // return;
+            for (const string &subseq : memo[i][j]) {
+                temp.insert(subseq);
+            }
+            return;
+        }
+        if(s[i-1]==t[j-1]){
+            ds.push_back(s[i-1]);
+            recursion(memo,ds,i-1,j-1,dp,s,t,temp);
+            ds.pop_back();
+        }
+       else {
+    if (i > 0 && dp[i-1][j] == dp[i][j]) recursion(memo, ds, i-1, j, dp, s, t,temp);
+    if (j > 0 && dp[i][j-1] == dp[i][j]) recursion(memo, ds, i, j-1, dp, s, t,temp);
+        }
+        temp.insert(memo[i][j].begin(),memo[i][j].end());
+    }
+    vector<string> all_longest_common_subsequences(string s, string t) {
+        int n=s.size(),m=t.size();
+        vector<vector<int>> dp(n+1,vector<int> (m+1,0));
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s[i-1]==t[j-1]) dp[i][j]=1+dp[i-1][j-1];
+                else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+
+        string ds;
+        vector<vector<set<string>>> memo(n+1,vector<set<string>>(m+1));
+        set<string>temp;
+        recursion(memo,ds,n,m,dp,s,t,temp);
+        return vector<string>(temp.begin(), temp.end());
+    }
+};
+
+
+//{ Driver Code Starts.
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        string s, t;
+        cin >> s >> t;
+        Solution ob;
+        vector<string> ans = ob.all_longest_common_subsequences(s, t);
+        for (auto i : ans)
+            cout << i << " ";
+        cout << "\n";
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+```
+
+### Optimized with Map
+
+```cpp
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public:
+    void recursion(unordered_map<string,bool> &mp,string &ds,int i,int j,vector<vector<int>> &dp,string s,string t,set<string>&temp){
+        if(i==0 && j==0){
+            reverse(begin(ds),end(ds));
+            temp.insert(ds);
+            reverse(begin(ds),end(ds));
+            return;
+        }
+        string key=to_string(i)+','+to_string(j)+ds;
+        if(mp.find(key)!=mp.end()) return;
+        mp[key]=true;
+        if(s[i-1]==t[j-1]){
+            ds.push_back(s[i-1]);
+            recursion(mp,ds,i-1,j-1,dp,s,t,temp);
+            ds.pop_back();
+        }
+       else {
+    if (i > 0 && dp[i-1][j] == dp[i][j]) recursion(mp, ds, i-1, j, dp, s, t,temp);
+    if (j > 0 && dp[i][j-1] == dp[i][j]) recursion(mp, ds, i, j-1, dp, s, t,temp);
+        }
+    }
+    vector<string> all_longest_common_subsequences(string s, string t) {
+        int n=s.size(),m=t.size();
+        vector<vector<int>> dp(n+1,vector<int> (m+1,0));
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s[i-1]==t[j-1]) dp[i][j]=1+dp[i-1][j-1];
+                else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+
+        string ds;
+        unordered_map<string,bool> mp;
+        set<string>temp;
+        recursion(mp,ds,n,m,dp,s,t,temp);
+        return vector<string>(temp.begin(), temp.end());
+    }
+};
+
+
+//{ Driver Code Starts.
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        string s, t;
+        cin >> s >> t;
+        Solution ob;
+        vector<string> ans = ob.all_longest_common_subsequences(s, t);
+        for (auto i : ans)
+            cout << i << " ";
+        cout << "\n";
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+```
+
+---
 
 # [Maximize Number of Subsequences in a String](https://leetcode.com/problems/maximize-number-of-subsequences-in-a-string/)
 
