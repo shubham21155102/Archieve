@@ -1348,7 +1348,7 @@ int recursion(int target,vector<int> &wt,vector<int> &val,int ind,vector<vector<
 
 ---
 
-# [** Coin Change Problem**](https://leetcode.com/problems/coin-change/))
+# [**Coin Change Problem**](https://leetcode.com/problems/coin-change/)
 
 ## Recursion+Memoization
 
@@ -2399,6 +2399,7 @@ public:
 ```
 
 ### Tabulation
+
 ```cpp
 class Solution {
 public:
@@ -2428,6 +2429,7 @@ public:
     }
 };
 ```
+
 ### Space Optimized Tabulation
 
 ```cpp
