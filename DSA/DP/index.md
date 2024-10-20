@@ -1667,8 +1667,8 @@ You are given two strings `s` and `t`. Now your task is to print all longest com
 
 ### Example 1:
 
-**Input:**  
-`s = abaaa`  
+**Input:**
+`s = abaaa`
 `t = baabaca`
 
 **Output:**
@@ -1679,14 +1679,14 @@ abaa
 baaa
 ```
 
-**Explanation:**  
-Length of LCS is 4. In lexicographical order, the longest common subsequences are:  
+**Explanation:**
+Length of LCS is 4. In lexicographical order, the longest common subsequences are:
 `aaaa, abaa, baaa`
 
 ### Example 2:
 
-**Input:**  
-`s = aaa`  
+**Input:**
+`s = aaa`
 `t = a`
 
 **Output:**
@@ -1701,7 +1701,7 @@ You do not need to read or print anything. Your task is to complete the function
 
 ### Expected Time Complexity:
 
-O(n<sup>3</sup>)
+O(n `<sup>`3 `</sup>`)
 
 ### Expected Space Complexity:
 
@@ -1924,133 +1924,538 @@ int main() {
 
 ---
 
-# [Maximize Number of Subsequences in a String](https://leetcode.com/problems/maximize-number-of-subsequences-in-a-string/)
+# [**Longest Common Substring**](https://www.geeksforgeeks.org/problems/longest-common-substring1452/1)
+
+```cpp
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public:
+    int longestCommonSubstr(string s, string t) {
+        // your code here
+        int n=s.size();
+        int m=t.size();
+        int ans=0;
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s[i-1]==t[j-1]) {
+                    dp[i][j]=1+dp[i-1][j-1];
+                    ans=max(ans,dp[i][j]);
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string s1, s2;
+        cin >> s1 >> s2;
+        Solution ob;
+
+        cout << ob.longestCommonSubstr(s1, s2) << endl;
+    }
+}
+// } Driver Code Ends
+```
 
 ---
 
-You are given a **0-indexed** string `text` and another **0-indexed** string `pattern` of length `2`, both of which consist of only lowercase English letters.
-
-You can add **either** `pattern[0]` **or** `pattern[1]` anywhere in `text` **exactly once** . Note that the character can be added even at the beginning or at the end of `text`.
-
-Return _the **maximum** number of times_ `pattern` _can occur as a **subsequence** of the modified _`text`.
-
-A **subsequence** is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.
-
----
-
-**Example 1:**
-
-<pre><strong>Input:</strong> text = "abdcdbc", pattern = "ac"
-<strong>Output:</strong> 4
-<strong>Explanation:</strong>
-If we add pattern[0] = 'a' in between text[1] and text[2], we get "ab<u><strong>a</strong></u>dcdbc". Now, the number of times "ac" occurs as a subsequence is 4.
-Some other strings which have 4 subsequences "ac" after adding a character to text are "<u><strong>a</strong></u>abdcdbc" and "abd<u><strong>a</strong></u>cdbc".
-However, strings such as "abdc<u><strong>a</strong></u>dbc", "abd<u><strong>c</strong></u>cdbc", and "abdcdbc<u><strong>c</strong></u>", although obtainable, have only 3 subsequences "ac" and are thus suboptimal.
-It can be shown that it is not possible to get more than 4 subsequences "ac" by adding only one character.
-</pre>
-
----
-
-**Example 2:**
-
-<pre><strong>Input:</strong> text = "aabb", pattern = "ab"
-<strong>Output:</strong> 6
-<strong>Explanation:</strong>
-Some of the strings which can be obtained from text and have 6 subsequences "ab" are "<u><strong>a</strong></u>aabb", "aa<u><strong>a</strong></u>bb", and "aab<u><strong>b</strong></u>b".
-</pre>
-
----
-
-**Constraints:**
-
-- `1 <= text.length <= 10<sup>5</sup>`
-- `pattern.length == 2`
-- `text` and `pattern` consist only of lowercase English letters.
-
----
+# [**Longest Palindromic Subsequence**](https://leetcode.com/problems/longest-palindromic-subsequence/)
 
 ```cpp
 class Solution {
 public:
-    long long Helper(string text, string pattern){
-        vector<int> pfx(text.size(), 0);
-
-        for(int i = 0; i < text.size(); i++) {
-            if(text[i] == pattern[0]) {
-                pfx[i] = 1;
-            }
+    int longestPalindromeSubseq(string s) {
+        string t=s;
+        reverse(begin(t),end(t));
+        int n=s.size();
+        vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int i=1;i<=n;i++){
+          for(int j=1;j<=n;j++){
+            if(s[i-1]==t[j-1]) dp[i][j]=1+dp[i-1][j-1];
+            else dp[i][j]=max({dp[i-1][j],dp[i][j-1]});
+          }
         }
-        // for(int i=0;i<pfx.size();i++){
-        //     cout<<pfx[i]<<" ";
-        // }
-        // cout<<"\n";
-        if(pattern[0]==pattern[1]){
-         int sum=accumulate(begin(pfx),end(pfx),0);
-        //    cout<<sum;
-        if(sum==1) return 0;
-        else {
-            int count_ttl=0;
-            for(int i=0;i<text.size();i++){
-                if(text[i]==pattern[0]) count_ttl++;
-            }
-            long long ans=count_ttl;
-            ans*=(count_ttl-1);
-            return ans/2;
-        }
-        }
-        for(int i = 1; i < pfx.size(); i++) {
-            pfx[i] += pfx[i-1];
-        }
-
-        long long ans = 0;
-        // for(int i=0;i<pfx.size();i++){
-        //     cout<<pfx[i]<<" ";
-        // }
-        // cout<<"\n";
-        for(int i = 0; i < text.size(); i++) {
-            if(text[i] == pattern[1]) {
-                ans += pfx[i];
-            }
-        }
-
-
-
-        // cout<<"\n";
-        return ans;
-    }
-
-    long long maximumSubsequenceCount(string text, string pattern) {
-        string s1 = pattern[0] + text;
-        // string s2 = text + pattern[0];
-        // string s3 = pattern[1] + text;
-        string s4 = text + pattern[1];
-
-        return max({Helper(s1, pattern),Helper(s4, pattern)});
+        return dp[n][n];
     }
 };
 ```
 
 ---
 
+[**Delete Operation for Two Strings**](https://leetcode.com/problems/delete-operation-for-two-strings/)
+
 ```cpp
 class Solution {
 public:
-    long long Helper(string s,char a,char b){
-        long long ans=0LL,first=0LL;
-        for(char c:s){
-            if(c==b) ans+=first;
-            if(c==a)first++;
+    int minDistance(string word1, string word2) {
+        int m=word1.size();
+        int n=word2.size();
+        vector<vector<int>>dp(m+1,vector<int>(n+1,0));
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=n;j++){
+                if(word1[i-1]==word2[j-1]){
+                    dp[i][j]=1+dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
         }
-        return ans;
-    }
+        return m+n-2*dp[m][n];
 
-    long long maximumSubsequenceCount(string text, string pattern) {
-        char first = pattern[0], second = pattern[1];
-        long long option1 = Helper(first + text, first, second);
-        long long option2 = Helper(text + second, first, second);
-        return max(option1, option2);
     }
 };
 ```
 
 ---
+
+# [**Shortest Common Supersequence**](https://leetcode.com/problems/shortest-common-supersequence/)
+
+```cpp
+class Solution {
+public:
+    string shortestCommonSupersequence(string s, string t) {
+        int n=s.size(),m=t.size();
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s[i-1]==t[j-1]) dp[i][j]=1+dp[i-1][j-1];
+                else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        int i=n,j=m;
+        string ans;
+        while(i>0 && j>0){
+           if(s[i-1]==t[j-1]){
+             ans+=s[i-1];
+             i--;
+             j--;
+           }
+           else {
+            if(dp[i-1][j]>dp[i][j-1]){
+                ans+=s[i-1];
+                i--;
+            }
+            else {
+                ans+=t[j-1];
+                j--;
+            }
+           }
+        }
+        while(i>0){
+          ans+=s[i-1];
+          i--;
+        }
+        while(j>0){
+            ans+=t[j-1];
+            j--;
+        }
+        reverse(begin(ans),end(ans));
+        return ans;
+    }
+};
+```
+
+---
+
+# [Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)
+
+### Recursion
+
+```cpp
+class Solution {
+public:
+    int recursion(string s,string t,int i,int j){
+        if(j<0) return 1;
+        if(i<0) return 0;
+        if(s[i]==t[j]){
+            return recursion(s,t,i-1,j-1)+recursion(s,t,i-1,j);
+        }
+        return recursion(s,t,i-1,j);
+    }
+    int numDistinct(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        return recursion(s,t,n-1,m-1);
+    }
+};
+```
+
+### Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(string s,string t,int i,int j,vector<vector<int>> &dp){
+        if(j<0) return 1;
+        if(i<0) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(s[i]==t[j]){
+            return dp[i][j]=recursion(s,t,i-1,j-1,dp)+recursion(s,t,i-1,j,dp);
+        }
+        return dp[i][j]=recursion(s,t,i-1,j,dp);
+    }
+    int numDistinct(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<vector<int>> dp(n,vector<int>(m,-1));
+        return recursion(s,t,n-1,m-1,dp);
+    }
+};
+```
+
+### Shifted Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(string s,string t,int i,int j,vector<vector<int>> &dp){
+        if(j==0) return 1;
+        if(i==0) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(s[i-1]==t[j-1]){
+            return dp[i][j]=recursion(s,t,i-1,j-1,dp)+recursion(s,t,i-1,j,dp);
+        }
+        return dp[i][j]=recursion(s,t,i-1,j,dp);
+    }
+    int numDistinct(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
+        return recursion(s,t,n,m,dp);
+    }
+};
+```
+
+### Tabulation
+
+```cpp
+class Solution {
+public:
+    int numDistinct(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<vector<double>> dp(n+1,vector<double>(m+1,0));
+        for(int i=0;i<=n;i++) dp[i][0]=1;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s[i-1]==t[j-1]) dp[i][j]=dp[i-1][j-1]+dp[i-1][j];
+                else dp[i][j]=dp[i-1][j];
+            }
+        }
+        return (int)dp[n][m];
+    }
+};
+```
+
+### Space Optimized Tabulation
+
+```cpp
+class Solution {
+public:
+    int numDistinct(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<double> prev(m+1,0),curr(m+1,0);
+        prev[0]=curr[0]=1;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s[i-1]==t[j-1]) curr[j]=prev[j-1]+prev[j];
+                else curr[j]=prev[j];
+            }
+            prev=curr;
+        }
+        return (int)prev[m];
+    }
+};
+```
+
+---
+
+# [Edit Distance](https://leetcode.com/problems/edit-distance/)
+
+### Recursive
+
+```cpp
+class Solution {
+public:
+    int recursion(int i,int j,string s,string t){
+        if(i<0) return j+1;
+        if(j<0) return i+1;
+        if(s[i]==t[j]) return 0+recursion(i-1,j-1,s,t);
+        int insertion=1+recursion(i,j-1,s,t);
+        int deletion=1+recursion(i-1,j,s,t);
+        int replacement=1+recursion(i-1,j-1,s,t);
+        return min({insertion,deletion,replacement});
+    }
+    int minDistance(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        return recursion(n-1,m-1,s,t);
+    }
+};
+```
+
+### Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(int i,int j,string s,string t,vector<vector<int>> &dp){
+        if(i<0) return j+1;
+        if(j<0) return i+1;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(s[i]==t[j]) return dp[i][j]=0+recursion(i-1,j-1,s,t,dp);
+        int insertion=1+recursion(i,j-1,s,t,dp);
+        int deletion=1+recursion(i-1,j,s,t,dp);
+        int replacement=1+recursion(i-1,j-1,s,t,dp);
+        return dp[i][j]=min({insertion,deletion,replacement});
+    }
+    int minDistance(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<vector<int>> dp(n,vector<int>(m,-1));
+        return recursion(n-1,m-1,s,t,dp);
+    }
+};
+```
+
+### Shifted Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(int i,int j,string s,string t,vector<vector<int>> &dp){
+        if(i==0) return j;
+        if(j==0) return i;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(s[i-1]==t[j-1]) return dp[i][j]=0+recursion(i-1,j-1,s,t,dp);
+        int insertion=1+recursion(i,j-1,s,t,dp);
+        int deletion=1+recursion(i-1,j,s,t,dp);
+        int replacement=1+recursion(i-1,j-1,s,t,dp);
+        return dp[i][j]=min({insertion,deletion,replacement});
+    }
+    int minDistance(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
+        return recursion(n,m,s,t,dp);
+    }
+};
+```
+
+### Tabulation
+
+```cpp
+class Solution {
+public:
+    int minDistance(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+        for(int i=0;i<=n;i++) dp[i][0]=i;
+        for(int j=0;j<=m;j++) dp[0][j]=j;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                if(s[i-1]==t[j-1]) dp[i][j]=dp[i-1][j-1];
+                else dp[i][j]=min({dp[i-1][j],dp[i][j-1],dp[i-1][j-1]})+1;
+            }
+        }
+        return dp[n][m];
+    }
+};
+```
+
+### Space Optimized Tabulation
+
+```cpp
+class Solution {
+public:
+    int minDistance(string s, string t) {
+        int n=s.size();
+        int m=t.size();
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
+        vector<int> prev(m+1,0),curr(m+1,0);
+        for(int j=0;j<=m;j++) prev[j]=j;
+        for(int i=1;i<=n;i++){
+            curr[0]=i;
+            for(int j=1;j<=m;j++){
+                if(s[i-1]==t[j-1]) curr[j]=prev[j-1];
+                else curr[j]=min({prev[j],curr[j-1],prev[j-1]})+1;
+            }
+            prev=curr;
+        }
+        return prev[m];
+    }
+};
+```
+
+---
+
+# [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)
+
+### Recursion
+
+```cpp
+class Solution {
+public:
+    bool recursion(int i,int j,string p,string s){
+       if(i<0 && j<0) return true;
+       if(i<0 && j>=0) return false;
+       if(j<0 && i>=0) {
+        for(int x=0;x<=i;x++){
+            if(p[x]!='*') return false;
+        }
+        return true;
+       }
+       if(p[i]==s[j] || p[i]=='?') return recursion(i-1,j-1,p,s);
+       if(p[i]=='*'){
+        return recursion(i-1,j,p,s) || recursion(i,j-1,p,s);
+       }
+       return false;
+    }
+    bool isMatch(string s, string p) {
+        int n=s.size();
+        int m=p.size();
+        return recursion(m-1,n-1,p,s);
+    }
+};
+```
+
+### Memoization
+
+###### MLE(Memory Limit Exceeded)
+
+```cpp
+class Solution {
+public:
+    bool recursion(int i,int j,string p,string s,vector<vector<int>> &dp){
+       if(i<0 && j<0) return true;
+       if(i<0 && j>=0) return false;
+       if(j<0 && i>=0) {
+        for(int x=0;x<=i;x++){
+            if(p[x]!='*') return false;
+        }
+        return true;
+       }
+       if(dp[i][j]!=-1) return dp[i][j]==1;
+       if(p[i]==s[j] || p[i]=='?') return dp[i][j]=recursion(i-1,j-1,p,s,dp);
+       if(p[i]=='*'){
+        return dp[i][j]=(recursion(i-1,j,p,s,dp) || recursion(i,j-1,p,s,dp));
+       }
+       return dp[i][j]=false;
+    }
+    bool isMatch(string s, string p) {
+        int n=s.size();
+        int m=p.size();
+        vector<vector<int>> dp(m,vector<int> (n,-1));
+        return recursion(m-1,n-1,p,s,dp);
+    }
+};
+```
+
+### Shifted Memoization
+
+#### MLE(Memory Limit Exceeded)
+
+```cpp
+class Solution {
+public:
+    bool recursion(int i,int j,string p,string s,vector<vector<int>> &dp){
+       if(i==0 && j==0) return true;
+       if(i==0 && j>0) return false;
+       if(j==0 && i>0) {
+        for(int x=0;x<i;x++){
+            if(p[x]!='*') return false;
+        }
+        return true;
+       }
+       if(dp[i][j]!=-1) return dp[i][j]==1;
+       if(p[i-1]==s[j-1] || p[i-1]=='?') return dp[i][j]=recursion(i-1,j-1,p,s,dp);
+       if(p[i-1]=='*'){
+        return dp[i][j]=(recursion(i-1,j,p,s,dp) || recursion(i,j-1,p,s,dp));
+       }
+       return dp[i][j]=false;
+    }
+    bool isMatch(string s, string p) {
+        int n=s.size();
+        int m=p.size();
+        vector<vector<int>> dp(m+1,vector<int> (n+1,-1));
+        return recursion(m,n,p,s,dp);
+    }
+};
+```
+
+### Tabulation
+```cpp
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int n=s.size();
+        int m=p.size();
+        vector<vector<bool>> dp(m+1,vector<bool> (n+1,0));
+        dp[0][0]=true;
+        for(int j=1;j<=n;j++) dp[0][j]=false;
+        for(int i=1;i<=m;i++){
+            int flag=true;
+            for(int x=0;x<i;x++){
+                if(p[x]!='*') {
+                    flag=false;
+                    break;
+                }
+            }
+             dp[i][0]=flag;
+        }
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=n;j++){
+                if(p[i-1]==s[j-1] || p[i-1]=='?') dp[i][j]=dp[i-1][j-1];
+                if(p[i-1]=='*') dp[i][j]= (dp[i-1][j] || dp[i][j-1]);
+            }
+        }
+        return dp[m][n];
+    }
+};
+```
+### Space Optimized Tabulation
+
+```cpp
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int m=p.size();
+        int n=s.size();
+        vector<bool> prev(n+1,0),curr(n+1,0);
+        prev[0]=1;
+        for(int j=1;j<=n;j++) prev[j]=false;
+        for(int i=1;i<=m;i++){
+            bool flag=true;
+            for(int x=1;x<=i;x++){
+                if(p[x-1]!='*') {
+                    flag=false;
+                    break;
+                }
+            }
+             curr[0]=flag;
+            for(int j=1;j<=n;j++){
+                if(p[i-1]==s[j-1] || p[i-1]=='?') curr[j]=prev[j-1];
+                else if(p[i-1]=='*') curr[j]= (prev[j] || curr[j-1]);
+                else curr[j]=false;
+            }
+            prev=curr;
+        }
+        return prev[n];
+    }
+};
+```
