@@ -1474,7 +1474,7 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
             ds.<span class="hljs-built_in">pop_back</span>();
             vis[i][j]=<span class="hljs-literal">false</span>;
         }
-      
+
     }
     <span class="hljs-function">vector&lt;string&gt; <span class="hljs-title">findPath</span><span class="hljs-params">(vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;mat)</span> </span>{
         <span class="hljs-comment">// Your code goes here</span>
@@ -1579,6 +1579,53 @@ set&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;ans;
             fact/=numbers.<span class="hljs-built_in">size</span>();
         }
         <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
+<h1 id="largest-time-for-given-digits" tabindex="-1"><a href="https://leetcode.com/problems/largest-time-for-given-digits/"> Largest Time for Given Digits</a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> ind,vector&lt;string&gt; &amp;ans,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;arr)</span></span>{
+        <span class="hljs-keyword">if</span>(ind==arr.<span class="hljs-built_in">size</span>()) {
+            string ds=<span class="hljs-string">&quot;&quot;</span>;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it:arr){
+                <span class="hljs-keyword">char</span> x=it+<span class="hljs-string">&#x27;0&#x27;</span>;
+                ds+=x;
+            }
+            ans.<span class="hljs-built_in">push_back</span>(ds);
+        }
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=ind;i&lt;arr.<span class="hljs-built_in">size</span>();i++){
+            <span class="hljs-built_in">swap</span>(arr[i],arr[ind]);
+            <span class="hljs-built_in">recursion</span>(ind+<span class="hljs-number">1</span>,ans,arr);
+            <span class="hljs-built_in">swap</span>(arr[i],arr[ind]);
+        }
+        
+    }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isPossible</span><span class="hljs-params">(string temp)</span></span>{
+        <span class="hljs-keyword">int</span> a=temp[<span class="hljs-number">0</span>]-<span class="hljs-string">&#x27;0&#x27;</span>;
+        <span class="hljs-keyword">int</span> b=temp[<span class="hljs-number">1</span>]-<span class="hljs-string">&#x27;0&#x27;</span>;
+        <span class="hljs-keyword">int</span> c=temp[<span class="hljs-number">2</span>]-<span class="hljs-string">&#x27;0&#x27;</span>;
+        <span class="hljs-keyword">int</span> d=temp[<span class="hljs-number">3</span>]-<span class="hljs-string">&#x27;0&#x27;</span>;
+        <span class="hljs-keyword">if</span>(a&gt;<span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">if</span>(b&gt;<span class="hljs-number">3</span> &amp;&amp; a==<span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">if</span>(c&gt;<span class="hljs-number">5</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-function">string <span class="hljs-title">largestTimeFromDigits</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr)</span> </span>{
+        string ds=<span class="hljs-string">&quot;&quot;</span>;
+        vector&lt;string&gt;ans;
+        <span class="hljs-built_in">recursion</span>(<span class="hljs-number">0</span>,ans,arr);
+        <span class="hljs-built_in">sort</span>(<span class="hljs-built_in">rbegin</span>(ans),<span class="hljs-built_in">rend</span>(ans));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;ans.<span class="hljs-built_in">size</span>();i++){
+            cout&lt;&lt;ans[i];
+            cout&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isPossible</span>(ans[i])){
+                string x=ans[i].<span class="hljs-built_in">substr</span>(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>);
+                string y=ans[i].<span class="hljs-built_in">substr</span>(<span class="hljs-number">2</span>,<span class="hljs-number">2</span>);
+                <span class="hljs-keyword">return</span> (x+<span class="hljs-string">&#x27;:&#x27;</span>+y);
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;                                      
     }
 };
 </div></code></pre>
