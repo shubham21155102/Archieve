@@ -2561,6 +2561,551 @@ Length of LCS is 4. In lexicographical order, the longest common subsequences ar
     }
 };
 </div></code></pre>
+<hr>
+<h1 id="dp-on-stocks" tabindex="-1">DP on Stocks</h1>
+<hr>
+<h1 id="best-time-to-buy-and-sell-stock" tabindex="-1"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"><strong>Best Time to Buy and Sell Stock</strong></a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> mini=INT_MAX;
+        <span class="hljs-keyword">int</span> ans=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;prices.<span class="hljs-built_in">size</span>();i++){
+            ans=<span class="hljs-built_in">max</span>(ans,prices[i]-mini);
+            mini=<span class="hljs-built_in">min</span>(mini,prices[i]);
+        }
+        <span class="hljs-keyword">return</span> ans;
+    }
+};
+</div></code></pre>
+<hr>
+<h1 id="best-time-to-buy-and-sell-stock-ii" tabindex="-1"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/"><strong>Best Time to Buy and Sell Stock II</strong></a></h1>
+<h3 id="recursive-1" tabindex="-1">Recursive</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">bool</span> buy,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;prices)</span></span>{
+        <span class="hljs-keyword">if</span>(i==n) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(buy){
+             <span class="hljs-comment">// buying here iska matlab pesa jayega</span>
+            <span class="hljs-keyword">int</span> take=-prices[i]+<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,n,<span class="hljs-literal">false</span>,prices); <span class="hljs-comment">//profit</span>
+            <span class="hljs-keyword">int</span> notTake=<span class="hljs-number">0</span>+<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,n,<span class="hljs-literal">true</span>,prices);
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(take,notTake);
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// selling here iska matlab pesa aayega</span>
+            <span class="hljs-keyword">int</span> take=prices[i]+<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,n,<span class="hljs-literal">true</span>,prices);  <span class="hljs-comment">//profit</span>
+            <span class="hljs-keyword">int</span> notTake=<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,n,<span class="hljs-literal">false</span>,prices);
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(take,notTake);
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(<span class="hljs-number">0</span>,n,<span class="hljs-literal">true</span>,prices);
+    }
+};
+### Memoization
+```cpp
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">bool</span> buy,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;prices,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(i==n) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(dp[i][buy]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[i][buy];
+        <span class="hljs-keyword">if</span>(buy){
+             <span class="hljs-comment">// buying here iska matlab pesa jayega</span>
+            <span class="hljs-keyword">int</span> take=-prices[i]+<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,n,<span class="hljs-literal">false</span>,prices,dp); <span class="hljs-comment">//profit</span>
+            <span class="hljs-keyword">int</span> notTake=<span class="hljs-number">0</span>+<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,n,<span class="hljs-literal">true</span>,prices,dp);
+            <span class="hljs-keyword">return</span> dp[i][buy]=<span class="hljs-built_in">max</span>(take,notTake);
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// selling here iska matlab pesa aayega</span>
+            <span class="hljs-keyword">int</span> take=prices[i]+<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,n,<span class="hljs-literal">true</span>,prices,dp);  <span class="hljs-comment">//profit</span>
+            <span class="hljs-keyword">int</span> notTake=<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,n,<span class="hljs-literal">false</span>,prices,dp);
+            <span class="hljs-keyword">return</span> dp[i][buy]=<span class="hljs-built_in">max</span>(take,notTake);
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">2</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(<span class="hljs-number">0</span>,n,<span class="hljs-literal">true</span>,prices,dp);
+    }
+};
+</div></code></pre>
+<h3 id="tabulation-15" tabindex="-1">Tabulation</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;i--){
+           <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;<span class="hljs-number">2</span>;j++){
+            <span class="hljs-keyword">if</span>(j==<span class="hljs-number">1</span>){
+                <span class="hljs-keyword">int</span> take=-prices[i]+dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">false</span>];
+                <span class="hljs-keyword">int</span> notTake=dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">true</span>];
+                dp[i][j]=<span class="hljs-built_in">max</span>(take,notTake);
+            }
+            <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">int</span> take=prices[i]+dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">true</span>];
+                <span class="hljs-keyword">int</span> notTake=dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">false</span>];
+                dp[i][j]=<span class="hljs-built_in">max</span>(take,notTake);
+            }
+           }
+        }
+        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>];
+    }
+};
+</div></code></pre>
+<h3 id="space-optimized-tabulation-4" tabindex="-1">Space Optimized Tabulation</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">prev</span><span class="hljs-params">(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>)</span>,<span class="hljs-title">curr</span><span class="hljs-params">(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;i--){
+           <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;<span class="hljs-number">2</span>;j++){
+            <span class="hljs-keyword">if</span>(j==<span class="hljs-number">1</span>){
+                <span class="hljs-keyword">int</span> take=-prices[i]+prev[<span class="hljs-literal">false</span>];
+                <span class="hljs-keyword">int</span> notTake=prev[<span class="hljs-literal">true</span>];
+                curr[j]=<span class="hljs-built_in">max</span>(take,notTake);
+            }
+            <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">int</span> take=prices[i]+prev[<span class="hljs-literal">true</span>];
+                <span class="hljs-keyword">int</span> notTake=prev[<span class="hljs-literal">false</span>];
+                curr[j]=<span class="hljs-built_in">max</span>(take,notTake);
+            }
+           }
+           prev=curr;
+        }
+        <span class="hljs-keyword">return</span> prev[<span class="hljs-number">1</span>];
+    }
+};
+</div></code></pre>
+<h1 id="best-time-to-buy-and-sell-stock-iii" tabindex="-1"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/"><strong>Best Time to Buy and Sell Stock III</strong></a></h1>
+<h3 id="recursive-%2B-memoization" tabindex="-1">Recursive + Memoization</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i,<span class="hljs-keyword">bool</span> buy,<span class="hljs-keyword">int</span> cap,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;prices,vector&lt;vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(cap==<span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(i==prices.<span class="hljs-built_in">size</span>()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(dp[i][buy][cap]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[i][buy][cap];
+        <span class="hljs-keyword">if</span>(buy){
+            <span class="hljs-keyword">int</span> take=-prices[i]+<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,<span class="hljs-literal">false</span>,cap,prices,dp);
+            <span class="hljs-keyword">int</span> notTake=<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,<span class="hljs-literal">true</span>,cap,prices,dp);
+            <span class="hljs-keyword">return</span> dp[i][buy][cap]=<span class="hljs-built_in">max</span>(take,notTake);
+        }
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">int</span> take=prices[i]+<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,<span class="hljs-literal">true</span>,cap<span class="hljs-number">-1</span>,prices,dp);
+            <span class="hljs-keyword">int</span> notTake=<span class="hljs-built_in">recursion</span>(i+<span class="hljs-number">1</span>,<span class="hljs-literal">false</span>,cap,prices,dp);
+            <span class="hljs-keyword">return</span> dp[i][buy][cap]=<span class="hljs-built_in">max</span>(take,notTake);
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;(<span class="hljs-number">2</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">3</span>,<span class="hljs-number">-1</span>)));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(<span class="hljs-number">0</span>,<span class="hljs-literal">true</span>,<span class="hljs-number">2</span>,prices,dp);
+    }
+};
+</div></code></pre>
+<h3 id="tabulation-16" tabindex="-1">Tabulation</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n = prices.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span> || n == <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        vector&lt;vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&gt; <span class="hljs-built_in">dp</span>(
+            n + <span class="hljs-number">1</span>, vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;(<span class="hljs-number">2</span>, vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">3</span>, <span class="hljs-number">0</span>)));
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> buy = <span class="hljs-number">0</span>; buy &lt; <span class="hljs-number">2</span>; buy++) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> cap = <span class="hljs-number">1</span>; cap &lt;=<span class="hljs-number">2</span>; cap++) {
+                    <span class="hljs-keyword">if</span> (buy) {
+                        <span class="hljs-keyword">int</span> take = -prices[i] + dp[i + <span class="hljs-number">1</span>][<span class="hljs-literal">false</span>][cap];
+                        <span class="hljs-keyword">int</span> notTake = dp[i + <span class="hljs-number">1</span>][<span class="hljs-literal">true</span>][cap];
+                        dp[i][buy][cap] = <span class="hljs-built_in">max</span>(take, notTake);
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-keyword">int</span> take = prices[i] + dp[i + <span class="hljs-number">1</span>][<span class="hljs-literal">true</span>][cap - <span class="hljs-number">1</span>];
+                        <span class="hljs-keyword">int</span> notTake = dp[i + <span class="hljs-number">1</span>][<span class="hljs-literal">false</span>][cap];
+                        dp[i][buy][cap] = <span class="hljs-built_in">max</span>(take, notTake);
+                    }
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>][<span class="hljs-number">2</span>];
+    }
+};
+</div></code></pre>
+<h3 id="space-optimized-tabulation-5" tabindex="-1">Space Optimized Tabulation</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n = prices.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span> || n == <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">prev</span>(<span class="hljs-number">2</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">3</span>,<span class="hljs-number">0</span>)),<span class="hljs-built_in">curr</span>(<span class="hljs-number">2</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">3</span>,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> buy = <span class="hljs-number">0</span>; buy &lt; <span class="hljs-number">2</span>; buy++) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> cap = <span class="hljs-number">1</span>; cap &lt;=<span class="hljs-number">2</span>; cap++) {
+                    <span class="hljs-keyword">if</span> (buy) {
+                        <span class="hljs-keyword">int</span> take = -prices[i] + prev[<span class="hljs-literal">false</span>][cap];
+                        <span class="hljs-keyword">int</span> notTake = prev[<span class="hljs-literal">true</span>][cap];
+                        curr[buy][cap] = <span class="hljs-built_in">max</span>(take, notTake);
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-keyword">int</span> take = prices[i] + prev[<span class="hljs-literal">true</span>][cap - <span class="hljs-number">1</span>];
+                        <span class="hljs-keyword">int</span> notTake = prev[<span class="hljs-literal">false</span>][cap];
+                        curr[buy][cap] = <span class="hljs-built_in">max</span>(take, notTake);
+                    }
+                }
+            }
+            prev=curr;
+        }
+        <span class="hljs-keyword">return</span> prev[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>];
+    }
+};
+</div></code></pre>
+<h3 id="best-optimized" tabindex="-1">Best Optimized</h3>
+<h5 id="memoization-" tabindex="-1">Memoization-</h5>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> ind,<span class="hljs-keyword">int</span> ts,<span class="hljs-keyword">int</span> n,vector&lt;<span class="hljs-keyword">int</span>&gt;&amp;prices,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp;dp)</span>
+</span>{
+    <span class="hljs-comment">//base cases</span>
+    <span class="hljs-keyword">if</span>(ind == n || ts ==<span class="hljs-number">4</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span>(dp[ind][ts] !=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[ind][ts];
+    <span class="hljs-keyword">if</span>(ts%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>)
+    {
+        <span class="hljs-keyword">return</span> dp[ind][ts] = <span class="hljs-built_in">max</span>(-prices[ind]+<span class="hljs-built_in">f</span>(ind+<span class="hljs-number">1</span>,ts+<span class="hljs-number">1</span>,n,prices,dp),<span class="hljs-built_in">f</span>(ind+<span class="hljs-number">1</span>,ts,n,prices,dp));
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        <span class="hljs-keyword">return</span> dp[ind][ts] = <span class="hljs-built_in">max</span>(prices[ind]+<span class="hljs-built_in">f</span>(ind+<span class="hljs-number">1</span>,ts+<span class="hljs-number">1</span>,n,prices,dp),<span class="hljs-built_in">f</span>(ind+<span class="hljs-number">1</span>,ts,n,prices,dp));
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-comment">// Write your code here.</span>
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">4</span>,<span class="hljs-number">-1</span>));
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">f</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,n,prices,dp);
+}
+</div></code></pre>
+<h5 id="tabulation-----" tabindex="-1">Tabulation-----</h5>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-comment">// Write your code here.</span>
+    vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;<span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">5</span>,<span class="hljs-number">-1</span>));
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;=<span class="hljs-number">4</span>;i++)
+    {
+        dp[n][i] = <span class="hljs-number">0</span>;
+    }
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;=n;i++)
+    {
+        dp[i][<span class="hljs-number">4</span>]=<span class="hljs-number">0</span>;
+    }
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> ind=n<span class="hljs-number">-1</span>;ind&gt;=<span class="hljs-number">0</span>;ind--)
+    {
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> ts = <span class="hljs-number">3</span>;ts&gt;=<span class="hljs-number">0</span>;ts--)
+        {
+            <span class="hljs-keyword">if</span>(ts%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>)
+            {
+                dp[ind][ts] = <span class="hljs-built_in">max</span>(-prices[ind]+dp[ind+<span class="hljs-number">1</span>][ts+<span class="hljs-number">1</span>],dp[ind+<span class="hljs-number">1</span>][ts]);
+            }
+            <span class="hljs-keyword">else</span>
+            {
+                dp[ind][ts] = <span class="hljs-built_in">max</span>(prices[ind]+dp[ind+<span class="hljs-number">1</span>][ts+<span class="hljs-number">1</span>],dp[ind+<span class="hljs-number">1</span>][ts]);
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];
+}
+</div></code></pre>
+<h5 id="1-d-space-optimisation-------" tabindex="-1">1-D Space Optimisation-------</h5>
+<pre class='hljs'><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices, <span class="hljs-keyword">int</span> n)</span>
+</span>{
+    <span class="hljs-comment">// Write your code here.</span>
+   vector&lt;<span class="hljs-keyword">int</span>&gt;<span class="hljs-built_in">ahead</span>(<span class="hljs-number">5</span>,<span class="hljs-number">-1</span>),<span class="hljs-built_in">cur</span>(<span class="hljs-number">5</span>,<span class="hljs-number">-1</span>);
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;=<span class="hljs-number">4</span>;i++)
+    {
+        ahead[i] = <span class="hljs-number">0</span>;
+    }
+    cur[<span class="hljs-number">4</span>]=<span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> ind=n<span class="hljs-number">-1</span>;ind&gt;=<span class="hljs-number">0</span>;ind--)
+    {
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> ts = <span class="hljs-number">3</span>;ts&gt;=<span class="hljs-number">0</span>;ts--)
+        {
+            <span class="hljs-keyword">if</span>(ts%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>)
+            {
+                cur[ts] = <span class="hljs-built_in">max</span>(-prices[ind]+ahead[ts+<span class="hljs-number">1</span>],ahead[ts]);
+            }
+            <span class="hljs-keyword">else</span>
+            {
+                cur[ts] = <span class="hljs-built_in">max</span>(prices[ind]+ahead[ts+<span class="hljs-number">1</span>],ahead[ts]);
+            }
+        }
+        ahead = cur;
+    }
+    <span class="hljs-keyword">return</span> ahead[<span class="hljs-number">0</span>];
+}
+</div></code></pre>
+<h1 id="best-time-to-buy-and-sell-stock-iv" tabindex="-1"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/">Best Time to Buy and Sell Stock IV</a></h1>
+<h3 id="direct-tabulation-with-previous-learned-concepts" tabindex="-1">Direct Tabulation with previous learned concepts</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> k, vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt;(<span class="hljs-number">2</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(k+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;i--){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> buy=<span class="hljs-number">0</span>;buy&lt;=<span class="hljs-number">1</span>;buy++){
+                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> cap=<span class="hljs-number">1</span>;cap&lt;=k;cap++){
+                    <span class="hljs-keyword">if</span>(buy){
+                        dp[i][buy][cap]=<span class="hljs-built_in">max</span>(-prices[i]+dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">false</span>][cap],dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">true</span>][cap]);
+                    }
+                    <span class="hljs-keyword">else</span> {
+                        dp[i][buy][cap]=<span class="hljs-built_in">max</span>(prices[i]+dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">true</span>][cap<span class="hljs-number">-1</span>],dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">false</span>][cap]);
+                    }
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>][k];
+    }
+};
+</div></code></pre>
+<h1 id="best-time-to-buy-and-sell-stock-with-cooldown" tabindex="-1"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/">Best Time to Buy and Sell Stock with Cooldown</a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">2</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;i--){
+                    dp[i][<span class="hljs-number">1</span>]=<span class="hljs-built_in">max</span>(-prices[i]+dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">false</span>],dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">true</span>]);
+                    dp[i][<span class="hljs-number">0</span>]=<span class="hljs-built_in">max</span>(prices[i]+dp[i+<span class="hljs-number">2</span>][<span class="hljs-literal">true</span>],dp[i+<span class="hljs-number">1</span>][<span class="hljs-literal">false</span>]);
+        }
+        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>];
+    }
+};
+</div></code></pre>
+<h4 id="space-optimized-3" tabindex="-1">Space Optimized</h4>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">next1</span><span class="hljs-params">(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>)</span>,<span class="hljs-title">curr</span><span class="hljs-params">(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>)</span>,<span class="hljs-title">next2</span><span class="hljs-params">(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;i--){
+                    curr[<span class="hljs-number">1</span>]=<span class="hljs-built_in">max</span>(-prices[i]+next1[<span class="hljs-literal">false</span>],next1[<span class="hljs-literal">true</span>]);
+                    curr[<span class="hljs-number">0</span>]=<span class="hljs-built_in">max</span>(prices[i]+next2[<span class="hljs-literal">true</span>],next1[<span class="hljs-literal">false</span>]);
+                    next2=next1;
+                    next1=curr;
+        }
+        <span class="hljs-keyword">return</span> next1[<span class="hljs-number">1</span>];
+    }
+};
+</div></code></pre>
+<h1 id="best-time-to-buy-and-sell-stock-with-transaction-fee" tabindex="-1"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/">Best Time to Buy and Sell Stock with Transaction Fee</a></h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices, <span class="hljs-keyword">int</span> fee)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,vector&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;i--){
+            dp[i][<span class="hljs-number">1</span>]=<span class="hljs-built_in">max</span>(-prices[i]+dp[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>],dp[i+<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]);
+             dp[i][<span class="hljs-number">0</span>]=<span class="hljs-built_in">max</span>(prices[i]+dp[i+<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]-fee,dp[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]);
+        }
+        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>];
+    }
+};
+</div></code></pre>
+<h3 id="space-optimized-4" tabindex="-1">Space Optimized</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; prices, <span class="hljs-keyword">int</span> fee)</span> </span>{
+        <span class="hljs-keyword">int</span> n=prices.<span class="hljs-built_in">size</span>();
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">next</span><span class="hljs-params">(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>)</span>,<span class="hljs-title">curr</span><span class="hljs-params">(<span class="hljs-number">2</span>,<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=n<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;i--){
+            curr[<span class="hljs-number">1</span>]=<span class="hljs-built_in">max</span>(-prices[i]+next[<span class="hljs-number">0</span>],next[<span class="hljs-number">1</span>]);
+            curr[<span class="hljs-number">0</span>]=<span class="hljs-built_in">max</span>(prices[i]+next[<span class="hljs-number">1</span>]-fee,next[<span class="hljs-number">0</span>]);
+            next=curr;
+        }
+        <span class="hljs-keyword">return</span> next[<span class="hljs-number">1</span>];
+    }
+};
+</div></code></pre>
+<hr>
+<h1 id="dp-on-lis" tabindex="-1">DP on LIS</h1>
+<hr>
+<h1 id="longest-increasing-subsequence" tabindex="-1"><a href="https://leetcode.com/problems/longest-increasing-subsequence/"><strong>Longest Increasing Subsequence</strong></a></h1>
+<h3 id="recursive-2" tabindex="-1">Recursive</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> idx,<span class="hljs-keyword">int</span> prevIdx,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums)</span></span>{
+        <span class="hljs-keyword">if</span>(idx==nums.<span class="hljs-built_in">size</span>()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> notTake=<span class="hljs-built_in">recursion</span>(idx+<span class="hljs-number">1</span>,prevIdx,nums);
+        <span class="hljs-keyword">int</span> take=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(prevIdx==<span class="hljs-number">-1</span> || nums[idx]&gt;nums[prevIdx]) take=<span class="hljs-number">1</span>+<span class="hljs-built_in">recursion</span>(idx+<span class="hljs-number">1</span>,idx,nums);
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(take,notTake);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>,nums);
+    }
+};
+</div></code></pre>
+<h3 id="memoization-9" tabindex="-1">Memoization</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recursion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> idx,<span class="hljs-keyword">int</span> prevIdx,vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;nums,vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; &amp;dp)</span></span>{
+        <span class="hljs-keyword">if</span>(idx==nums.<span class="hljs-built_in">size</span>()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(dp[idx][prevIdx+<span class="hljs-number">1</span>]!=<span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[idx][prevIdx+<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">int</span> notTake=<span class="hljs-built_in">recursion</span>(idx+<span class="hljs-number">1</span>,prevIdx,nums,dp);
+        <span class="hljs-keyword">int</span> take=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span>(prevIdx==<span class="hljs-number">-1</span> || nums[idx]&gt;nums[prevIdx]) take=<span class="hljs-number">1</span>+<span class="hljs-built_in">recursion</span>(idx+<span class="hljs-number">1</span>,idx,nums,dp);
+        <span class="hljs-keyword">return</span> dp[idx][prevIdx+<span class="hljs-number">1</span>]=<span class="hljs-built_in">max</span>(take,notTake);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+        <span class="hljs-keyword">int</span> n=nums.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,vector&lt;<span class="hljs-keyword">int</span>&gt;(n+<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>));
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">recursion</span>(<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>,nums,dp);
+    }
+};
+</div></code></pre>
+<h3 id="tabulation-17" tabindex="-1">Tabulation</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+        <span class="hljs-keyword">int</span> n = nums.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>, vector&lt;<span class="hljs-keyword">int</span>&gt;(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> idx = n - <span class="hljs-number">1</span>; idx &gt;= <span class="hljs-number">0</span>; idx--) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> prevIdx = idx<span class="hljs-number">-1</span>; prevIdx &gt;= <span class="hljs-number">-1</span>; prevIdx--) {
+                <span class="hljs-keyword">int</span> notTake = dp[idx + <span class="hljs-number">1</span>][prevIdx+<span class="hljs-number">1</span>];
+                <span class="hljs-keyword">int</span> take = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">if</span> (prevIdx == <span class="hljs-number">-1</span> || nums[idx] &gt; nums[prevIdx])
+                    take = <span class="hljs-number">1</span> + dp[idx + <span class="hljs-number">1</span>][idx+<span class="hljs-number">1</span>] ;
+                dp[idx][prevIdx + <span class="hljs-number">1</span>] =<span class="hljs-built_in">max</span>(take, notTake);
+            }
+        }
+        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];
+    }
+};
+</div></code></pre>
+<h3 id="space-optimised-tabulation" tabindex="-1">Space Optimised Tabulation</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+        <span class="hljs-keyword">int</span> n = nums.<span class="hljs-built_in">size</span>();
+        vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>, vector&lt;<span class="hljs-keyword">int</span>&gt;(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">next</span><span class="hljs-params">(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)</span>,<span class="hljs-title">curr</span><span class="hljs-params">(n+<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> idx = n - <span class="hljs-number">1</span>; idx &gt;= <span class="hljs-number">0</span>; idx--) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> prevIdx = idx<span class="hljs-number">-1</span>; prevIdx &gt;= <span class="hljs-number">-1</span>; prevIdx--) {
+                <span class="hljs-keyword">int</span> notTake = next[prevIdx+<span class="hljs-number">1</span>];
+                <span class="hljs-keyword">int</span> take = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">if</span> (prevIdx == <span class="hljs-number">-1</span> || nums[idx] &gt; nums[prevIdx])
+                    take = <span class="hljs-number">1</span> + next[idx+<span class="hljs-number">1</span>] ;
+                curr[prevIdx + <span class="hljs-number">1</span>] =<span class="hljs-built_in">max</span>(take, notTake);
+            }
+            next=curr;
+        }
+        <span class="hljs-keyword">return</span> next[<span class="hljs-number">0</span>];
+    }
+};
+</div></code></pre>
+<h3 id="best-optimized-1" tabindex="-1">Best Optimized</h3>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+        <span class="hljs-keyword">int</span> n = nums.<span class="hljs-built_in">size</span>();
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(n+<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)</span></span>;
+        <span class="hljs-keyword">int</span> maxi=<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> prev=<span class="hljs-number">0</span>;prev&lt;i;prev++){
+                 <span class="hljs-keyword">if</span>(nums[prev]&lt;nums[i]){
+                    dp[i]=<span class="hljs-built_in">max</span>(dp[i],<span class="hljs-number">1</span>+dp[prev]);
+                 }
+            }
+            maxi=<span class="hljs-built_in">max</span>(maxi,dp[i]);
+        }
+        <span class="hljs-keyword">return</span> maxi;
+    }
+};
+</div></code></pre>
+<h1 id="print-longest-increasing-subsequence" tabindex="-1"><a href="https://www.geeksforgeeks.org/problems/printing-longest-increasing-subsequence/1">Print Longest Increasing Subsequence</a></h1>
+<pre class='hljs'><code><div><span class="hljs-comment">//{ Driver Code Starts</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
+
+
+<span class="hljs-comment">// } Driver Code Ends</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">longestIncreasingSubsequence</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr)</span> </span>{
+        <span class="hljs-comment">// Code here</span>
+        vector&lt;<span class="hljs-keyword">int</span>&gt; ans;
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(n,<span class="hljs-number">1</span>)</span></span>;
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">hash</span><span class="hljs-params">(n,<span class="hljs-number">0</span>)</span></span>;
+        <span class="hljs-keyword">int</span> lastIndex=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> maxi=<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++){
+            hash[i]=i;
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> prev=<span class="hljs-number">0</span>;prev&lt;i;prev++){
+                <span class="hljs-keyword">if</span>(arr[i]&gt;arr[prev] &amp;&amp; <span class="hljs-number">1</span>+dp[prev]&gt;dp[i]){
+                    dp[i]=<span class="hljs-number">1</span>+dp[prev];
+                    hash[i]=prev;
+                }
+            }
+            <span class="hljs-keyword">if</span>(dp[i]&gt;maxi){
+                maxi=dp[i];
+                lastIndex=i;
+            }
+        }
+        vector&lt;<span class="hljs-keyword">int</span>&gt; lis;
+        lis.<span class="hljs-built_in">push_back</span>(arr[lastIndex]);
+        <span class="hljs-keyword">int</span> index=<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span>(hash[lastIndex]!=lastIndex){
+            lastIndex=hash[lastIndex];
+            lis.<span class="hljs-built_in">push_back</span>(arr[lastIndex]);
+        }
+        <span class="hljs-built_in">reverse</span>(<span class="hljs-built_in">begin</span>(lis),<span class="hljs-built_in">end</span>(lis));
+        <span class="hljs-keyword">return</span> lis;
+    }
+};
+
+<span class="hljs-comment">//{ Driver Code Starts.</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> t;
+    cin &gt;&gt; t;
+    <span class="hljs-keyword">while</span> (t--) {
+        <span class="hljs-keyword">int</span> N;
+        cin &gt;&gt; N;
+        <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">arr</span><span class="hljs-params">(N)</span></span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+            cin &gt;&gt; arr[i];
+        }
+        Solution obj;
+        vector&lt;<span class="hljs-keyword">int</span>&gt; res = obj.<span class="hljs-built_in">longestIncreasingSubsequence</span>(N, arr);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : res)
+            cout &lt;&lt; x &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;
+        cout &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+<span class="hljs-comment">// } Driver Code Ends</span>
+</div></code></pre>
+<h1 id="lis-using-binary-search" tabindex="-1">LIS using Binary Search</h1>
+<pre class='hljs'><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+        <span class="hljs-keyword">int</span> n = nums.<span class="hljs-built_in">size</span>();
+        vector&lt;<span class="hljs-keyword">int</span>&gt; temp;
+        temp.<span class="hljs-built_in">push_back</span>(nums[<span class="hljs-number">0</span>]);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+            <span class="hljs-keyword">if</span> (nums[i] &gt; temp.<span class="hljs-built_in">back</span>())
+                temp.<span class="hljs-built_in">push_back</span>(nums[i]);
+            <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">int</span> ind =
+                    <span class="hljs-built_in">lower_bound</span>(<span class="hljs-built_in">begin</span>(temp), <span class="hljs-built_in">end</span>(temp), nums[i]) - <span class="hljs-built_in">begin</span>(temp);
+                temp[ind] = nums[i];
+            }
+        }
+        <span class="hljs-keyword">return</span> temp.<span class="hljs-built_in">size</span>();
+    }
+};
+</div></code></pre>
 
     </div>
 </body>

@@ -2461,3 +2461,626 @@ public:
     }
 };
 ```
+
+---
+
+# DP on Stocks
+
+---
+
+# [**Best Time to Buy and Sell Stock**](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int mini=INT_MAX;
+        int ans=0;
+        for(int i=0;i<prices.size();i++){
+            ans=max(ans,prices[i]-mini);
+            mini=min(mini,prices[i]);
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+# [**Best Time to Buy and Sell Stock II**](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
+
+### Recursive
+
+````cpp
+class Solution {
+public:
+    int recursion(int i,int n,bool buy,vector<int> &prices){
+        if(i==n) return 0;
+        if(buy){
+             // buying here iska matlab pesa jayega
+            int take=-prices[i]+recursion(i+1,n,false,prices); //profit
+            int notTake=0+recursion(i+1,n,true,prices);
+            return max(take,notTake);
+        }
+        else {
+            // selling here iska matlab pesa aayega
+            int take=prices[i]+recursion(i+1,n,true,prices);  //profit
+            int notTake=recursion(i+1,n,false,prices);
+            return max(take,notTake);
+        }
+    }
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        return recursion(0,n,true,prices);
+    }
+};
+### Memoization
+```cpp
+class Solution {
+public:
+    int recursion(int i,int n,bool buy,vector<int> &prices,vector<vector<int>> &dp){
+        if(i==n) return 0;
+        if(dp[i][buy]!=-1) return dp[i][buy];
+        if(buy){
+             // buying here iska matlab pesa jayega
+            int take=-prices[i]+recursion(i+1,n,false,prices,dp); //profit
+            int notTake=0+recursion(i+1,n,true,prices,dp);
+            return dp[i][buy]=max(take,notTake);
+        }
+        else {
+            // selling here iska matlab pesa aayega
+            int take=prices[i]+recursion(i+1,n,true,prices,dp);  //profit
+            int notTake=recursion(i+1,n,false,prices,dp);
+            return dp[i][buy]=max(take,notTake);
+        }
+    }
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        vector<vector<int>> dp(n,vector<int>(2,-1));
+        return recursion(0,n,true,prices,dp);
+    }
+};
+````
+
+### Tabulation
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        vector<vector<int>> dp(n+1,vector<int>(2,0));
+        for(int i=n-1;i>=0;i--){
+           for(int j=0;j<2;j++){
+            if(j==1){
+                int take=-prices[i]+dp[i+1][false];
+                int notTake=dp[i+1][true];
+                dp[i][j]=max(take,notTake);
+            }
+            else {
+                int take=prices[i]+dp[i+1][true];
+                int notTake=dp[i+1][false];
+                dp[i][j]=max(take,notTake);
+            }
+           }
+        }
+        return dp[0][1];
+    }
+};
+```
+
+### Space Optimized Tabulation
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        vector<int> prev(2,0),curr(2,0);
+        for(int i=n-1;i>=0;i--){
+           for(int j=0;j<2;j++){
+            if(j==1){
+                int take=-prices[i]+prev[false];
+                int notTake=prev[true];
+                curr[j]=max(take,notTake);
+            }
+            else {
+                int take=prices[i]+prev[true];
+                int notTake=prev[false];
+                curr[j]=max(take,notTake);
+            }
+           }
+           prev=curr;
+        }
+        return prev[1];
+    }
+};
+```
+
+# [**Best Time to Buy and Sell Stock III**](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
+
+### Recursive + Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(int i,bool buy,int cap,vector<int> &prices,vector<vector<vector<int>>> &dp){
+        if(cap==0) return 0;
+        if(i==prices.size()) return 0;
+        if(dp[i][buy][cap]!=-1) return dp[i][buy][cap];
+        if(buy){
+            int take=-prices[i]+recursion(i+1,false,cap,prices,dp);
+            int notTake=recursion(i+1,true,cap,prices,dp);
+            return dp[i][buy][cap]=max(take,notTake);
+        }
+        else {
+            int take=prices[i]+recursion(i+1,true,cap-1,prices,dp);
+            int notTake=recursion(i+1,false,cap,prices,dp);
+            return dp[i][buy][cap]=max(take,notTake);
+        }
+    }
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        vector<vector<vector<int>>> dp(n,vector<vector<int>>(2,vector<int>(3,-1)));
+        return recursion(0,true,2,prices,dp);
+    }
+};
+```
+
+### Tabulation
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        if (n == 0 || n == 1)
+            return 0;
+        vector<vector<vector<int>>> dp(
+            n + 1, vector<vector<int>>(2, vector<int>(3, 0)));
+        for (int i = n - 1; i >= 0; i--) {
+            for (int buy = 0; buy < 2; buy++) {
+                for (int cap = 1; cap <=2; cap++) {
+                    if (buy) {
+                        int take = -prices[i] + dp[i + 1][false][cap];
+                        int notTake = dp[i + 1][true][cap];
+                        dp[i][buy][cap] = max(take, notTake);
+                    } else {
+                        int take = prices[i] + dp[i + 1][true][cap - 1];
+                        int notTake = dp[i + 1][false][cap];
+                        dp[i][buy][cap] = max(take, notTake);
+                    }
+                }
+            }
+        }
+        return dp[0][1][2];
+    }
+};
+```
+
+### Space Optimized Tabulation
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        if (n == 0 || n == 1)
+            return 0;
+        vector<vector<int>> prev(2,vector<int>(3,0)),curr(2,vector<int>(3,0));
+        for (int i = n - 1; i >= 0; i--) {
+            for (int buy = 0; buy < 2; buy++) {
+                for (int cap = 1; cap <=2; cap++) {
+                    if (buy) {
+                        int take = -prices[i] + prev[false][cap];
+                        int notTake = prev[true][cap];
+                        curr[buy][cap] = max(take, notTake);
+                    } else {
+                        int take = prices[i] + prev[true][cap - 1];
+                        int notTake = prev[false][cap];
+                        curr[buy][cap] = max(take, notTake);
+                    }
+                }
+            }
+            prev=curr;
+        }
+        return prev[1][2];
+    }
+};
+```
+
+### Best Optimized
+
+##### Memoization-
+
+```cpp
+int f(int ind,int ts,int n,vector<int>&prices,vector<vector<int>>&dp)
+{
+    //base cases
+    if(ind == n || ts ==4) return 0;
+    if(dp[ind][ts] !=-1) return dp[ind][ts];
+    if(ts%2==0)
+    {
+        return dp[ind][ts] = max(-prices[ind]+f(ind+1,ts+1,n,prices,dp),f(ind+1,ts,n,prices,dp));
+    }
+    else
+    {
+        return dp[ind][ts] = max(prices[ind]+f(ind+1,ts+1,n,prices,dp),f(ind+1,ts,n,prices,dp));
+    }
+}
+
+int maxProfit(vector<int>& prices, int n)
+{
+    // Write your code here.
+    vector<vector<int>>dp(n,vector<int>(4,-1));
+    return f(0,0,n,prices,dp);
+}
+```
+
+##### Tabulation-----
+
+```cpp
+int maxProfit(vector<int>& prices, int n)
+{
+    // Write your code here.
+    vector<vector<int>>dp(n+1,vector<int>(5,-1));
+    for(int i=0;i<=4;i++)
+    {
+        dp[n][i] = 0;
+    }
+    for(int i=0;i<=n;i++)
+    {
+        dp[i][4]=0;
+    }
+    for(int ind=n-1;ind>=0;ind--)
+    {
+        for(int ts = 3;ts>=0;ts--)
+        {
+            if(ts%2==0)
+            {
+                dp[ind][ts] = max(-prices[ind]+dp[ind+1][ts+1],dp[ind+1][ts]);
+            }
+            else
+            {
+                dp[ind][ts] = max(prices[ind]+dp[ind+1][ts+1],dp[ind+1][ts]);
+            }
+        }
+    }
+    return dp[0][0];
+}
+```
+
+##### 1-D Space Optimisation-------
+
+```cpp
+int maxProfit(vector<int>& prices, int n)
+{
+    // Write your code here.
+   vector<int>ahead(5,-1),cur(5,-1);
+    for(int i=0;i<=4;i++)
+    {
+        ahead[i] = 0;
+    }
+    cur[4]=0;
+    for(int ind=n-1;ind>=0;ind--)
+    {
+        for(int ts = 3;ts>=0;ts--)
+        {
+            if(ts%2==0)
+            {
+                cur[ts] = max(-prices[ind]+ahead[ts+1],ahead[ts]);
+            }
+            else
+            {
+                cur[ts] = max(prices[ind]+ahead[ts+1],ahead[ts]);
+            }
+        }
+        ahead = cur;
+    }
+    return ahead[0];
+}
+```
+
+# [Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)
+
+### Direct Tabulation with previous learned concepts
+
+```cpp
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& prices) {
+        int n=prices.size();
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(k+1,0)));
+        for(int i=n-1;i>=0;i--){
+            for(int buy=0;buy<=1;buy++){
+                for(int cap=1;cap<=k;cap++){
+                    if(buy){
+                        dp[i][buy][cap]=max(-prices[i]+dp[i+1][false][cap],dp[i+1][true][cap]);
+                    }
+                    else {
+                        dp[i][buy][cap]=max(prices[i]+dp[i+1][true][cap-1],dp[i+1][false][cap]);
+                    }
+                }
+            }
+        }
+        return dp[0][1][k];
+    }
+};
+```
+
+# [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+
+        vector<vector<int>> dp(n+2,vector<int>(2,0));
+        for(int i=n-1;i>=0;i--){
+                    dp[i][1]=max(-prices[i]+dp[i+1][false],dp[i+1][true]);
+                    dp[i][0]=max(prices[i]+dp[i+2][true],dp[i+1][false]);
+        }
+        return dp[0][1];
+    }
+};
+```
+
+#### Space Optimized
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        vector<int> next1(2,0),curr(2,0),next2(2,0);
+        for(int i=n-1;i>=0;i--){
+                    curr[1]=max(-prices[i]+next1[false],next1[true]);
+                    curr[0]=max(prices[i]+next2[true],next1[false]);
+                    next2=next1;
+                    next1=curr;
+        }
+        return next1[1];
+    }
+};
+```
+
+# [Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int n=prices.size();
+        vector<vector<int>> dp(n+1,vector<int>(2,0));
+        for(int i=n-1;i>=0;i--){
+            dp[i][1]=max(-prices[i]+dp[i+1][0],dp[i+1][1]);
+             dp[i][0]=max(prices[i]+dp[i+1][1]-fee,dp[i+1][0]);
+        }
+        return dp[0][1];
+    }
+};
+```
+
+### Space Optimized
+
+```cpp
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int n=prices.size();
+        vector<int> next(2,0),curr(2,0);
+        for(int i=n-1;i>=0;i--){
+            curr[1]=max(-prices[i]+next[0],next[1]);
+            curr[0]=max(prices[i]+next[1]-fee,next[0]);
+            next=curr;
+        }
+        return next[1];
+    }
+};
+```
+
+---
+
+# DP on LIS
+
+---
+
+# [**Longest Increasing Subsequence**](https://leetcode.com/problems/longest-increasing-subsequence/)
+
+### Recursive
+
+```cpp
+class Solution {
+public:
+    int recursion(int idx,int prevIdx,vector<int> &nums){
+        if(idx==nums.size()) return 0;
+        int notTake=recursion(idx+1,prevIdx,nums);
+        int take=0;
+        if(prevIdx==-1 || nums[idx]>nums[prevIdx]) take=1+recursion(idx+1,idx,nums);
+        return max(take,notTake);
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        return recursion(0,-1,nums);
+    }
+};
+```
+
+### Memoization
+
+```cpp
+class Solution {
+public:
+    int recursion(int idx,int prevIdx,vector<int> &nums,vector<vector<int>> &dp){
+        if(idx==nums.size()) return 0;
+        if(dp[idx][prevIdx+1]!=-1) return dp[idx][prevIdx+1];
+        int notTake=recursion(idx+1,prevIdx,nums,dp);
+        int take=0;
+        if(prevIdx==-1 || nums[idx]>nums[prevIdx]) take=1+recursion(idx+1,idx,nums,dp);
+        return dp[idx][prevIdx+1]=max(take,notTake);
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>> dp(n,vector<int>(n+1,-1));
+        return recursion(0,-1,nums,dp);
+    }
+};
+```
+
+### Tabulation
+
+```cpp
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> dp(n+1, vector<int>(n + 1, 0));
+        for (int idx = n - 1; idx >= 0; idx--) {
+            for (int prevIdx = idx-1; prevIdx >= -1; prevIdx--) {
+                int notTake = dp[idx + 1][prevIdx+1];
+                int take = 0;
+                if (prevIdx == -1 || nums[idx] > nums[prevIdx])
+                    take = 1 + dp[idx + 1][idx+1] ;
+                dp[idx][prevIdx + 1] =max(take, notTake);
+            }
+        }
+        return dp[0][0];
+    }
+};
+```
+
+### Space Optimised Tabulation
+
+```cpp
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> dp(n+1, vector<int>(n + 1, 0));
+        vector<int> next(n+1,0),curr(n+1,0);
+        for (int idx = n - 1; idx >= 0; idx--) {
+            for (int prevIdx = idx-1; prevIdx >= -1; prevIdx--) {
+                int notTake = next[prevIdx+1];
+                int take = 0;
+                if (prevIdx == -1 || nums[idx] > nums[prevIdx])
+                    take = 1 + next[idx+1] ;
+                curr[prevIdx + 1] =max(take, notTake);
+            }
+            next=curr;
+        }
+        return next[0];
+    }
+};
+```
+
+### Best Optimized
+
+```cpp
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n+1,1);
+        int maxi=1;
+        for(int i=0;i<n;i++){
+            for(int prev=0;prev<i;prev++){
+                 if(nums[prev]<nums[i]){
+                    dp[i]=max(dp[i],1+dp[prev]);
+                 }
+            }
+            maxi=max(maxi,dp[i]);
+        }
+        return maxi;
+    }
+};
+```
+
+# [Print Longest Increasing Subsequence](https://www.geeksforgeeks.org/problems/printing-longest-increasing-subsequence/1)
+
+```cpp
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public:
+    vector<int> longestIncreasingSubsequence(int n, vector<int>& arr) {
+        // Code here
+        vector<int> ans;
+        vector<int> dp(n,1);
+        vector<int> hash(n,0);
+        int lastIndex=0;
+        int maxi=1;
+        for(int i=0;i<n;i++){
+            hash[i]=i;
+            for(int prev=0;prev<i;prev++){
+                if(arr[i]>arr[prev] && 1+dp[prev]>dp[i]){
+                    dp[i]=1+dp[prev];
+                    hash[i]=prev;
+                }
+            }
+            if(dp[i]>maxi){
+                maxi=dp[i];
+                lastIndex=i;
+            }
+        }
+        vector<int> lis;
+        lis.push_back(arr[lastIndex]);
+        int index=1;
+        while(hash[lastIndex]!=lastIndex){
+            lastIndex=hash[lastIndex];
+            lis.push_back(arr[lastIndex]);
+        }
+        reverse(begin(lis),end(lis));
+        return lis;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int N;
+        cin >> N;
+        vector<int> arr(N);
+        for (int i = 0; i < N; i++) {
+            cin >> arr[i];
+        }
+        Solution obj;
+        vector<int> res = obj.longestIncreasingSubsequence(N, arr);
+        for (auto x : res)
+            cout << x << " ";
+        cout << "\n";
+    }
+    return 0;
+}
+// } Driver Code Ends
+```
+
+# LIS using Binary Search
+
+```cpp
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> temp;
+        temp.push_back(nums[0]);
+        for (int i = 1; i < n; i++) {
+            if (nums[i] > temp.back())
+                temp.push_back(nums[i]);
+            else {
+                int ind =
+                    lower_bound(begin(temp), end(temp), nums[i]) - begin(temp);
+                temp[ind] = nums[i];
+            }
+        }
+        return temp.size();
+    }
+};
+```
